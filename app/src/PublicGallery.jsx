@@ -291,17 +291,18 @@ export default function PublicGallery({ images, metadata }) {
                                     </div>
 
                                     {/* Nav arrows — siblings of image div, so not clipped. Positioned slightly outside on desktop, inside on mobile */}
+                                    {/* Nav arrows */}
                                     <button
                                         onClick={nextImage}
                                         disabled={currentIndex === displayImages.length - 1}
-                                        className={`absolute top-1/2 -translate-y-1/2 -right-3 md:-right-6 z-30 ${theme.navBtnCls} backdrop-blur-sm p-1.5 sm:p-3 rounded-full shadow-[0_0_16px_rgba(0,0,0,0.4)] disabled:opacity-0 disabled:pointer-events-none hover:scale-110 hover:brightness-110 transition-all font-bold group border`}
+                                        className={`absolute top-1/2 -translate-y-1/2 right-2 md:right-4 z-30 ${theme.navBtnCls} backdrop-blur-sm p-1.5 sm:p-3 rounded-full shadow-[0_0_16px_rgba(0,0,0,0.4)] disabled:opacity-0 disabled:pointer-events-none hover:scale-110 hover:brightness-110 transition-all font-bold group border`}
                                     >
                                         <ChevronRight className="w-5 h-5 sm:w-7 sm:h-7 group-hover:translate-x-0.5 transition-transform" />
                                     </button>
                                     <button
                                         onClick={prevImage}
                                         disabled={currentIndex === 0}
-                                        className={`absolute top-1/2 -translate-y-1/2 -left-3 md:-left-6 z-30 ${theme.navBtnCls} backdrop-blur-sm p-1.5 sm:p-3 rounded-full shadow-[0_0_16px_rgba(0,0,0,0.4)] disabled:opacity-0 disabled:pointer-events-none hover:scale-110 hover:brightness-110 transition-all font-bold group border`}
+                                        className={`absolute top-1/2 -translate-y-1/2 left-2 md:left-4 z-30 ${theme.navBtnCls} backdrop-blur-sm p-1.5 sm:p-3 rounded-full shadow-[0_0_16px_rgba(0,0,0,0.4)] disabled:opacity-0 disabled:pointer-events-none hover:scale-110 hover:brightness-110 transition-all font-bold group border`}
                                     >
                                         <ChevronLeft className="w-5 h-5 sm:w-7 sm:h-7 group-hover:-translate-x-0.5 transition-transform" />
                                     </button>
