@@ -1,0 +1,7 @@
+﻿node_modules/
+app/node_modules/
+app/dist/
+.env
+# Source images large raw PNGs, only needed locally
+**/u{05EA}u{05DE}u{05D5}u{05E0}u{05D5}u{05EA} u{05DE}u{05E7}u{05D5}u{05E8} u{05DE}u{05E9}u{05D7}u{05E7}u{05D9} u{05DE}u{05D9}u{05DC}u{05D9}u{05DD}/
+.DS_Store

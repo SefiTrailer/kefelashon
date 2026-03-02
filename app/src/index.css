@@ -1,0 +1,84 @@
+@import "tailwindcss";
+
+body {
+  margin: 0;
+  font-family: 'Fredoka', 'Rubik', 'Assistant', system-ui, sans-serif;
+  background-color: #f8fafc;
+  color: #0f172a;
+  direction: rtl;
+}
+
+.perspective-1000 {
+  perspective: 1000px;
+}
+
+/* ── Theme: Dark Purple (default) ── */
+.theme-dark-purple {
+  --bg-from: #1a0533;
+  --bg-via: #0f172a;
+  --bg-to: #000000;
+  --accent-1: #e879f9;
+  --accent-2: #22d3ee;
+  --accent-3: #f43f5e;
+  --card-bg: rgba(30, 10, 60, 0.9);
+  --card-border: rgba(232, 121, 249, 0.25);
+  --text-primary: #ffffff;
+  --text-secondary: #d8b4fe;
+  --frame-gradient: linear-gradient(135deg, #f43f5e, #a855f7, #22d3ee);
+  --glow-color: rgba(168, 85, 247, 0.5);
+}
+
+/* ── Theme: Neon Cyberpunk ── */
+.theme-neon {
+  --bg-from: #000000;
+  --bg-via: #001a00;
+  --bg-to: #000a1a;
+  --accent-1: #39ff14;
+  --accent-2: #00f5ff;
+  --accent-3: #ff073a;
+  --card-bg: rgba(0, 10, 0, 0.95);
+  --card-border: rgba(57, 255, 20, 0.3);
+  --text-primary: #e0ffe0;
+  --text-secondary: #39ff14;
+  --frame-gradient: linear-gradient(135deg, #39ff14, #00f5ff, #ff073a);
+  --glow-color: rgba(57, 255, 20, 0.4);
+}
+
+/* ── Theme: Pastel Cloud ── */
+.theme-pastel {
+  --bg-from: #fdf2f8;
+  --bg-via: #ede9fe;
+  --bg-to: #e0f2fe;
+  --accent-1: #f472b6;
+  --accent-2: #38bdf8;
+  --accent-3: #fb923c;
+  --card-bg: rgba(255, 255, 255, 0.85);
+  --card-border: rgba(244, 114, 182, 0.3);
+  --text-primary: #1e1b4b;
+  --text-secondary: #7c3aed;
+  --frame-gradient: linear-gradient(135deg, #f472b6, #a78bfa, #38bdf8);
+  --glow-color: rgba(244, 114, 182, 0.35);
+}
+
+/* ── Theme: Sunset Vibes ── */
+.theme-sunset {
+  --bg-from: #1c0a00;
+  --bg-via: #2d1b00;
+  --bg-to: #1a0a2e;
+  --accent-1: #fbbf24;
+  --accent-2: #f97316;
+  --accent-3: #d946ef;
+  --card-bg: rgba(28, 10, 0, 0.9);
+  --card-border: rgba(251, 191, 36, 0.3);
+  --text-primary: #fff7ed;
+  --text-secondary: #fbbf24;
+  --frame-gradient: linear-gradient(135deg, #fbbf24, #f97316, #d946ef);
+  --glow-color: rgba(251, 191, 36, 0.4);
+}
+
+/* Smooth theme transitions */
+* {
+  transition-property: background-color, border-color, color, box-shadow;
+  transition-duration: 400ms;
+  transition-timing-function: ease;
+}
