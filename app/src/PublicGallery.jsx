@@ -1,5 +1,5 @@
 import { useState, useEffect, useMemo } from 'react';
-import { ChevronRight, ChevronLeft, Search, X, MessageCircle, Info, Palette } from 'lucide-react';
+import { ChevronRight, ChevronLeft, Search, X, MessageCircle, Info, Palette, Linkedin } from 'lucide-react';
 import QRCodeDisplay from './components/QRCodeDisplay';
 
 // ── Themes ────────────────────────────────────────────────────────────────────
@@ -16,7 +16,7 @@ const THEMES = [
         headerBtnSearchCls: 'bg-cyan-500/20 hover:bg-cyan-500/40 border-cyan-400/50 text-cyan-50 shadow-[0_0_15px_rgba(6,182,212,0.3)] hover:shadow-[0_0_25px_rgba(6,182,212,0.6)]',
         headerBtnAboutCls: 'bg-rose-500/20 hover:bg-rose-500/40 border-rose-400/50 text-rose-50 shadow-[0_0_15px_rgba(244,63,94,0.3)] hover:shadow-[0_0_25px_rgba(244,63,94,0.6)]',
         navBtnCls: 'bg-white/90 text-purple-600 border-purple-200',
-        explainBtnCls: 'text-slate-300 hover:text-white hover:bg-slate-800',
+        explainBtnCls: 'text-slate-300 hover:text-white',
         explainTextCls: 'text-cyan-50',
         glowClass: 'from-purple-500/20',
         topicBadgeCls: 'bg-rose-500 border-rose-400',
@@ -34,7 +34,7 @@ const THEMES = [
         headerBtnSearchCls: 'bg-[#39ff14]/10 hover:bg-[#39ff14]/25 border-[#39ff14]/50 text-[#39ff14] shadow-[0_0_15px_rgba(57,255,20,0.3)] hover:shadow-[0_0_25px_rgba(57,255,20,0.6)]',
         headerBtnAboutCls: 'bg-[#ff073a]/10 hover:bg-[#ff073a]/25 border-[#ff073a]/50 text-[#ff073a] shadow-[0_0_15px_rgba(255,7,58,0.3)] hover:shadow-[0_0_25px_rgba(255,7,58,0.6)]',
         navBtnCls: 'bg-black text-[#39ff14] border-[#39ff14]/60 shadow-[0_0_12px_rgba(57,255,20,0.4)]',
-        explainBtnCls: 'text-[#39ff14]/70 hover:text-[#39ff14] hover:bg-[#39ff14]/10',
+        explainBtnCls: 'text-[#39ff14]/70 hover:text-[#39ff14]',
         explainTextCls: 'text-[#e0ffe0]',
         glowClass: 'from-[#39ff14]/10',
         topicBadgeCls: 'bg-[#ff073a] border-red-400',
@@ -52,7 +52,7 @@ const THEMES = [
         headerBtnSearchCls: 'bg-sky-100 hover:bg-sky-200 border-sky-300 text-sky-700 shadow-[0_4px_15px_rgba(56,189,248,0.2)] hover:shadow-[0_4px_20px_rgba(56,189,248,0.4)]',
         headerBtnAboutCls: 'bg-pink-100 hover:bg-pink-200 border-pink-300 text-pink-700 shadow-[0_4px_15px_rgba(244,114,182,0.2)] hover:shadow-[0_4px_20px_rgba(244,114,182,0.4)]',
         navBtnCls: 'bg-white text-violet-600 border-violet-200 shadow-lg',
-        explainBtnCls: 'text-violet-500 hover:text-violet-700 hover:bg-violet-50',
+        explainBtnCls: 'text-violet-500 hover:text-violet-700',
         explainTextCls: 'text-indigo-900',
         glowClass: 'from-pink-300/20',
         topicBadgeCls: 'bg-orange-400 border-orange-300',
@@ -70,7 +70,7 @@ const THEMES = [
         headerBtnSearchCls: 'bg-amber-500/20 hover:bg-amber-500/40 border-amber-400/50 text-amber-100 shadow-[0_0_15px_rgba(251,191,36,0.3)] hover:shadow-[0_0_25px_rgba(251,191,36,0.6)]',
         headerBtnAboutCls: 'bg-fuchsia-500/20 hover:bg-fuchsia-500/40 border-fuchsia-400/50 text-fuchsia-100 shadow-[0_0_15px_rgba(217,70,239,0.3)] hover:shadow-[0_0_25px_rgba(217,70,239,0.6)]',
         navBtnCls: 'bg-amber-50/90 text-orange-600 border-amber-300',
-        explainBtnCls: 'text-amber-300/70 hover:text-amber-200 hover:bg-amber-900/30',
+        explainBtnCls: 'text-amber-300/70 hover:text-amber-200',
         explainTextCls: 'text-amber-50',
         glowClass: 'from-orange-500/20',
         topicBadgeCls: 'bg-fuchsia-600 border-fuchsia-400',
@@ -123,10 +123,9 @@ export default function PublicGallery({ images, metadata }) {
     const currentFile = displayImages[currentIndex];
     const fileMetadata = currentFile ? metadata[currentFile] : null;
 
-    const nextImage = () => { if (currentIndex < displayImages.length - 1) setCurrentIndex(p => p + 1); };
-    const prevImage = () => { if (currentIndex > 0) setCurrentIndex(p => p - 1); };
+    const nextImage = () => { if (currentIndex < displayImages.length - 1) { setCurrentIndex(p => p + 1); setShowExplanation(false); } };
+    const prevImage = () => { if (currentIndex > 0) { setCurrentIndex(p => p - 1); setShowExplanation(false); } };
 
-    useEffect(() => { setShowExplanation(false); }, [currentIndex]);
     useEffect(() => { setCurrentIndex(0); }, [searchQuery]);
 
     // ── Touch Handling (Swipe) ───────────────────────────────────────────────────
@@ -187,38 +186,11 @@ export default function PublicGallery({ images, metadata }) {
             {/* ── Main Layout Container ── */}
             <div className="relative w-full max-w-[1400px] px-3 sm:px-4 mx-auto flex flex-col lg:flex-row gap-8 lg:gap-12 items-start justify-center">
 
-                {/* ── Left/Main: Logo + Search + Image Frame ── */}
+                {/* ── Left/Main: Search + Image Frame ── */}
                 <div className="w-full max-w-2xl md:max-w-4xl flex flex-col items-center flex-1 relative shrink-0 mx-auto">
-                    {/* Logo — floats above frame at top-center, z-50 */}
-                    <div className="relative z-50 flex justify-center pointer-events-none" style={{ height: 0 }}>
-                        <div
-                            className="absolute pointer-events-auto"
-                            style={{ top: '-4px', transform: 'translateX(0)' }}
-                        >
-                            <img
-                                src="./logo.png"
-                                alt="כפל לשון"
-                                className="h-28 sm:h-32 md:h-40 object-contain drop-shadow-[0_0_20px_rgba(236,72,153,0.5)] hover:scale-105 transition-transform cursor-pointer"
-                                style={{ transform: 'scaleX(1.15)' }}
-                            />
-                        </div>
-                    </div>
 
-                    {/* Buttons pinned to frame edges — same container as frame */}
-                    <div className="flex items-end justify-between relative z-10 pt-1 w-full" style={{ minHeight: '5.5rem' }}>
-                        {/* חיפוש — aligns with RIGHT edge of frame */}
-                        <button
-                            onClick={() => setIsSearchOpen(true)}
-                            className={`border ${theme.headerBtnSearchCls} px-3 sm:px-4 py-2 rounded-full backdrop-blur-md flex items-center gap-1.5 sm:gap-2 transition-all font-semibold text-sm sm:text-base`}
-                        >
-                            <Search size={16} />
-                            <span className="hidden xs:inline sm:inline">חיפוש</span>
-                        </button>
-                        {/* Spacer to keep search on the right */}
-                        <div className="w-10"></div>
-                    </div>
-                    {/* gap between buttons row and frame */}
-                    <div className="h-10" />
+                    {/* Spacer since logo is gone */}
+                    <div className="h-6" />
                     {displayImages.length === 0 ? (
                         <div className="text-center bg-white/10 backdrop-blur-lg p-12 rounded-3xl border border-white/20">
                             <span className="text-6xl mb-4 block">😢</span>
@@ -235,15 +207,37 @@ export default function PublicGallery({ images, metadata }) {
                                 {/* Inner card */}
                                 <div className={`${theme.innerBg} rounded-[1.8rem] sm:rounded-[2.2rem] flex flex-col`}>
 
-                                    {/* Title */}
-                                    <div className="px-4 sm:px-6 pt-4 sm:pt-5 pb-3 sm:pb-4 text-center relative flex-shrink-0 z-20">
+                                    {/* Title Bar with inline Search and About */}
+                                    <div className="px-4 sm:px-6 py-4 flex items-center justify-between relative flex-shrink-0 z-20 w-full min-h-[5rem]">
                                         <div className={`absolute bottom-0 left-0 w-full h-[2px] bg-gradient-to-r ${theme.frameGrad} opacity-60`} />
+
+                                        {/* Right: Search button */}
+                                        <button
+                                            onClick={() => setIsSearchOpen(true)}
+                                            className={`p-2 rounded-full backdrop-blur-md flex items-center justify-center transition-all ${theme.headerBtnSearchCls} flex-shrink-0 animate-in fade-in duration-300`}
+                                            title="חיפוש"
+                                        >
+                                            <Search size={22} />
+                                        </button>
+
+                                        {/* Center: Title */}
                                         <h2
-                                            className={`text-2xl sm:text-3xl md:text-5xl font-['Varela_Round',sans-serif] text-transparent bg-clip-text bg-gradient-to-r ${theme.titleGrad}`}
+                                            className={`text-2xl sm:text-3xl md:text-5xl font-['Varela_Round',sans-serif] text-transparent bg-clip-text bg-gradient-to-r ${theme.titleGrad} mx-4 text-center flex-1`}
                                             style={{ filter: 'drop-shadow(0 1px 3px rgba(0,0,0,0.3))' }}
                                         >
                                             {fileMetadata?.title}
                                         </h2>
+
+                                        {/* Left: Explain button overlay trigger */}
+                                        <div className="relative">
+                                            <button
+                                                onClick={() => setShowExplanation(!showExplanation)}
+                                                className={`flex items-center gap-1.5 p-2 px-3 rounded-full backdrop-blur-md transition-all ${theme.headerBtnAboutCls} flex-shrink-0 whitespace-nowrap text-sm sm:text-base font-bold animate-in fade-in duration-300`}
+                                            >
+                                                <span>להסבר לחץ כאן</span>
+                                                <ChevronLeft size={16} className={`transition-transform duration-300 ${showExplanation ? '-rotate-90' : 'rotate-0'}`} />
+                                            </button>
+                                        </div>
                                     </div>
 
                                     {/* Image + nav arrows wrapper (no overflow-hidden so arrows aren't clipped) */}
@@ -294,26 +288,7 @@ export default function PublicGallery({ images, metadata }) {
                                         >
                                             <ChevronLeft className="w-5 h-5 sm:w-7 sm:h-7 group-hover:-translate-x-0.5 transition-transform" />
                                         </button>
-                                    </div>
-
-                                    {/* Explanation toggle */}
-                                    <div className={`${theme.innerBg} rounded-b-[1.8rem] sm:rounded-b-[2.2rem] border-t border-white/10 flex flex-col items-center justify-center relative z-20`}>
-                                        {!showExplanation ? (
-                                            <button
-                                                onClick={() => setShowExplanation(true)}
-                                                className={`w-full py-4 ${theme.explainBtnCls} font-semibold transition-colors flex items-center justify-center gap-2 group text-base tracking-wide`}
-                                            >
-                                                <span className="border-b border-dashed border-current opacity-70 group-hover:opacity-100">
-                                                    למי שצריך הסבר בהרחבה ⬇️
-                                                </span>
-                                            </button>
-                                        ) : (
-                                            <div className="p-6 md:p-8 text-center animate-in fade-in slide-in-from-top-2 w-full">
-                                                <p className={`text-lg md:text-xl ${theme.explainTextCls} leading-relaxed mx-auto font-medium`}>
-                                                    {fileMetadata?.explanation}
-                                                </p>
-                                            </div>
-                                        )}
+                                        {/* Explanation overlay (absolutely positioned inside the image frame if desired, but we will place it dynamically over the About section area below logic handles that via z-index or absolute floating over everything) */}
                                     </div>
 
                                 </div>
@@ -324,50 +299,81 @@ export default function PublicGallery({ images, metadata }) {
                 </div>
 
                 {/* ── Right/Side: About Section ── */}
-                <div className="w-full lg:w-[350px] xl:w-[400px] shrink-0 mt-8 lg:mt-0 flex flex-col lg:sticky lg:top-8 bg-slate-900/60 backdrop-blur-xl border border-white/10 p-6 rounded-[2.5rem] shadow-2xl relative overflow-hidden">
-                    <div className="absolute inset-0 bg-gradient-to-br from-white/5 to-transparent pointer-events-none" />
+                <div className="w-full lg:w-[350px] xl:w-[400px] shrink-0 mt-8 lg:mt-0 flex flex-col lg:sticky lg:top-8 bg-slate-900/60 backdrop-blur-xl border border-white/10 rounded-[2.5rem] shadow-2xl relative">
+                    <div className="absolute inset-0 bg-gradient-to-br from-white/5 to-transparent pointer-events-none rounded-[2.5rem]" />
 
-                    <h2 className={`text-3xl md:text-4xl font-black mb-6 flex items-center justify-center gap-3 text-transparent bg-clip-text bg-gradient-to-r ${theme.titleGrad} drop-shadow-md text-center`}>
-                        <Info size={32} className="text-white drop-shadow-md" />
-                        אודות הפרויקט
-                    </h2>
+                    {/* Floating Explanation View */}
+                    {showExplanation && (
+                        <div className="absolute inset-0 z-30 bg-slate-900/95 backdrop-blur-3xl rounded-[2.5rem] p-6 lg:p-8 border border-white/20 shadow-[0_0_40px_rgba(0,0,0,0.6)] animate-in fade-in zoom-in-95 duration-200 flex flex-col">
+                            <button onClick={() => setShowExplanation(false)} className="self-end p-2 bg-white/10 hover:bg-white/20 rounded-full text-white transition-colors mb-4">
+                                <X size={20} />
+                            </button>
+                            <div className="text-center overflow-auto pb-4">
+                                <h3 className={`text-2xl font-bold mb-4 text-transparent bg-clip-text bg-gradient-to-r ${theme.titleGrad}`}>ההסבר</h3>
+                                <p className={`text-lg md:text-xl ${theme.explainTextCls} leading-relaxed mx-auto font-medium`}>
+                                    {fileMetadata?.explanation}
+                                </p>
+                            </div>
+                        </div>
+                    )}
 
-                    <div className="flex flex-col md:flex-row lg:flex-col gap-6 items-center text-slate-300 md:text-lg">
-                        <div className="flex-1 leading-relaxed text-center sm:text-right lg:text-center font-medium">
-                            ברוכים הבאים ל<strong className="text-white mx-1 text-xl drop-shadow-md">כפל לשון</strong>!
-                            <br /><br />
-                            מאות איורים דיגיטליים הממחישים ביטויים ומשחקי מילים בעברית — להעלות חיוך ולחגוג את השפה בצורתה הכיפית ביותר.
-                            <br />
-                            <span className="text-purple-400 font-semibold block mt-4 text-xl">יצירה ועריכה: ספי רייכקינד</span>
+                    <div className="p-6 flex flex-col items-center flex-1 h-full">
+                        <div className="flex justify-center -mt-12 mb-2 w-full">
+                            <img
+                                src="./logo.png"
+                                alt="כפלשון"
+                                className="h-28 sm:h-32 object-contain drop-shadow-[0_0_20px_rgba(236,72,153,0.5)] transition-transform hover:scale-105"
+                                style={{ transform: 'scaleX(1.15)' }}
+                            />
                         </div>
 
-                        {/* QR + WhatsApp side by side */}
-                        <div className="flex flex-col sm:flex-row lg:flex-col justify-center items-center gap-4 bg-black/30 p-4 md:p-5 rounded-3xl border border-white/5 shadow-inner w-full">
-                            {/* QR code */}
-                            <div className="flex-shrink-0 bg-white p-2 rounded-2xl shadow-md rotate-1 hover:rotate-0 transition-transform">
-                                <QRCodeDisplay url="https://sefitrailer.github.io/kefel-lashon/" />
+                        <div className="flex flex-col md:flex-row lg:flex-col gap-6 items-center text-slate-300 md:text-lg w-full">
+                            <div className="flex-1 leading-relaxed text-center sm:text-right lg:text-center font-medium">
+                                ברוכים הבאים ל<strong className="text-white mx-1 text-xl drop-shadow-md">'כפלשון'</strong>!
+                                <br /><br />
+                                מאות איורים דיגיטליים ויצירות AI הממחישים ביטויים, כפל לשון ומשחקי מילים בעברית — להעלות חיוך ולחגוג את השפה בצורתה הכיפית ביותר.
+                                <br />
+                                <span className="text-purple-400 font-semibold flex items-center justify-center gap-2 mt-4 text-xl">הכל ביצירת מוחי הקודח... 😊</span>
+                                <span className="text-indigo-300 font-bold block mt-1 text-lg">ספי רייכקינד</span>
                             </div>
 
-                            {/* WhatsApp buttons stacked on the left of QR */}
-                            <div className="flex flex-col gap-3 w-full sm:w-auto">
-                                <a
-                                    href="https://whatsapp.com/channel/0029VajNwaPL2AU0jdlgxa20"
-                                    target="_blank"
-                                    rel="noreferrer"
-                                    className="flex items-center justify-center gap-2 bg-[#25D366] text-white px-5 py-3 rounded-xl font-bold hover:bg-[#20ba56] transition-all shadow-lg text-sm sm:text-base hover:scale-105"
-                                >
-                                    <MessageCircle size={20} />
-                                    📢 ערוץ וואטסאפ
-                                </a>
-                                <a
-                                    href="https://chat.whatsapp.com/LN6nwJ8cYiLHaj5uhTum9P"
-                                    target="_blank"
-                                    rel="noreferrer"
-                                    className="flex items-center justify-center gap-2 bg-emerald-700 text-white px-5 py-3 rounded-xl font-bold hover:bg-emerald-800 transition-all shadow-lg text-sm sm:text-base hover:scale-105"
-                                >
-                                    <MessageCircle size={20} />
-                                    👥 קבוצת וואטסאפ
-                                </a>
+                            {/* QR + WhatsApp side by side */}
+                            <div className="flex flex-col sm:flex-row lg:flex-col justify-center items-center gap-4 bg-black/30 p-4 md:p-5 rounded-3xl border border-white/5 shadow-inner w-full">
+                                {/* QR code */}
+                                <div className="flex-shrink-0 bg-white p-2 rounded-2xl shadow-md rotate-1 hover:rotate-0 transition-transform">
+                                    <QRCodeDisplay url="https://sefitrailer.github.io/kefel-lashon/" />
+                                </div>
+
+                                {/* WhatsApp buttons stacked on the left of QR */}
+                                <div className="flex flex-col gap-3 w-full sm:w-auto">
+                                    <a
+                                        href="https://whatsapp.com/channel/0029VajNwaPL2AU0jdlgxa20"
+                                        target="_blank"
+                                        rel="noreferrer"
+                                        className="flex items-center justify-center gap-2 bg-[#25D366] text-white px-5 py-3 rounded-xl font-bold hover:bg-[#20ba56] transition-all shadow-lg text-sm sm:text-base hover:scale-105"
+                                    >
+                                        <MessageCircle size={20} />
+                                        📢 ערוץ וואטסאפ
+                                    </a>
+                                    <a
+                                        href="https://chat.whatsapp.com/LN6nwJ8cYiLHaj5uhTum9P"
+                                        target="_blank"
+                                        rel="noreferrer"
+                                        className="flex items-center justify-center gap-2 bg-emerald-700 text-white px-5 py-3 rounded-xl font-bold hover:bg-emerald-800 transition-all shadow-lg text-sm sm:text-base hover:scale-105"
+                                    >
+                                        <MessageCircle size={20} />
+                                        👥 קבוצת וואטסאפ
+                                    </a>
+                                    <a
+                                        href="https://www.linkedin.com/in/sefi-riechkind-679b67136/"
+                                        target="_blank"
+                                        rel="noreferrer"
+                                        className="flex items-center justify-center gap-2 bg-[#0077b5] text-white px-5 py-3 rounded-xl font-bold hover:bg-[#006396] transition-all shadow-lg text-sm sm:text-base hover:scale-105"
+                                    >
+                                        <Linkedin size={20} />
+                                        💼 לינקדאין
+                                    </a>
+                                </div>
                             </div>
                         </div>
                     </div>
