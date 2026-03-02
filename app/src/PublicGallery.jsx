@@ -83,13 +83,6 @@ export default function PublicGallery({ images, metadata }) {
     const [currentIndex, setCurrentIndex] = useState(0);
     const [searchQuery, setSearchQuery] = useState('');
     const [isSearchOpen, setIsSearchOpen] = useState(false);
-    const [isAboutOpen, setIsAboutOpen] = useState(() => {
-        try {
-            const visited = localStorage.getItem('kefel-visited');
-            if (!visited) { localStorage.setItem('kefel-visited', '1'); return true; }
-            return false;
-        } catch { return false; }
-    });
     const [showExplanation, setShowExplanation] = useState(false);
     const [themeIndex, setThemeIndex] = useState(() => {
         try {
@@ -168,13 +161,13 @@ export default function PublicGallery({ images, metadata }) {
 
     useEffect(() => {
         const handleKeyDown = (e) => {
-            if (isSearchOpen || isAboutOpen) return;
+            if (isSearchOpen) return;
             if (e.key === 'ArrowLeft') nextImage();
             if (e.key === 'ArrowRight') prevImage();
         };
         window.addEventListener('keydown', handleKeyDown);
         return () => window.removeEventListener('keydown', handleKeyDown);
-    }, [currentIndex, displayImages.length, isSearchOpen, isAboutOpen]);
+    }, [currentIndex, displayImages.length, isSearchOpen]);
 
     if (shuffledImages.length === 0) {
         return (
@@ -191,151 +184,147 @@ export default function PublicGallery({ images, metadata }) {
             className={`min-h-screen ${theme.bgStyle} text-white font-['Fredoka',sans-serif] flex flex-col items-center pt-4 pb-8 overflow-x-hidden relative ${theme.className}`}
             style={{ letterSpacing: '0.01em' }}
         >
-            {/* ── Single unified container: logo + buttons + frame ── */}
-            <div className="relative w-full max-w-2xl md:max-w-4xl px-3 sm:px-4 mx-auto flex flex-col">
-                {/* Logo — floats above frame at top-center, z-50 */}
-                <div className="relative z-50 flex justify-center pointer-events-none" style={{ height: 0 }}>
-                    <div
-                        className="absolute pointer-events-auto"
-                        style={{ top: '-4px', transform: 'translateX(0)' }}
-                    >
-                        <img
-                            src="./logo.png"
-                            alt="כפל לשון"
-                            className="h-28 sm:h-32 md:h-40 object-contain drop-shadow-[0_0_20px_rgba(236,72,153,0.5)] hover:scale-105 transition-transform cursor-pointer"
-                            style={{ transform: 'scaleX(1.15)' }}
-                            onClick={() => setIsAboutOpen(true)}
-                        />
-                    </div>
-                </div>
+            {/* ── Main Layout Container ── */}
+            <div className="relative w-full max-w-[1400px] px-3 sm:px-4 mx-auto flex flex-col lg:flex-row gap-8 lg:gap-12 items-start justify-center">
 
-                {/* Buttons pinned to frame edges — same container as frame */}
-                <div className="flex items-end justify-between relative z-10 pt-1" style={{ minHeight: '5.5rem' }}>
-                    {/* חיפוש — aligns with RIGHT edge of frame */}
-                    <button
-                        onClick={() => setIsSearchOpen(true)}
-                        className={`border ${theme.headerBtnSearchCls} px-3 sm:px-4 py-2 rounded-full backdrop-blur-md flex items-center gap-1.5 sm:gap-2 transition-all font-semibold text-sm sm:text-base`}
-                    >
-                        <Search size={16} />
-                        <span className="hidden xs:inline sm:inline">חיפוש</span>
-                    </button>
-
-                    {/* אודות — aligns with LEFT edge of frame */}
-                    <button
-                        onClick={() => setIsAboutOpen(true)}
-                        className={`border ${theme.headerBtnAboutCls} px-3 sm:px-4 py-2 rounded-full backdrop-blur-md flex items-center gap-1.5 sm:gap-2 transition-all font-semibold text-sm sm:text-base`}
-                    >
-                        <Info size={16} />
-                        <span className="hidden xs:inline sm:inline">אודות</span>
-                    </button>
-                </div>
-                {/* gap between buttons row and frame */}
-                <div className="h-10" />
-                {displayImages.length === 0 ? (
-                    <div className="text-center bg-white/10 backdrop-blur-lg p-12 rounded-3xl border border-white/20">
-                        <span className="text-6xl mb-4 block">😢</span>
-                        <h2 className="text-2xl font-bold text-white mb-2">לא מצאנו מה שחיפשת...</h2>
-                        <p className={theme.textClass}>נסה מילת חיפוש אחרת!</p>
-                    </div>
-                ) : (
-                    <div className="w-full relative shrink-0">
-                        {/* Frame */}
+                {/* ── Left/Main: Logo + Search + Image Frame ── */}
+                <div className="w-full max-w-2xl md:max-w-4xl flex flex-col items-center flex-1 relative shrink-0 mx-auto">
+                    {/* Logo — floats above frame at top-center, z-50 */}
+                    <div className="relative z-50 flex justify-center pointer-events-none" style={{ height: 0 }}>
                         <div
-                            className={`relative bg-gradient-to-br ${theme.frameGrad} p-[3px] sm:p-1.5 md:p-[10px] rounded-[2rem] sm:rounded-[2.5rem] shadow-[0_20px_60px_rgba(0,0,0,0.55)] w-full`}
-                            style={{ willChange: 'transform' }}
+                            className="absolute pointer-events-auto"
+                            style={{ top: '-4px', transform: 'translateX(0)' }}
                         >
-                            {/* Inner card */}
-                            <div className={`${theme.innerBg} rounded-[1.8rem] sm:rounded-[2.2rem] flex flex-col overflow-hidden`}>
+                            <img
+                                src="./logo.png"
+                                alt="כפל לשון"
+                                className="h-28 sm:h-32 md:h-40 object-contain drop-shadow-[0_0_20px_rgba(236,72,153,0.5)] hover:scale-105 transition-transform cursor-pointer"
+                                style={{ transform: 'scaleX(1.15)' }}
+                            />
+                        </div>
+                    </div>
 
-                                {/* Title */}
-                                <div className="px-4 sm:px-6 pt-4 sm:pt-5 pb-3 sm:pb-4 text-center relative flex-shrink-0 z-20">
-                                    <div className={`absolute bottom-0 left-0 w-full h-[2px] bg-gradient-to-r ${theme.frameGrad} opacity-60`} />
-                                    <h2
-                                        className={`text-2xl sm:text-3xl md:text-5xl font-['Varela_Round',sans-serif] text-transparent bg-clip-text bg-gradient-to-r ${theme.titleGrad}`}
-                                        style={{ filter: 'drop-shadow(0 1px 3px rgba(0,0,0,0.3))' }}
-                                    >
-                                        {fileMetadata?.title}
-                                    </h2>
-                                </div>
+                    {/* Buttons pinned to frame edges — same container as frame */}
+                    <div className="flex items-end justify-between relative z-10 pt-1 w-full" style={{ minHeight: '5.5rem' }}>
+                        {/* חיפוש — aligns with RIGHT edge of frame */}
+                        <button
+                            onClick={() => setIsSearchOpen(true)}
+                            className={`border ${theme.headerBtnSearchCls} px-3 sm:px-4 py-2 rounded-full backdrop-blur-md flex items-center gap-1.5 sm:gap-2 transition-all font-semibold text-sm sm:text-base`}
+                        >
+                            <Search size={16} />
+                            <span className="hidden xs:inline sm:inline">חיפוש</span>
+                        </button>
+                        {/* Spacer to keep search on the right */}
+                        <div className="w-10"></div>
+                    </div>
+                    {/* gap between buttons row and frame */}
+                    <div className="h-10" />
+                    {displayImages.length === 0 ? (
+                        <div className="text-center bg-white/10 backdrop-blur-lg p-12 rounded-3xl border border-white/20">
+                            <span className="text-6xl mb-4 block">😢</span>
+                            <h2 className="text-2xl font-bold text-white mb-2">לא מצאנו מה שחיפשת...</h2>
+                            <p className={theme.textClass}>נסה מילת חיפוש אחרת!</p>
+                        </div>
+                    ) : (
+                        <div className="w-full relative shrink-0">
+                            {/* Frame */}
+                            <div
+                                className={`relative bg-gradient-to-br ${theme.frameGrad} p-[3px] sm:p-1.5 md:p-[10px] rounded-[2rem] sm:rounded-[2.5rem] shadow-[0_20px_60px_rgba(0,0,0,0.55)] w-full`}
+                                style={{ willChange: 'transform' }}
+                            >
+                                {/* Inner card */}
+                                <div className={`${theme.innerBg} rounded-[1.8rem] sm:rounded-[2.2rem] flex flex-col`}>
 
-                                {/* Image + nav arrows wrapper (no overflow-hidden so arrows aren't clipped) */}
-                                <div className="relative w-full"
-                                    onTouchStart={onTouchStart}
-                                    onTouchMove={onTouchMove}
-                                    onTouchEnd={onTouchEnd}
-                                >
-                                    {/* Image area — click to fullscreen */}
-                                    <div className={`relative flex items-center justify-center bg-black/40 w-full overflow-hidden cursor-zoom-in`}
-                                        style={{ aspectRatio: '1/1', maxHeight: '55vh', padding: '16px' }}
-                                        onClick={() => setIsFullscreen(true)}>
-
-                                        {/* Glow behind image */}
-                                        <div className={`absolute inset-0 bg-gradient-to-t ${theme.glowClass} to-transparent opacity-50 mix-blend-screen pointer-events-none`} />
-
-                                        <img
-                                            key={currentFile}
-                                            src={`./images/${encodeURIComponent(currentFile)}`}
-                                            alt={fileMetadata?.title || 'תמונה'}
-                                            className="w-full h-full object-contain filter drop-shadow-[0_10px_25px_rgba(0,0,0,0.7)] relative z-10 animate-in zoom-in-95 duration-500"
-                                            style={{ borderRadius: '12px' }}
-                                            loading="lazy"
-                                        />
-
-                                        {/* Topic badge */}
-                                        {fileMetadata?.topic && (
-                                            <div className={`absolute top-4 right-4 z-20 ${theme.topicBadgeCls} text-white px-4 py-1.5 rounded-full font-bold text-sm shadow-lg border backdrop-blur-md -rotate-1`}>
-                                                📌 {fileMetadata.topic}
-                                            </div>
-                                        )}
-
+                                    {/* Title */}
+                                    <div className="px-4 sm:px-6 pt-4 sm:pt-5 pb-3 sm:pb-4 text-center relative flex-shrink-0 z-20">
+                                        <div className={`absolute bottom-0 left-0 w-full h-[2px] bg-gradient-to-r ${theme.frameGrad} opacity-60`} />
+                                        <h2
+                                            className={`text-2xl sm:text-3xl md:text-5xl font-['Varela_Round',sans-serif] text-transparent bg-clip-text bg-gradient-to-r ${theme.titleGrad}`}
+                                            style={{ filter: 'drop-shadow(0 1px 3px rgba(0,0,0,0.3))' }}
+                                        >
+                                            {fileMetadata?.title}
+                                        </h2>
                                     </div>
 
-                                    {/* Nav arrows — siblings of image div, so not clipped. Positioned slightly outside on desktop, inside on mobile */}
-                                    {/* Nav arrows */}
-                                    <button
-                                        onClick={nextImage}
-                                        disabled={currentIndex === displayImages.length - 1}
-                                        className={`absolute top-1/2 -translate-y-1/2 right-2 md:right-4 z-30 ${theme.navBtnCls} backdrop-blur-sm p-1.5 sm:p-3 rounded-full shadow-[0_0_16px_rgba(0,0,0,0.4)] disabled:opacity-0 disabled:pointer-events-none hover:scale-110 hover:brightness-110 transition-all font-bold group border`}
+                                    {/* Image + nav arrows wrapper (no overflow-hidden so arrows aren't clipped) */}
+                                    <div className="relative w-full"
+                                        onTouchStart={onTouchStart}
+                                        onTouchMove={onTouchMove}
+                                        onTouchEnd={onTouchEnd}
                                     >
-                                        <ChevronRight className="w-5 h-5 sm:w-7 sm:h-7 group-hover:translate-x-0.5 transition-transform" />
-                                    </button>
-                                    <button
-                                        onClick={prevImage}
-                                        disabled={currentIndex === 0}
-                                        className={`absolute top-1/2 -translate-y-1/2 left-2 md:left-4 z-30 ${theme.navBtnCls} backdrop-blur-sm p-1.5 sm:p-3 rounded-full shadow-[0_0_16px_rgba(0,0,0,0.4)] disabled:opacity-0 disabled:pointer-events-none hover:scale-110 hover:brightness-110 transition-all font-bold group border`}
-                                    >
-                                        <ChevronLeft className="w-5 h-5 sm:w-7 sm:h-7 group-hover:-translate-x-0.5 transition-transform" />
-                                    </button>
-                                </div>
+                                        {/* Image area — click to fullscreen */}
+                                        <div className={`relative flex items-center justify-center bg-black/40 w-full overflow-hidden cursor-zoom-in`}
+                                            style={{ aspectRatio: '1/1', maxHeight: '55vh', padding: '16px' }}
+                                            onClick={() => setIsFullscreen(true)}>
 
-                                {/* Explanation toggle */}
-                                <div className={`${theme.innerBg} border-t border-white/10 flex flex-col items-center justify-center relative z-20`}>
-                                    {!showExplanation ? (
-                                        <button
-                                            onClick={() => setShowExplanation(true)}
-                                            className={`w-full py-4 ${theme.explainBtnCls} font-semibold transition-colors flex items-center justify-center gap-2 group text-base tracking-wide`}
-                                        >
-                                            <span className="border-b border-dashed border-current opacity-70 group-hover:opacity-100">
-                                                למי שצריך הסבר בהרחבה ⬇️
-                                            </span>
-                                        </button>
-                                    ) : (
-                                        <div className="p-6 md:p-8 text-center animate-in fade-in slide-in-from-top-2 w-full">
-                                            <p className={`text-lg md:text-xl ${theme.explainTextCls} leading-relaxed mx-auto font-medium`}>
-                                                {fileMetadata?.explanation}
-                                            </p>
+                                            {/* Glow behind image */}
+                                            <div className={`absolute inset-0 bg-gradient-to-t ${theme.glowClass} to-transparent opacity-50 mix-blend-screen pointer-events-none`} />
+
+                                            <img
+                                                key={currentFile}
+                                                src={`./images/${encodeURIComponent(currentFile)}`}
+                                                alt={fileMetadata?.title || 'תמונה'}
+                                                className="w-full h-full object-contain filter drop-shadow-[0_10px_25px_rgba(0,0,0,0.7)] relative z-10 animate-in zoom-in-95 duration-500"
+                                                style={{ borderRadius: '12px' }}
+                                                loading="lazy"
+                                            />
+
+                                            {/* Topic badge */}
+                                            {fileMetadata?.topic && (
+                                                <div className={`absolute top-4 right-4 z-20 ${theme.topicBadgeCls} text-white px-4 py-1.5 rounded-full font-bold text-sm shadow-lg border backdrop-blur-md -rotate-1`}>
+                                                    📌 {fileMetadata.topic}
+                                                </div>
+                                            )}
+
                                         </div>
-                                    )}
+
+                                        {/* Nav arrows — siblings of image div, so not clipped. Positioned slightly outside on desktop, inside on mobile */}
+                                        {/* Nav arrows */}
+                                        <button
+                                            onClick={nextImage}
+                                            disabled={currentIndex === displayImages.length - 1}
+                                            className={`absolute top-1/2 -translate-y-1/2 -right-3 md:-right-6 z-30 ${theme.navBtnCls} backdrop-blur-sm p-1.5 sm:p-3 rounded-full shadow-[0_0_16px_rgba(0,0,0,0.4)] disabled:opacity-0 disabled:pointer-events-none hover:scale-110 hover:brightness-110 transition-all font-bold group border`}
+                                        >
+                                            <ChevronRight className="w-5 h-5 sm:w-7 sm:h-7 group-hover:translate-x-0.5 transition-transform" />
+                                        </button>
+                                        <button
+                                            onClick={prevImage}
+                                            disabled={currentIndex === 0}
+                                            className={`absolute top-1/2 -translate-y-1/2 -left-3 md:-left-6 z-30 ${theme.navBtnCls} backdrop-blur-sm p-1.5 sm:p-3 rounded-full shadow-[0_0_16px_rgba(0,0,0,0.4)] disabled:opacity-0 disabled:pointer-events-none hover:scale-110 hover:brightness-110 transition-all font-bold group border`}
+                                        >
+                                            <ChevronLeft className="w-5 h-5 sm:w-7 sm:h-7 group-hover:-translate-x-0.5 transition-transform" />
+                                        </button>
+                                    </div>
+
+                                    {/* Explanation toggle */}
+                                    <div className={`${theme.innerBg} rounded-b-[1.8rem] sm:rounded-b-[2.2rem] border-t border-white/10 flex flex-col items-center justify-center relative z-20`}>
+                                        {!showExplanation ? (
+                                            <button
+                                                onClick={() => setShowExplanation(true)}
+                                                className={`w-full py-4 ${theme.explainBtnCls} font-semibold transition-colors flex items-center justify-center gap-2 group text-base tracking-wide`}
+                                            >
+                                                <span className="border-b border-dashed border-current opacity-70 group-hover:opacity-100">
+                                                    למי שצריך הסבר בהרחבה ⬇️
+                                                </span>
+                                            </button>
+                                        ) : (
+                                            <div className="p-6 md:p-8 text-center animate-in fade-in slide-in-from-top-2 w-full">
+                                                <p className={`text-lg md:text-xl ${theme.explainTextCls} leading-relaxed mx-auto font-medium`}>
+                                                    {fileMetadata?.explanation}
+                                                </p>
+                                            </div>
+                                        )}
+                                    </div>
+
                                 </div>
-
                             </div>
+
                         </div>
+                    )}
+                </div>
 
-                    </div>
-                )}
-
-                {/* ── About Section (Inline, moved below the main gallery) ── */}
-                <div className="w-full mt-12 bg-slate-900/60 backdrop-blur-xl border border-white/10 p-6 md:p-10 rounded-[2.5rem] shadow-2xl relative overflow-hidden flex flex-col">
+                {/* ── Right/Side: About Section ── */}
+                <div className="w-full lg:w-[350px] xl:w-[400px] shrink-0 mt-8 lg:mt-0 flex flex-col lg:sticky lg:top-8 bg-slate-900/60 backdrop-blur-xl border border-white/10 p-6 rounded-[2.5rem] shadow-2xl relative overflow-hidden">
                     <div className="absolute inset-0 bg-gradient-to-br from-white/5 to-transparent pointer-events-none" />
 
                     <h2 className={`text-3xl md:text-4xl font-black mb-6 flex items-center justify-center gap-3 text-transparent bg-clip-text bg-gradient-to-r ${theme.titleGrad} drop-shadow-md text-center`}>
@@ -343,8 +332,8 @@ export default function PublicGallery({ images, metadata }) {
                         אודות הפרויקט
                     </h2>
 
-                    <div className="flex flex-col md:flex-row gap-8 items-center text-slate-300 md:text-lg">
-                        <div className="flex-1 leading-relaxed text-center sm:text-right font-medium">
+                    <div className="flex flex-col md:flex-row lg:flex-col gap-6 items-center text-slate-300 md:text-lg">
+                        <div className="flex-1 leading-relaxed text-center sm:text-right lg:text-center font-medium">
                             ברוכים הבאים ל<strong className="text-white mx-1 text-xl drop-shadow-md">כפל לשון</strong>!
                             <br /><br />
                             מאות איורים דיגיטליים הממחישים ביטויים ומשחקי מילים בעברית — להעלות חיוך ולחגוג את השפה בצורתה הכיפית ביותר.
@@ -353,7 +342,7 @@ export default function PublicGallery({ images, metadata }) {
                         </div>
 
                         {/* QR + WhatsApp side by side */}
-                        <div className="flex flex-col sm:flex-row items-center gap-4 bg-black/30 p-4 md:p-5 rounded-3xl border border-white/5 shadow-inner">
+                        <div className="flex flex-col sm:flex-row lg:flex-col justify-center items-center gap-4 bg-black/30 p-4 md:p-5 rounded-3xl border border-white/5 shadow-inner w-full">
                             {/* QR code */}
                             <div className="flex-shrink-0 bg-white p-2 rounded-2xl shadow-md rotate-1 hover:rotate-0 transition-transform">
                                 <QRCodeDisplay url="https://sefitrailer.github.io/kefel-lashon/" />
