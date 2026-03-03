@@ -103,10 +103,14 @@ export default function PublicGallery({ images, metadata }) {
     };
 
     useEffect(() => {
-        const tagged = images.filter(img => metadata[img]?.title && metadata[img]?.explanation);
+        // Sort tagged images first, untagged images after. Inside groups, sort by file timestamp (newest first).
+        const sorted = [...images].sort((a, b) => {
+            const aTagged = metadata[a]?.title && metadata[a]?.explanation;
+            const bTagged = metadata[b]?.title && metadata[b]?.explanation;
 
-        // Sort by timestamp in filename if present, otherwise random
-        const sorted = [...tagged].sort((a, b) => {
+            if (aTagged && !bTagged) return -1;
+            if (!aTagged && bTagged) return 1;
+
             const extractDate = (filename) => {
                 const match = filename.match(/_(\d{8})_(\d{6})_/);
                 return match ? parseInt(match[1] + match[2], 10) : 0;
@@ -115,11 +119,10 @@ export default function PublicGallery({ images, metadata }) {
             const dateB = extractDate(b);
 
             if (dateA && dateB) return dateB - dateA; // Newest first
-            if (dateA) return -1; // A is newer (has date)
-            if (dateB) return 1;  // B is newer (has date)
+            if (dateA) return -1; // A is newer
+            if (dateB) return 1;  // B is newer
 
-            // Randomize the rest
-            return Math.random() - 0.5;
+            return Math.random() - 0.5; // Randomize the rest
         });
 
         setShuffledImages(sorted);
@@ -225,35 +228,42 @@ export default function PublicGallery({ images, metadata }) {
                                 <div className={`${theme.innerBg} rounded-[1.8rem] sm:rounded-[2.2rem] flex flex-col`}>
 
                                     {/* Title Bar with inline Search and About */}
-                                    <div className="px-4 sm:px-6 py-4 flex items-center justify-between relative flex-shrink-0 z-20 w-full min-h-[5rem]">
+                                    <div className="px-3 sm:px-6 py-4 flex items-center justify-between relative flex-shrink-0 z-20 w-full min-h-[5rem]">
                                         <div className={`absolute bottom-0 left-0 w-full h-[2px] bg-gradient-to-r ${theme.frameGrad} opacity-60`} />
 
                                         {/* Right: Search button */}
                                         <button
                                             onClick={() => setIsSearchOpen(true)}
-                                            className={`p-2 rounded-full backdrop-blur-md flex items-center justify-center transition-all ${theme.headerBtnSearchCls} flex-shrink-0 animate-in fade-in duration-300`}
+                                            className={`p-2 rounded-full backdrop-blur-md flex items-center justify-center transition-all ${theme.headerBtnSearchCls} flex-shrink-0 animate-in fade-in duration-300 relative z-10 w-10 sm:w-12 h-10 sm:h-12`}
                                             title="חיפוש"
                                         >
                                             <Search size={22} />
                                         </button>
 
-                                        {/* Center: Title */}
-                                        <h2
-                                            className={`text-2xl sm:text-3xl md:text-5xl font-['Varela_Round',sans-serif] text-transparent bg-clip-text bg-gradient-to-r ${theme.titleGrad} mx-4 text-center flex-1`}
-                                            style={{ filter: 'drop-shadow(0 1px 3px rgba(0,0,0,0.3))' }}
-                                        >
-                                            {fileMetadata?.title}
-                                        </h2>
+                                        {/* Center: Title absolutely centered within the bar so it's perfectly in the middle of the frame */}
+                                        <div className="absolute inset-x-0 w-full h-full flex items-center justify-center pointer-events-none px-16 sm:px-24">
+                                            <h2
+                                                className={`text-2xl sm:text-3xl md:text-5xl font-['Varela_Round',sans-serif] text-transparent bg-clip-text bg-gradient-to-r ${theme.titleGrad} text-center leading-tight`}
+                                                style={{ filter: 'drop-shadow(0 1px 3px rgba(0,0,0,0.3))' }}
+                                            >
+                                                {fileMetadata?.title || ''}
+                                            </h2>
+                                        </div>
 
                                         {/* Left: Explain button overlay trigger */}
-                                        <div className="relative">
-                                            <button
-                                                onClick={() => setShowExplanation(!showExplanation)}
-                                                className={`flex items-center gap-1.5 p-2 px-3 rounded-full backdrop-blur-md transition-all ${theme.headerBtnAboutCls} flex-shrink-0 whitespace-nowrap text-sm sm:text-base font-bold animate-in fade-in duration-300`}
-                                            >
-                                                <span>להסבר לחץ כאן</span>
-                                                <ChevronLeft size={16} className={`transition-transform duration-300 ${showExplanation ? '-rotate-90' : 'rotate-0'}`} />
-                                            </button>
+                                        <div className="relative z-10 w-24 sm:w-32 flex justify-start">
+                                            {fileMetadata?.explanation && (
+                                                <button
+                                                    onClick={() => setShowExplanation(!showExplanation)}
+                                                    className={`flex items-center gap-1.5 sm:gap-2 p-1.5 sm:p-2 px-3 rounded-2xl backdrop-blur-md transition-all ${theme.headerBtnAboutCls} flex-shrink-0 whitespace-nowrap text-sm sm:text-base font-bold animate-in fade-in duration-300`}
+                                                >
+                                                    <div className="flex flex-col items-end leading-snug text-right pointer-events-none">
+                                                        <span>להסבר</span>
+                                                        <span>לחץ כאן</span>
+                                                    </div>
+                                                    <ChevronLeft size={20} sm={{ size: 24 }} strokeWidth={2.5} className={`transition-transform duration-300 shrink-0 ${showExplanation ? '-rotate-90' : 'rotate-0'}`} />
+                                                </button>
+                                            )}
                                         </div>
                                     </div>
 
@@ -349,7 +359,7 @@ export default function PublicGallery({ images, metadata }) {
                                 ברוכים הבאים ל<strong className="text-white mx-1 text-xl drop-shadow-md">'כפלשון'</strong>!
                                 <br />
                                 <span>
-                                    {images.filter(img => metadata[img]?.title && metadata[img]?.explanation).length} איורים דיגיטליים ויצירות AI הממחישים ביטויים, כפל לשון ומשחקי מילים בעברית — להעלות חיוך ולחגוג את השפה בצורתה הכיפית ביותר.
+                                    {images.length} איורים דיגיטליים ויצירות AI הממחישים ביטויים, כפל לשון ומשחקי מילים בעברית — להעלות חיוך ולחגוג את השפה בצורתה הכיפית ביותר.
                                 </span>
                                 <br />
                                 <span className="text-purple-400 font-semibold flex items-center justify-center gap-2 mt-2 text-xl">הכל ביצירת מוחי הקודח... 😊</span>
@@ -369,30 +379,30 @@ export default function PublicGallery({ images, metadata }) {
                                         href="https://whatsapp.com/channel/0029VajNwaPL2AU0jdlgxa20"
                                         target="_blank"
                                         rel="noreferrer"
-                                        className="relative flex items-center justify-center text-[#25D366] hover:text-[#20ba56] transition-transform hover:scale-110 drop-shadow-md"
+                                        className="relative flex items-center justify-center text-[#25D366] hover:text-[#20ba56] transition-transform hover:scale-110 drop-shadow-md rounded-full bg-[#25D366]/10 p-1"
                                         title="ערוץ"
                                     >
-                                        <MessageCircle size={56} strokeWidth={1.5} />
-                                        <span className="absolute font-bold text-white text-sm" style={{ textShadow: '0 1px 3px rgba(0,0,0,0.8)' }}>ערוץ</span>
+                                        <MessageCircle size={48} strokeWidth={1.5} />
+                                        <span className="absolute font-bold text-white text-[13px]" style={{ textShadow: '0 1px 3px rgba(0,0,0,0.8)' }}>ערוץ</span>
                                     </a>
                                     <a
                                         href="https://chat.whatsapp.com/LN6nwJ8cYiLHaj5uhTum9P"
                                         target="_blank"
                                         rel="noreferrer"
-                                        className="relative flex items-center justify-center text-emerald-500 hover:text-emerald-400 transition-transform hover:scale-110 drop-shadow-md"
+                                        className="relative flex items-center justify-center text-emerald-500 hover:text-emerald-400 transition-transform hover:scale-110 drop-shadow-md rounded-full bg-emerald-500/10 p-1"
                                         title="קבוצה"
                                     >
-                                        <MessageCircle size={56} strokeWidth={1.5} />
-                                        <span className="absolute font-bold text-white text-[13px]" style={{ textShadow: '0 1px 3px rgba(0,0,0,0.8)' }}>קבוצה</span>
+                                        <MessageCircle size={48} strokeWidth={1.5} />
+                                        <span className="absolute font-bold text-white text-[12px]" style={{ textShadow: '0 1px 3px rgba(0,0,0,0.8)' }}>קבוצה</span>
                                     </a>
                                     <a
                                         href="https://www.linkedin.com/in/sefi-riechkind-679b67136/"
                                         target="_blank"
                                         rel="noreferrer"
-                                        className="flex items-center justify-center text-[#0077b5] hover:text-[#006396] transition-transform hover:scale-110 drop-shadow-md"
+                                        className="flex items-center justify-center text-[#0077b5] hover:text-white hover:bg-[#0077b5] transition-all hover:scale-110 drop-shadow-md border-[2.5px] border-[#0077b5] rounded-lg p-1 w-12 h-12"
                                         title="לינקדאין"
                                     >
-                                        <Linkedin size={50} fill="currentColor" strokeWidth={1.5} />
+                                        <Linkedin size={28} fill="currentColor" strokeWidth={1} className="shrink-0" />
                                     </a>
                                 </div>
                             </div>
