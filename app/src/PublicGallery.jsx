@@ -104,8 +104,25 @@ export default function PublicGallery({ images, metadata }) {
 
     useEffect(() => {
         const tagged = images.filter(img => metadata[img]?.title && metadata[img]?.explanation);
-        const shuffled = [...tagged].sort(() => Math.random() - 0.5);
-        setShuffledImages(shuffled);
+
+        // Sort by timestamp in filename if present, otherwise random
+        const sorted = [...tagged].sort((a, b) => {
+            const extractDate = (filename) => {
+                const match = filename.match(/_(\d{8})_(\d{6})_/);
+                return match ? parseInt(match[1] + match[2], 10) : 0;
+            };
+            const dateA = extractDate(a);
+            const dateB = extractDate(b);
+
+            if (dateA && dateB) return dateB - dateA; // Newest first
+            if (dateA) return -1; // A is newer (has date)
+            if (dateB) return 1;  // B is newer (has date)
+
+            // Randomize the rest
+            return Math.random() - 0.5;
+        });
+
+        setShuffledImages(sorted);
     }, [images, metadata]);
 
     const filteredImages = useMemo(() => {
@@ -247,8 +264,8 @@ export default function PublicGallery({ images, metadata }) {
                                         onTouchEnd={onTouchEnd}
                                     >
                                         {/* Image area — click to fullscreen */}
-                                        <div className={`relative flex items-center justify-center bg-black/40 w-full overflow-hidden cursor-zoom-in`}
-                                            style={{ aspectRatio: '1/1', maxHeight: '55vh', padding: '16px' }}
+                                        <div className={`relative flex items-center justify-center bg-black/40 w-full overflow-hidden cursor-zoom-in rounded-b-[1.8rem] sm:rounded-b-[2.2rem]`}
+                                            style={{ aspectRatio: '1/1', maxHeight: '70vh', padding: '16px' }}
                                             onClick={() => setIsFullscreen(true)}>
 
                                             {/* Glow behind image */}
@@ -318,7 +335,7 @@ export default function PublicGallery({ images, metadata }) {
                     )}
 
                     <div className="p-6 flex flex-col items-center flex-1 h-full">
-                        <div className="flex justify-center -mt-12 mb-2 w-full">
+                        <div className="flex justify-center mb-4 w-full">
                             <img
                                 src="./logo.png"
                                 alt="כפלשון"
@@ -329,9 +346,8 @@ export default function PublicGallery({ images, metadata }) {
 
                         <div className="flex flex-col md:flex-row lg:flex-col gap-6 items-center text-slate-300 md:text-lg w-full">
                             <div className="flex-1 leading-relaxed text-center sm:text-right lg:text-center font-medium">
-                                ברוכים הבאים ל<strong className="text-white mx-1 text-xl drop-shadow-md">'כפלשון'</strong>!
-                                <br /><br />
-                                מאות איורים דיגיטליים ויצירות AI הממחישים ביטויים, כפל לשון ומשחקי מילים בעברית — להעלות חיוך ולחגוג את השפה בצורתה הכיפית ביותר.
+                                ברוכים הבאים ל<strong className="text-white mx-1 text-xl drop-shadow-md">'כפלשון'</strong>!{' '}
+                                {images.filter(img => metadata[img]?.title && metadata[img]?.explanation).length} איורים דיגיטליים ויצירות AI הממחישים ביטויים, כפל לשון ומשחקי מילים בעברית — להעלות חיוך ולחגוג את השפה בצורתה הכיפית ביותר.
                                 <br />
                                 <span className="text-purple-400 font-semibold flex items-center justify-center gap-2 mt-4 text-xl">הכל ביצירת מוחי הקודח... 😊</span>
                                 <span className="text-indigo-300 font-bold block mt-1 text-lg">ספי רייכקינד</span>
@@ -340,38 +356,38 @@ export default function PublicGallery({ images, metadata }) {
                             {/* QR + WhatsApp side by side */}
                             <div className="flex flex-col sm:flex-row lg:flex-col justify-center items-center gap-4 bg-black/30 p-4 md:p-5 rounded-3xl border border-white/5 shadow-inner w-full">
                                 {/* QR code */}
-                                <div className="flex-shrink-0 bg-white p-2 rounded-2xl shadow-md rotate-1 hover:rotate-0 transition-transform">
+                                <div className="flex-shrink-0 bg-white p-1 rounded-xl shadow-md rotate-1 hover:rotate-0 transition-transform">
                                     <QRCodeDisplay url="https://sefitrailer.github.io/kefel-lashon/" />
                                 </div>
 
                                 {/* WhatsApp buttons stacked on the left of QR */}
-                                <div className="flex flex-col gap-3 w-full sm:w-auto">
+                                <div className="flex flex-col gap-3 w-full">
                                     <a
                                         href="https://whatsapp.com/channel/0029VajNwaPL2AU0jdlgxa20"
                                         target="_blank"
                                         rel="noreferrer"
-                                        className="flex items-center justify-center gap-2 bg-[#25D366] text-white px-5 py-3 rounded-xl font-bold hover:bg-[#20ba56] transition-all shadow-lg text-sm sm:text-base hover:scale-105"
+                                        className="w-full flex items-center justify-center gap-2 bg-[#25D366] text-white px-5 py-3 rounded-xl font-bold hover:bg-[#20ba56] transition-all shadow-lg text-sm sm:text-base hover:scale-105"
                                     >
                                         <MessageCircle size={20} />
-                                        📢 ערוץ וואטסאפ
+                                        לינק לערוץ וואטסאפ
                                     </a>
                                     <a
                                         href="https://chat.whatsapp.com/LN6nwJ8cYiLHaj5uhTum9P"
                                         target="_blank"
                                         rel="noreferrer"
-                                        className="flex items-center justify-center gap-2 bg-emerald-700 text-white px-5 py-3 rounded-xl font-bold hover:bg-emerald-800 transition-all shadow-lg text-sm sm:text-base hover:scale-105"
+                                        className="w-full flex items-center justify-center gap-2 bg-emerald-700 text-white px-5 py-3 rounded-xl font-bold hover:bg-emerald-800 transition-all shadow-lg text-sm sm:text-base hover:scale-105"
                                     >
                                         <MessageCircle size={20} />
-                                        👥 קבוצת וואטסאפ
+                                        לינק לקבוצת וואטסאפ
                                     </a>
                                     <a
                                         href="https://www.linkedin.com/in/sefi-riechkind-679b67136/"
                                         target="_blank"
                                         rel="noreferrer"
-                                        className="flex items-center justify-center gap-2 bg-[#0077b5] text-white px-5 py-3 rounded-xl font-bold hover:bg-[#006396] transition-all shadow-lg text-sm sm:text-base hover:scale-105"
+                                        className="w-full flex items-center justify-center gap-2 bg-[#0077b5] text-white px-5 py-3 rounded-xl font-bold hover:bg-[#006396] transition-all shadow-lg text-sm sm:text-base hover:scale-105 tracking-wider"
                                     >
                                         <Linkedin size={20} />
-                                        💼 לינקדאין
+                                        <span>in</span>
                                     </a>
                                 </div>
                             </div>
