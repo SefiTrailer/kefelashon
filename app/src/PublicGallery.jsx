@@ -97,6 +97,7 @@ export default function PublicGallery({ images, metadata }) {
         } catch { return 0; }
     });
     const [isThemeMenuOpen, setIsThemeMenuOpen] = useState(false);
+    const [isSortOpen, setIsSortOpen] = useState(false);
     const [isFullscreen, setIsFullscreen] = useState(false);
 
     const theme = THEMES[themeIndex];
@@ -252,6 +253,12 @@ export default function PublicGallery({ images, metadata }) {
         return () => window.removeEventListener('keydown', handleKeyDown);
     }, [currentIndex, displayImages.length, isSearchOpen]);
 
+    useEffect(() => {
+        const handleClickOutside = () => setIsSortOpen(false);
+        if (isSortOpen) window.addEventListener('click', handleClickOutside);
+        return () => window.removeEventListener('click', handleClickOutside);
+    }, [isSortOpen]);
+
     if (shuffledImages.length === 0) {
         return (
             <div className={`min-h-screen flex items-center justify-center ${theme.bgStyle}`}>
@@ -293,6 +300,12 @@ export default function PublicGallery({ images, metadata }) {
                                         {images.length} איורים דיגיטליים ויצירות AI הממחישים ביטויים, כפל לשון ומשחקי מילים בעברית — להעלות חיוך ולחגוג את השפה בצורתה הכיפית ביותר.
                                     </span>
                                 </div>
+                                <div className="flex items-center justify-center gap-3 mt-4">
+                                    <span className="text-indigo-300 font-bold block text-lg drop-shadow-md">ספי רייכקינד</span>
+                                    <a href="https://www.linkedin.com/in/sefi-riechkind-679b67136" target="_blank" rel="noreferrer" className="text-[#0077b5] hover:text-white hover:bg-[#0077b5] transition-all hover:scale-110 drop-shadow-md border border-[#0077b5] rounded-lg p-1 w-8 h-8 flex items-center justify-center bg-white/5" title="לינקדאין">
+                                        <Linkedin size={18} fill="currentColor" strokeWidth={1} className="shrink-0" />
+                                    </a>
+                                </div>
                             </div>
 
                             {/* Frame */}
@@ -308,11 +321,11 @@ export default function PublicGallery({ images, metadata }) {
                                         <div className="px-3 sm:px-6 py-4 grid grid-cols-[auto_1fr_auto] gap-3 items-center justify-between relative flex-shrink-0 z-20 w-full min-h-[5rem]">
                                             <div className={`absolute bottom-0 left-0 w-full h-[2px] bg-gradient-to-r ${theme.frameGrad} opacity-60`} />
 
-                                            {/* Right: Search button (only single mode) */}
-                                            <div className="relative z-10 flex-shrink-0 flex items-center justify-end w-12">
+                                            {/* Right: Search button (only single mode) - Width matches left side for perfect title centering */}
+                                            <div className="relative z-10 flex-shrink-0 flex items-center justify-end w-24 sm:w-28">
                                                 <button
                                                     onClick={() => setIsSearchOpen(true)}
-                                                    className={`w-10 h-10 lg:w-11 lg:h-11 rounded-full backdrop-blur-md flex items-center justify-center transition-all ${theme.headerBtnSearchCls} animate-in fade-in duration-300`}
+                                                    className={`w-10 h-10 lg:w-11 lg:h-11 rounded-full backdrop-blur-md flex items-center justify-center transition-all ${theme.headerBtnSearchCls} animate-in fade-in duration-300 ml-auto`}
                                                     title="חיפוש"
                                                 >
                                                     <Search size={20} />
@@ -397,6 +410,22 @@ export default function PublicGallery({ images, metadata }) {
                                                 </div>
                                             )}
 
+                                            {/* Nav arrows — positioned absolutely centered vertically to the IMAGE CONTAINER */}
+                                            <button
+                                                onClick={(e) => { e.stopPropagation(); nextImage(); }}
+                                                disabled={currentIndex + getGridSize() >= displayImages.length && currentIndex !== displayImages.length - 1}
+                                                className={`absolute top-1/2 -translate-y-1/2 right-2 md:-right-6 z-30 bg-black/50 md:${theme.navBtnCls} backdrop-blur-md p-2 sm:p-3 md:shadow-[0_0_16px_rgba(0,0,0,0.4)] rounded-full text-white md:text-purple-600 border border-white/10 md:border-purple-200 disabled:opacity-0 disabled:pointer-events-none hover:scale-110 hover:brightness-110 transition-all font-bold group`}
+                                            >
+                                                <ChevronRight className="w-6 h-6 sm:w-7 sm:h-7 group-hover:translate-x-0.5 transition-transform" />
+                                            </button>
+                                            <button
+                                                onClick={(e) => { e.stopPropagation(); prevImage(); }}
+                                                disabled={currentIndex === 0}
+                                                className={`absolute top-1/2 -translate-y-1/2 left-2 md:-left-6 z-30 bg-black/50 md:${theme.navBtnCls} backdrop-blur-md p-2 sm:p-3 md:shadow-[0_0_16px_rgba(0,0,0,0.4)] rounded-full text-white md:text-purple-600 border border-white/10 md:border-purple-200 disabled:opacity-0 disabled:pointer-events-none hover:scale-110 hover:brightness-110 transition-all font-bold group`}
+                                            >
+                                                <ChevronLeft className="w-6 h-6 sm:w-7 sm:h-7 group-hover:-translate-x-0.5 transition-transform" />
+                                            </button>
+
                                         </div>
 
                                         {/* Tagging and Sorting Footer */}
@@ -438,63 +467,53 @@ export default function PublicGallery({ images, metadata }) {
                                                     </button>
                                                     <button onClick={() => setViewMode('grid-2x3')} className={`p-1 rounded transition-colors ${viewMode === 'grid-2x3' ? 'bg-white/20 text-white' : 'text-white/50 hover:text-white'}`} title="רשת 2x3">
                                                         <div className="w-5 h-5 grid grid-cols-3 grid-rows-2 gap-[2px]">
-                                                            <div className="bg-current rounded-[1px]"></div><div className="bg-current rounded-[1px]"></div><div className="bg-current rounded-[1px]"></div>
-                                                            <div className="bg-current rounded-[1px]"></div><div className="bg-current rounded-[1px]"></div><div className="bg-current rounded-[1px]"></div>
+                                                            <div className="bg-current rounded-[1px] aspect-square"></div><div className="bg-current rounded-[1px] aspect-square"></div><div className="bg-current rounded-[1px] aspect-square"></div>
+                                                            <div className="bg-current rounded-[1px] aspect-square"></div><div className="bg-current rounded-[1px] aspect-square"></div><div className="bg-current rounded-[1px] aspect-square"></div>
                                                         </div>
                                                     </button>
                                                     <button onClick={() => setViewMode('grid-3x4')} className={`p-1 rounded transition-colors ${viewMode === 'grid-3x4' ? 'bg-white/20 text-white' : 'text-white/50 hover:text-white'}`} title="רשת 3x4">
                                                         <div className="w-5 h-5 grid grid-cols-4 grid-rows-3 gap-[1px]">
-                                                            <div className="bg-current rounded-[1px]"></div><div className="bg-current rounded-[1px]"></div><div className="bg-current rounded-[1px]"></div><div className="bg-current rounded-[1px]"></div>
-                                                            <div className="bg-current rounded-[1px]"></div><div className="bg-current rounded-[1px]"></div><div className="bg-current rounded-[1px]"></div><div className="bg-current rounded-[1px]"></div>
-                                                            <div className="bg-current rounded-[1px]"></div><div className="bg-current rounded-[1px]"></div><div className="bg-current rounded-[1px]"></div><div className="bg-current rounded-[1px]"></div>
+                                                            <div className="bg-current rounded-[1px] aspect-square"></div><div className="bg-current rounded-[1px] aspect-square"></div><div className="bg-current rounded-[1px] aspect-square"></div><div className="bg-current rounded-[1px] aspect-square"></div>
+                                                            <div className="bg-current rounded-[1px] aspect-square"></div><div className="bg-current rounded-[1px] aspect-square"></div><div className="bg-current rounded-[1px] aspect-square"></div><div className="bg-current rounded-[1px] aspect-square"></div>
+                                                            <div className="bg-current rounded-[1px] aspect-square"></div><div className="bg-current rounded-[1px] aspect-square"></div><div className="bg-current rounded-[1px] aspect-square"></div><div className="bg-current rounded-[1px] aspect-square"></div>
                                                         </div>
                                                     </button>
                                                 </div>
 
                                                 <div
-                                                    className="flex items-center gap-2 relative group cursor-pointer"
+                                                    className="flex items-center gap-2 relative cursor-pointer"
                                                     onWheel={(e) => {
                                                         e.preventDefault();
                                                         if (e.deltaY > 0) setSortOrder('random');
                                                         else setSortOrder('newest');
                                                     }}
+                                                    onClick={(e) => {
+                                                        e.stopPropagation();
+                                                        setIsSortOpen(!isSortOpen);
+                                                    }}
                                                 >
                                                     <span className="text-white/70 text-sm font-bold pointer-events-none">מיון:</span>
                                                     <div className="relative flex items-center bg-transparent text-white text-sm font-medium pr-1 pl-6 hover:text-white/80 transition-colors z-10">
                                                         {sortOrder === 'newest' ? 'הכי חדשים' : 'אקראי'}
-                                                        <div className="absolute left-1 text-white/50 text-[10px] opacity-70">▲</div>
+                                                        <div className={`absolute left-1 text-white/50 text-[10px] transition-transform ${isSortOpen ? 'rotate-180' : ''}`}>▲</div>
 
-                                                        {/* Upwards Dropdown Menu */}
-                                                        <div className="absolute bottom-full left-0 mb-2 w-32 bg-slate-800/95 backdrop-blur-md rounded-xl border border-white/10 shadow-[0_-5px_20px_rgba(0,0,0,0.5)] opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50 flex flex-col overflow-hidden origin-bottom">
-                                                            <div
-                                                                className={`px-4 py-2.5 text-sm text-right transition-colors ${sortOrder === 'newest' ? 'text-white font-bold bg-white/10' : 'text-white/70 hover:bg-white/5'}`}
-                                                                onClick={(e) => { e.stopPropagation(); setSortOrder('newest'); }}
-                                                            >הכי חדשים</div>
-                                                            <div
-                                                                className={`px-4 py-2.5 text-sm text-right transition-colors ${sortOrder === 'random' ? 'text-white font-bold bg-white/10' : 'text-white/70 hover:bg-white/5'}`}
-                                                                onClick={(e) => { e.stopPropagation(); setSortOrder('random'); }}
-                                                            >אקראי</div>
-                                                        </div>
+                                                        {/* Upwards Dropdown Menu (Click based) */}
+                                                        {isSortOpen && (
+                                                            <div className="absolute bottom-full left-0 mb-2 w-32 bg-slate-800/95 backdrop-blur-md rounded-xl border border-white/10 shadow-[0_-5px_20px_rgba(0,0,0,0.5)] animate-in fade-in zoom-in-95 duration-200 z-50 flex flex-col overflow-hidden origin-bottom">
+                                                                <div
+                                                                    className={`px-4 py-2.5 text-sm text-right transition-colors ${sortOrder === 'newest' ? 'text-white font-bold bg-white/10' : 'text-white/70 hover:bg-white/5'}`}
+                                                                    onClick={(e) => { e.stopPropagation(); setSortOrder('newest'); setIsSortOpen(false); }}
+                                                                >הכי חדשים</div>
+                                                                <div
+                                                                    className={`px-4 py-2.5 text-sm text-right transition-colors ${sortOrder === 'random' ? 'text-white font-bold bg-white/10' : 'text-white/70 hover:bg-white/5'}`}
+                                                                    onClick={(e) => { e.stopPropagation(); setSortOrder('random'); setIsSortOpen(false); }}
+                                                                >אקראי</div>
+                                                            </div>
+                                                        )}
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
-
-                                        {/* Nav arrows — repositioned on mobile to sit on top of image entirely, semi-transparent */}
-                                        <button
-                                            onClick={nextImage}
-                                            disabled={currentIndex + getGridSize() >= displayImages.length && currentIndex !== displayImages.length - 1}
-                                            className={`absolute top-1/2 -translate-y-1/2 right-2 md:-right-6 z-30 bg-black/50 md:${theme.navBtnCls} backdrop-blur-md p-2 sm:p-3 md:shadow-[0_0_16px_rgba(0,0,0,0.4)] rounded-full text-white md:text-purple-600 border border-white/10 md:border-purple-200 disabled:opacity-0 disabled:pointer-events-none hover:scale-110 hover:brightness-110 transition-all font-bold group`}
-                                        >
-                                            <ChevronRight className="w-6 h-6 sm:w-7 sm:h-7 group-hover:translate-x-0.5 transition-transform" />
-                                        </button>
-                                        <button
-                                            onClick={prevImage}
-                                            disabled={currentIndex === 0}
-                                            className={`absolute top-1/2 -translate-y-1/2 left-2 md:-left-6 z-30 bg-black/50 md:${theme.navBtnCls} backdrop-blur-md p-2 sm:p-3 md:shadow-[0_0_16px_rgba(0,0,0,0.4)] rounded-full text-white md:text-purple-600 border border-white/10 md:border-purple-200 disabled:opacity-0 disabled:pointer-events-none hover:scale-110 hover:brightness-110 transition-all font-bold group`}
-                                        >
-                                            <ChevronLeft className="w-6 h-6 sm:w-7 sm:h-7 group-hover:-translate-x-0.5 transition-transform" />
-                                        </button>
 
                                         {/* Mobile Explanation overlay (Float atop the image in mobile) */}
                                         {showExplanation && (
@@ -579,7 +598,7 @@ export default function PublicGallery({ images, metadata }) {
 
                                 {/* QR Image with Share action on click */}
                                 <div
-                                    className="w-[176px] h-[176px] relative group cursor-pointer rounded-2xl shadow-md bg-white overflow-hidden shrink-0 flex items-center justify-center border-4 border-white"
+                                    className="w-[176px] h-[176px] relative group cursor-pointer rounded-2xl shadow-[0_10px_30px_rgba(0,0,0,0.5)] bg-white overflow-hidden shrink-0 flex items-center justify-center border-[3px] border-white/80 transition-all duration-500 hover:shadow-[0_0_40px_rgba(255,105,180,0.6)] hover:border-pink-300 hover:scale-[1.03]"
                                     onClick={async () => {
                                         const url = window.location.href;
                                         try {
@@ -592,43 +611,34 @@ export default function PublicGallery({ images, metadata }) {
                                         } catch (err) { }
                                     }}
                                 >
-                                    <img src="./qrcode.png" alt="QR Code" className="w-full h-full object-contain" />
+                                    <img src="./qrcode.png" alt="QR Code" className="w-full h-full object-contain transition-transform duration-700 group-hover:scale-110 group-hover:rotate-1" />
                                     <div className="absolute inset-0 bg-black/75 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col items-center justify-center text-white backdrop-blur-sm z-10">
-                                        <Share2 size={36} className="mb-2 text-pink-400 drop-shadow-[0_0_8px_rgba(236,72,153,0.8)]" />
+                                        <Share2 size={36} className="mb-2 text-pink-400 drop-shadow-[0_0_8px_rgba(236,72,153,0.8)] animate-pulse" />
                                         <span className="text-sm font-bold text-center leading-tight tracking-wide px-2">לשיתוף האתר<br />לחץ כאן</span>
                                     </div>
                                 </div>
 
-                                {/* Social buttons stacked vertically (3 items * 48px + 2 gaps * 16px = 176px total height) */}
+                                {/* Social buttons stacked vertically (2 items ~ 80px + 16px gap = 176px total height) */}
                                 <div className="flex flex-col h-[176px] justify-between shrink-0">
                                     <a
                                         href="https://whatsapp.com/channel/0029VajNwaPL2AU0jdlgxa20"
                                         target="_blank"
                                         rel="noreferrer"
-                                        className="relative flex items-center justify-center text-[#128C7E] hover:text-white hover:bg-[#128C7E] transition-all hover:scale-110 drop-shadow-md border-[2.5px] border-[#128C7E] rounded-lg p-1 w-12 h-12"
+                                        className="group relative flex items-center justify-center text-[#128C7E] hover:text-white hover:bg-[#128C7E] transition-all hover:scale-105 drop-shadow-md border-[2.5px] border-[#128C7E] rounded-xl p-1 w-16 h-20"
                                         title="ערוץ"
                                     >
-                                        <MessageCircle size={28} strokeWidth={1.5} className="shrink-0" />
-                                        <span className="absolute -bottom-5 font-bold text-white text-[12px]" style={{ textShadow: '0 1px 3px rgba(0,0,0,0.8)' }}>ערוץ</span>
+                                        <MessageCircle size={32} strokeWidth={1.5} className="shrink-0 mb-3 transition-transform group-hover:-translate-y-1" />
+                                        <span className="absolute bottom-1.5 font-bold text-[#128C7E] group-hover:text-white text-[14px] transition-colors" style={{ textShadow: '0 1px 2px rgba(0,0,0,0.5)' }}>ערוץ</span>
                                     </a>
                                     <a
                                         href="https://chat.whatsapp.com/LN6nwJ8cYiLHaj5uhTum9P"
                                         target="_blank"
                                         rel="noreferrer"
-                                        className="relative flex items-center justify-center text-[#25D366] hover:text-white hover:bg-[#25D366] transition-all hover:scale-110 drop-shadow-md border-[2.5px] border-[#25D366] rounded-lg p-1 w-12 h-12"
+                                        className="group relative flex items-center justify-center text-[#25D366] hover:text-white hover:bg-[#25D366] transition-all hover:scale-105 drop-shadow-md border-[2.5px] border-[#25D366] rounded-xl p-1 w-16 h-20"
                                         title="קבוצה"
                                     >
-                                        <MessageCircle size={28} strokeWidth={1.5} className="shrink-0" />
-                                        <span className="absolute -bottom-5 font-bold text-white text-[12px]" style={{ textShadow: '0 1px 3px rgba(0,0,0,0.8)' }}>קבוצה</span>
-                                    </a>
-                                    <a
-                                        href="https://www.linkedin.com/in/sefi-riechkind-679b67136"
-                                        target="_blank"
-                                        rel="noreferrer"
-                                        className="flex items-center justify-center text-[#0077b5] hover:text-white hover:bg-[#0077b5] transition-all hover:scale-110 drop-shadow-md border-[2.5px] border-[#0077b5] rounded-lg p-1 w-12 h-12"
-                                        title="לינקדאין"
-                                    >
-                                        <Linkedin size={28} fill="currentColor" strokeWidth={1} className="shrink-0" />
+                                        <MessageCircle size={32} strokeWidth={1.5} className="shrink-0 mb-3 transition-transform group-hover:-translate-y-1" />
+                                        <span className="absolute bottom-1.5 font-bold text-[#25D366] group-hover:text-white text-[14px] transition-colors" style={{ textShadow: '0 1px 2px rgba(0,0,0,0.5)' }}>קבוצה</span>
                                     </a>
                                 </div>
                             </div>
@@ -693,23 +703,7 @@ export default function PublicGallery({ images, metadata }) {
                             </div>
                         )}
 
-                        {/* Fullscreen Arrows */}
-                        <button
-                            onClick={(e) => { e.stopPropagation(); nextImage(); }}
-                            disabled={currentIndex === displayImages.length - 1}
-                            className={`absolute top-1/2 -translate-y-1/2 right-4 md:right-8 z-[70] bg-black/50 text-white backdrop-blur-md p-3 md:p-4 rounded-full shadow-[0_0_16px_rgba(0,0,0,0.4)] disabled:opacity-0 disabled:pointer-events-none hover:bg-white/20 transition-all cursor-pointer`}
-                        >
-                            <ChevronRight size={32} />
-                        </button>
-                        <button
-                            onClick={(e) => { e.stopPropagation(); prevImage(); }}
-                            disabled={currentIndex === 0}
-                            className={`absolute top-1/2 -translate-y-1/2 left-4 md:left-8 z-[70] bg-black/50 text-white backdrop-blur-md p-3 md:p-4 rounded-full shadow-[0_0_16px_rgba(0,0,0,0.4)] disabled:opacity-0 disabled:pointer-events-none hover:bg-white/20 transition-all cursor-pointer`}
-                        >
-                            <ChevronLeft size={32} />
-                        </button>
-
-                        <div className="w-full h-full flex items-center justify-center gap-6 p-6 md:p-12 relative pointer-events-none z-50">
+                        <div className="w-full h-full flex flex-row-reverse items-center justify-center gap-6 p-6 md:p-12 relative pointer-events-none z-50">
 
                             {/* Panel Column (Left) */}
                             {showFullscreenInfo ? (
@@ -765,13 +759,30 @@ export default function PublicGallery({ images, metadata }) {
                             )}
 
                             {/* Center Column: Perfectly Centered Image */}
-                            <div className="flex-1 flex flex-col items-center justify-center h-full max-h-[95vh] pointer-events-auto">
-                                <img
-                                    src={`./images/${encodeURIComponent(currentFile)}`}
-                                    alt={fileMetadata?.title || 'תמונה'}
-                                    className="max-w-full max-h-[85vh] xl:max-h-[92vh] object-contain drop-shadow-[0_0_60px_rgba(0,0,0,0.9)] rounded-2xl cursor-zoom-out"
-                                    onClick={(e) => { e.stopPropagation(); setIsFullscreen(false); }}
-                                />
+                            <div className="flex-1 flex flex-col items-center justify-center h-full max-h-[95vh] pointer-events-auto relative">
+                                <div className="relative inline-flex items-center justify-center max-w-full max-h-full">
+                                    <img
+                                        src={`./images/${encodeURIComponent(currentFile)}`}
+                                        alt={fileMetadata?.title || 'תמונה'}
+                                        className="max-w-full max-h-[85vh] xl:max-h-[92vh] object-contain drop-shadow-[0_0_60px_rgba(0,0,0,0.9)] rounded-2xl cursor-zoom-out"
+                                        onClick={(e) => { e.stopPropagation(); setIsFullscreen(false); }}
+                                    />
+
+                                    <button
+                                        onClick={(e) => { e.stopPropagation(); nextImage(); }}
+                                        disabled={currentIndex === displayImages.length - 1}
+                                        className={`absolute top-1/2 -translate-y-1/2 -right-12 md:-right-16 z-[70] bg-black/50 text-white backdrop-blur-md p-3 rounded-full shadow-[0_0_16px_rgba(0,0,0,0.4)] disabled:opacity-0 disabled:pointer-events-none hover:bg-white/20 hover:scale-110 transition-all cursor-pointer`}
+                                    >
+                                        <ChevronRight size={28} />
+                                    </button>
+                                    <button
+                                        onClick={(e) => { e.stopPropagation(); prevImage(); }}
+                                        disabled={currentIndex === 0}
+                                        className={`absolute top-1/2 -translate-y-1/2 -left-12 md:-left-16 z-[70] bg-black/50 text-white backdrop-blur-md p-3 rounded-full shadow-[0_0_16px_rgba(0,0,0,0.4)] disabled:opacity-0 disabled:pointer-events-none hover:bg-white/20 hover:scale-110 transition-all cursor-pointer`}
+                                    >
+                                        <ChevronLeft size={28} />
+                                    </button>
+                                </div>
                             </div>
 
                             {/* Right Column: Spacer to counterbalance the left panel so image stays exactly centered */}
