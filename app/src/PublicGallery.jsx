@@ -200,6 +200,18 @@ export default function PublicGallery({ images, metadata }) {
 
     useEffect(() => { setCurrentIndex(0); }, [searchQuery, viewMode]);
 
+    // Force single view mode on small screens (mobile)
+    useEffect(() => {
+        const handleResize = () => {
+            if (window.innerWidth < 640 && viewMode !== 'single') {
+                setViewMode('single');
+            }
+        };
+        handleResize(); // trigger on mount
+        window.addEventListener('resize', handleResize);
+        return () => window.removeEventListener('resize', handleResize);
+    }, [viewMode]);
+
     // ── Touch Handling (Swipe) ───────────────────────────────────────────────────
     const [touchStartX, setTouchStartX] = useState(0);
     const [touchEndX, setTouchEndX] = useState(0);
@@ -270,6 +282,19 @@ export default function PublicGallery({ images, metadata }) {
                         </div>
                     ) : (
                         <div className="w-full relative flex-1 flex flex-col min-h-0">
+
+                            {/* ── Mobile-Only Header Block (Hidden on Desktop) ── */}
+                            <div className="flex lg:hidden flex-col items-center shrink-0 mb-6 bg-slate-900/60 backdrop-blur-xl border border-white/10 rounded-[2.5rem] p-6 shadow-xl w-full">
+                                <img src="./logo.png" alt="כפלשון" className="h-20 sm:h-24 md:h-28 object-contain drop-shadow-[0_0_20px_rgba(236,72,153,0.5)]" />
+                                <div className="text-center font-medium mt-4 text-sm sm:text-base text-slate-300">
+                                    ברוכים הבאים ל<strong className="text-white mx-1 drop-shadow-md">'כפלשון'</strong>!
+                                    <br />
+                                    <span>
+                                        {images.length} איורים דיגיטליים ויצירות AI הממחישים ביטויים, כפל לשון ומשחקי מילים בעברית — להעלות חיוך ולחגוג את השפה בצורתה הכיפית ביותר.
+                                    </span>
+                                </div>
+                            </div>
+
                             {/* Frame */}
                             <div
                                 className={`relative bg-gradient-to-br ${theme.frameGrad} p-[3px] sm:p-1.5 md:p-[10px] rounded-[2rem] sm:rounded-[2.5rem] shadow-[0_20px_60px_rgba(0,0,0,0.55)] w-full flex-1 flex flex-col min-h-0`}
@@ -329,8 +354,8 @@ export default function PublicGallery({ images, metadata }) {
                                         onTouchEnd={onTouchEnd}
                                     >
                                         {/* Image area — click to fullscreen */}
-                                        <div className={`relative flex-1 flex flex-col items-center justify-center bg-black/40 w-full overflow-hidden cursor-zoom-in min-h-0`}
-                                            style={{ padding: '8px' }}
+                                        <div className={`relative flex-1 flex flex-col items-center justify-center bg-black/40 w-full overflow-hidden cursor-zoom-in min-h-0 rounded-t-[1.8rem] sm:rounded-t-[2.2rem] ${viewMode !== 'single' ? 'rounded-b-none' : ''}`}
+                                            style={{ padding: viewMode === 'single' ? '8px' : '0px' }}
                                             onClick={() => viewMode === 'single' ? openFullscreen() : null}>
 
                                             {/* Glow behind image */}
@@ -394,7 +419,7 @@ export default function PublicGallery({ images, metadata }) {
                                                 })()}
                                             </div>
 
-                                            <div className="flex items-center gap-4 shrink-0 bg-white/5 px-2 py-1.5 rounded-xl border border-white/5 z-40 relative">
+                                            <div className="hidden sm:flex items-center gap-4 shrink-0 bg-white/5 px-2 py-1.5 rounded-xl border border-white/5 z-40 relative">
                                                 {/* View Mode Icons */}
                                                 {/* Search Icon visible in Grid mode */}
                                                 {viewMode !== 'single' && (
@@ -443,22 +468,39 @@ export default function PublicGallery({ images, metadata }) {
                                             </div>
                                         </div>
 
-                                        {/* Nav arrows — siblings of image div, so not clipped. Positioned slightly outside on desktop, inside on mobile */}
+                                        {/* Nav arrows — repositioned on mobile to sit on top of image entirely, semi-transparent */}
                                         <button
                                             onClick={nextImage}
                                             disabled={currentIndex + getGridSize() >= displayImages.length && currentIndex !== displayImages.length - 1}
-                                            className={`absolute top-1/2 -translate-y-1/2 -right-3 md:-right-6 z-30 ${theme.navBtnCls} backdrop-blur-sm p-1.5 sm:p-3 rounded-full shadow-[0_0_16px_rgba(0,0,0,0.4)] disabled:opacity-0 disabled:pointer-events-none hover:scale-110 hover:brightness-110 transition-all font-bold group border`}
+                                            className={`absolute top-1/2 -translate-y-1/2 right-2 md:-right-6 z-30 bg-black/50 md:${theme.navBtnCls} backdrop-blur-md p-2 sm:p-3 md:shadow-[0_0_16px_rgba(0,0,0,0.4)] rounded-full text-white md:text-purple-600 border border-white/10 md:border-purple-200 disabled:opacity-0 disabled:pointer-events-none hover:scale-110 hover:brightness-110 transition-all font-bold group`}
                                         >
-                                            <ChevronRight className="w-5 h-5 sm:w-7 sm:h-7 group-hover:translate-x-0.5 transition-transform" />
+                                            <ChevronRight className="w-6 h-6 sm:w-7 sm:h-7 group-hover:translate-x-0.5 transition-transform" />
                                         </button>
                                         <button
                                             onClick={prevImage}
                                             disabled={currentIndex === 0}
-                                            className={`absolute top-1/2 -translate-y-1/2 -left-3 md:-left-6 z-30 ${theme.navBtnCls} backdrop-blur-sm p-1.5 sm:p-3 rounded-full shadow-[0_0_16px_rgba(0,0,0,0.4)] disabled:opacity-0 disabled:pointer-events-none hover:scale-110 hover:brightness-110 transition-all font-bold group border`}
+                                            className={`absolute top-1/2 -translate-y-1/2 left-2 md:-left-6 z-30 bg-black/50 md:${theme.navBtnCls} backdrop-blur-md p-2 sm:p-3 md:shadow-[0_0_16px_rgba(0,0,0,0.4)] rounded-full text-white md:text-purple-600 border border-white/10 md:border-purple-200 disabled:opacity-0 disabled:pointer-events-none hover:scale-110 hover:brightness-110 transition-all font-bold group`}
                                         >
-                                            <ChevronLeft className="w-5 h-5 sm:w-7 sm:h-7 group-hover:-translate-x-0.5 transition-transform" />
+                                            <ChevronLeft className="w-6 h-6 sm:w-7 sm:h-7 group-hover:-translate-x-0.5 transition-transform" />
                                         </button>
-                                        {/* Explanation overlay (absolutely positioned inside the image frame if desired, but we will place it dynamically over the About section area below logic handles that via z-index or absolute floating over everything) */}
+
+                                        {/* Mobile Explanation overlay (Float atop the image in mobile) */}
+                                        {showExplanation && (
+                                            <div className="absolute inset-4 lg:hidden z-40 bg-black/80 backdrop-blur-md rounded-2xl p-5 border border-white/20 shadow-2xl overflow-y-auto animate-in fade-in zoom-in-95 custom-scrollbar flex flex-col">
+                                                <button onClick={() => setShowExplanation(false)} className="self-end p-2 bg-white/10 hover:bg-white/20 rounded-full text-white transition-colors mb-2 shrink-0">
+                                                    <X size={20} />
+                                                </button>
+                                                <div className="flex-1">
+                                                    <h3 className={`text-xl font-bold mb-3 text-transparent bg-clip-text bg-gradient-to-r ${theme.titleGrad} text-center`}>ההסבר</h3>
+                                                    <p className={`text-base text-white/90 leading-relaxed text-right dir-rtl font-medium`}>
+                                                        {fileMetadata?.explanation}
+                                                    </p>
+                                                    <div className="mt-6 pt-3 border-t border-white/10 text-white/50 text-xs font-medium text-right dir-rtl">
+                                                        * ההסבר נוסח ע"י בינה מלאכותית (AI) ועלול להכיל אי דיוקים.
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        )}
                                     </div>
 
                                 </div>
@@ -469,12 +511,12 @@ export default function PublicGallery({ images, metadata }) {
                 </div>
 
                 {/* ── Right/Side: About Section ── */}
-                <div className="w-full lg:w-[380px] xl:w-[440px] shrink-0 mt-8 lg:mt-0 flex flex-col bg-slate-900/60 backdrop-blur-xl border border-white/10 rounded-[2.5rem] shadow-2xl relative min-h-0">
+                <div className="w-full lg:w-[380px] xl:w-[440px] shrink-0 mt-2 lg:mt-0 flex flex-col bg-slate-900/60 backdrop-blur-xl border border-white/10 rounded-[2.5rem] shadow-2xl relative min-h-0">
                     <div className="absolute inset-0 bg-gradient-to-br from-white/5 to-transparent pointer-events-none rounded-[2.5rem]" />
 
-                    {/* Floating Explanation View */}
+                    {/* Desktop Floating Explanation View */}
                     {showExplanation && (
-                        <div className="absolute inset-0 z-30 bg-slate-900/95 backdrop-blur-3xl rounded-[2.5rem] p-6 lg:p-8 border border-white/20 shadow-[0_0_40px_rgba(0,0,0,0.6)] animate-in fade-in zoom-in-95 duration-200 flex flex-col overflow-y-auto">
+                        <div className="hidden lg:flex absolute inset-0 z-30 bg-slate-900/95 backdrop-blur-3xl rounded-[2.5rem] p-6 lg:p-8 border border-white/20 shadow-[0_0_40px_rgba(0,0,0,0.6)] animate-in fade-in zoom-in-95 duration-200 flex flex-col overflow-y-auto">
                             <button onClick={() => setShowExplanation(false)} className="self-end p-2 bg-white/10 hover:bg-white/20 rounded-full text-white transition-colors mb-4 shrink-0">
                                 <X size={20} />
                             </button>
@@ -493,33 +535,39 @@ export default function PublicGallery({ images, metadata }) {
                     )}
 
                     <div className="p-4 sm:p-6 flex flex-col items-center flex-1 h-full min-h-0 overflow-y-auto w-full no-scrollbar">
-                        <div className="flex justify-center mb-0 sm:mb-2 w-full shrink-0">
-                            <img
-                                src="./logo.png"
-                                alt="כפלשון"
-                                className="h-20 sm:h-24 md:h-28 object-contain drop-shadow-[0_0_20px_rgba(236,72,153,0.5)] transition-transform hover:scale-105"
-                                style={{ transform: 'scaleX(1.15)' }}
-                            />
-                        </div>
-
-                        <div className="flex flex-col gap-4 sm:gap-6 items-center text-slate-300 w-full shrink-0">
-                            <div className="leading-relaxed text-center font-medium text-sm sm:text-base lg:text-lg">
-                                ברוכים הבאים ל<strong className="text-white mx-1 xl:text-xl drop-shadow-md">'כפלשון'</strong>!
-                                <br />
-                                <span>
-                                    {images.length} איורים דיגיטליים ויצירות AI הממחישים ביטויים, כפל לשון ומשחקי מילים בעברית — להעלות חיוך ולחגוג את השפה בצורתה הכיפית ביותר.
-                                </span>
-                                <br />
-                                <span className="text-purple-400 font-semibold flex items-center justify-center gap-2 mt-2 xl:text-xl">הכל ביצירת מוחי הקודח... 😊</span>
-                                <span className="text-indigo-300 font-bold block mt-1 xl:text-lg">ספי רייכקינד</span>
+                        {/* Hidden on mobile, shown on lg screens */}
+                        <div className="hidden lg:flex flex-col items-center w-full">
+                            <div className="flex justify-center mb-0 sm:mb-2 w-full shrink-0">
+                                <img
+                                    src="./logo.png"
+                                    alt="כפלשון"
+                                    className="h-20 sm:h-24 md:h-28 object-contain drop-shadow-[0_0_20px_rgba(236,72,153,0.5)] transition-transform hover:scale-105"
+                                    style={{ transform: 'scaleX(1.15)' }}
+                                />
                             </div>
 
+                            <div className="flex flex-col gap-4 sm:gap-6 items-center text-slate-300 w-full shrink-0 mb-6">
+                                <div className="leading-relaxed text-center font-medium text-sm sm:text-base lg:text-lg">
+                                    ברוכים הבאים ל<strong className="text-white mx-1 xl:text-xl drop-shadow-md">'כפלשון'</strong>!
+                                    <br />
+                                    <span>
+                                        {images.length} איורים דיגיטליים ויצירות AI הממחישים ביטויים, כפל לשון ומשחקי מילים בעברית — להעלות חיוך ולחגוג את השפה בצורתה הכיפית ביותר.
+                                    </span>
+                                    <br />
+                                    <span className="text-purple-400 font-semibold flex items-center justify-center gap-2 mt-2 xl:text-xl">הכל ביצירת מוחי הקודח... 😊</span>
+                                    <span className="text-indigo-300 font-bold block mt-1 xl:text-lg">ספי רייכקינד</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        {/* Always visible logic (QR + Socials) */}
+                        <div className="flex flex-col gap-3 items-center text-slate-300 w-full shrink-0 mt-auto">
                             {/* QR + Socials side by side */}
                             <div className="flex flex-row justify-center items-center gap-6 xl:gap-8 bg-black/30 p-4 xl:p-6 rounded-3xl border border-white/5 shadow-inner w-full flex-wrap sm:flex-nowrap">
-                                {/* Custom QR image + Share */}
+                                {/* Custom pure QR image + Share */}
                                 <div className="flex flex-col items-center gap-3 w-[140px] xl:w-[150px]">
-                                    <div className="flex-shrink-0 border-2 border-white/20 bg-white/10 rounded-xl shadow-md rotate-1 hover:rotate-0 transition-transform flex items-center justify-center overflow-hidden w-full h-[140px] xl:h-[150px] p-2">
-                                        <img src="./qrcode.png" alt="QR Code" className="w-full h-full object-contain" />
+                                    <div className="flex-shrink-0 bg-white rounded-xl shadow-md flex items-center justify-center overflow-hidden w-full h-[140px] xl:h-[150px]">
+                                        <img src="./qrcode.png" alt="QR Code" className="w-full h-full object-contain p-2" />
                                     </div>
                                     <button
                                         onClick={async () => {
@@ -547,7 +595,7 @@ export default function PublicGallery({ images, metadata }) {
                                         href="https://whatsapp.com/channel/0029VajNwaPL2AU0jdlgxa20"
                                         target="_blank"
                                         rel="noreferrer"
-                                        className="relative flex items-center justify-center text-[#128C7E] hover:text-white hover:bg-[#128C7E] transition-all hover:scale-110 rotate-1 hover:rotate-0 drop-shadow-md border-[2.5px] border-[#128C7E] rounded-lg p-1 w-12 h-12"
+                                        className="relative flex items-center justify-center text-[#128C7E] hover:text-white hover:bg-[#128C7E] transition-all hover:scale-110 drop-shadow-md border-[2.5px] border-[#128C7E] rounded-lg p-1 w-12 h-12"
                                         title="ערוץ"
                                     >
                                         <MessageCircle size={28} strokeWidth={1.5} className="shrink-0" />
@@ -557,7 +605,7 @@ export default function PublicGallery({ images, metadata }) {
                                         href="https://chat.whatsapp.com/LN6nwJ8cYiLHaj5uhTum9P"
                                         target="_blank"
                                         rel="noreferrer"
-                                        className="relative flex items-center justify-center text-[#25D366] hover:text-white hover:bg-[#25D366] transition-all hover:scale-110 -rotate-1 hover:rotate-0 drop-shadow-md border-[2.5px] border-[#25D366] rounded-lg p-1 w-12 h-12 mt-2"
+                                        className="relative flex items-center justify-center text-[#25D366] hover:text-white hover:bg-[#25D366] transition-all hover:scale-110 drop-shadow-md border-[2.5px] border-[#25D366] rounded-lg p-1 w-12 h-12 mt-2"
                                         title="קבוצה"
                                     >
                                         <MessageCircle size={28} strokeWidth={1.5} className="shrink-0" />
@@ -575,8 +623,8 @@ export default function PublicGallery({ images, metadata }) {
                                 </div>
                             </div>
 
-                            <p className="text-white/60 text-sm mt-4 italic font-medium px-4">
-                                אם יש לכם רעיון ליצירה, אל תהססו ליצור בעצמכם! עזרה תמיד תינתן... צרו קשר באישי.
+                            <p className="text-white/60 text-sm mt-3 lg:mt-4 italic font-medium px-4">
+                                אם יש לכם רעיון ליצירה, אל תהססו ליצור בעצמכם!<br />עזרה תמיד תינתן... צרו קשר באישי.
                             </p>
                         </div>
                     </div>
