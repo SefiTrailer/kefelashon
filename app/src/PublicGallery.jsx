@@ -493,8 +493,8 @@ export default function PublicGallery({ images, metadata }) {
                                                     }}
                                                 >
                                                     <span className="text-white/70 text-sm font-bold pointer-events-none">מיון:</span>
-                                                    <div className="relative flex items-center bg-transparent text-white text-sm font-medium pr-1 pl-6 hover:text-white/80 transition-colors z-10">
-                                                        {sortOrder === 'newest' ? 'הכי חדשים' : 'אקראי'}
+                                                    <div className="relative flex items-center bg-transparent text-white text-sm font-medium pr-1 pl-6 hover:text-white/80 transition-colors z-10 w-[85px] justify-start">
+                                                        <span>{sortOrder === 'newest' ? 'הכי חדשים' : 'אקראי'}</span>
                                                         <div className={`absolute left-1 text-white/50 text-[10px] transition-transform ${isSortOpen ? 'rotate-180' : ''}`}>▲</div>
 
                                                         {/* Upwards Dropdown Menu (Click based) */}
