@@ -201,7 +201,7 @@ export default function PublicGallery({ images, metadata }) {
             style={{ letterSpacing: '0.01em' }}
         >
             {/* ── Main Layout Container ── */}
-            <div className="relative w-full max-w-[1400px] px-3 sm:px-4 mx-auto flex flex-col lg:flex-row gap-8 lg:gap-12 items-start justify-center">
+            <div className="relative w-full max-w-[1400px] px-3 sm:px-4 mx-auto flex flex-col lg:flex-row gap-8 lg:gap-12 items-stretch justify-center">
 
                 {/* ── Left/Main: Search + Image Frame ── */}
                 <div className="w-full max-w-2xl md:max-w-4xl flex flex-col items-center flex-1 relative shrink-0 mx-auto">
@@ -218,11 +218,11 @@ export default function PublicGallery({ images, metadata }) {
                         <div className="w-full relative shrink-0">
                             {/* Frame */}
                             <div
-                                className={`relative bg-gradient-to-br ${theme.frameGrad} p-[3px] sm:p-1.5 md:p-[10px] rounded-[2rem] sm:rounded-[2.5rem] shadow-[0_20px_60px_rgba(0,0,0,0.55)] w-full`}
+                                className={`relative bg-gradient-to-br ${theme.frameGrad} p-[3px] sm:p-1.5 md:p-[10px] rounded-[2rem] sm:rounded-[2.5rem] shadow-[0_20px_60px_rgba(0,0,0,0.55)] w-full h-full flex flex-col`}
                                 style={{ willChange: 'transform' }}
                             >
                                 {/* Inner card */}
-                                <div className={`${theme.innerBg} rounded-[1.8rem] sm:rounded-[2.2rem] flex flex-col`}>
+                                <div className={`${theme.innerBg} rounded-[1.8rem] sm:rounded-[2.2rem] flex flex-col flex-1`}>
 
                                     {/* Title Bar with inline Search and About */}
                                     <div className="px-4 sm:px-6 py-4 flex items-center justify-between relative flex-shrink-0 z-20 w-full min-h-[5rem]">
@@ -264,8 +264,8 @@ export default function PublicGallery({ images, metadata }) {
                                         onTouchEnd={onTouchEnd}
                                     >
                                         {/* Image area — click to fullscreen */}
-                                        <div className={`relative flex items-center justify-center bg-black/40 w-full overflow-hidden cursor-zoom-in rounded-b-[1.8rem] sm:rounded-b-[2.2rem]`}
-                                            style={{ aspectRatio: '1/1', maxHeight: '70vh', padding: '16px' }}
+                                        <div className={`relative flex items-center justify-center bg-black/40 w-full overflow-hidden cursor-zoom-in rounded-b-[1.8rem] sm:rounded-b-[2.2rem] flex-1`}
+                                            style={{ padding: '16px' }}
                                             onClick={() => setIsFullscreen(true)}>
 
                                             {/* Glow behind image */}
@@ -346,49 +346,56 @@ export default function PublicGallery({ images, metadata }) {
 
                         <div className="flex flex-col md:flex-row lg:flex-col gap-6 items-center text-slate-300 md:text-lg w-full">
                             <div className="flex-1 leading-relaxed text-center sm:text-right lg:text-center font-medium">
-                                ברוכים הבאים ל<strong className="text-white mx-1 text-xl drop-shadow-md">'כפלשון'</strong>!{' '}
-                                {images.filter(img => metadata[img]?.title && metadata[img]?.explanation).length} איורים דיגיטליים ויצירות AI הממחישים ביטויים, כפל לשון ומשחקי מילים בעברית — להעלות חיוך ולחגוג את השפה בצורתה הכיפית ביותר.
+                                ברוכים הבאים ל<strong className="text-white mx-1 text-xl drop-shadow-md">'כפלשון'</strong>!
+                                <br />
+                                <span className="mt-1 block">
+                                    {images.filter(img => metadata[img]?.title && metadata[img]?.explanation).length} איורים דיגיטליים ויצירות AI הממחישים ביטויים, כפל לשון ומשחקי מילים בעברית — להעלות חיוך ולחגוג את השפה בצורתה הכיפית ביותר.
+                                </span>
                                 <br />
                                 <span className="text-purple-400 font-semibold flex items-center justify-center gap-2 mt-4 text-xl">הכל ביצירת מוחי הקודח... 😊</span>
                                 <span className="text-indigo-300 font-bold block mt-1 text-lg">ספי רייכקינד</span>
                             </div>
 
-                            {/* QR + WhatsApp side by side */}
-                            <div className="flex flex-col sm:flex-row lg:flex-col justify-center items-center gap-4 bg-black/30 p-4 md:p-5 rounded-3xl border border-white/5 shadow-inner w-full">
+                            {/* QR + Socials side by side */}
+                            <div className="flex flex-col sm:flex-row justify-center items-center gap-4 bg-black/30 p-4 md:p-5 rounded-3xl border border-white/5 shadow-inner w-full">
                                 {/* QR code */}
                                 <div className="flex-shrink-0 bg-white p-1 rounded-xl shadow-md rotate-1 hover:rotate-0 transition-transform">
                                     <QRCodeDisplay url="https://sefitrailer.github.io/kefel-lashon/" />
                                 </div>
 
-                                {/* WhatsApp buttons stacked on the left of QR */}
-                                <div className="flex flex-col gap-3 w-full">
-                                    <a
-                                        href="https://whatsapp.com/channel/0029VajNwaPL2AU0jdlgxa20"
-                                        target="_blank"
-                                        rel="noreferrer"
-                                        className="w-full flex items-center justify-center gap-2 bg-[#25D366] text-white px-5 py-3 rounded-xl font-bold hover:bg-[#20ba56] transition-all shadow-lg text-sm sm:text-base hover:scale-105"
-                                    >
-                                        <MessageCircle size={20} />
-                                        לינק לערוץ וואטסאפ
-                                    </a>
-                                    <a
-                                        href="https://chat.whatsapp.com/LN6nwJ8cYiLHaj5uhTum9P"
-                                        target="_blank"
-                                        rel="noreferrer"
-                                        className="w-full flex items-center justify-center gap-2 bg-emerald-700 text-white px-5 py-3 rounded-xl font-bold hover:bg-emerald-800 transition-all shadow-lg text-sm sm:text-base hover:scale-105"
-                                    >
-                                        <MessageCircle size={20} />
-                                        לינק לקבוצת וואטסאפ
-                                    </a>
-                                    <a
-                                        href="https://www.linkedin.com/in/sefi-riechkind-679b67136/"
-                                        target="_blank"
-                                        rel="noreferrer"
-                                        className="w-full flex items-center justify-center gap-2 bg-[#0077b5] text-white px-5 py-3 rounded-xl font-bold hover:bg-[#006396] transition-all shadow-lg text-sm sm:text-base hover:scale-105 tracking-wider"
-                                    >
-                                        <Linkedin size={20} />
-                                        <span>in</span>
-                                    </a>
+                                {/* Social buttons stacked on the left of QR */}
+                                <div className="flex flex-row flex-wrap sm:flex-col lg:flex-row gap-3 justify-center w-full">
+                                    <div className="flex flex-row gap-2 w-full lg:flex-1">
+                                        <a
+                                            href="https://whatsapp.com/channel/0029VajNwaPL2AU0jdlgxa20"
+                                            target="_blank"
+                                            rel="noreferrer"
+                                            className="flex-1 flex flex-col items-center justify-center gap-1 bg-[#25D366] text-white p-2 sm:p-3 rounded-2xl font-bold hover:bg-[#20ba56] transition-all shadow-lg text-sm hover:scale-105"
+                                        >
+                                            <MessageCircle size={24} className="shrink-0" />
+                                            <span>ערוץ</span>
+                                        </a>
+                                        <a
+                                            href="https://chat.whatsapp.com/LN6nwJ8cYiLHaj5uhTum9P"
+                                            target="_blank"
+                                            rel="noreferrer"
+                                            className="flex-1 flex flex-col items-center justify-center gap-1 bg-emerald-700 text-white p-2 sm:p-3 rounded-2xl font-bold hover:bg-emerald-800 transition-all shadow-lg text-sm hover:scale-105"
+                                        >
+                                            <MessageCircle size={24} className="shrink-0" />
+                                            <span>קבוצה</span>
+                                        </a>
+                                    </div>
+                                    <div className="flex justify-center items-center">
+                                        <a
+                                            href="https://www.linkedin.com/in/sefi-riechkind-679b67136/"
+                                            target="_blank"
+                                            rel="noreferrer"
+                                            className="flex items-center justify-center bg-[#0077b5] text-white p-3 rounded-2xl font-bold hover:bg-[#006396] transition-all shadow-lg hover:scale-105 w-16 h-16 sm:w-20 sm:h-20"
+                                            title="לינקדאין"
+                                        >
+                                            <Linkedin size={32} />
+                                        </a>
+                                    </div>
                                 </div>
                             </div>
                         </div>
