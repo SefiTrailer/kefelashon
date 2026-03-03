@@ -84,6 +84,7 @@ export default function PublicGallery({ images, metadata }) {
     const [searchQuery, setSearchQuery] = useState('');
     const [isSearchOpen, setIsSearchOpen] = useState(false);
     const [showExplanation, setShowExplanation] = useState(false);
+    const [sortOrder, setSortOrder] = useState('newest');
     const [themeIndex, setThemeIndex] = useState(() => {
         try {
             const saved = localStorage.getItem('kefel-theme');
@@ -111,22 +112,24 @@ export default function PublicGallery({ images, metadata }) {
             if (aTagged && !bTagged) return -1;
             if (!aTagged && bTagged) return 1;
 
-            const extractDate = (filename) => {
-                const match = filename.match(/_(\d{8})_(\d{6})_/);
-                return match ? parseInt(match[1] + match[2], 10) : 0;
-            };
-            const dateA = extractDate(a);
-            const dateB = extractDate(b);
+            if (sortOrder === 'newest') {
+                const extractDate = (filename) => {
+                    const match = filename.match(/_(\d{8})_(\d{6})_/);
+                    return match ? parseInt(match[1] + match[2], 10) : 0;
+                };
+                const dateA = extractDate(a);
+                const dateB = extractDate(b);
 
-            if (dateA && dateB) return dateB - dateA; // Newest first
-            if (dateA) return -1; // A is newer
-            if (dateB) return 1;  // B is newer
+                if (dateA && dateB) return dateB - dateA; // Newest first
+                if (dateA) return -1; // A is newer
+                if (dateB) return 1;  // B is newer
+            }
 
             return Math.random() - 0.5; // Randomize the rest
         });
 
         setShuffledImages(sorted);
-    }, [images, metadata]);
+    }, [images, metadata, sortOrder]);
 
     const filteredImages = useMemo(() => {
         if (!searchQuery) return shuffledImages;
@@ -134,8 +137,12 @@ export default function PublicGallery({ images, metadata }) {
         return shuffledImages.filter(file => {
             const data = metadata[file];
             if (!data) return false;
-            return (data.title && data.title.toLowerCase().includes(query)) ||
-                (data.topic && data.topic.toLowerCase().includes(query));
+
+            const rawTags = data.tags || data.topic || '';
+            const tagsList = Array.isArray(rawTags) ? rawTags : rawTags.split(',').map(t => t.trim()).filter(Boolean);
+            const matchesTag = tagsList.some(tag => tag.toLowerCase().includes(query));
+
+            return (data.title && data.title.toLowerCase().includes(query)) || matchesTag;
         });
     }, [searchQuery, shuffledImages, metadata]);
 
@@ -218,14 +225,14 @@ export default function PublicGallery({ images, metadata }) {
                             <p className={theme.textClass}>נסה מילת חיפוש אחרת!</p>
                         </div>
                     ) : (
-                        <div className="w-full relative shrink-0">
+                        <div className="w-full relative flex-1 flex flex-col">
                             {/* Frame */}
                             <div
-                                className={`relative bg-gradient-to-br ${theme.frameGrad} p-[3px] sm:p-1.5 md:p-[10px] rounded-[2rem] sm:rounded-[2.5rem] shadow-[0_20px_60px_rgba(0,0,0,0.55)] w-full`}
+                                className={`relative bg-gradient-to-br ${theme.frameGrad} p-[3px] sm:p-1.5 md:p-[10px] rounded-[2rem] sm:rounded-[2.5rem] shadow-[0_20px_60px_rgba(0,0,0,0.55)] w-full flex-1 flex flex-col`}
                                 style={{ willChange: 'transform' }}
                             >
                                 {/* Inner card */}
-                                <div className={`${theme.innerBg} rounded-[1.8rem] sm:rounded-[2.2rem] flex flex-col`}>
+                                <div className={`${theme.innerBg} rounded-[1.8rem] sm:rounded-[2.2rem] flex flex-col flex-1`}>
 
                                     {/* Title Bar with inline Search and About */}
                                     <div className="px-3 sm:px-6 py-4 flex items-center justify-between relative flex-shrink-0 z-20 w-full min-h-[5rem]">
@@ -268,14 +275,14 @@ export default function PublicGallery({ images, metadata }) {
                                     </div>
 
                                     {/* Image + nav arrows wrapper (no overflow-hidden so arrows aren't clipped) */}
-                                    <div className="relative w-full"
+                                    <div className="relative w-full flex-1 flex flex-col"
                                         onTouchStart={onTouchStart}
                                         onTouchMove={onTouchMove}
                                         onTouchEnd={onTouchEnd}
                                     >
                                         {/* Image area — click to fullscreen */}
-                                        <div className={`relative flex items-center justify-center bg-black/40 w-full overflow-hidden cursor-zoom-in rounded-b-[1.8rem] sm:rounded-b-[2.2rem]`}
-                                            style={{ aspectRatio: '1/1', maxHeight: '70vh', padding: '16px' }}
+                                        <div className={`relative flex-1 flex items-center justify-center bg-black/40 w-full overflow-hidden cursor-zoom-in`}
+                                            style={{ padding: '16px', minHeight: '300px' }}
                                             onClick={() => setIsFullscreen(true)}>
 
                                             {/* Glow behind image */}
@@ -299,8 +306,42 @@ export default function PublicGallery({ images, metadata }) {
 
                                         </div>
 
+                                        {/* Tagging and Sorting Footer */}
+                                        <div className="bg-black/50 backdrop-blur-md border-t border-white/10 p-3 sm:p-4 rounded-b-[1.8rem] sm:rounded-b-[2.2rem] flex flex-col sm:flex-row items-center justify-between gap-4 relative z-30 shrink-0">
+                                            <div className="flex flex-wrap gap-2 items-center justify-center flex-1">
+                                                <span className="text-white/60 text-sm font-bold">תיוגים:</span>
+                                                {(() => {
+                                                    const rawTags = fileMetadata?.tags || fileMetadata?.topic || '';
+                                                    const tagsList = Array.isArray(rawTags) ? rawTags : rawTags.split(',').map(t => t.trim()).filter(Boolean);
+                                                    if (tagsList.length === 0) return <span className="text-white/30 text-sm italic">אין תיוגים</span>;
+                                                    return tagsList.map(tag => (
+                                                        <button
+                                                            key={tag}
+                                                            onClick={(e) => { e.stopPropagation(); setSearchQuery(tag); }}
+                                                            className="px-3 py-1 rounded-full bg-white/10 hover:bg-white/20 text-white text-sm font-medium transition-all hover:scale-105 border border-white/10 shadow-sm z-40 relative"
+                                                        >
+                                                            {tag}
+                                                        </button>
+                                                    ));
+                                                })()}
+                                            </div>
+
+                                            <div className="flex items-center gap-2 shrink-0 bg-white/5 px-3 py-1.5 rounded-xl border border-white/5 z-40 relative">
+                                                <span className="text-white/70 text-sm font-bold">מיון:</span>
+                                                <select
+                                                    value={sortOrder}
+                                                    onChange={(e) => setSortOrder(e.target.value)}
+                                                    className="bg-transparent text-white text-sm outline-none cursor-pointer font-medium appearance-none select-none"
+                                                    style={{ paddingLeft: '0.2rem' }}
+                                                >
+                                                    <option value="newest" className="bg-slate-900">הכי חדשים</option>
+                                                    <option value="random" className="bg-slate-900">אקראי</option>
+                                                </select>
+                                                <div className="pointer-events-none text-white/50 text-xs mr-1">▼</div>
+                                            </div>
+                                        </div>
+
                                         {/* Nav arrows — siblings of image div, so not clipped. Positioned slightly outside on desktop, inside on mobile */}
-                                        {/* Nav arrows */}
                                         <button
                                             onClick={nextImage}
                                             disabled={currentIndex === displayImages.length - 1}
@@ -326,7 +367,7 @@ export default function PublicGallery({ images, metadata }) {
                 </div>
 
                 {/* ── Right/Side: About Section ── */}
-                <div className="w-full lg:w-[380px] xl:w-[440px] shrink-0 mt-8 lg:mt-0 flex flex-col lg:sticky lg:top-8 bg-slate-900/60 backdrop-blur-xl border border-white/10 rounded-[2.5rem] shadow-2xl relative">
+                <div className="w-full lg:w-[380px] xl:w-[440px] shrink-0 mt-8 lg:mt-0 flex flex-col bg-slate-900/60 backdrop-blur-xl border border-white/10 rounded-[2.5rem] shadow-2xl relative">
                     <div className="absolute inset-0 bg-gradient-to-br from-white/5 to-transparent pointer-events-none rounded-[2.5rem]" />
 
                     {/* Floating Explanation View */}
@@ -396,7 +437,7 @@ export default function PublicGallery({ images, metadata }) {
                                         <span className="absolute font-bold text-white text-[12px]" style={{ textShadow: '0 1px 3px rgba(0,0,0,0.8)' }}>קבוצה</span>
                                     </a>
                                     <a
-                                        href="https://www.linkedin.com/in/sefi-riechkind-679b67136/"
+                                        href="https://www.linkedin.com/in/sefi-riechkind-679b67136"
                                         target="_blank"
                                         rel="noreferrer"
                                         className="flex items-center justify-center text-[#0077b5] hover:text-white hover:bg-[#0077b5] transition-all hover:scale-110 drop-shadow-md border-[2.5px] border-[#0077b5] rounded-lg p-1 w-12 h-12"
@@ -412,7 +453,7 @@ export default function PublicGallery({ images, metadata }) {
             </div>
 
             {/* ── Theme Select Button ────────────────────────────────────────── */}
-            <div className="fixed bottom-6 right-6 z-50">
+            <div className="fixed bottom-6 left-6 z-50">
                 <button
                     onClick={() => setIsThemeMenuOpen(!isThemeMenuOpen)}
                     className={`${theme.themeBtnCls} p-3 sm:p-4 rounded-full shadow-[0_10px_30px_rgba(0,0,0,0.6)] backdrop-blur-lg flex items-center justify-center transition-all hover:scale-110 active:scale-95 border-2`}
@@ -421,7 +462,7 @@ export default function PublicGallery({ images, metadata }) {
                 </button>
 
                 {isThemeMenuOpen && (
-                    <div className="absolute bottom-full right-0 mb-4 bg-black/80 backdrop-blur-xl border border-white/10 rounded-2xl p-2 w-40 flex flex-col gap-1 shadow-2xl animate-in slide-in-from-bottom-5">
+                    <div className="absolute bottom-full left-0 mb-4 bg-black/80 backdrop-blur-xl border border-white/10 rounded-2xl p-2 w-40 flex flex-col gap-1 shadow-2xl animate-in fade-in slide-in-from-bottom-5">
                         <div className="text-white/50 text-[10px] uppercase tracking-wider px-2 pt-1 pb-2 font-black">בחר עיצוב</div>
                         {THEMES.map((t, i) => (
                             <button
