@@ -207,32 +207,31 @@ export default function PublicGallery({ images, metadata }) {
 
     return (
         <div
-            className={`min-h-screen ${theme.bgStyle} text-white font-['Fredoka',sans-serif] flex flex-col items-center pt-4 pb-8 overflow-x-hidden relative ${theme.className}`}
+            className={`min-h-screen lg:h-screen lg:overflow-hidden ${theme.bgStyle} text-white font-['Fredoka',sans-serif] flex flex-col items-center pt-4 pb-8 lg:pb-4 relative ${theme.className}`}
             style={{ letterSpacing: '0.01em' }}
         >
             {/* ── Main Layout Container ── */}
-            <div className="relative w-full max-w-[1400px] px-3 sm:px-4 mx-auto flex flex-col lg:flex-row gap-8 lg:gap-12 items-stretch justify-center">
+            <div className="relative w-full max-w-[1400px] px-3 sm:px-4 mx-auto flex flex-col lg:flex-row gap-8 lg:gap-12 items-stretch justify-center flex-1 min-h-0">
 
                 {/* ── Left/Main: Search + Image Frame ── */}
-                <div className="w-full max-w-2xl md:max-w-4xl flex flex-col items-center flex-1 relative shrink-0 mx-auto">
+                <div className="w-full max-w-2xl md:max-w-4xl flex flex-col items-center flex-1 relative shrink-0 mx-auto min-h-0">
 
-                    {/* Spacer since logo is gone */}
-                    <div className="h-6" />
+                    {/* Removed top spacer so both panels align at the top */}
                     {displayImages.length === 0 ? (
-                        <div className="text-center bg-white/10 backdrop-blur-lg p-12 rounded-3xl border border-white/20">
+                        <div className="text-center bg-white/10 backdrop-blur-lg p-12 rounded-3xl border border-white/20 mt-8">
                             <span className="text-6xl mb-4 block">😢</span>
                             <h2 className="text-2xl font-bold text-white mb-2">לא מצאנו מה שחיפשת...</h2>
                             <p className={theme.textClass}>נסה מילת חיפוש אחרת!</p>
                         </div>
                     ) : (
-                        <div className="w-full relative flex-1 flex flex-col">
+                        <div className="w-full relative flex-1 flex flex-col min-h-0">
                             {/* Frame */}
                             <div
-                                className={`relative bg-gradient-to-br ${theme.frameGrad} p-[3px] sm:p-1.5 md:p-[10px] rounded-[2rem] sm:rounded-[2.5rem] shadow-[0_20px_60px_rgba(0,0,0,0.55)] w-full flex-1 flex flex-col`}
+                                className={`relative bg-gradient-to-br ${theme.frameGrad} p-[3px] sm:p-1.5 md:p-[10px] rounded-[2rem] sm:rounded-[2.5rem] shadow-[0_20px_60px_rgba(0,0,0,0.55)] w-full flex-1 flex flex-col min-h-0`}
                                 style={{ willChange: 'transform' }}
                             >
                                 {/* Inner card */}
-                                <div className={`${theme.innerBg} rounded-[1.8rem] sm:rounded-[2.2rem] flex flex-col flex-1`}>
+                                <div className={`${theme.innerBg} rounded-[1.8rem] sm:rounded-[2.2rem] flex flex-col flex-1 min-h-0`}>
 
                                     {/* Title Bar with inline Search and About */}
                                     <div className="px-3 sm:px-6 py-4 flex items-center justify-between relative flex-shrink-0 z-20 w-full min-h-[5rem]">
@@ -275,14 +274,14 @@ export default function PublicGallery({ images, metadata }) {
                                     </div>
 
                                     {/* Image + nav arrows wrapper (no overflow-hidden so arrows aren't clipped) */}
-                                    <div className="relative w-full flex-1 flex flex-col"
+                                    <div className="relative w-full flex-1 flex flex-col min-h-0"
                                         onTouchStart={onTouchStart}
                                         onTouchMove={onTouchMove}
                                         onTouchEnd={onTouchEnd}
                                     >
                                         {/* Image area — click to fullscreen */}
-                                        <div className={`relative flex-1 flex items-center justify-center bg-black/40 w-full overflow-hidden cursor-zoom-in`}
-                                            style={{ padding: '16px', minHeight: '300px' }}
+                                        <div className={`relative flex-1 flex items-center justify-center bg-black/40 w-full overflow-hidden cursor-zoom-in min-h-0`}
+                                            style={{ padding: '8px' }}
                                             onClick={() => setIsFullscreen(true)}>
 
                                             {/* Glow behind image */}
@@ -367,16 +366,16 @@ export default function PublicGallery({ images, metadata }) {
                 </div>
 
                 {/* ── Right/Side: About Section ── */}
-                <div className="w-full lg:w-[380px] xl:w-[440px] shrink-0 mt-8 lg:mt-0 flex flex-col bg-slate-900/60 backdrop-blur-xl border border-white/10 rounded-[2.5rem] shadow-2xl relative">
+                <div className="w-full lg:w-[380px] xl:w-[440px] shrink-0 mt-8 lg:mt-0 flex flex-col bg-slate-900/60 backdrop-blur-xl border border-white/10 rounded-[2.5rem] shadow-2xl relative min-h-0">
                     <div className="absolute inset-0 bg-gradient-to-br from-white/5 to-transparent pointer-events-none rounded-[2.5rem]" />
 
                     {/* Floating Explanation View */}
                     {showExplanation && (
-                        <div className="absolute inset-0 z-30 bg-slate-900/95 backdrop-blur-3xl rounded-[2.5rem] p-6 lg:p-8 border border-white/20 shadow-[0_0_40px_rgba(0,0,0,0.6)] animate-in fade-in zoom-in-95 duration-200 flex flex-col">
-                            <button onClick={() => setShowExplanation(false)} className="self-end p-2 bg-white/10 hover:bg-white/20 rounded-full text-white transition-colors mb-4">
+                        <div className="absolute inset-0 z-30 bg-slate-900/95 backdrop-blur-3xl rounded-[2.5rem] p-6 lg:p-8 border border-white/20 shadow-[0_0_40px_rgba(0,0,0,0.6)] animate-in fade-in zoom-in-95 duration-200 flex flex-col overflow-y-auto">
+                            <button onClick={() => setShowExplanation(false)} className="self-end p-2 bg-white/10 hover:bg-white/20 rounded-full text-white transition-colors mb-4 shrink-0">
                                 <X size={20} />
                             </button>
-                            <div className="text-center overflow-auto pb-4">
+                            <div className="text-center pb-4">
                                 <h3 className={`text-2xl font-bold mb-4 text-transparent bg-clip-text bg-gradient-to-r ${theme.titleGrad}`}>ההסבר</h3>
                                 <p className={`text-lg md:text-xl ${theme.explainTextCls} leading-relaxed mx-auto font-medium`}>
                                     {fileMetadata?.explanation}
@@ -385,33 +384,33 @@ export default function PublicGallery({ images, metadata }) {
                         </div>
                     )}
 
-                    <div className="p-6 flex flex-col items-center flex-1 h-full">
-                        <div className="flex justify-center mb-4 w-full">
+                    <div className="p-4 sm:p-6 flex flex-col items-center flex-1 h-full min-h-0 overflow-y-auto w-full no-scrollbar">
+                        <div className="flex justify-center mb-0 sm:mb-2 w-full shrink-0">
                             <img
                                 src="./logo.png"
                                 alt="כפלשון"
-                                className="h-28 sm:h-32 object-contain drop-shadow-[0_0_20px_rgba(236,72,153,0.5)] transition-transform hover:scale-105"
+                                className="h-20 sm:h-24 md:h-28 object-contain drop-shadow-[0_0_20px_rgba(236,72,153,0.5)] transition-transform hover:scale-105"
                                 style={{ transform: 'scaleX(1.15)' }}
                             />
                         </div>
 
-                        <div className="flex flex-col md:flex-row lg:flex-col gap-6 items-center text-slate-300 md:text-lg w-full">
-                            <div className="flex-1 leading-relaxed text-center sm:text-right lg:text-center font-medium">
-                                ברוכים הבאים ל<strong className="text-white mx-1 text-xl drop-shadow-md">'כפלשון'</strong>!
+                        <div className="flex flex-col gap-4 sm:gap-6 items-center text-slate-300 w-full shrink-0">
+                            <div className="leading-relaxed text-center font-medium text-sm sm:text-base lg:text-lg">
+                                ברוכים הבאים ל<strong className="text-white mx-1 xl:text-xl drop-shadow-md">'כפלשון'</strong>!
                                 <br />
                                 <span>
                                     {images.length} איורים דיגיטליים ויצירות AI הממחישים ביטויים, כפל לשון ומשחקי מילים בעברית — להעלות חיוך ולחגוג את השפה בצורתה הכיפית ביותר.
                                 </span>
                                 <br />
-                                <span className="text-purple-400 font-semibold flex items-center justify-center gap-2 mt-2 text-xl">הכל ביצירת מוחי הקודח... 😊</span>
-                                <span className="text-indigo-300 font-bold block mt-1 text-lg">ספי רייכקינד</span>
+                                <span className="text-purple-400 font-semibold flex items-center justify-center gap-2 mt-2 xl:text-xl">הכל ביצירת מוחי הקודח... 😊</span>
+                                <span className="text-indigo-300 font-bold block mt-1 xl:text-lg">ספי רייכקינד</span>
                             </div>
 
                             {/* QR + Socials side by side */}
-                            <div className="flex flex-row justify-center items-center gap-6 bg-black/30 p-5 rounded-3xl border border-white/5 shadow-inner w-full flex-wrap sm:flex-nowrap">
-                                {/* QR code */}
-                                <div className="flex-shrink-0 bg-white p-2 rounded-xl shadow-md rotate-1 hover:rotate-0 transition-transform">
-                                    <QRCodeDisplay url="https://sefitrailer.github.io/kefel-lashon/" />
+                            <div className="flex flex-row justify-center items-center gap-4 xl:gap-6 bg-black/30 p-3 xl:p-4 rounded-3xl border border-white/5 shadow-inner w-full flex-wrap sm:flex-nowrap">
+                                {/* Custom QR image */}
+                                <div className="flex-shrink-0 bg-white/10 rounded-xl shadow-md rotate-1 hover:rotate-0 transition-transform flex items-center justify-center overflow-hidden w-[100px] h-[100px] xl:w-[124px] xl:h-[124px]">
+                                    <img src="./qrcode.png" alt="QR Code" className="w-[110%] max-w-none h-auto object-cover" />
                                 </div>
 
                                 {/* Social buttons stacked vertically */}
