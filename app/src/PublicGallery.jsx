@@ -705,19 +705,19 @@ export default function PublicGallery({ images, metadata }) {
 
                         <div className="w-full h-full flex flex-row-reverse items-center justify-center gap-6 p-6 md:p-12 relative pointer-events-none z-50">
 
-                            {/* Panel Column (Left) */}
+                            {/* Left Panel (Absolute overlay or fixed flex to avoid shrinking image) */}
                             {showFullscreenInfo ? (
-                                <div className="hidden lg:flex w-[320px] xl:w-[380px] shrink-0 bg-black/80 backdrop-blur-2xl border border-white/10 rounded-3xl shadow-[0_0_50px_rgba(0,0,0,0.8)] flex-col relative z-[75] max-h-[85vh] pointer-events-auto animate-in fade-in slide-in-from-left-8">
+                                <div className="hidden lg:flex absolute left-6 lg:left-12 top-1/2 -translate-y-1/2 w-[320px] xl:w-[380px] shrink-0 bg-black/80 backdrop-blur-2xl border border-white/10 rounded-3xl shadow-[0_0_50px_rgba(0,0,0,0.8)] flex-col z-[75] max-h-[85vh] pointer-events-auto animate-in fade-in slide-in-from-left-8">
                                     <div className="px-6 pt-6 pb-4 border-b border-white/10 flex items-center justify-between">
                                         <button
                                             onClick={(e) => { e.stopPropagation(); setShowFullscreenInfo(false); }}
-                                            className="p-2 bg-white/10 hover:bg-white/20 text-white rounded-full transition-colors flex shrink-0"
+                                            className="p-2 bg-white/10 hover:bg-white/20 text-white rounded-full transition-colors flex shrink-0 ml-3"
                                             title="הסתר פרטים"
                                         >
                                             <X size={20} />
                                         </button>
                                         {fileMetadata?.title ? (
-                                            <h3 className="text-xl xl:text-2xl font-['Varela_Round',sans-serif] text-transparent bg-clip-text bg-gradient-to-r from-pink-400 to-purple-400 font-black leading-tight text-right flex-1 ml-4 truncate">
+                                            <h3 className="text-xl xl:text-2xl font-['Varela_Round',sans-serif] text-transparent bg-clip-text bg-gradient-to-r from-pink-400 to-purple-400 font-black leading-tight text-right flex-1 truncate ml-8">
                                                 {fileMetadata.title}
                                             </h3>
                                         ) : (
@@ -758,37 +758,32 @@ export default function PublicGallery({ images, metadata }) {
                                 </div>
                             )}
 
-                            {/* Center Column: Perfectly Centered Image */}
-                            <div className="flex-1 flex flex-col items-center justify-center h-full max-h-[95vh] pointer-events-auto relative">
-                                <div className="relative inline-flex items-center justify-center max-w-full max-h-full">
+                            {/* Center Column: Perfectly Centered Image (Uses all available space but respects absolute left pane) */}
+                            <div className="flex-1 flex flex-col items-center justify-center h-full max-h-[95vh] pointer-events-auto">
+                                <div className="relative inline-flex items-center justify-center max-w-[70vw] lg:max-w-[50vw] xl:max-w-[60vw]">
                                     <img
                                         src={`./images/${encodeURIComponent(currentFile)}`}
                                         alt={fileMetadata?.title || 'תמונה'}
-                                        className="max-w-full max-h-[85vh] xl:max-h-[92vh] object-contain drop-shadow-[0_0_60px_rgba(0,0,0,0.9)] rounded-2xl cursor-zoom-out"
+                                        className="max-h-[85vh] xl:max-h-[92vh] object-contain drop-shadow-[0_0_60px_rgba(0,0,0,0.9)] rounded-2xl cursor-zoom-out"
                                         onClick={(e) => { e.stopPropagation(); setIsFullscreen(false); }}
                                     />
 
                                     <button
                                         onClick={(e) => { e.stopPropagation(); nextImage(); }}
                                         disabled={currentIndex === displayImages.length - 1}
-                                        className={`absolute top-1/2 -translate-y-1/2 -right-12 md:-right-16 z-[70] bg-black/50 text-white backdrop-blur-md p-3 rounded-full shadow-[0_0_16px_rgba(0,0,0,0.4)] disabled:opacity-0 disabled:pointer-events-none hover:bg-white/20 hover:scale-110 transition-all cursor-pointer`}
+                                        className={`absolute top-1/2 -translate-y-1/2 -right-8 md:-right-16 z-[70] bg-black/50 text-white backdrop-blur-md p-3 md:p-4 rounded-full shadow-[0_0_16px_rgba(0,0,0,0.4)] disabled:opacity-0 disabled:pointer-events-none hover:bg-white/20 hover:scale-110 transition-all cursor-pointer`}
                                     >
                                         <ChevronRight size={28} />
                                     </button>
                                     <button
                                         onClick={(e) => { e.stopPropagation(); prevImage(); }}
                                         disabled={currentIndex === 0}
-                                        className={`absolute top-1/2 -translate-y-1/2 -left-12 md:-left-16 z-[70] bg-black/50 text-white backdrop-blur-md p-3 rounded-full shadow-[0_0_16px_rgba(0,0,0,0.4)] disabled:opacity-0 disabled:pointer-events-none hover:bg-white/20 hover:scale-110 transition-all cursor-pointer`}
+                                        className={`absolute top-1/2 -translate-y-1/2 -left-8 md:-left-16 z-[70] bg-black/50 text-white backdrop-blur-md p-3 md:p-4 rounded-full shadow-[0_0_16px_rgba(0,0,0,0.4)] disabled:opacity-0 disabled:pointer-events-none hover:bg-white/20 hover:scale-110 transition-all cursor-pointer`}
                                     >
                                         <ChevronLeft size={28} />
                                     </button>
                                 </div>
                             </div>
-
-                            {/* Right Column: Spacer to counterbalance the left panel so image stays exactly centered */}
-                            {showFullscreenInfo ? (
-                                <div className="hidden lg:block w-[320px] xl:w-[380px] shrink-0 pointer-events-none" />
-                            ) : null}
 
                         </div>
                     </div>
