@@ -86,8 +86,9 @@ export default function PublicGallery({ images, metadata }) {
     const [showExplanation, setShowExplanation] = useState(false);
     const [hasSeenTooltip, setHasSeenTooltip] = useState(() => localStorage.getItem('kefel-tooltip') === 'true');
     const [showTooltip, setShowTooltip] = useState(false);
+    const [showFullscreenInfo, setShowFullscreenInfo] = useState(true);
     const [sortOrder, setSortOrder] = useState('newest'); // 'newest' or 'random'
-    const [viewMode, setViewMode] = useState('single'); // 'single', 'grid-2x2', 'grid-3x3'
+    const [viewMode, setViewMode] = useState('single'); // 'single', 'grid-2x3', 'grid-3x4'
     const [themeIndex, setThemeIndex] = useState(() => {
         try {
             const saved = localStorage.getItem('kefel-theme');
@@ -116,16 +117,21 @@ export default function PublicGallery({ images, metadata }) {
             if (!aTagged && bTagged) return 1;
 
             if (sortOrder === 'newest') {
+                const dateA = metadata[a]?.dateMillis || 0;
+                const dateB = metadata[b]?.dateMillis || 0;
+
+                if (dateA !== dateB) return dateB - dateA; // Newest first
+
+                // Fallback to older logic if dateMillis not present (i.e. user didn't run updated prepare script)
                 const extractDate = (filename) => {
                     const match = filename.match(/_(\d{8})_(\d{6})_/);
                     return match ? parseInt(match[1] + match[2], 10) : 0;
                 };
-                const dateA = extractDate(a);
-                const dateB = extractDate(b);
-
-                if (dateA && dateB) return dateB - dateA; // Newest first
-                if (dateA) return -1; // A is newer
-                if (dateB) return 1;  // B is newer
+                const fbA = extractDate(a);
+                const fbB = extractDate(b);
+                if (fbA && fbB) return fbB - fbA;
+                if (fbA) return -1;
+                if (fbB) return 1;
             }
 
             return Math.random() - 0.5; // Randomize the rest
@@ -166,7 +172,7 @@ export default function PublicGallery({ images, metadata }) {
     const currentFile = displayImages[currentIndex];
     const fileMetadata = currentFile ? metadata[currentFile] : null;
 
-    const getGridSize = () => viewMode === 'grid-3x3' ? 9 : (viewMode === 'grid-2x2' ? 4 : 1);
+    const getGridSize = () => viewMode === 'grid-3x4' ? 12 : (viewMode === 'grid-2x3' ? 6 : 1);
 
     const nextImage = () => {
         const step = getGridSize();
@@ -347,7 +353,7 @@ export default function PublicGallery({ images, metadata }) {
                                                     )}
                                                 </>
                                             ) : (
-                                                <div className={`grid gap-2 sm:gap-4 p-2 w-full h-full relative z-10 items-center justify-items-center ${viewMode === 'grid-3x3' ? 'grid-cols-3 grid-rows-3' : 'grid-cols-2 grid-rows-2'}`}>
+                                                <div className={`grid gap-2 sm:gap-4 p-2 w-full h-full relative z-10 items-center justify-items-center ${viewMode === 'grid-3x4' ? 'grid-cols-4 grid-rows-3' : 'grid-cols-3 grid-rows-2'}`}>
                                                     {displayImages.slice(currentIndex, currentIndex + getGridSize()).map((file, idx) => (
                                                         <div key={file} className="relative aspect-square w-full h-full max-h-full max-w-full flex items-center justify-center cursor-zoom-in group" onClick={(e) => { e.stopPropagation(); setCurrentIndex(currentIndex + idx); setViewMode('single'); openFullscreen(); }}>
                                                             <img
@@ -405,17 +411,17 @@ export default function PublicGallery({ images, metadata }) {
                                                     <button onClick={() => setViewMode('single')} className={`p-1 rounded transition-colors ${viewMode === 'single' ? 'bg-white/20 text-white' : 'text-white/50 hover:text-white'}`} title="תמונה אחת">
                                                         <div className="w-5 h-5 border-[2px] border-current rounded-sm"></div>
                                                     </button>
-                                                    <button onClick={() => setViewMode('grid-2x2')} className={`p-1 rounded transition-colors ${viewMode === 'grid-2x2' ? 'bg-white/20 text-white' : 'text-white/50 hover:text-white'}`} title="רשת 2x2">
-                                                        <div className="w-5 h-5 grid grid-cols-2 grid-rows-2 gap-[2px]">
-                                                            <div className="bg-current rounded-[1px]"></div><div className="bg-current rounded-[1px]"></div>
-                                                            <div className="bg-current rounded-[1px]"></div><div className="bg-current rounded-[1px]"></div>
+                                                    <button onClick={() => setViewMode('grid-2x3')} className={`p-1 rounded transition-colors ${viewMode === 'grid-2x3' ? 'bg-white/20 text-white' : 'text-white/50 hover:text-white'}`} title="רשת 2x3">
+                                                        <div className="w-5 h-5 grid grid-cols-3 grid-rows-2 gap-[2px]">
+                                                            <div className="bg-current rounded-[1px]"></div><div className="bg-current rounded-[1px]"></div><div className="bg-current rounded-[1px]"></div>
+                                                            <div className="bg-current rounded-[1px]"></div><div className="bg-current rounded-[1px]"></div><div className="bg-current rounded-[1px]"></div>
                                                         </div>
                                                     </button>
-                                                    <button onClick={() => setViewMode('grid-3x3')} className={`p-1 rounded transition-colors ${viewMode === 'grid-3x3' ? 'bg-white/20 text-white' : 'text-white/50 hover:text-white'}`} title="רשת 3x3">
-                                                        <div className="w-5 h-5 grid grid-cols-3 grid-rows-3 gap-[1px]">
-                                                            <div className="bg-current rounded-[1px]"></div><div className="bg-current rounded-[1px]"></div><div className="bg-current rounded-[1px]"></div>
-                                                            <div className="bg-current rounded-[1px]"></div><div className="bg-current rounded-[1px]"></div><div className="bg-current rounded-[1px]"></div>
-                                                            <div className="bg-current rounded-[1px]"></div><div className="bg-current rounded-[1px]"></div><div className="bg-current rounded-[1px]"></div>
+                                                    <button onClick={() => setViewMode('grid-3x4')} className={`p-1 rounded transition-colors ${viewMode === 'grid-3x4' ? 'bg-white/20 text-white' : 'text-white/50 hover:text-white'}`} title="רשת 3x4">
+                                                        <div className="w-5 h-5 grid grid-cols-4 grid-rows-3 gap-[1px]">
+                                                            <div className="bg-current rounded-[1px]"></div><div className="bg-current rounded-[1px]"></div><div className="bg-current rounded-[1px]"></div><div className="bg-current rounded-[1px]"></div>
+                                                            <div className="bg-current rounded-[1px]"></div><div className="bg-current rounded-[1px]"></div><div className="bg-current rounded-[1px]"></div><div className="bg-current rounded-[1px]"></div>
+                                                            <div className="bg-current rounded-[1px]"></div><div className="bg-current rounded-[1px]"></div><div className="bg-current rounded-[1px]"></div><div className="bg-current rounded-[1px]"></div>
                                                         </div>
                                                     </button>
                                                 </div>
@@ -511,8 +517,8 @@ export default function PublicGallery({ images, metadata }) {
                             {/* QR + Socials side by side */}
                             <div className="flex flex-row justify-center items-center gap-4 xl:gap-6 bg-black/30 p-3 xl:p-4 rounded-3xl border border-white/5 shadow-inner w-full flex-wrap sm:flex-nowrap">
                                 {/* Custom QR image */}
-                                <div className="flex-shrink-0 bg-white/10 rounded-xl shadow-md rotate-1 hover:rotate-0 transition-transform flex items-center justify-center overflow-hidden w-[100px] h-[100px] xl:w-[124px] xl:h-[124px]">
-                                    <img src="./qrcode.png" alt="QR Code" className="w-[110%] max-w-none h-auto object-cover" />
+                                <div className="flex-shrink-0 border-2 border-white/20 bg-white/10 rounded-xl shadow-md rotate-1 hover:rotate-0 transition-transform flex items-center justify-center overflow-hidden w-[100px] h-[100px] xl:w-[124px] xl:h-[124px] p-2">
+                                    <img src="./qrcode.png" alt="QR Code" className="w-full h-full object-contain" />
                                 </div>
 
                                 {/* Social buttons stacked vertically */}
@@ -521,27 +527,27 @@ export default function PublicGallery({ images, metadata }) {
                                         href="https://whatsapp.com/channel/0029VajNwaPL2AU0jdlgxa20"
                                         target="_blank"
                                         rel="noreferrer"
-                                        className="relative flex items-center justify-center text-[#25D366] hover:text-[#20ba56] transition-transform hover:scale-110 rotate-1 hover:rotate-0 drop-shadow-md rounded-full bg-[#25D366]/10 p-1"
+                                        className="relative flex items-center justify-center text-[#25D366] hover:text-white hover:bg-[#25D366] transition-all hover:scale-110 rotate-1 hover:rotate-0 drop-shadow-md border-[2.5px] border-[#25D366] rounded-lg p-1 w-12 h-12"
                                         title="ערוץ"
                                     >
-                                        <MessageCircle size={48} strokeWidth={1.5} />
-                                        <span className="absolute font-bold text-white text-[13px]" style={{ textShadow: '0 1px 3px rgba(0,0,0,0.8)' }}>ערוץ</span>
+                                        <MessageCircle size={28} strokeWidth={1.5} className="shrink-0" />
+                                        <span className="absolute -bottom-5 font-bold text-white text-[12px]" style={{ textShadow: '0 1px 3px rgba(0,0,0,0.8)' }}>ערוץ</span>
                                     </a>
                                     <a
                                         href="https://chat.whatsapp.com/LN6nwJ8cYiLHaj5uhTum9P"
                                         target="_blank"
                                         rel="noreferrer"
-                                        className="relative flex items-center justify-center text-emerald-500 hover:text-emerald-400 transition-transform hover:scale-110 -rotate-1 hover:rotate-0 drop-shadow-md rounded-full bg-emerald-500/10 p-1"
+                                        className="relative flex items-center justify-center text-[#25D366] hover:text-white hover:bg-[#25D366] transition-all hover:scale-110 -rotate-1 hover:rotate-0 drop-shadow-md border-[2.5px] border-[#25D366] rounded-lg p-1 w-12 h-12 mt-3"
                                         title="קבוצה"
                                     >
-                                        <MessageCircle size={48} strokeWidth={1.5} />
-                                        <span className="absolute font-bold text-white text-[12px]" style={{ textShadow: '0 1px 3px rgba(0,0,0,0.8)' }}>קבוצה</span>
+                                        <MessageCircle size={28} strokeWidth={1.5} className="shrink-0" />
+                                        <span className="absolute -bottom-5 font-bold text-white text-[12px]" style={{ textShadow: '0 1px 3px rgba(0,0,0,0.8)' }}>קבוצה</span>
                                     </a>
                                     <a
                                         href="https://www.linkedin.com/in/sefi-riechkind-679b67136"
                                         target="_blank"
                                         rel="noreferrer"
-                                        className="flex items-center justify-center text-[#0077b5] hover:text-white hover:bg-[#0077b5] transition-all hover:scale-110 drop-shadow-md border-[2.5px] border-[#0077b5] rounded-lg p-1 w-12 h-12"
+                                        className="flex items-center justify-center text-[#0077b5] hover:text-white hover:bg-[#0077b5] transition-all hover:scale-110 drop-shadow-md border-[2.5px] border-[#0077b5] rounded-lg p-1 w-12 h-12 mt-3"
                                         title="לינקדאין"
                                     >
                                         <Linkedin size={28} fill="currentColor" strokeWidth={1} className="shrink-0" />
@@ -620,31 +626,50 @@ export default function PublicGallery({ images, metadata }) {
                         <ChevronLeft size={32} />
                     </button>
 
-                    <div className="relative inline-flex flex-col items-center justify-center max-w-[90vw] max-h-[90vh]">
-                        <img
-                            src={`./images/${encodeURIComponent(currentFile)}`}
-                            alt={fileMetadata?.title || 'תמונה'}
-                            className="max-w-full max-h-[85vh] object-contain drop-shadow-[0_0_60px_rgba(0,0,0,0.9)] rounded-2xl cursor-zoom-out"
-                            onClick={(e) => { e.stopPropagation(); setIsFullscreen(false); }}
-                        />
+                    <div className="w-full h-full flex flex-col xl:flex-row items-center justify-center gap-6 p-6 md:p-12 relative">
+                        {/* Image Wrapper */}
+                        <div className={`relative flex flex-col items-center justify-center flex-1 max-w-[90vw] transition-all duration-300 ${showFullscreenInfo ? 'xl:max-w-[70vw]' : 'xl:max-w-[90vw]'}`}>
+                            <div className="relative group w-full h-full flex items-center justify-center">
+                                <img
+                                    src={`./images/${encodeURIComponent(currentFile)}`}
+                                    alt={fileMetadata?.title || 'תמונה'}
+                                    className="max-w-full max-h-[85vh] object-contain drop-shadow-[0_0_60px_rgba(0,0,0,0.9)] rounded-2xl cursor-zoom-out flex-shrink"
+                                    onClick={(e) => { e.stopPropagation(); setIsFullscreen(false); }}
+                                />
 
-                        {(fileMetadata?.title || fileMetadata?.explanation) && (
-                            <div className="absolute -left-6 md:-left-12 bottom-6 max-w-[280px] flex flex-col items-start gap-3 z-[70]">
-                                {fileMetadata?.explanation && (
-                                    <button
-                                        onClick={(e) => { e.stopPropagation(); setShowExplanation(!showExplanation); setIsFullscreen(false); }}
-                                        className={`flex items-center gap-1.5 p-2 px-3 lg:px-4 rounded-2xl backdrop-blur-xl bg-black/60 shadow-[0_4px_20px_rgba(0,0,0,0.5)] border border-white/10 hover:bg-white/10 transition-all whitespace-nowrap text-sm lg:text-base font-bold text-white group cursor-pointer`}
-                                    >
-                                        <div className="flex flex-col items-end leading-snug text-right pointer-events-none">
-                                            <span>להסבר</span>
-                                            <span>לחץ כאן</span>
-                                        </div>
-                                        <ChevronLeft size={20} strokeWidth={2.5} className="group-hover:-translate-x-1 transition-transform opacity-80" />
-                                    </button>
+                                {/* Floating Action Buttons when Hovering on Image */}
+                                {(fileMetadata?.title || fileMetadata?.explanation) && (
+                                    <div className="absolute top-4 right-4 flex flex-col gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
+                                        <button
+                                            onClick={(e) => { e.stopPropagation(); setShowFullscreenInfo(!showFullscreenInfo); }}
+                                            className="bg-black/60 backdrop-blur-md text-white px-4 py-2 rounded-xl border border-white/20 hover:bg-white/20 transition-all font-bold shadow-lg flex items-center gap-2"
+                                        >
+                                            {showFullscreenInfo ? 'הסתר פרטים' : 'הצג פרטים'}
+                                            <MessageCircle size={20} />
+                                        </button>
+                                    </div>
                                 )}
+                            </div>
+                        </div>
+
+                        {/* Separate Panel for Info (No Overlap) */}
+                        {showFullscreenInfo && (fileMetadata?.title || fileMetadata?.explanation) && (
+                            <div className="w-full xl:w-[400px] xl:max-w-sm shrink-0 bg-black/70 backdrop-blur-2xl border border-white/10 rounded-3xl p-6 sm:p-8 flex flex-col gap-6 shadow-[0_0_50px_rgba(0,0,0,0.8)] animate-in fade-in slide-in-from-right-8 z-[70] max-h-[40vh] xl:max-h-[85vh] overflow-y-auto custom-scrollbar">
                                 {fileMetadata?.title && (
-                                    <div className="bg-black/70 backdrop-blur-xl text-white px-5 py-3.5 rounded-2xl text-base lg:text-lg font-['Varela_Round',sans-serif] border border-white/20 text-right leading-snug shadow-2xl">
+                                    <h3 className="text-2xl sm:text-3xl font-['Varela_Round',sans-serif] text-transparent bg-clip-text bg-gradient-to-r from-pink-400 to-purple-400 font-black leading-tight border-b border-white/10 pb-4">
                                         {fileMetadata.title}
+                                    </h3>
+                                )}
+                                {fileMetadata?.explanation && (
+                                    <div className="text-white/90 text-sm sm:text-base leading-relaxed flex-1">
+                                        {fileMetadata.explanation.split('\n').map((paragraph, index) => (
+                                            <p key={index} className="mb-4 last:mb-0">
+                                                {paragraph}
+                                            </p>
+                                        ))}
+                                        <div className="mt-8 pt-4 border-t border-white/5 text-right w-full">
+                                            <span className="text-[10px] text-white/30 uppercase tracking-widest font-black">* טקסט זה נכתב על ידי AI ועלול להכיל אי דיוקים</span>
+                                        </div>
                                     </div>
                                 )}
                             </div>

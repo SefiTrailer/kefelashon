@@ -63,6 +63,9 @@ async function buildPublicGallery() {
 
                 publicFiles.push(newFilename);
                 if (metadata.title && metadata.explanation) {
+                    // Extract the creation/modification time of the original asset
+                    // to support sorting by 'newest' in the frontend exactly as they were created on disk
+                    metadata.dateMillis = fs.statSync(sourcePath).mtimeMs;
                     publicData[newFilename] = metadata;
                 }
 
