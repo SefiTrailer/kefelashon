@@ -84,6 +84,8 @@ export default function PublicGallery({ images, metadata }) {
     const [searchQuery, setSearchQuery] = useState('');
     const [isSearchOpen, setIsSearchOpen] = useState(false);
     const [showExplanation, setShowExplanation] = useState(false);
+    const [hasSeenTooltip, setHasSeenTooltip] = useState(() => localStorage.getItem('kefel-tooltip') === 'true');
+    const [showTooltip, setShowTooltip] = useState(false);
     const [sortOrder, setSortOrder] = useState('newest'); // 'newest' or 'random'
     const [viewMode, setViewMode] = useState('single'); // 'single', 'grid-2x2', 'grid-3x3'
     const [themeIndex, setThemeIndex] = useState(() => {
@@ -148,6 +150,19 @@ export default function PublicGallery({ images, metadata }) {
     }, [searchQuery, shuffledImages, metadata]);
 
     const displayImages = searchQuery ? filteredImages : shuffledImages;
+
+    const openFullscreen = () => {
+        setIsFullscreen(true);
+        if (!hasSeenTooltip) {
+            setShowTooltip(true);
+            setTimeout(() => {
+                setShowTooltip(false);
+                setHasSeenTooltip(true);
+                localStorage.setItem('kefel-tooltip', 'true');
+            }, 3000);
+        }
+    };
+
     const currentFile = displayImages[currentIndex];
     const fileMetadata = currentFile ? metadata[currentFile] : null;
 
@@ -172,6 +187,7 @@ export default function PublicGallery({ images, metadata }) {
             setShowExplanation(false);
         } else if (currentIndex > 0) {
             setCurrentIndex(0);
+            setIsFullscreen(false);
             setShowExplanation(false);
         }
     };
@@ -256,45 +272,49 @@ export default function PublicGallery({ images, metadata }) {
                                 {/* Inner card */}
                                 <div className={`${theme.innerBg} rounded-[1.8rem] sm:rounded-[2.2rem] flex flex-col flex-1 min-h-0`}>
 
-                                    {/* Title Bar with inline Search and About */}
-                                    <div className="px-3 sm:px-6 py-4 flex items-center justify-between relative flex-shrink-0 z-20 w-full min-h-[5rem]">
-                                        <div className={`absolute bottom-0 left-0 w-full h-[2px] bg-gradient-to-r ${theme.frameGrad} opacity-60`} />
+                                    {/* Title Bar with inline Search and About - Completely hidden in Grid mode */}
+                                    {viewMode === 'single' && (
+                                        <div className="px-3 sm:px-6 py-4 flex items-center justify-between relative flex-shrink-0 z-20 w-full min-h-[5rem]">
+                                            <div className={`absolute bottom-0 left-0 w-full h-[2px] bg-gradient-to-r ${theme.frameGrad} opacity-60`} />
 
-                                        {/* Right: Search button */}
-                                        <button
-                                            onClick={() => setIsSearchOpen(true)}
-                                            className={`p-2 rounded-full backdrop-blur-md flex items-center justify-center transition-all ${theme.headerBtnSearchCls} flex-shrink-0 animate-in fade-in duration-300 relative z-10 w-10 sm:w-12 h-10 sm:h-12`}
-                                            title="חיפוש"
-                                        >
-                                            <Search size={22} />
-                                        </button>
-
-                                        {/* Center: Title absolutely centered within the bar so it's perfectly in the middle of the frame */}
-                                        <div className="absolute inset-x-0 w-full h-full flex items-center justify-center pointer-events-none px-16 sm:px-24">
-                                            <h2
-                                                className={`text-2xl sm:text-3xl md:text-5xl font-['Varela_Round',sans-serif] text-transparent bg-clip-text bg-gradient-to-r ${theme.titleGrad} text-center leading-tight`}
-                                                style={{ filter: 'drop-shadow(0 1px 3px rgba(0,0,0,0.3))' }}
-                                            >
-                                                {fileMetadata?.title || ''}
-                                            </h2>
-                                        </div>
-
-                                        {/* Left: Explain button overlay trigger */}
-                                        <div className="relative z-10 w-24 sm:w-32 flex justify-start">
-                                            {fileMetadata?.explanation && (
+                                            {/* Right: Search button (only single mode) */}
+                                            <div className="relative z-10 flex-shrink-0 w-10 sm:w-12 h-10 sm:h-12 flex justify-end">
                                                 <button
-                                                    onClick={() => setShowExplanation(!showExplanation)}
-                                                    className={`flex items-center gap-1.5 sm:gap-2 p-1.5 sm:p-2 px-3 rounded-2xl backdrop-blur-md transition-all ${theme.headerBtnAboutCls} flex-shrink-0 whitespace-nowrap text-sm sm:text-base font-bold animate-in fade-in duration-300`}
+                                                    onClick={() => setIsSearchOpen(true)}
+                                                    className={`p-2 rounded-full backdrop-blur-md flex items-center justify-center transition-all ${theme.headerBtnSearchCls} w-full h-full animate-in fade-in duration-300`}
+                                                    title="חיפוש"
                                                 >
-                                                    <div className="flex flex-col items-end leading-snug text-right pointer-events-none">
-                                                        <span>להסבר</span>
-                                                        <span>לחץ כאן</span>
-                                                    </div>
-                                                    <ChevronLeft size={20} sm={{ size: 24 }} strokeWidth={2.5} className={`transition-transform duration-300 shrink-0 ${showExplanation ? '-rotate-90' : 'rotate-0'}`} />
+                                                    <Search size={22} />
                                                 </button>
-                                            )}
+                                            </div>
+
+                                            {/* Center: Title absolutely centered within the bar (only single mode) */}
+                                            <div className="absolute inset-x-0 w-full h-full flex items-center justify-center pointer-events-none px-16 sm:px-24">
+                                                <h2
+                                                    className={`text-2xl sm:text-3xl md:text-5xl font-['Varela_Round',sans-serif] text-transparent bg-clip-text bg-gradient-to-r ${theme.titleGrad} text-center leading-tight transition-opacity duration-300`}
+                                                    style={{ filter: 'drop-shadow(0 1px 3px rgba(0,0,0,0.3))' }}
+                                                >
+                                                    {fileMetadata?.title || ''}
+                                                </h2>
+                                            </div>
+
+                                            {/* Left: Explain button overlay trigger (only single mode) */}
+                                            <div className="relative z-10 w-24 sm:w-32 flex justify-start">
+                                                {fileMetadata?.explanation && (
+                                                    <button
+                                                        onClick={() => setShowExplanation(!showExplanation)}
+                                                        className={`flex items-center gap-1.5 sm:gap-2 p-1.5 sm:p-2 px-3 rounded-2xl backdrop-blur-md transition-all ${theme.headerBtnAboutCls} flex-shrink-0 whitespace-nowrap text-sm sm:text-base font-bold animate-in fade-in duration-300`}
+                                                    >
+                                                        <div className="flex flex-col items-end leading-snug text-right pointer-events-none">
+                                                            <span>להסבר</span>
+                                                            <span>לחץ כאן</span>
+                                                        </div>
+                                                        <ChevronLeft size={20} sm={{ size: 24 }} strokeWidth={2.5} className={`transition-transform duration-300 shrink-0 ${showExplanation ? '-rotate-90' : 'rotate-0'}`} />
+                                                    </button>
+                                                )}
+                                            </div>
                                         </div>
-                                    </div>
+                                    )}
 
                                     {/* Image + nav arrows wrapper (no overflow-hidden so arrows aren't clipped) */}
                                     <div className="relative w-full flex-1 flex flex-col min-h-0"
@@ -305,7 +325,7 @@ export default function PublicGallery({ images, metadata }) {
                                         {/* Image area — click to fullscreen */}
                                         <div className={`relative flex-1 flex flex-col items-center justify-center bg-black/40 w-full overflow-hidden cursor-zoom-in min-h-0`}
                                             style={{ padding: '8px' }}
-                                            onClick={() => viewMode === 'single' ? setIsFullscreen(true) : null}>
+                                            onClick={() => viewMode === 'single' ? openFullscreen() : null}>
 
                                             {/* Glow behind image */}
                                             <div className={`absolute inset-0 bg-gradient-to-t ${theme.glowClass} to-transparent opacity-50 mix-blend-screen pointer-events-none`} />
@@ -327,17 +347,17 @@ export default function PublicGallery({ images, metadata }) {
                                                     )}
                                                 </>
                                             ) : (
-                                                <div className={`grid gap-2 sm:gap-4 p-2 w-full h-full relative z-10 ${viewMode === 'grid-3x3' ? 'grid-cols-3 grid-rows-3' : 'grid-cols-2 grid-rows-2'}`}>
+                                                <div className={`grid gap-2 sm:gap-4 p-2 w-full h-full relative z-10 items-center justify-items-center ${viewMode === 'grid-3x3' ? 'grid-cols-3 grid-rows-3' : 'grid-cols-2 grid-rows-2'}`}>
                                                     {displayImages.slice(currentIndex, currentIndex + getGridSize()).map((file, idx) => (
-                                                        <div key={file} className="relative w-full h-full cursor-zoom-in group" onClick={(e) => { e.stopPropagation(); setCurrentIndex(currentIndex + idx); setViewMode('single'); setIsFullscreen(true); }}>
+                                                        <div key={file} className="relative aspect-square w-full h-full max-h-full max-w-full flex items-center justify-center cursor-zoom-in group" onClick={(e) => { e.stopPropagation(); setCurrentIndex(currentIndex + idx); setViewMode('single'); openFullscreen(); }}>
                                                             <img
                                                                 src={`./images/${encodeURIComponent(file)}`}
                                                                 alt={metadata[file]?.title || 'תמונה'}
-                                                                className="w-full h-full object-cover filter drop-shadow-md rounded-xl transition-transform group-hover:scale-105"
+                                                                className="w-full h-full object-contain filter drop-shadow-md rounded-xl transition-transform group-hover:scale-105"
                                                                 loading="lazy"
                                                             />
                                                             {metadata[file]?.title && (
-                                                                <div className="absolute bottom-0 w-full bg-black/70 backdrop-blur-sm text-white text-xs sm:text-sm text-center py-1 sm:py-1.5 rounded-b-xl opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap overflow-hidden text-ellipsis px-2">
+                                                                <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/90 to-transparent text-white text-xs sm:text-[13px] text-center pt-6 pb-2 rounded-b-xl opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap overflow-hidden text-ellipsis px-2 font-bold z-20 pointer-events-none">
                                                                     {metadata[file].title}
                                                                 </div>
                                                             )}
@@ -370,7 +390,18 @@ export default function PublicGallery({ images, metadata }) {
 
                                             <div className="flex items-center gap-4 shrink-0 bg-white/5 px-2 py-1.5 rounded-xl border border-white/5 z-40 relative">
                                                 {/* View Mode Icons */}
-                                                <div className="flex items-center gap-1 border-l border-white/20 pl-4">
+                                                {/* Search Icon visible in Grid mode */}
+                                                {viewMode !== 'single' && (
+                                                    <button
+                                                        onClick={() => setIsSearchOpen(true)}
+                                                        className={`p-1.5 bg-white/10 hover:bg-white/20 rounded-lg text-white transition-colors duration-300 mr-2`}
+                                                        title="חיפוש"
+                                                    >
+                                                        <Search size={18} />
+                                                    </button>
+                                                )}
+
+                                                <div className="flex items-center gap-1 border-l border-white/20 pl-3">
                                                     <button onClick={() => setViewMode('single')} className={`p-1 rounded transition-colors ${viewMode === 'single' ? 'bg-white/20 text-white' : 'text-white/50 hover:text-white'}`} title="תמונה אחת">
                                                         <div className="w-5 h-5 border-[2px] border-current rounded-sm"></div>
                                                     </button>
@@ -389,18 +420,19 @@ export default function PublicGallery({ images, metadata }) {
                                                     </button>
                                                 </div>
 
-                                                <div className="flex items-center gap-2">
-                                                    <span className="text-white/70 text-sm font-bold">מיון:</span>
-                                                    <select
-                                                        value={sortOrder}
-                                                        onChange={(e) => setSortOrder(e.target.value)}
-                                                        className="bg-transparent text-white text-sm outline-none cursor-pointer font-medium appearance-none select-none"
-                                                        style={{ paddingLeft: '0.2rem' }}
-                                                    >
-                                                        <option value="newest" className="bg-slate-900">הכי חדשים</option>
-                                                        <option value="random" className="bg-slate-900">אקראי</option>
-                                                    </select>
-                                                    <div className="pointer-events-none text-white/50 text-xs mr-1">▼</div>
+                                                <div className="flex items-center gap-2 relative group cursor-pointer">
+                                                    <span className="text-white/70 text-sm font-bold pointer-events-none">מיון:</span>
+                                                    <div className="relative">
+                                                        <select
+                                                            value={sortOrder}
+                                                            onChange={(e) => setSortOrder(e.target.value)}
+                                                            className="bg-transparent text-white text-sm outline-none cursor-pointer font-medium select-none pr-1 pl-6 appearance-none hover:text-white/80 transition-colors z-10 relative"
+                                                        >
+                                                            <option value="newest" className="bg-slate-900">הכי חדשים</option>
+                                                            <option value="random" className="bg-slate-900">אקראי</option>
+                                                        </select>
+                                                        <div className="absolute left-1 top-1/2 -translate-y-1/2 pointer-events-none text-white/50 text-[10px] opacity-70">▼</div>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
@@ -559,11 +591,18 @@ export default function PublicGallery({ images, metadata }) {
                     onClick={() => setIsFullscreen(false)}
                 >
                     <button
-                        className="absolute top-4 right-4 text-white bg-white/10 hover:bg-white/20 rounded-full p-3 transition-colors z-[70] cursor-pointer"
+                        className="absolute top-4 right-4 text-white bg-white/10 hover:bg-white/20 rounded-full p-3 transition-colors z-[80] cursor-pointer shadow-md"
                         onClick={(e) => { e.stopPropagation(); setIsFullscreen(false); }}
                     >
                         <X size={28} />
                     </button>
+
+                    {/* Tooltip on first visit */}
+                    {showTooltip && (
+                        <div className="absolute top-20 left-1/2 -translate-x-1/2 bg-indigo-500/90 text-white px-5 py-2.5 rounded-full font-bold shadow-[0_0_20px_rgba(99,102,241,0.6)] animate-in slide-in-from-top-4 fade-in z-[80] text-sm md:text-base pointer-events-none border border-white/20">
+                            ✨ ניתן לעבור בין התמונות עם החיצים או גלגלת העכבר
+                        </div>
+                    )}
 
                     {/* Fullscreen Arrows */}
                     <button
@@ -581,17 +620,36 @@ export default function PublicGallery({ images, metadata }) {
                         <ChevronLeft size={32} />
                     </button>
 
-                    <img
-                        src={`./images/${encodeURIComponent(currentFile)}`}
-                        alt={fileMetadata?.title || 'תמונה'}
-                        className="max-w-[95vw] max-h-[95vh] object-contain drop-shadow-[0_0_60px_rgba(0,0,0,0.9)] rounded-2xl cursor-zoom-out"
-                        onClick={(e) => { e.stopPropagation(); setIsFullscreen(false); }}
-                    />
-                    {fileMetadata?.title && (
-                        <div className="absolute bottom-4 right-6 max-w-[220px] bg-black/70 backdrop-blur-md text-white px-4 py-3 rounded-2xl text-base font-['Varela_Round',sans-serif] border border-white/20 text-right leading-snug z-[70]">
-                            {fileMetadata.title}
-                        </div>
-                    )}
+                    <div className="relative inline-flex flex-col items-center justify-center max-w-[90vw] max-h-[90vh]">
+                        <img
+                            src={`./images/${encodeURIComponent(currentFile)}`}
+                            alt={fileMetadata?.title || 'תמונה'}
+                            className="max-w-full max-h-[85vh] object-contain drop-shadow-[0_0_60px_rgba(0,0,0,0.9)] rounded-2xl cursor-zoom-out"
+                            onClick={(e) => { e.stopPropagation(); setIsFullscreen(false); }}
+                        />
+
+                        {(fileMetadata?.title || fileMetadata?.explanation) && (
+                            <div className="absolute -left-6 md:-left-12 bottom-6 max-w-[280px] flex flex-col items-start gap-3 z-[70]">
+                                {fileMetadata?.explanation && (
+                                    <button
+                                        onClick={(e) => { e.stopPropagation(); setShowExplanation(!showExplanation); setIsFullscreen(false); }}
+                                        className={`flex items-center gap-1.5 p-2 px-3 lg:px-4 rounded-2xl backdrop-blur-xl bg-black/60 shadow-[0_4px_20px_rgba(0,0,0,0.5)] border border-white/10 hover:bg-white/10 transition-all whitespace-nowrap text-sm lg:text-base font-bold text-white group cursor-pointer`}
+                                    >
+                                        <div className="flex flex-col items-end leading-snug text-right pointer-events-none">
+                                            <span>להסבר</span>
+                                            <span>לחץ כאן</span>
+                                        </div>
+                                        <ChevronLeft size={20} strokeWidth={2.5} className="group-hover:-translate-x-1 transition-transform opacity-80" />
+                                    </button>
+                                )}
+                                {fileMetadata?.title && (
+                                    <div className="bg-black/70 backdrop-blur-xl text-white px-5 py-3.5 rounded-2xl text-base lg:text-lg font-['Varela_Round',sans-serif] border border-white/20 text-right leading-snug shadow-2xl">
+                                        {fileMetadata.title}
+                                    </div>
+                                )}
+                            </div>
+                        )}
+                    </div>
                 </div>
             )}
 
