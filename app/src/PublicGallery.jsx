@@ -325,6 +325,22 @@ export default function PublicGallery({ images, metadata }) {
                                 className={`relative bg-gradient-to-br ${theme.frameGrad} p-[3px] sm:p-1.5 md:p-[10px] rounded-[2rem] sm:rounded-[2.5rem] shadow-[0_20px_60px_rgba(0,0,0,0.55)] w-full flex-1 flex flex-col min-h-0`}
                                 style={{ willChange: 'transform' }}
                             >
+                                {/* Nav arrows — seamlessly integrated into the colorful outer boundary */}
+                                <button
+                                    onClick={(e) => { e.stopPropagation(); nextImage(); }}
+                                    disabled={currentIndex + getGridSize() >= displayImages.length && currentIndex !== displayImages.length - 1}
+                                    className={`absolute top-1/2 -translate-y-1/2 -right-4 sm:-right-[22px] z-50 bg-black/50 md:${theme.navBtnCls} backdrop-blur-md p-2 sm:p-3 md:shadow-[0_0_16px_rgba(0,0,0,0.4)] rounded-full text-white md:text-purple-600 border border-white/10 md:border-purple-200 disabled:opacity-0 disabled:pointer-events-none hover:scale-110 hover:brightness-110 transition-all font-bold group`}
+                                >
+                                    <ChevronRight className="w-6 h-6 sm:w-7 sm:h-7 group-hover:translate-x-0.5 transition-transform" />
+                                </button>
+                                <button
+                                    onClick={(e) => { e.stopPropagation(); prevImage(); }}
+                                    disabled={currentIndex === 0}
+                                    className={`absolute top-1/2 -translate-y-1/2 -left-4 sm:-left-[22px] z-50 bg-black/50 md:${theme.navBtnCls} backdrop-blur-md p-2 sm:p-3 md:shadow-[0_0_16px_rgba(0,0,0,0.4)] rounded-full text-white md:text-purple-600 border border-white/10 md:border-purple-200 disabled:opacity-0 disabled:pointer-events-none hover:scale-110 hover:brightness-110 transition-all font-bold group`}
+                                >
+                                    <ChevronLeft className="w-6 h-6 sm:w-7 sm:h-7 group-hover:-translate-x-0.5 transition-transform" />
+                                </button>
+
                                 {/* Inner card */}
                                 <div className={`${theme.innerBg} rounded-[1.8rem] sm:rounded-[2.2rem] flex flex-col flex-1 min-h-0`}>
 
@@ -347,25 +363,25 @@ export default function PublicGallery({ images, metadata }) {
                                             {/* Center: Title absolutely centered within the bar (only single mode) */}
                                             <div className="flex-1 w-full flex items-center justify-center px-1 overflow-hidden">
                                                 <h2
-                                                    className={`text-[clamp(1.3rem,4vw,2.5rem)] font-['Varela_Round',sans-serif] text-transparent bg-clip-text bg-gradient-to-r ${theme.titleGrad} text-center leading-tight transition-opacity duration-300 break-words line-clamp-2`}
-                                                    style={{ filter: 'drop-shadow(0 1px 3px rgba(0,0,0,0.3))' }}
+                                                    className={`text-[clamp(1.3rem,4vw,2.5rem)] font-['Varela_Round',sans-serif] text-transparent bg-clip-text bg-gradient-to-r ${theme.titleGrad} text-center tracking-wide leading-tight transition-opacity duration-300 break-words line-clamp-2`}
+                                                    style={{ filter: 'drop-shadow(0 2px 8px rgba(34,211,238,0.25))' }}
                                                 >
                                                     {fileMetadata?.title || ''}
                                                 </h2>
                                             </div>
 
                                             {/* Left: Explain button overlay trigger (only single mode) */}
-                                            <div className="relative z-10 w-24 sm:w-28 flex items-center justify-start flex-shrink-0">
+                                            <div className="relative z-50 w-24 sm:w-28 flex items-center justify-start flex-shrink-0">
                                                 {fileMetadata?.explanation ? (
                                                     <button
                                                         onClick={() => setShowExplanation(!showExplanation)}
-                                                        className={`flex items-center gap-1.5 p-1.5 sm:p-2 px-2.5 sm:px-3 rounded-2xl backdrop-blur-md transition-all ${theme.headerBtnAboutCls} whitespace-nowrap text-xs sm:text-sm font-bold animate-in fade-in duration-300`}
+                                                        className={`flex items-center gap-1.5 p-1.5 sm:p-2 px-3 sm:px-4 rounded-full backdrop-blur-md transition-all border border-cyan-500/30 hover:border-cyan-400 bg-slate-900/60 hover:bg-slate-800/80 text-cyan-50 shadow-[0_4px_12px_rgba(0,0,0,0.5)] whitespace-nowrap text-xs sm:text-sm font-bold animate-in fade-in duration-300`}
                                                     >
                                                         <div className="flex flex-col items-end leading-snug text-right pointer-events-none">
                                                             <span>להסבר</span>
-                                                            <span>לחץ כאן</span>
+                                                            <span className="text-cyan-200">לחץ כאן</span>
                                                         </div>
-                                                        <ChevronLeft size={18} sm={{ size: 22 }} strokeWidth={2.5} className={`transition-transform duration-300 shrink-0 ${showExplanation ? '-rotate-90' : 'rotate-0'}`} />
+                                                        <ChevronLeft size={18} sm={{ size: 22 }} strokeWidth={2.5} className={`transition-transform duration-300 shrink-0 text-cyan-400 ${showExplanation ? '-rotate-90' : 'rotate-0'}`} />
                                                     </button>
                                                 ) : <div className="invisible w-full h-10"></div>}
                                             </div>
@@ -427,21 +443,7 @@ export default function PublicGallery({ images, metadata }) {
                                                 </div>
                                             )}
 
-                                            {/* Nav arrows — positioned absolutely centered vertically to the IMAGE CONTAINER */}
-                                            <button
-                                                onClick={(e) => { e.stopPropagation(); nextImage(); }}
-                                                disabled={currentIndex + getGridSize() >= displayImages.length && currentIndex !== displayImages.length - 1}
-                                                className={`absolute top-1/2 -translate-y-1/2 right-2 md:right-4 xl:right-6 z-30 bg-black/50 md:${theme.navBtnCls} backdrop-blur-md p-2 sm:p-3 md:shadow-[0_0_16px_rgba(0,0,0,0.4)] rounded-full text-white md:text-purple-600 border border-white/10 md:border-purple-200 disabled:opacity-0 disabled:pointer-events-none hover:scale-110 hover:brightness-110 transition-all font-bold group`}
-                                            >
-                                                <ChevronRight className="w-6 h-6 sm:w-7 sm:h-7 group-hover:translate-x-0.5 transition-transform" />
-                                            </button>
-                                            <button
-                                                onClick={(e) => { e.stopPropagation(); prevImage(); }}
-                                                disabled={currentIndex === 0}
-                                                className={`absolute top-1/2 -translate-y-1/2 left-2 md:left-4 xl:left-6 z-30 bg-black/50 md:${theme.navBtnCls} backdrop-blur-md p-2 sm:p-3 md:shadow-[0_0_16px_rgba(0,0,0,0.4)] rounded-full text-white md:text-purple-600 border border-white/10 md:border-purple-200 disabled:opacity-0 disabled:pointer-events-none hover:scale-110 hover:brightness-110 transition-all font-bold group`}
-                                            >
-                                                <ChevronLeft className="w-6 h-6 sm:w-7 sm:h-7 group-hover:-translate-x-0.5 transition-transform" />
-                                            </button>
+                                            {/* Nav arrows were extracted from here and moved to the outer container for border-overlapping design! */}
 
                                         </div>
 
