@@ -1,4 +1,4 @@
-import { useState, useEffect, useMemo } from 'react';
+import { useState, useEffect, useMemo, useRef, useCallback } from 'react';
 import { ChevronRight, ChevronLeft, Search, X, MessageCircle, Info, Palette, Linkedin, Share2 } from 'lucide-react';
 import QRCodeDisplay from './components/QRCodeDisplay';
 
@@ -117,6 +117,18 @@ export default function PublicGallery({ images, metadata }) {
     const [isThemeMenuOpen, setIsThemeMenuOpen] = useState(false);
     const [isSortOpen, setIsSortOpen] = useState(false);
     const [isFullscreen, setIsFullscreen] = useState(false);
+
+    // Sidebar dynamic height measurement
+    const sidebarRef = useRef(null);
+    const [sidebarH, setSidebarH] = useState(700);
+    useEffect(() => {
+        if (!sidebarRef.current) return;
+        const ro = new ResizeObserver(([entry]) => {
+            setSidebarH(entry.contentRect.height);
+        });
+        ro.observe(sidebarRef.current);
+        return () => ro.disconnect();
+    }, []);
 
     const theme = THEMES[themeIndex];
 
@@ -343,26 +355,38 @@ export default function PublicGallery({ images, metadata }) {
                                 className={`relative bg-gradient-to-br ${theme.frameGrad} p-[3px] sm:p-1.5 md:p-[10px] rounded-[2rem] sm:rounded-[2.5rem] shadow-[0_20px_60px_rgba(0,0,0,0.55)] w-full flex-1 flex flex-col min-h-0`}
                                 style={{ willChange: 'transform' }}
                             >
-                                {/* Nav arrows — on the outer gradient frame so top-1/2 = visual center of the border ring */}
-                                {/* Next Arrow Wrapper */}
-                                <div className={`absolute top-1/2 -translate-y-1/2 -right-9 sm:-right-[46px] md:-right-[48px] z-50 rounded-full bg-gradient-to-br ${theme.frameGrad} p-[3px] sm:p-1.5 md:p-[10px] shadow-[0_0_20px_rgba(0,0,0,0.5)] transition-all ${currentIndex + getGridSize() >= displayImages.length && currentIndex !== displayImages.length - 1 ? 'opacity-0 pointer-events-none' : 'hover:scale-110 hover:brightness-110'}`}>
-                                    <button
-                                        onClick={(e) => { e.stopPropagation(); nextImage(); }}
-                                        className={`bg-black md:${theme.navBtnCls} rounded-full text-white md:text-purple-600 font-bold group flex items-center justify-center p-2 sm:p-3 border-none outline-none w-full h-full`}
-                                    >
-                                        <ChevronRight className="w-5 h-5 sm:w-6 sm:h-6 md:w-7 md:h-7 group-hover:translate-x-[2px] transition-transform" />
-                                    </button>
-                                </div>
+                                {/* Nav arrows — half inside, half outside the frame border. Using translate to center precisely on the edge. */}
+                                {/* Next Arrow (right) */}
+                                <button
+                                    onClick={(e) => { e.stopPropagation(); nextImage(); }}
+                                    className={`absolute top-1/2 -translate-y-1/2 translate-x-1/2 right-0 z-50
+                                        w-12 h-12 md:w-14 md:h-14 rounded-full
+                                        bg-gradient-to-br ${theme.frameGrad}
+                                        flex items-center justify-center
+                                        shadow-[0_0_20px_rgba(0,0,0,0.6)] border-none outline-none
+                                        transition-all hover:scale-110 hover:brightness-110
+                                        ${currentIndex + getGridSize() >= displayImages.length && currentIndex !== displayImages.length - 1 ? 'opacity-0 pointer-events-none' : ''}`}
+                                >
+                                    <div className={`w-9 h-9 md:w-10 md:h-10 rounded-full ${theme.innerBg} flex items-center justify-center`}>
+                                        <ChevronRight className={`w-5 h-5 md:w-6 md:h-6 ${theme.textClass}`} />
+                                    </div>
+                                </button>
 
-                                {/* Prev Arrow Wrapper */}
-                                <div className={`absolute top-1/2 -translate-y-1/2 -left-9 sm:-left-[46px] md:-left-[48px] z-50 rounded-full bg-gradient-to-br ${theme.frameGrad} p-[3px] sm:p-1.5 md:p-[10px] shadow-[0_0_20px_rgba(0,0,0,0.5)] transition-all ${currentIndex === 0 ? 'opacity-0 pointer-events-none' : 'hover:scale-110 hover:brightness-110'}`}>
-                                    <button
-                                        onClick={(e) => { e.stopPropagation(); prevImage(); }}
-                                        className={`bg-black md:${theme.navBtnCls} rounded-full text-white md:text-purple-600 font-bold group flex items-center justify-center p-2 sm:p-3 border-none outline-none w-full h-full`}
-                                    >
-                                        <ChevronLeft className="w-5 h-5 sm:w-6 sm:h-6 md:w-7 md:h-7 group-hover:-translate-x-[2px] transition-transform" />
-                                    </button>
-                                </div>
+                                {/* Prev Arrow (left) */}
+                                <button
+                                    onClick={(e) => { e.stopPropagation(); prevImage(); }}
+                                    className={`absolute top-1/2 -translate-y-1/2 -translate-x-1/2 left-0 z-50
+                                        w-12 h-12 md:w-14 md:h-14 rounded-full
+                                        bg-gradient-to-br ${theme.frameGrad}
+                                        flex items-center justify-center
+                                        shadow-[0_0_20px_rgba(0,0,0,0.6)] border-none outline-none
+                                        transition-all hover:scale-110 hover:brightness-110
+                                        ${currentIndex === 0 ? 'opacity-0 pointer-events-none' : ''}`}
+                                >
+                                    <div className={`w-9 h-9 md:w-10 md:h-10 rounded-full ${theme.innerBg} flex items-center justify-center`}>
+                                        <ChevronLeft className={`w-5 h-5 md:w-6 md:h-6 ${theme.textClass}`} />
+                                    </div>
+                                </button>
 
                                 {/* Inner card */}
                                 <div className={`${theme.innerBg} rounded-[1.8rem] sm:rounded-[2.2rem] flex flex-col flex-1 min-h-0`}>
@@ -584,7 +608,7 @@ export default function PublicGallery({ images, metadata }) {
                 </div>
 
                 {/* ── Right/Side: About Section ── */}
-                <div className="w-full lg:w-[380px] xl:w-[440px] shrink-0 mt-2 lg:mt-0 flex flex-col bg-slate-900/60 backdrop-blur-xl border border-white/10 rounded-[2.5rem] shadow-2xl relative min-h-0 lg:self-stretch">
+                <div ref={sidebarRef} className="w-full lg:w-[380px] xl:w-[440px] shrink-0 mt-2 lg:mt-0 flex flex-col bg-slate-900/60 backdrop-blur-xl border border-white/10 rounded-[2.5rem] shadow-2xl relative min-h-0 lg:self-stretch">
                     <div className="absolute inset-0 bg-gradient-to-br from-white/5 to-transparent pointer-events-none rounded-[2.5rem]" />
 
                     {/* Desktop Floating Explanation View */}
@@ -607,41 +631,41 @@ export default function PublicGallery({ images, metadata }) {
                         </div>
                     )}
 
-                    <div className="flex flex-col items-center justify-between flex-1 w-full no-scrollbar overflow-hidden" style={{ height: '100%', padding: 'clamp(0.75rem, 1.5vh, 1.75rem)' }}>
+                    <div className="flex flex-col items-center justify-between flex-1 w-full no-scrollbar overflow-hidden" style={{ height: '100%', padding: `${sidebarH * 0.025}px ${sidebarH * 0.028}px` }}>
                         {/* Hidden on mobile, shown on lg screens */}
-                        <div className="hidden lg:flex flex-col items-center justify-evenly w-full flex-1" style={{ paddingBottom: 'clamp(0.5rem, 1vh, 1rem)' }}>
+                        <div className="hidden lg:flex flex-col items-center justify-evenly w-full flex-1">
                             <div className="flex justify-center w-full shrink-0">
                                 <img
                                     src="./logo.png"
                                     alt="כפלשון"
                                     className="object-contain drop-shadow-[0_0_32px_rgba(236,72,153,0.7)] transition-transform hover:scale-105"
-                                    style={{ height: 'clamp(80px, 18vh, 170px)', transform: 'scaleX(1.15)' }}
+                                    style={{ height: `${sidebarH * 0.2}px`, transform: 'scaleX(1.15)' }}
                                 />
                             </div>
 
-                            <div className="flex flex-col items-center text-slate-300 w-full shrink-0" style={{ gap: 'clamp(0.5rem, 1vh, 0.75rem)' }}>
-                                <div className="leading-relaxed text-center font-medium" style={{ fontSize: 'clamp(0.85rem, 1.8vh, 1.3rem)' }}>
+                            <div className="flex flex-col items-center text-slate-300 w-full shrink-0" style={{ gap: `${sidebarH * 0.008}px` }}>
+                                <div className="leading-relaxed text-center font-medium" style={{ fontSize: `${sidebarH * 0.022}px` }}>
                                     ברוכים הבאים ל<strong className="text-white mx-1 drop-shadow-md">'כפלשון'</strong>!
                                     <br />
                                     <span>
                                         <span className="mr-[3px]">{images.length}</span> איורים דיגיטליים ויצירות AI הממחישים ביטויים, כפל לשון ומשחקי מילים בעברית — להעלות חיוך ולחגוג את השפה.
                                     </span>
                                     <br />
-                                    <span className="text-purple-400 font-semibold flex items-center justify-center gap-1.5" style={{ marginTop: 'clamp(0.25rem, 0.8vh, 0.5rem)', fontSize: 'clamp(0.95rem, 1.9vh, 1.4rem)' }}>הכל ביצירת מוחי הקודח... 😊</span>
-                                    <span className="text-indigo-300 font-bold block" style={{ marginTop: 'clamp(0.1rem, 0.4vh, 0.25rem)', fontSize: 'clamp(0.9rem, 1.7vh, 1.25rem)' }}>ספי רייכקינד</span>
+                                    <span className="text-purple-400 font-semibold flex items-center justify-center gap-1.5" style={{ marginTop: `${sidebarH * 0.01}px`, fontSize: `${sidebarH * 0.024}px` }}>הכל ביצירת מוחי הקודח... 😊</span>
+                                    <span className="text-indigo-300 font-bold block" style={{ marginTop: `${sidebarH * 0.005}px`, fontSize: `${sidebarH * 0.022}px` }}>ספי רייכקינד</span>
                                 </div>
                             </div>
                         </div>
 
                         {/* Always visible logic (QR + Socials) */}
-                        <div className="flex flex-col items-center text-slate-300 w-full shrink-0" style={{ gap: 'clamp(0.4rem, 0.8vh, 0.75rem)' }}>
+                        <div className="flex flex-col items-center text-slate-300 w-full shrink-0" style={{ gap: `${sidebarH * 0.01}px` }}>
                             {/* QR Code + Socials Side by Side */}
-                            <div className="flex flex-row justify-center items-center bg-black/30 rounded-3xl border border-white/5 shadow-inner w-full flex-wrap sm:flex-nowrap" style={{ gap: 'clamp(0.75rem, 1.5vh, 1.5rem)', padding: 'clamp(0.6rem, 1.2vh, 1.25rem)' }}>
+                            <div className="flex flex-row justify-center items-center bg-black/30 rounded-3xl border border-white/5 shadow-inner w-full flex-wrap sm:flex-nowrap" style={{ gap: `${sidebarH * 0.02}px`, padding: `${sidebarH * 0.02}px` }}>
 
                                 {/* QR Image with Share action on click */}
                                 <div
                                     className="relative group cursor-pointer rounded-2xl shadow-[0_8px_25px_rgba(0,0,0,0.5)] bg-white overflow-hidden shrink-0 flex items-center justify-center border-[3px] border-white/80 transition-all duration-500 hover:shadow-[0_0_35px_rgba(255,105,180,0.6)] hover:border-pink-300 hover:scale-[1.03]"
-                                    style={{ width: 'clamp(100px, 18vh, 175px)', height: 'clamp(100px, 18vh, 175px)' }}
+                                    style={{ width: `${sidebarH * 0.22}px`, height: `${sidebarH * 0.22}px` }}
                                     onClick={async () => {
                                         const url = window.location.href;
                                         try {
@@ -662,33 +686,33 @@ export default function PublicGallery({ images, metadata }) {
                                 </div>
 
                                 {/* Social buttons stacked vertically */}
-                                <div className="flex flex-col justify-between shrink-0" style={{ height: 'clamp(100px, 18vh, 175px)' }}>
+                                <div className="flex flex-col justify-between shrink-0" style={{ height: `${sidebarH * 0.22}px` }}>
                                     <a
                                         href="https://whatsapp.com/channel/0029VajNwaPL2AU0jdlgxa20"
                                         target="_blank"
                                         rel="noreferrer"
                                         className="group relative flex items-center justify-center text-[#128C7E] hover:text-white hover:bg-[#128C7E] transition-all hover:scale-105 drop-shadow-md border-[2.5px] border-[#128C7E] rounded-xl p-1"
-                                        style={{ width: 'clamp(52px, 6vw, 64px)', height: 'clamp(44px, 8vh, 82px)' }}
+                                        style={{ width: `${sidebarH * 0.09}px`, height: `${sidebarH * 0.1}px` }}
                                         title="ערוץ"
                                     >
-                                        <MessageCircle size={26} strokeWidth={1.5} className="shrink-0 mb-4 transition-transform group-hover:-translate-y-1" />
-                                        <span className="absolute bottom-1 font-bold text-[#128C7E] group-hover:text-white text-[12px] transition-colors" style={{ textShadow: '0 1px 2px rgba(0,0,0,0.5)' }}>ערוץ</span>
+                                        <MessageCircle style={{ width: `${sidebarH * 0.042}px`, height: `${sidebarH * 0.042}px`, marginBottom: `${sidebarH * 0.048}px` }} strokeWidth={1.5} className="shrink-0 transition-transform group-hover:-translate-y-1" />
+                                        <span className="absolute bottom-1 font-bold text-[#128C7E] group-hover:text-white transition-colors" style={{ fontSize: `${sidebarH * 0.018}px`, textShadow: '0 1px 2px rgba(0,0,0,0.5)' }}>ערוץ</span>
                                     </a>
                                     <a
                                         href="https://chat.whatsapp.com/LN6nwJ8cYiLHaj5uhTum9P"
                                         target="_blank"
                                         rel="noreferrer"
                                         className="group relative flex items-center justify-center text-[#25D366] hover:text-white hover:bg-[#25D366] transition-all hover:scale-105 drop-shadow-md border-[2.5px] border-[#25D366] rounded-xl p-1"
-                                        style={{ width: 'clamp(52px, 6vw, 64px)', height: 'clamp(44px, 8vh, 82px)' }}
+                                        style={{ width: `${sidebarH * 0.09}px`, height: `${sidebarH * 0.1}px` }}
                                         title="קבוצה"
                                     >
-                                        <MessageCircle size={26} strokeWidth={1.5} className="shrink-0 mb-4 transition-transform group-hover:-translate-y-1" />
-                                        <span className="absolute bottom-1 font-bold text-[#25D366] group-hover:text-white text-[12px] transition-colors" style={{ textShadow: '0 1px 2px rgba(0,0,0,0.5)' }}>קבוצה</span>
+                                        <MessageCircle style={{ width: `${sidebarH * 0.042}px`, height: `${sidebarH * 0.042}px`, marginBottom: `${sidebarH * 0.048}px` }} strokeWidth={1.5} className="shrink-0 transition-transform group-hover:-translate-y-1" />
+                                        <span className="absolute bottom-1 font-bold text-[#25D366] group-hover:text-white transition-colors" style={{ fontSize: `${sidebarH * 0.018}px`, textShadow: '0 1px 2px rgba(0,0,0,0.5)' }}>קבוצה</span>
                                     </a>
                                 </div>
                             </div>
 
-                            <p className="text-white/60 italic font-medium px-2 text-center leading-snug" style={{ fontSize: 'clamp(0.7rem, 1.3vh, 0.875rem)', marginTop: 'clamp(0.1rem, 0.3vh, 0.25rem)' }}>
+                            <p className="text-white/60 italic font-medium px-2 text-center leading-snug" style={{ fontSize: `${sidebarH * 0.018}px`, marginTop: `${sidebarH * 0.005}px` }}>
                                 אם יש לכם רעיון ליצירה, אל תהססו ליצור בעצמכם!<br />עזרה תמיד תינתן... צרו קשר באישי.
                             </p>
                         </div>
