@@ -607,40 +607,41 @@ export default function PublicGallery({ images, metadata }) {
                         </div>
                     )}
 
-                    <div className="p-4 sm:p-5 md:p-7 flex flex-col items-center justify-between flex-1 overflow-y-auto w-full no-scrollbar" style={{ height: '100%' }}>
+                    <div className="flex flex-col items-center justify-between flex-1 w-full no-scrollbar overflow-hidden" style={{ height: '100%', padding: 'clamp(0.75rem, 1.5vh, 1.75rem)' }}>
                         {/* Hidden on mobile, shown on lg screens */}
-                        <div className="hidden lg:flex flex-col items-center justify-evenly w-full flex-1 pb-4">
+                        <div className="hidden lg:flex flex-col items-center justify-evenly w-full flex-1" style={{ paddingBottom: 'clamp(0.5rem, 1vh, 1rem)' }}>
                             <div className="flex justify-center w-full shrink-0">
                                 <img
                                     src="./logo.png"
                                     alt="כפלשון"
-                                    className="h-32 lg:h-[150px] xl:h-[170px] object-contain drop-shadow-[0_0_32px_rgba(236,72,153,0.7)] transition-transform hover:scale-105"
-                                    style={{ transform: 'scaleX(1.15)' }}
+                                    className="object-contain drop-shadow-[0_0_32px_rgba(236,72,153,0.7)] transition-transform hover:scale-105"
+                                    style={{ height: 'clamp(80px, 18vh, 170px)', transform: 'scaleX(1.15)' }}
                                 />
                             </div>
 
-                            <div className="flex flex-col gap-3 items-center text-slate-300 w-full shrink-0">
-                                <div className="leading-relaxed text-center font-medium text-lg lg:text-xl xl:text-2xl">
-                                    ברוכים הבאים ל<strong className="text-white mx-1 xl:text-2xl drop-shadow-md">'כפלשון'</strong>!
+                            <div className="flex flex-col items-center text-slate-300 w-full shrink-0" style={{ gap: 'clamp(0.5rem, 1vh, 0.75rem)' }}>
+                                <div className="leading-relaxed text-center font-medium" style={{ fontSize: 'clamp(0.85rem, 1.8vh, 1.3rem)' }}>
+                                    ברוכים הבאים ל<strong className="text-white mx-1 drop-shadow-md">'כפלשון'</strong>!
                                     <br />
                                     <span>
                                         <span className="mr-[3px]">{images.length}</span> איורים דיגיטליים ויצירות AI הממחישים ביטויים, כפל לשון ומשחקי מילים בעברית — להעלות חיוך ולחגוג את השפה.
                                     </span>
                                     <br />
-                                    <span className="text-purple-400 font-semibold flex items-center justify-center gap-1.5 mt-2 text-xl xl:text-2xl">הכל ביצירת מוחי הקודח... 😊</span>
-                                    <span className="text-indigo-300 font-bold block mt-1 text-lg xl:text-xl">ספי רייכקינד</span>
+                                    <span className="text-purple-400 font-semibold flex items-center justify-center gap-1.5" style={{ marginTop: 'clamp(0.25rem, 0.8vh, 0.5rem)', fontSize: 'clamp(0.95rem, 1.9vh, 1.4rem)' }}>הכל ביצירת מוחי הקודח... 😊</span>
+                                    <span className="text-indigo-300 font-bold block" style={{ marginTop: 'clamp(0.1rem, 0.4vh, 0.25rem)', fontSize: 'clamp(0.9rem, 1.7vh, 1.25rem)' }}>ספי רייכקינד</span>
                                 </div>
                             </div>
                         </div>
 
                         {/* Always visible logic (QR + Socials) */}
-                        <div className="flex flex-col gap-3 items-center text-slate-300 w-full shrink-0">
+                        <div className="flex flex-col items-center text-slate-300 w-full shrink-0" style={{ gap: 'clamp(0.4rem, 0.8vh, 0.75rem)' }}>
                             {/* QR Code + Socials Side by Side */}
-                            <div className="flex flex-row justify-center items-center gap-4 xl:gap-6 bg-black/30 p-4 xl:p-5 rounded-3xl border border-white/5 shadow-inner w-full flex-wrap sm:flex-nowrap">
+                            <div className="flex flex-row justify-center items-center bg-black/30 rounded-3xl border border-white/5 shadow-inner w-full flex-wrap sm:flex-nowrap" style={{ gap: 'clamp(0.75rem, 1.5vh, 1.5rem)', padding: 'clamp(0.6rem, 1.2vh, 1.25rem)' }}>
 
                                 {/* QR Image with Share action on click */}
                                 <div
-                                    className="w-[160px] h-[160px] xl:w-[180px] xl:h-[180px] relative group cursor-pointer rounded-2xl shadow-[0_8px_25px_rgba(0,0,0,0.5)] bg-white overflow-hidden shrink-0 flex items-center justify-center border-[3px] border-white/80 transition-all duration-500 hover:shadow-[0_0_35px_rgba(255,105,180,0.6)] hover:border-pink-300 hover:scale-[1.03]"
+                                    className="relative group cursor-pointer rounded-2xl shadow-[0_8px_25px_rgba(0,0,0,0.5)] bg-white overflow-hidden shrink-0 flex items-center justify-center border-[3px] border-white/80 transition-all duration-500 hover:shadow-[0_0_35px_rgba(255,105,180,0.6)] hover:border-pink-300 hover:scale-[1.03]"
+                                    style={{ width: 'clamp(100px, 18vh, 175px)', height: 'clamp(100px, 18vh, 175px)' }}
                                     onClick={async () => {
                                         const url = window.location.href;
                                         try {
@@ -655,37 +656,39 @@ export default function PublicGallery({ images, metadata }) {
                                 >
                                     <img src="./qrcode.png" alt="QR Code" className="w-full h-full object-contain transition-transform duration-700 group-hover:scale-110 group-hover:rotate-1" />
                                     <div className="absolute inset-0 bg-black/75 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col items-center justify-center text-white backdrop-blur-sm z-10">
-                                        <Share2 size={32} className="mb-2 text-pink-400 drop-shadow-[0_0_8px_rgba(236,72,153,0.8)] animate-pulse" />
-                                        <span className="text-[13px] font-bold text-center leading-tight tracking-wide px-2">לשיתוף האתר<br />לחץ כאן</span>
+                                        <Share2 size={28} className="mb-2 text-pink-400 drop-shadow-[0_0_8px_rgba(236,72,153,0.8)] animate-pulse" />
+                                        <span className="text-[11px] font-bold text-center leading-tight tracking-wide px-2">לשיתוף האתר<br />לחץ כאן</span>
                                     </div>
                                 </div>
 
                                 {/* Social buttons stacked vertically */}
-                                <div className="flex flex-col h-[160px] xl:h-[180px] justify-between shrink-0">
+                                <div className="flex flex-col justify-between shrink-0" style={{ height: 'clamp(100px, 18vh, 175px)' }}>
                                     <a
                                         href="https://whatsapp.com/channel/0029VajNwaPL2AU0jdlgxa20"
                                         target="_blank"
                                         rel="noreferrer"
-                                        className="group relative flex items-center justify-center text-[#128C7E] hover:text-white hover:bg-[#128C7E] transition-all hover:scale-105 drop-shadow-md border-[2.5px] border-[#128C7E] rounded-xl p-1 w-16 h-[74px] xl:h-[84px]"
+                                        className="group relative flex items-center justify-center text-[#128C7E] hover:text-white hover:bg-[#128C7E] transition-all hover:scale-105 drop-shadow-md border-[2.5px] border-[#128C7E] rounded-xl p-1"
+                                        style={{ width: 'clamp(52px, 6vw, 64px)', height: 'clamp(44px, 8vh, 82px)' }}
                                         title="ערוץ"
                                     >
-                                        <MessageCircle size={32} strokeWidth={1.5} className="shrink-0 mb-4 transition-transform group-hover:-translate-y-1" />
-                                        <span className="absolute bottom-1 font-bold text-[#128C7E] group-hover:text-white text-[13px] transition-colors" style={{ textShadow: '0 1px 2px rgba(0,0,0,0.5)' }}>ערוץ</span>
+                                        <MessageCircle size={26} strokeWidth={1.5} className="shrink-0 mb-4 transition-transform group-hover:-translate-y-1" />
+                                        <span className="absolute bottom-1 font-bold text-[#128C7E] group-hover:text-white text-[12px] transition-colors" style={{ textShadow: '0 1px 2px rgba(0,0,0,0.5)' }}>ערוץ</span>
                                     </a>
                                     <a
                                         href="https://chat.whatsapp.com/LN6nwJ8cYiLHaj5uhTum9P"
                                         target="_blank"
                                         rel="noreferrer"
-                                        className="group relative flex items-center justify-center text-[#25D366] hover:text-white hover:bg-[#25D366] transition-all hover:scale-105 drop-shadow-md border-[2.5px] border-[#25D366] rounded-xl p-1 w-16 h-[74px] xl:h-[84px]"
+                                        className="group relative flex items-center justify-center text-[#25D366] hover:text-white hover:bg-[#25D366] transition-all hover:scale-105 drop-shadow-md border-[2.5px] border-[#25D366] rounded-xl p-1"
+                                        style={{ width: 'clamp(52px, 6vw, 64px)', height: 'clamp(44px, 8vh, 82px)' }}
                                         title="קבוצה"
                                     >
-                                        <MessageCircle size={32} strokeWidth={1.5} className="shrink-0 mb-4 transition-transform group-hover:-translate-y-1" />
-                                        <span className="absolute bottom-1 font-bold text-[#25D366] group-hover:text-white text-[13px] transition-colors" style={{ textShadow: '0 1px 2px rgba(0,0,0,0.5)' }}>קבוצה</span>
+                                        <MessageCircle size={26} strokeWidth={1.5} className="shrink-0 mb-4 transition-transform group-hover:-translate-y-1" />
+                                        <span className="absolute bottom-1 font-bold text-[#25D366] group-hover:text-white text-[12px] transition-colors" style={{ textShadow: '0 1px 2px rgba(0,0,0,0.5)' }}>קבוצה</span>
                                     </a>
                                 </div>
                             </div>
 
-                            <p className="text-white/60 text-sm mt-1 italic font-medium px-2 text-center leading-snug">
+                            <p className="text-white/60 italic font-medium px-2 text-center leading-snug" style={{ fontSize: 'clamp(0.7rem, 1.3vh, 0.875rem)', marginTop: 'clamp(0.1rem, 0.3vh, 0.25rem)' }}>
                                 אם יש לכם רעיון ליצירה, אל תהססו ליצור בעצמכם!<br />עזרה תמיד תינתן... צרו קשר באישי.
                             </p>
                         </div>
