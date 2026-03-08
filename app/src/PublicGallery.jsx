@@ -5,22 +5,22 @@ import QRCodeDisplay from './components/QRCodeDisplay';
 // ── Themes ────────────────────────────────────────────────────────────────────
 const THEMES = [
     {
-        id: 'dark-purple',
-        label: '🌌 נוגה',
-        className: 'theme-dark-purple',
-        textClass: 'text-purple-200',
-        bgStyle: 'bg-[radial-gradient(ellipse_at_top,_#1a0533_0%,_#0f172a_50%,_#000000_100%)]',
-        frameGrad: 'from-rose-500 via-purple-600 to-cyan-500',
+        id: 'dark',
+        label: '🌌 חלל עמוק',
+        className: 'theme-dark',
+        textClass: 'text-cyan-400',
+        bgStyle: 'bg-slate-950',
+        frameGrad: 'from-pink-500 via-purple-500 to-cyan-500',
         innerBg: 'bg-slate-900',
-        titleGrad: 'from-cyan-300 via-purple-300 to-rose-300',
-        headerBtnSearchCls: 'bg-cyan-500/20 hover:bg-cyan-500/40 border-cyan-400/50 text-cyan-50 shadow-[0_0_15px_rgba(6,182,212,0.3)] hover:shadow-[0_0_25px_rgba(6,182,212,0.6)]',
-        headerBtnAboutCls: 'bg-rose-500/20 hover:bg-rose-500/40 border-rose-400/50 text-rose-50 shadow-[0_0_15px_rgba(244,63,94,0.3)] hover:shadow-[0_0_25px_rgba(244,63,94,0.6)]',
-        navBtnCls: 'bg-white/90 text-purple-600 border-purple-200',
-        explainBtnCls: 'text-slate-300 hover:text-white',
-        explainTextCls: 'text-cyan-50',
-        glowClass: 'from-purple-500/20',
-        topicBadgeCls: 'bg-rose-500 border-rose-400',
-        themeBtnCls: 'bg-purple-900/80 border-purple-500/50 text-purple-200 hover:bg-purple-800/90',
+        titleGrad: 'from-cyan-400 to-purple-400',
+        headerBtnSearchCls: 'bg-cyan-500/20 hover:bg-cyan-500/40 border-cyan-400/50 text-cyan-100 shadow-[0_4px_15px_rgba(34,211,238,0.2)] hover:shadow-[0_4px_20px_rgba(34,211,238,0.4)]',
+        headerBtnAboutCls: 'bg-purple-500/20 hover:bg-purple-500/40 border-purple-400/50 text-purple-100 shadow-[0_4px_15px_rgba(168,85,247,0.2)] hover:shadow-[0_4px_20px_rgba(168,85,247,0.4)]',
+        navBtnCls: 'bg-slate-900 text-cyan-400 border-cyan-500/30',
+        explainBtnCls: 'text-cyan-400 hover:text-cyan-300',
+        explainTextCls: 'text-slate-200',
+        glowClass: 'from-cyan-500/20',
+        topicBadgeCls: 'bg-purple-600 border-purple-400',
+        themeBtnCls: 'bg-slate-900/80 border-cyan-500/50 text-cyan-400 hover:bg-slate-800',
     },
     {
         id: 'neon',
@@ -39,6 +39,24 @@ const THEMES = [
         glowClass: 'from-[#39ff14]/10',
         topicBadgeCls: 'bg-[#ff073a] border-red-400',
         themeBtnCls: 'bg-black/80 border-[#39ff14]/50 text-[#39ff14] hover:bg-[#001a00]',
+    },
+    {
+        id: 'light',
+        label: '☀️ יום בהיר',
+        className: 'theme-light',
+        textClass: 'text-violet-600',
+        bgStyle: 'bg-slate-100',
+        frameGrad: 'from-sky-300 via-indigo-300 to-pink-300',
+        innerBg: 'bg-white',
+        titleGrad: 'from-violet-600 to-fuchsia-600',
+        headerBtnSearchCls: 'bg-sky-100 hover:bg-sky-200 border-sky-300 text-sky-700 shadow-[0_4px_15px_rgba(56,189,248,0.2)] hover:shadow-[0_4px_20px_rgba(56,189,248,0.4)]',
+        headerBtnAboutCls: 'bg-pink-100 hover:bg-pink-200 border-pink-300 text-pink-700 shadow-[0_4px_15px_rgba(244,114,182,0.2)] hover:shadow-[0_4px_20px_rgba(244,114,182,0.4)]',
+        navBtnCls: 'bg-white text-violet-600 border-violet-200 shadow-lg',
+        explainBtnCls: 'text-violet-500 hover:text-violet-700',
+        explainTextCls: 'text-indigo-900',
+        glowClass: 'from-pink-300/20',
+        topicBadgeCls: 'bg-orange-400 border-orange-300',
+        themeBtnCls: 'bg-white/80 border-pink-300 text-pink-600 hover:bg-pink-50',
     },
     {
         id: 'pastel',
@@ -69,7 +87,7 @@ const THEMES = [
         titleGrad: 'from-amber-300 via-orange-300 to-fuchsia-300',
         headerBtnSearchCls: 'bg-amber-500/20 hover:bg-amber-500/40 border-amber-400/50 text-amber-100 shadow-[0_0_15px_rgba(251,191,36,0.3)] hover:shadow-[0_0_25px_rgba(251,191,36,0.6)]',
         headerBtnAboutCls: 'bg-fuchsia-500/20 hover:bg-fuchsia-500/40 border-fuchsia-400/50 text-fuchsia-100 shadow-[0_0_15px_rgba(217,70,239,0.3)] hover:shadow-[0_0_25px_rgba(217,70,239,0.6)]',
-        navBtnCls: 'bg-amber-50/90 text-orange-600 border-amber-300',
+        navBtnCls: 'bg-[#2d1b00] text-orange-400 border-amber-300/40',
         explainBtnCls: 'text-amber-300/70 hover:text-amber-200',
         explainTextCls: 'text-amber-50',
         glowClass: 'from-orange-500/20',
@@ -329,14 +347,14 @@ export default function PublicGallery({ images, metadata }) {
                                 <button
                                     onClick={(e) => { e.stopPropagation(); nextImage(); }}
                                     disabled={currentIndex + getGridSize() >= displayImages.length && currentIndex !== displayImages.length - 1}
-                                    className={`absolute top-1/2 -translate-y-1/2 -right-4 sm:-right-[22px] z-50 bg-black/50 md:${theme.navBtnCls} backdrop-blur-md p-2 sm:p-3 md:shadow-[0_0_16px_rgba(0,0,0,0.4)] rounded-full text-white md:text-purple-600 border border-white/10 md:border-purple-200 disabled:opacity-0 disabled:pointer-events-none hover:scale-110 hover:brightness-110 transition-all font-bold group`}
+                                    className={`absolute top-1/2 -translate-y-1/2 -right-4 sm:-right-[22px] z-50 bg-black md:${theme.navBtnCls} backdrop-blur-md p-2 sm:p-3 md:shadow-[0_0_16px_rgba(0,0,0,0.4)] rounded-full text-white md:text-purple-600 border border-white/10 md:border-purple-200 disabled:opacity-0 disabled:pointer-events-none hover:scale-110 hover:brightness-110 transition-all font-bold group`}
                                 >
                                     <ChevronRight className="w-6 h-6 sm:w-7 sm:h-7 group-hover:translate-x-0.5 transition-transform" />
                                 </button>
                                 <button
                                     onClick={(e) => { e.stopPropagation(); prevImage(); }}
                                     disabled={currentIndex === 0}
-                                    className={`absolute top-1/2 -translate-y-1/2 -left-4 sm:-left-[22px] z-50 bg-black/50 md:${theme.navBtnCls} backdrop-blur-md p-2 sm:p-3 md:shadow-[0_0_16px_rgba(0,0,0,0.4)] rounded-full text-white md:text-purple-600 border border-white/10 md:border-purple-200 disabled:opacity-0 disabled:pointer-events-none hover:scale-110 hover:brightness-110 transition-all font-bold group`}
+                                    className={`absolute top-1/2 -translate-y-1/2 -left-4 sm:-left-[22px] z-50 bg-black md:${theme.navBtnCls} backdrop-blur-md p-2 sm:p-3 md:shadow-[0_0_16px_rgba(0,0,0,0.4)] rounded-full text-white md:text-purple-600 border border-white/10 md:border-purple-200 disabled:opacity-0 disabled:pointer-events-none hover:scale-110 hover:brightness-110 transition-all font-bold group`}
                                 >
                                     <ChevronLeft className="w-6 h-6 sm:w-7 sm:h-7 group-hover:-translate-x-0.5 transition-transform" />
                                 </button>
@@ -584,40 +602,40 @@ export default function PublicGallery({ images, metadata }) {
                         </div>
                     )}
 
-                    <div className="p-4 sm:p-6 flex flex-col items-center flex-1 h-full min-h-0 overflow-y-auto w-full no-scrollbar">
+                    <div className="p-3 sm:p-4 md:p-5 flex flex-col items-center flex-1 h-full min-h-0 overflow-y-auto w-full no-scrollbar">
                         {/* Hidden on mobile, shown on lg screens */}
                         <div className="hidden lg:flex flex-col items-center w-full">
-                            <div className="flex justify-center mb-0 sm:mb-2 w-full shrink-0">
+                            <div className="flex justify-center mb-0 w-full shrink-0">
                                 <img
                                     src="./logo.png"
                                     alt="כפלשון"
-                                    className="h-20 sm:h-24 md:h-28 object-contain drop-shadow-[0_0_20px_rgba(236,72,153,0.5)] transition-transform hover:scale-105"
+                                    className="h-16 sm:h-20 lg:h-[88px] object-contain drop-shadow-[0_0_20px_rgba(236,72,153,0.5)] transition-transform hover:scale-105"
                                     style={{ transform: 'scaleX(1.15)' }}
                                 />
                             </div>
 
-                            <div className="flex flex-col gap-4 sm:gap-6 items-center text-slate-300 w-full shrink-0 mb-6">
-                                <div className="leading-relaxed text-center font-medium text-sm sm:text-base lg:text-lg">
-                                    ברוכים הבאים ל<strong className="text-white mx-1 xl:text-xl drop-shadow-md">'כפלשון'</strong>!
+                            <div className="flex flex-col gap-2 sm:gap-3 items-center text-slate-300 w-full shrink-0 mb-3 mt-1">
+                                <div className="leading-relaxed text-center font-medium text-sm lg:text-base">
+                                    ברוכים הבאים ל<strong className="text-white mx-1 xl:text-lg drop-shadow-md">'כפלשון'</strong>!
                                     <br />
                                     <span>
-                                        {images.length} איורים דיגיטליים ויצירות AI הממחישים ביטויים, כפל לשון ומשחקי מילים בעברית — להעלות חיוך ולחגוג את השפה בצורתה הכיפית ביותר.
+                                        <span className="mr-[3px]">{images.length}</span> איורים דיגיטליים ויצירות AI הממחישים ביטויים, כפל לשון ומשחקי מילים בעברית — להעלות חיוך ולחגוג את השפה.
                                     </span>
                                     <br />
-                                    <span className="text-purple-400 font-semibold flex items-center justify-center gap-2 mt-2 xl:text-xl">הכל ביצירת מוחי הקודח... 😊</span>
-                                    <span className="text-indigo-300 font-bold block mt-1 xl:text-lg">ספי רייכקינד</span>
+                                    <span className="text-purple-400 font-semibold flex items-center justify-center gap-1.5 mt-1 xl:text-lg">הכל ביצירת מוחי הקודח... 😊</span>
+                                    <span className="text-indigo-300 font-bold block mt-0.5 xl:text-base">ספי רייכקינד</span>
                                 </div>
                             </div>
                         </div>
 
                         {/* Always visible logic (QR + Socials) */}
-                        <div className="flex flex-col gap-3 items-center text-slate-300 w-full shrink-0 mt-auto">
+                        <div className="flex flex-col gap-2.5 items-center text-slate-300 w-full shrink-0 mt-auto">
                             {/* QR Code + Socials Side by Side */}
-                            <div className="flex flex-row justify-center items-center gap-6 xl:gap-8 bg-black/30 p-4 xl:p-6 rounded-3xl border border-white/5 shadow-inner w-full flex-wrap sm:flex-nowrap">
+                            <div className="flex flex-row justify-center items-center gap-4 xl:gap-5 bg-black/30 p-3 xl:p-4 rounded-3xl border border-white/5 shadow-inner w-full flex-wrap sm:flex-nowrap">
 
                                 {/* QR Image with Share action on click */}
                                 <div
-                                    className="w-[176px] h-[176px] relative group cursor-pointer rounded-2xl shadow-[0_10px_30px_rgba(0,0,0,0.5)] bg-white overflow-hidden shrink-0 flex items-center justify-center border-[3px] border-white/80 transition-all duration-500 hover:shadow-[0_0_40px_rgba(255,105,180,0.6)] hover:border-pink-300 hover:scale-[1.03]"
+                                    className="w-[130px] h-[130px] xl:w-[140px] xl:h-[140px] relative group cursor-pointer rounded-2xl shadow-[0_8px_25px_rgba(0,0,0,0.5)] bg-white overflow-hidden shrink-0 flex items-center justify-center border-[3px] border-white/80 transition-all duration-500 hover:shadow-[0_0_35px_rgba(255,105,180,0.6)] hover:border-pink-300 hover:scale-[1.03]"
                                     onClick={async () => {
                                         const url = window.location.href;
                                         try {
@@ -632,37 +650,37 @@ export default function PublicGallery({ images, metadata }) {
                                 >
                                     <img src="./qrcode.png" alt="QR Code" className="w-full h-full object-contain transition-transform duration-700 group-hover:scale-110 group-hover:rotate-1" />
                                     <div className="absolute inset-0 bg-black/75 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col items-center justify-center text-white backdrop-blur-sm z-10">
-                                        <Share2 size={36} className="mb-2 text-pink-400 drop-shadow-[0_0_8px_rgba(236,72,153,0.8)] animate-pulse" />
-                                        <span className="text-sm font-bold text-center leading-tight tracking-wide px-2">לשיתוף האתר<br />לחץ כאן</span>
+                                        <Share2 size={28} className="mb-2 text-pink-400 drop-shadow-[0_0_8px_rgba(236,72,153,0.8)] animate-pulse" />
+                                        <span className="text-[11px] font-bold text-center leading-tight tracking-wide px-2">לשיתוף האתר<br />לחץ כאן</span>
                                     </div>
                                 </div>
 
-                                {/* Social buttons stacked vertically (2 items ~ 80px + 16px gap = 176px total height) */}
-                                <div className="flex flex-col h-[176px] justify-between shrink-0">
+                                {/* Social buttons stacked vertically */}
+                                <div className="flex flex-col h-[130px] xl:h-[140px] justify-between shrink-0">
                                     <a
                                         href="https://whatsapp.com/channel/0029VajNwaPL2AU0jdlgxa20"
                                         target="_blank"
                                         rel="noreferrer"
-                                        className="group relative flex items-center justify-center text-[#128C7E] hover:text-white hover:bg-[#128C7E] transition-all hover:scale-105 drop-shadow-md border-[2.5px] border-[#128C7E] rounded-xl p-1 w-16 h-20"
+                                        className="group relative flex items-center justify-center text-[#128C7E] hover:text-white hover:bg-[#128C7E] transition-all hover:scale-105 drop-shadow-md border-[2.5px] border-[#128C7E] rounded-xl p-1 w-14 h-[60px] xl:h-[65px]"
                                         title="ערוץ"
                                     >
-                                        <MessageCircle size={32} strokeWidth={1.5} className="shrink-0 mb-3 transition-transform group-hover:-translate-y-1" />
-                                        <span className="absolute bottom-1.5 font-bold text-[#128C7E] group-hover:text-white text-[14px] transition-colors" style={{ textShadow: '0 1px 2px rgba(0,0,0,0.5)' }}>ערוץ</span>
+                                        <MessageCircle size={28} strokeWidth={1.5} className="shrink-0 mb-3 xl:mb-4 transition-transform group-hover:-translate-y-1" />
+                                        <span className="absolute bottom-1 font-bold text-[#128C7E] group-hover:text-white text-[12px] transition-colors" style={{ textShadow: '0 1px 2px rgba(0,0,0,0.5)' }}>ערוץ</span>
                                     </a>
                                     <a
                                         href="https://chat.whatsapp.com/LN6nwJ8cYiLHaj5uhTum9P"
                                         target="_blank"
                                         rel="noreferrer"
-                                        className="group relative flex items-center justify-center text-[#25D366] hover:text-white hover:bg-[#25D366] transition-all hover:scale-105 drop-shadow-md border-[2.5px] border-[#25D366] rounded-xl p-1 w-16 h-20"
+                                        className="group relative flex items-center justify-center text-[#25D366] hover:text-white hover:bg-[#25D366] transition-all hover:scale-105 drop-shadow-md border-[2.5px] border-[#25D366] rounded-xl p-1 w-14 h-[60px] xl:h-[65px]"
                                         title="קבוצה"
                                     >
-                                        <MessageCircle size={32} strokeWidth={1.5} className="shrink-0 mb-3 transition-transform group-hover:-translate-y-1" />
-                                        <span className="absolute bottom-1.5 font-bold text-[#25D366] group-hover:text-white text-[14px] transition-colors" style={{ textShadow: '0 1px 2px rgba(0,0,0,0.5)' }}>קבוצה</span>
+                                        <MessageCircle size={28} strokeWidth={1.5} className="shrink-0 mb-3 xl:mb-4 transition-transform group-hover:-translate-y-1" />
+                                        <span className="absolute bottom-1 font-bold text-[#25D366] group-hover:text-white text-[12px] transition-colors" style={{ textShadow: '0 1px 2px rgba(0,0,0,0.5)' }}>קבוצה</span>
                                     </a>
                                 </div>
                             </div>
 
-                            <p className="text-white/60 text-sm mt-2 italic font-medium px-4 text-center">
+                            <p className="text-white/60 text-[13px] mt-1.5 italic font-medium px-2 text-center leading-snug">
                                 אם יש לכם רעיון ליצירה, אל תהססו ליצור בעצמכם!<br />עזרה תמיד תינתן... צרו קשר באישי.
                             </p>
                         </div>
@@ -780,18 +798,17 @@ export default function PublicGallery({ images, metadata }) {
                                         className="max-h-[85vh] xl:max-h-[92vh] object-contain drop-shadow-[0_0_60px_rgba(0,0,0,0.9)] rounded-2xl cursor-zoom-out"
                                         onClick={(e) => { e.stopPropagation(); setIsFullscreen(false); }}
                                     />
-
                                     <button
                                         onClick={(e) => { e.stopPropagation(); nextImage(); }}
                                         disabled={currentIndex === displayImages.length - 1}
-                                        className={`absolute top-1/2 -translate-y-1/2 -right-14 md:-right-20 xl:-right-24 z-[90] bg-black/50 text-white backdrop-blur-md p-3 md:p-4 rounded-full shadow-[0_0_16px_rgba(0,0,0,0.4)] disabled:opacity-0 disabled:pointer-events-none hover:bg-white/20 hover:scale-110 transition-all cursor-pointer group`}
+                                        className={`absolute top-1/2 -translate-y-1/2 -right-14 md:-right-20 xl:-right-24 z-[90] bg-black text-white backdrop-blur-md p-3 md:p-4 rounded-full shadow-[0_0_16px_rgba(0,0,0,0.4)] disabled:opacity-0 disabled:pointer-events-none hover:bg-zinc-800 hover:scale-110 transition-all cursor-pointer group`}
                                     >
                                         <ChevronRight size={28} className="group-hover:translate-x-0.5 transition-transform" />
                                     </button>
                                     <button
                                         onClick={(e) => { e.stopPropagation(); prevImage(); }}
                                         disabled={currentIndex === 0}
-                                        className={`absolute top-1/2 -translate-y-1/2 -left-14 md:-left-20 xl:-left-24 z-[90] bg-black/50 text-white backdrop-blur-md p-3 md:p-4 rounded-full shadow-[0_0_16px_rgba(0,0,0,0.4)] disabled:opacity-0 disabled:pointer-events-none hover:bg-white/20 hover:scale-110 transition-all cursor-pointer group`}
+                                        className={`absolute top-1/2 -translate-y-1/2 -left-14 md:-left-20 xl:-left-24 z-[90] bg-black text-white backdrop-blur-md p-3 md:p-4 rounded-full shadow-[0_0_16px_rgba(0,0,0,0.4)] disabled:opacity-0 disabled:pointer-events-none hover:bg-zinc-800 hover:scale-110 transition-all cursor-pointer group`}
                                     >
                                         <ChevronLeft size={28} className="group-hover:-translate-x-0.5 transition-transform" />
                                     </button>
