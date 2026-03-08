@@ -355,11 +355,14 @@ export default function PublicGallery({ images, metadata }) {
                                 className={`relative bg-gradient-to-br ${theme.frameGrad} p-[3px] sm:p-1.5 md:p-[10px] rounded-[2rem] sm:rounded-[2.5rem] shadow-[0_20px_60px_rgba(0,0,0,0.55)] w-full flex-1 flex flex-col min-h-0`}
                                 style={{ willChange: 'transform' }}
                             >
-                                {/* Nav arrows — half inside, half outside the frame border. Using translate to center precisely on the edge. */}
+                                {/* Nav arrows: right-0 + translate-x-1/2 = button center at outer edge of frame.
+                                    Adding sm:right-[3px] md:right-[5px] shifts it INWARD by half the border thickness
+                                    so the center lands exactly in the middle of the gradient border ring. */}
                                 {/* Next Arrow (right) */}
                                 <button
                                     onClick={(e) => { e.stopPropagation(); nextImage(); }}
-                                    className={`absolute top-1/2 -translate-y-1/2 translate-x-1/2 right-0 z-50
+                                    style={{ right: '5px' }}
+                                    className={`absolute top-1/2 -translate-y-1/2 translate-x-1/2 z-50
                                         w-12 h-12 md:w-14 md:h-14 rounded-full
                                         bg-gradient-to-br ${theme.frameGrad}
                                         flex items-center justify-center
@@ -375,7 +378,8 @@ export default function PublicGallery({ images, metadata }) {
                                 {/* Prev Arrow (left) */}
                                 <button
                                     onClick={(e) => { e.stopPropagation(); prevImage(); }}
-                                    className={`absolute top-1/2 -translate-y-1/2 -translate-x-1/2 left-0 z-50
+                                    style={{ left: '5px' }}
+                                    className={`absolute top-1/2 -translate-y-1/2 -translate-x-1/2 z-50
                                         w-12 h-12 md:w-14 md:h-14 rounded-full
                                         bg-gradient-to-br ${theme.frameGrad}
                                         flex items-center justify-center
@@ -691,23 +695,23 @@ export default function PublicGallery({ images, metadata }) {
                                         href="https://whatsapp.com/channel/0029VajNwaPL2AU0jdlgxa20"
                                         target="_blank"
                                         rel="noreferrer"
-                                        className="group relative flex items-center justify-center text-[#128C7E] hover:text-white hover:bg-[#128C7E] transition-all hover:scale-105 drop-shadow-md border-[2.5px] border-[#128C7E] rounded-xl p-1"
-                                        style={{ width: `${sidebarH * 0.09}px`, height: `${sidebarH * 0.1}px` }}
+                                        className="group flex flex-col items-center justify-center text-[#128C7E] hover:text-white hover:bg-[#128C7E] transition-all hover:scale-105 drop-shadow-md border-[2.5px] border-[#128C7E] rounded-xl"
+                                        style={{ width: `${sidebarH * 0.09}px`, height: `${sidebarH * 0.1}px`, gap: `${sidebarH * 0.005}px` }}
                                         title="ערוץ"
                                     >
-                                        <MessageCircle style={{ width: `${sidebarH * 0.042}px`, height: `${sidebarH * 0.042}px`, marginBottom: `${sidebarH * 0.048}px` }} strokeWidth={1.5} className="shrink-0 transition-transform group-hover:-translate-y-1" />
-                                        <span className="absolute bottom-1 font-bold text-[#128C7E] group-hover:text-white transition-colors" style={{ fontSize: `${sidebarH * 0.018}px`, textShadow: '0 1px 2px rgba(0,0,0,0.5)' }}>ערוץ</span>
+                                        <MessageCircle style={{ width: `${sidebarH * 0.042}px`, height: `${sidebarH * 0.042}px` }} strokeWidth={1.5} className="shrink-0 transition-transform group-hover:-translate-y-0.5" />
+                                        <span className="font-bold text-[#128C7E] group-hover:text-white transition-colors" style={{ fontSize: `${sidebarH * 0.018}px`, textShadow: '0 1px 2px rgba(0,0,0,0.5)', lineHeight: 1 }}>ערוץ</span>
                                     </a>
                                     <a
                                         href="https://chat.whatsapp.com/LN6nwJ8cYiLHaj5uhTum9P"
                                         target="_blank"
                                         rel="noreferrer"
-                                        className="group relative flex items-center justify-center text-[#25D366] hover:text-white hover:bg-[#25D366] transition-all hover:scale-105 drop-shadow-md border-[2.5px] border-[#25D366] rounded-xl p-1"
-                                        style={{ width: `${sidebarH * 0.09}px`, height: `${sidebarH * 0.1}px` }}
+                                        className="group flex flex-col items-center justify-center text-[#25D366] hover:text-white hover:bg-[#25D366] transition-all hover:scale-105 drop-shadow-md border-[2.5px] border-[#25D366] rounded-xl"
+                                        style={{ width: `${sidebarH * 0.09}px`, height: `${sidebarH * 0.1}px`, gap: `${sidebarH * 0.005}px` }}
                                         title="קבוצה"
                                     >
-                                        <MessageCircle style={{ width: `${sidebarH * 0.042}px`, height: `${sidebarH * 0.042}px`, marginBottom: `${sidebarH * 0.048}px` }} strokeWidth={1.5} className="shrink-0 transition-transform group-hover:-translate-y-1" />
-                                        <span className="absolute bottom-1 font-bold text-[#25D366] group-hover:text-white transition-colors" style={{ fontSize: `${sidebarH * 0.018}px`, textShadow: '0 1px 2px rgba(0,0,0,0.5)' }}>קבוצה</span>
+                                        <MessageCircle style={{ width: `${sidebarH * 0.042}px`, height: `${sidebarH * 0.042}px` }} strokeWidth={1.5} className="shrink-0 transition-transform group-hover:-translate-y-0.5" />
+                                        <span className="font-bold text-[#25D366] group-hover:text-white transition-colors" style={{ fontSize: `${sidebarH * 0.018}px`, textShadow: '0 1px 2px rgba(0,0,0,0.5)', lineHeight: 1 }}>קבוצה</span>
                                     </a>
                                 </div>
                             </div>
