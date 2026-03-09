@@ -708,7 +708,18 @@ export default function PublicGallery({ images, metadata }) {
                                     </span>
                                     <br />
                                     <span className="text-purple-400 font-semibold flex items-center justify-center gap-1.5" style={{ marginTop: isMobile ? '6px' : `${sidebarH * 0.01}px`, fontSize: isMobile ? '16px' : `${sidebarH * 0.024}px` }}>הכל ביצירת מוחי הקודח... 😊</span>
-                                    <span className="text-indigo-300 font-bold block" style={{ marginTop: isMobile ? '2px' : `${sidebarH * 0.005}px`, fontSize: isMobile ? '15px' : `${sidebarH * 0.022}px` }}>ספי רייכקינד</span>
+                                    <span className="flex items-center justify-center gap-2 text-indigo-300 font-bold" style={{ marginTop: isMobile ? '2px' : `${sidebarH * 0.005}px`, fontSize: isMobile ? '15px' : `${sidebarH * 0.022}px` }}>
+                                        ספי רייכקינד
+                                        <a
+                                            href="https://www.linkedin.com/in/sefi-riechkind-679b67136"
+                                            target="_blank" rel="noreferrer"
+                                            className="text-[#0077b5] hover:text-white hover:bg-[#0077b5] transition-all hover:scale-110 drop-shadow-md border border-[#0077b5] rounded-lg flex items-center justify-center bg-white/5 shrink-0"
+                                            style={{ width: `${sidebarH * 0.038}px`, height: `${sidebarH * 0.038}px` }}
+                                            title="לינקדאין"
+                                        >
+                                            <Linkedin style={{ width: `${sidebarH * 0.023}px`, height: `${sidebarH * 0.023}px` }} fill="currentColor" strokeWidth={1} className="shrink-0" />
+                                        </a>
+                                    </span>
                                 </div>
                             </div>
                         </div>
