@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { ChevronRight, ChevronLeft, Save, MessageCircle, CheckCircle, Trash2, Search, X } from 'lucide-react';
+import { ChevronRight, ChevronLeft, Save, MessageCircle, CheckCircle, Trash2, Search, X, Upload, Github, Loader } from 'lucide-react';
 import PublicGallery from './PublicGallery';
 
 const API_BASE = 'http://localhost:3088';
@@ -28,9 +28,50 @@ function App() {
   const [searchQuery, setSearchQuery] = useState('');
   const [fileSizes, setFileSizes] = useState({});
 
+  // ── Publish state ──
+  const [publishState, setPublishState] = useState('idle'); // idle | loading | success | error | skipped
+  const [publishResult, setPublishResult] = useState(null);
+  const [lastCommit, setLastCommit] = useState(null);
+
   useEffect(() => {
     fetchImages();
+    fetchPublishStatus();
   }, []);
+
+  const fetchPublishStatus = async () => {
+    try {
+      const res = await fetch(`${API_BASE}/api/publish/status`);
+      if (res.ok) {
+        const data = await res.json();
+        if (data.ok) setLastCommit(data);
+      }
+    } catch { /* non-critical */ }
+  };
+
+  const handlePublish = async () => {
+    setPublishState('loading');
+    setPublishResult(null);
+    try {
+      const res = await fetch(`${API_BASE}/api/publish`, { method: 'POST' });
+      const data = await res.json();
+      if (!res.ok || !data.ok) {
+        setPublishState('error');
+        setPublishResult(data);
+      } else if (data.skipped) {
+        setPublishState('skipped');
+        setPublishResult(data);
+      } else {
+        setPublishState('success');
+        setPublishResult(data);
+        setLastCommit({ hash: data.hash, message: data.message, date: new Date().toISOString() });
+      }
+    } catch (e) {
+      setPublishState('error');
+      setPublishResult({ error: e.message });
+    }
+    // Reset to idle after 8 seconds
+    setTimeout(() => setPublishState('idle'), 8000);
+  };
 
   const fetchImages = async () => {
     try {
@@ -219,8 +260,9 @@ function App() {
             <p className="text-slate-500 mt-1">מערכת ניהול תמונות ומשמעויות</p>
           </div>
 
-          <div className="mt-4 md:mt-0 flex flex-col items-end">
-            <div className="flex items-center gap-4 mb-2">
+          <div className="mt-4 md:mt-0 flex flex-col items-end gap-3">
+            {/* Progress + Search row */}
+            <div className="flex items-center gap-4">
               <button
                 onClick={() => setIsSearchOpen(true)}
                 className="flex items-center gap-2 px-4 py-1.5 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-lg text-sm font-medium transition-colors"
@@ -236,11 +278,58 @@ function App() {
                 </span>
               </div>
             </div>
+
+            {/* Progress bar */}
             <div className="w-48 h-2.5 bg-slate-200 rounded-full overflow-hidden">
               <div
                 className="h-full bg-gradient-to-r from-teal-400 to-teal-600 rounded-full transition-all duration-500 ease-out"
                 style={{ width: `${progressPercentage}%` }}
               />
+            </div>
+
+            {/* ── Publish to GitHub button ── */}
+            <div className="flex flex-col items-end gap-1">
+              <button
+                onClick={handlePublish}
+                disabled={publishState === 'loading'}
+                className={`flex items-center gap-2 px-5 py-2 rounded-xl text-sm font-bold shadow-sm border transition-all ${publishState === 'loading'
+                    ? 'bg-slate-100 text-slate-400 border-slate-200 cursor-wait'
+                    : publishState === 'success'
+                      ? 'bg-green-50 text-green-700 border-green-200 hover:bg-green-100'
+                      : publishState === 'error'
+                        ? 'bg-red-50 text-red-700 border-red-200 hover:bg-red-100'
+                        : publishState === 'skipped'
+                          ? 'bg-amber-50 text-amber-700 border-amber-200 hover:bg-amber-100'
+                          : 'bg-slate-800 text-white border-slate-700 hover:bg-slate-700'
+                  }`}
+                title="פרסם שינויי תוכן (תמונות + data.json) לגיטהאב"
+              >
+                {publishState === 'loading' ? (
+                  <><Loader size={15} className="animate-spin" /> מפרסם...</>
+                ) : publishState === 'success' ? (
+                  <><CheckCircle size={15} /> פורסם! #{publishResult?.hash}</>
+                ) : publishState === 'error' ? (
+                  <><X size={15} /> שגיאה — נסה שוב</>
+                ) : publishState === 'skipped' ? (
+                  <><CheckCircle size={15} /> אין שינויים חדשים</>
+                ) : (
+                  <><Upload size={15} /> פרסם לגיטהאב</>
+                )}
+              </button>
+
+              {/* Last commit info */}
+              {lastCommit && publishState === 'idle' && (
+                <p className="text-xs text-slate-400 font-mono" dir="ltr">
+                  last: {lastCommit.hash} · {lastCommit.message}
+                </p>
+              )}
+
+              {/* Error detail */}
+              {publishState === 'error' && publishResult?.error && (
+                <p className="text-xs text-red-500 max-w-xs text-right" dir="rtl">
+                  {publishResult.error.split('\n')[0]}
+                </p>
+              )}
             </div>
           </div>
         </header>
