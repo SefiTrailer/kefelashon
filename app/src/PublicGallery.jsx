@@ -349,16 +349,16 @@ export default function PublicGallery({ images, metadata }) {
                         <div className="w-full relative flex-1 flex flex-col min-h-0">
 
                             {/* ── Mobile-Only Header Block (Hidden on Desktop) ── */}
-                            <div className="flex lg:hidden flex-col items-center shrink-0 mb-6 bg-slate-900/60 backdrop-blur-xl border border-white/10 rounded-[2.5rem] p-6 shadow-xl w-full">
-                                <img src="./logo.png" alt="כפלשון" className="h-20 sm:h-24 md:h-28 object-contain drop-shadow-[0_0_20px_rgba(236,72,153,0.5)]" />
-                                <div className="text-center font-medium mt-4 text-sm sm:text-base text-slate-300">
+                            <div className="flex lg:hidden flex-col items-center shrink-0 mb-4 bg-slate-900/60 backdrop-blur-xl border border-white/10 rounded-[2.5rem] px-6 py-5 shadow-xl w-full">
+                                <img src="./logo.png" alt="כפלשון" className="h-32 sm:h-36 object-contain drop-shadow-[0_0_20px_rgba(236,72,153,0.5)]" />
+                                <div className="text-center font-medium mt-3 text-base sm:text-lg text-slate-300 leading-relaxed">
                                     ברוכים הבאים ל<strong className="text-white mx-1 drop-shadow-md">'כפלשון'</strong>!
                                     <br />
                                     <span>
-                                        {images.length} איורים דיגיטליים ויצירות AI הממחישים ביטויים, כפל לשון ומשחקי מילים בעברית — להעלות חיוך ולחגוג את השפה בצורתה הכיפית ביותר.
+                                        {images.length} איורים דיגיטליים ויצירות AI הממחישים ביטויים, כפל לשון ומשחקי מילים בעברית — להעלות חיוך ולחגוג את השפה.
                                     </span>
                                 </div>
-                                <div className="flex items-center justify-center gap-3 mt-4">
+                                <div className="flex items-center justify-center gap-3 mt-3">
                                     <span className="text-indigo-300 font-bold block text-lg drop-shadow-md">ספי רייכקינד</span>
                                     <a href="https://www.linkedin.com/in/sefi-riechkind-679b67136" target="_blank" rel="noreferrer" className="text-[#0077b5] hover:text-white hover:bg-[#0077b5] transition-all hover:scale-110 drop-shadow-md border border-[#0077b5] rounded-lg p-1 w-8 h-8 flex items-center justify-center bg-white/5" title="לינקדאין">
                                         <Linkedin size={18} fill="currentColor" strokeWidth={1} className="shrink-0" />
@@ -371,17 +371,14 @@ export default function PublicGallery({ images, metadata }) {
                                 className={`relative bg-gradient-to-br ${theme.frameGrad} p-[3px] sm:p-1.5 md:p-[10px] rounded-[2rem] sm:rounded-[2.5rem] shadow-[0_20px_60px_rgba(0,0,0,0.55)] w-full flex-1 flex flex-col min-h-0`}
                                 style={{ willChange: 'transform' }}
                             >
-                                {/* Nav arrows: right-0 + translate-x-1/2 = button center at outer edge of frame.
-                                    Adding sm:right-[3px] md:right-[5px] shifts it INWARD by half the border thickness
-                                    so the center lands exactly in the middle of the gradient border ring. */}
-                                {/* Next Arrow (right) */}
+                                {/* Next Arrow (right) — desktop only, on mobile arrows move to bottom */}
                                 <button
                                     onClick={(e) => { e.stopPropagation(); nextImage(); }}
                                     style={{ right: '5px' }}
-                                    className={`absolute top-1/2 -translate-y-1/2 translate-x-1/2 z-50
+                                    className={`hidden lg:flex absolute top-1/2 -translate-y-1/2 translate-x-1/2 z-50
                                         w-12 h-12 md:w-14 md:h-14 rounded-full
                                         bg-gradient-to-br ${theme.frameGrad}
-                                        flex items-center justify-center
+                                        items-center justify-center
                                         shadow-[0_0_20px_rgba(0,0,0,0.6)] border-none outline-none
                                         transition-all hover:scale-110 hover:brightness-110
                                         ${currentIndex + getGridSize() >= displayImages.length && currentIndex !== displayImages.length - 1 ? 'opacity-0 pointer-events-none' : ''}`}
@@ -391,14 +388,14 @@ export default function PublicGallery({ images, metadata }) {
                                     </div>
                                 </button>
 
-                                {/* Prev Arrow (left) */}
+                                {/* Prev Arrow (left) — desktop only */}
                                 <button
                                     onClick={(e) => { e.stopPropagation(); prevImage(); }}
                                     style={{ left: '5px' }}
-                                    className={`absolute top-1/2 -translate-y-1/2 -translate-x-1/2 z-50
+                                    className={`hidden lg:flex absolute top-1/2 -translate-y-1/2 -translate-x-1/2 z-50
                                         w-12 h-12 md:w-14 md:h-14 rounded-full
                                         bg-gradient-to-br ${theme.frameGrad}
-                                        flex items-center justify-center
+                                        items-center justify-center
                                         shadow-[0_0_20px_rgba(0,0,0,0.6)] border-none outline-none
                                         transition-all hover:scale-110 hover:brightness-110
                                         ${currentIndex === 0 ? 'opacity-0 pointer-events-none' : ''}`}
@@ -618,6 +615,44 @@ export default function PublicGallery({ images, metadata }) {
                                                 </div>
                                             </div>
                                         )}
+                                    </div>
+
+                                    {/* ── Mobile-only bottom navigation bar ── */}
+                                    <div className="lg:hidden flex items-center justify-between gap-3 shrink-0 px-4 pt-3 pb-3 border-t border-white/10">
+                                        {/* Prev (Right in RTL = previous) */}
+                                        <button
+                                            onClick={(e) => { e.stopPropagation(); prevImage(); }}
+                                            disabled={currentIndex === 0}
+                                            className={`flex-1 flex items-center justify-center gap-2 py-3 rounded-2xl
+                                                bg-gradient-to-br ${theme.frameGrad} opacity-90
+                                                shadow-[0_4px_15px_rgba(0,0,0,0.4)] transition-all active:scale-95
+                                                disabled:opacity-20 disabled:pointer-events-none`}
+                                        >
+                                            <div className={`rounded-full ${theme.innerBg} p-1.5`}>
+                                                <ChevronRight className={`w-5 h-5 ${theme.textClass}`} />
+                                            </div>
+                                            <span className={`text-sm font-bold ${theme.textClass}`}>הקודם</span>
+                                        </button>
+
+                                        {/* Counter */}
+                                        <span className="text-white/50 text-xs font-medium shrink-0 tabular-nums">
+                                            {currentIndex + 1} / {displayImages.length}
+                                        </span>
+
+                                        {/* Next (Left in RTL = next) */}
+                                        <button
+                                            onClick={(e) => { e.stopPropagation(); nextImage(); }}
+                                            disabled={currentIndex + getGridSize() >= displayImages.length && currentIndex !== displayImages.length - 1}
+                                            className={`flex-1 flex items-center justify-center gap-2 py-3 rounded-2xl
+                                                bg-gradient-to-br ${theme.frameGrad} opacity-90
+                                                shadow-[0_4px_15px_rgba(0,0,0,0.4)] transition-all active:scale-95
+                                                disabled:opacity-20 disabled:pointer-events-none`}
+                                        >
+                                            <span className={`text-sm font-bold ${theme.textClass}`}>הבא</span>
+                                            <div className={`rounded-full ${theme.innerBg} p-1.5`}>
+                                                <ChevronLeft className={`w-5 h-5 ${theme.textClass}`} />
+                                            </div>
+                                        </button>
                                     </div>
 
                                 </div>
