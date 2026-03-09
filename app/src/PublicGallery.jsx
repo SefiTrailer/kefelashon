@@ -790,54 +790,58 @@ export default function PublicGallery({ images, metadata }) {
                             </div>
                         )}
 
-                        <div className="w-full h-full flex flex-row-reverse items-center justify-center gap-6 p-6 md:p-12 relative pointer-events-none z-50">
+                        <div className="w-full h-full flex items-center justify-center p-6 md:p-12 relative pointer-events-none z-50">
 
-                            {/* Always visible Title and Toggle Button */}
-                            <div className="hidden lg:flex absolute top-8 right-8 xl:top-10 xl:right-10 flex-row items-center gap-4 z-[80] pointer-events-auto">
+                            {/* Left side panel: Title + toggle button (always) + explanation panel (when open) */}
+                            <div className="hidden lg:flex absolute left-4 lg:left-6 top-1/2 -translate-y-1/2 flex-col gap-3 z-[80] pointer-events-auto w-[240px] xl:w-[280px]">
+
+                                {/* Title pill */}
                                 {fileMetadata?.title && (
-                                    <div className="bg-slate-900/80 backdrop-blur-xl px-6 py-3 rounded-2xl border border-white/20 shadow-[0_0_30px_rgba(0,0,0,0.5)] flex items-center transition-all hover:scale-105">
-                                        <h3 className={`text-2xl lg:text-3xl font-['Varela_Round',sans-serif] text-transparent bg-clip-text bg-gradient-to-r ${theme.titleGrad} font-black drop-shadow-md`}>
+                                    <div className="bg-slate-900/80 backdrop-blur-xl px-5 py-3 rounded-2xl border border-white/20 shadow-[0_0_30px_rgba(0,0,0,0.5)] text-right">
+                                        <h3 className={`text-xl xl:text-2xl font-['Varela_Round',sans-serif] text-transparent bg-clip-text bg-gradient-to-r ${theme.titleGrad} font-black drop-shadow-md leading-snug`}>
                                             {fileMetadata.title}
                                         </h3>
                                     </div>
                                 )}
+
+                                {/* Toggle explanation button */}
                                 {fileMetadata?.explanation && (
                                     <button
                                         onClick={(e) => { e.stopPropagation(); setShowFullscreenInfo(!showFullscreenInfo); }}
-                                        className={`flex items-center gap-2 px-5 py-3 rounded-2xl backdrop-blur-md transition-all ${theme.headerBtnAboutCls} text-sm font-bold shadow-[0_0_20px_rgba(0,0,0,0.3)] hover:scale-105`}
+                                        className={`flex items-center justify-end gap-2 px-5 py-3 rounded-2xl backdrop-blur-md transition-all ${theme.headerBtnAboutCls} text-sm font-bold shadow-[0_0_20px_rgba(0,0,0,0.3)] hover:scale-105 w-full`}
                                     >
-                                        <MessageCircle size={20} />
                                         <span>{showFullscreenInfo ? 'הסתר הסבר' : 'הצג הסבר'}</span>
+                                        <MessageCircle size={18} />
                                     </button>
                                 )}
+
+                                {/* Explanation panel — expands below the button */}
+                                {showFullscreenInfo && fileMetadata?.explanation && (
+                                    <div className="bg-black/80 backdrop-blur-2xl border border-white/10 rounded-3xl shadow-[0_0_50px_rgba(0,0,0,0.8)] flex flex-col max-h-[55vh] animate-in fade-in slide-in-from-top-4">
+                                        <div className="px-5 pt-4 pb-3 border-b border-white/10 flex items-center justify-between">
+                                            <button
+                                                onClick={(e) => { e.stopPropagation(); setShowFullscreenInfo(false); }}
+                                                className="p-1.5 bg-white/10 hover:bg-white/20 text-white rounded-full transition-colors flex shrink-0"
+                                                title="הסתר פרטים"
+                                            >
+                                                <X size={16} />
+                                            </button>
+                                            <div className={`text-transparent bg-clip-text bg-gradient-to-r ${theme.titleGrad} font-bold text-sm`}>פירוט היצירה</div>
+                                        </div>
+                                        <div className="p-4 overflow-y-auto custom-scrollbar flex-1 text-right dir-rtl">
+                                            <div className="text-white/90 text-sm leading-relaxed font-medium">
+                                                {fileMetadata.explanation.split('\n').map((paragraph, index) => (
+                                                    <p key={index} className="mb-3 last:mb-0">{paragraph}</p>
+                                                ))}
+                                            </div>
+                                            <div className="mt-4 pt-3 border-t border-white/10 text-white/40 text-[11px] font-medium">
+                                                * ההסבר נוסח ע"י בינה מלאכותית (AI) ועלול להכיל אי דיוקים.
+                                            </div>
+                                        </div>
+                                    </div>
+                                )}
+
                             </div>
-
-                            {/* Left Panel - Explanation text only */}
-                            {showFullscreenInfo && fileMetadata?.explanation && (
-                                <div className="hidden lg:flex absolute left-4 lg:left-6 top-1/2 -translate-y-1/2 w-[240px] xl:w-[280px] shrink-0 bg-black/80 backdrop-blur-2xl border border-white/10 rounded-3xl shadow-[0_0_50px_rgba(0,0,0,0.8)] flex-col z-[75] max-h-[85vh] pointer-events-auto animate-in fade-in slide-in-from-left-8">
-                                    <div className="px-5 pt-5 pb-3 border-b border-white/10 flex items-center justify-between">
-                                        <button
-                                            onClick={(e) => { e.stopPropagation(); setShowFullscreenInfo(false); }}
-                                            className="p-1.5 bg-white/10 hover:bg-white/20 text-white rounded-full transition-colors flex shrink-0"
-                                            title="הסתר פרטים"
-                                        >
-                                            <X size={18} />
-                                        </button>
-                                        <div className={`text-transparent bg-clip-text bg-gradient-to-r ${theme.titleGrad} font-bold`}>פירוט היצירה</div>
-                                    </div>
-
-                                    <div className="p-5 overflow-y-auto custom-scrollbar flex-1 text-right dir-rtl">
-                                        <div className="text-white/90 text-sm xl:text-[15px] leading-relaxed font-medium">
-                                            {fileMetadata.explanation.split('\n').map((paragraph, index) => (
-                                                <p key={index} className="mb-4 last:mb-0">{paragraph}</p>
-                                            ))}
-                                        </div>
-                                        <div className="mt-6 pt-3 border-t border-white/10 text-white/40 text-[11px] font-medium">
-                                            * ההסבר נוסח ע"י בינה מלאכותית (AI) ועלול להכיל אי דיוקים.
-                                        </div>
-                                    </div>
-                                </div>
-                            )}
 
                             {/* Center Column: Perfectly Centered Image (Uses all available space but respects absolute left pane) */}
                             <div className="flex-1 flex flex-col items-center justify-center h-full max-h-[95vh] pointer-events-auto">
