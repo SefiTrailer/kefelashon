@@ -1,4 +1,4 @@
-import { useState, useEffect, useMemo } from 'react';
+import { useState, useEffect, useMemo, useRef } from 'react';
 import { ChevronRight, ChevronLeft, Save, MessageCircle, CheckCircle, Trash2, Search, X, Upload, Github, Loader, LayoutGrid, Image as ImageIcon } from 'lucide-react';
 import PublicGallery from './PublicGallery';
 
@@ -124,11 +124,27 @@ function App() {
     return result;
   }, [filterMode, selectedTopic, debouncedSearchQuery, allImages, metadata]);
 
+  const prevFiltersRef = useRef({ mode: filterMode, topic: selectedTopic, query: debouncedSearchQuery });
+
   // Sync images state with filtered results
   useEffect(() => {
     setImages(filteredImages);
-    setCurrentIndex(0);
-  }, [filteredImages]);
+    
+    const filtersChanged = prevFiltersRef.current.mode !== filterMode || 
+                           prevFiltersRef.current.topic !== selectedTopic || 
+                           prevFiltersRef.current.query !== debouncedSearchQuery;
+
+    if (filtersChanged) {
+      setCurrentIndex(0);
+      prevFiltersRef.current = { mode: filterMode, topic: selectedTopic, query: debouncedSearchQuery };
+    } else {
+      // If filters didn't change (e.g. just saving metadata), try to keep the index valid
+      setCurrentIndex(prev => {
+        if (filteredImages.length === 0) return 0;
+        return prev >= filteredImages.length ? filteredImages.length - 1 : prev;
+      });
+    }
+  }, [filteredImages, filterMode, selectedTopic, debouncedSearchQuery]);
 
   // Derived unique topics list
   const allTopics = Array.from(new Set(
