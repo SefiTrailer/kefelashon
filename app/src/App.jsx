@@ -98,7 +98,7 @@ function App() {
       // 1. Filter Mode
       if (filterMode === 'tagged' && (!meta.title || !meta.explanation)) return false;
       if (filterMode === 'untagged' && meta.title && meta.explanation) return false;
-      if (filterMode === 'no-topic' && (meta.topic || !meta.title || !meta.explanation)) return false;
+      if (filterMode === 'no-topic' && meta.topic) return false;
       if (filterMode === 'ai' && meta.isAIGenerated !== true) return false;
 
       // 2. Topic Filter
@@ -348,11 +348,11 @@ function App() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-50 to-teal-50/30 flex flex-col items-center py-8 font-sans">
-      <div className="w-full max-w-5xl px-4 flex flex-col gap-6">
+    <div className="h-screen overflow-hidden bg-gradient-to-br from-slate-50 to-teal-50/30 flex flex-col items-center p-4 font-sans">
+      <div className="w-full max-w-7xl flex flex-col gap-4 h-full min-h-0">
 
         {/* Header & Progress */}
-        <header className="flex flex-col md:flex-row md:items-center justify-between bg-white/70 backdrop-blur-md p-6 rounded-2xl shadow-sm border border-slate-100">
+        <header className="shrink-0 flex flex-col md:flex-row md:items-center justify-between bg-white/70 backdrop-blur-md p-4 lg:p-5 rounded-2xl shadow-sm border border-slate-100">
           <div>
             <h1 className="text-3xl font-extrabold text-slate-800 tracking-tight">
               כפל <span className="text-teal-600">לשון</span>
@@ -504,12 +504,12 @@ function App() {
 
         {/* Main Content Area */}
         {adminViewMode === 'edit' ? (
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+        <div className="grid grid-cols-1 lg:grid-cols-[1fr_400px] gap-6 flex-1 min-h-0">
 
           {/* Image Viewer Panel */}
-          <div className="flex flex-col bg-white rounded-3xl shadow-xl shadow-slate-200/50 overflow-hidden border border-slate-100">
+          <div className="flex flex-col bg-white rounded-3xl shadow-xl shadow-slate-200/50 overflow-hidden border border-slate-100 min-h-0">
             {/* Image Container with precise aspect ratio matching */}
-            <div className="relative w-full aspect-square bg-slate-100 flex items-center justify-center p-4">
+            <div className="relative w-full flex-1 min-h-0 bg-slate-100 flex items-center justify-center p-4">
               {images.length > 0 ? (
                 <img
                   src={`${API_BASE}/images/${encodeURIComponent(currentFile)}`}
@@ -564,9 +564,9 @@ function App() {
           </div>
 
           {/* Editor Panel */}
-          <div className="flex flex-col gap-6 bg-white p-8 rounded-3xl shadow-xl shadow-slate-200/50 border border-slate-100">
-            <div>
-              <h2 className="text-2xl font-bold text-slate-800 mb-6 flex items-center justify-between">
+          <div className="flex flex-col gap-4 bg-white p-6 rounded-3xl shadow-xl shadow-slate-200/50 border border-slate-100 min-h-0 overflow-y-auto">
+            <div className="shrink-0">
+              <h2 className="text-xl font-bold text-slate-800 mb-4 flex items-center justify-between">
                 <div className="flex items-center gap-3">
                   <span className="bg-teal-100 text-teal-600 w-10 h-10 rounded-xl flex items-center justify-center">✍️</span>
                   עריכת פרטים
@@ -629,12 +629,12 @@ function App() {
                   value={explanation}
                   onChange={(e) => setExplanation(e.target.value)}
                   placeholder="הסבר את משמעות כפל הלשון בפירוט..."
-                  className="w-full flex-1 min-h-[160px] px-5 py-4 bg-slate-50 border border-slate-200 rounded-2xl focus:outline-none focus:ring-4 focus:ring-teal-500/20 focus:border-teal-500 transition-all text-slate-700 resize-none leading-relaxed"
+                  className="w-full flex-1 min-h-[120px] px-4 py-3 bg-slate-50 border border-slate-200 rounded-2xl focus:outline-none focus:ring-4 focus:ring-teal-500/20 focus:border-teal-500 transition-all text-slate-700 resize-none leading-relaxed"
                 />
               </div>
             </div>
 
-            <div className="pt-6 border-t border-slate-100 flex flex-col sm:flex-row gap-3 mt-4">
+            <div className="pt-4 border-t border-slate-100 flex flex-col sm:flex-row gap-3 mt-2 shrink-0">
               <button
                 onClick={() => handleSave(true)}
                 disabled={isSaving}
@@ -659,71 +659,73 @@ function App() {
           </div>
         </div>
         ) : (
-          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-4">
-            {images.map((filename, index) => {
-              const data = metadata[filename];
-              const isTagged = data?.title && data?.explanation;
-              return (
-                <div 
-                  key={filename} 
-                  className="group relative bg-white border border-slate-200 rounded-xl overflow-hidden shadow-sm hover:shadow-md hover:border-teal-300 transition-all cursor-pointer aspect-square"
-                  onClick={() => {
-                    setCurrentIndex(index);
-                    setAdminViewMode('edit');
-                  }}
-                >
-                  <img 
-                    src={`${API_BASE}/images/${encodeURIComponent(filename)}`} 
-                    alt={data?.title || filename}
-                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
-                    loading="lazy"
-                  />
-                  
-                  {/* Overlay Grad */}
-                  <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-slate-900/90 to-transparent p-3 pt-8 pb-3">
-                    <p className="text-white text-sm font-bold truncate text-right drop-shadow-md">
-                      {data?.title || <span className="text-slate-300 font-normal italic">ללא שם</span>}
-                    </p>
-                  </div>
-
-                  {/* Status Indicator */}
-                  <div className="absolute top-2 right-2">
-                    {isTagged ? (
-                      <div className="w-2.5 h-2.5 bg-teal-500 rounded-full shadow-[0_0_5px_rgba(20,184,166,0.8)]" title="מעודכן"></div>
-                    ) : (
-                      <div className="w-2.5 h-2.5 bg-slate-300 rounded-full shadow-[0_0_5px_rgba(203,213,225,0.8)]" title="חסר נתונים"></div>
-                    )}
-                  </div>
-
-                  {/* Delete Button Area (shows only on hover) */}
-                  <button
-                    onClick={async (e) => {
-                      e.stopPropagation();
-                      if (window.confirm(`האם אתה בטוח שברצונך למחוק לצמיתות את "${filename}"?`)) {
-                        try {
-                          const res = await fetch(`${API_BASE}/api/images/${encodeURIComponent(filename)}`, { method: 'DELETE' });
-                          if (res.ok) {
-                            setImages(prev => prev.filter(img => img !== filename));
-                            setAllImages(prev => prev.filter(img => img !== filename));
-                            setMetadata(prev => {
-                              const newData = { ...prev };
-                              delete newData[filename];
-                              return newData;
-                            });
-                          }
-                        } catch (err) {
-                           setError(err.message);
-                        }
-                      }
+          <div className="flex-1 min-h-0 overflow-y-auto pr-1 pb-8">
+            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-4">
+              {images.map((filename, index) => {
+                const data = metadata[filename];
+                const isTagged = data?.title && data?.explanation;
+                return (
+                  <div 
+                    key={filename} 
+                    className="group relative bg-white border border-slate-200 rounded-xl overflow-hidden shadow-sm hover:shadow-md hover:border-teal-300 transition-all cursor-pointer aspect-square"
+                    onClick={() => {
+                      setCurrentIndex(index);
+                      setAdminViewMode('edit');
                     }}
-                    className="absolute top-2 left-2 p-1.5 bg-rose-500 hover:bg-rose-600 text-white rounded-md shadow-md opacity-0 group-hover:opacity-100 transition-opacity"
-                    title="מחק כליל תמונה זו"
                   >
-                    <Trash2 size={14} />
-                  </button>
-                </div>
-              );
-            })}
+                    <img 
+                      src={`${API_BASE}/images/${encodeURIComponent(filename)}`} 
+                      alt={data?.title || filename}
+                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                      loading="lazy"
+                    />
+                    
+                    {/* Overlay Grad */}
+                    <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-slate-900/90 to-transparent p-3 pt-8 pb-3">
+                      <p className="text-white text-sm font-bold truncate text-right drop-shadow-md">
+                        {data?.title || <span className="text-slate-300 font-normal italic">ללא שם</span>}
+                      </p>
+                    </div>
+
+                    {/* Status Indicator */}
+                    <div className="absolute top-2 right-2">
+                      {isTagged ? (
+                        <div className="w-2.5 h-2.5 bg-teal-500 rounded-full shadow-[0_0_5px_rgba(20,184,166,0.8)]" title="מעודכן"></div>
+                      ) : (
+                        <div className="w-2.5 h-2.5 bg-slate-300 rounded-full shadow-[0_0_5px_rgba(203,213,225,0.8)]" title="חסר נתונים"></div>
+                      )}
+                    </div>
+
+                    {/* Delete Button Area (shows only on hover) */}
+                    <button
+                      onClick={async (e) => {
+                        e.stopPropagation();
+                        if (window.confirm(`האם אתה בטוח שברצונך למחוק לצמיתות את "${filename}"?`)) {
+                          try {
+                            const res = await fetch(`${API_BASE}/api/images/${encodeURIComponent(filename)}`, { method: 'DELETE' });
+                            if (res.ok) {
+                              setImages(prev => prev.filter(img => img !== filename));
+                              setAllImages(prev => prev.filter(img => img !== filename));
+                              setMetadata(prev => {
+                                const newData = { ...prev };
+                                delete newData[filename];
+                                return newData;
+                              });
+                            }
+                          } catch (err) {
+                             setError(err.message);
+                          }
+                        }
+                      }}
+                      className="absolute top-2 left-2 p-1.5 bg-rose-500 hover:bg-rose-600 text-white rounded-md shadow-md opacity-0 group-hover:opacity-100 transition-opacity"
+                      title="מחק כליל תמונה זו"
+                    >
+                      <Trash2 size={14} />
+                    </button>
+                  </div>
+                );
+              })}
+            </div>
           </div>
         )}
       </div>
