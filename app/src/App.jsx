@@ -28,6 +28,7 @@ function App() {
   const [error, setError] = useState(null);
   const [isSearchOpen, setIsSearchOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
+  const [debouncedSearchQuery, setDebouncedSearchQuery] = useState('');
   const [fileSizes, setFileSizes] = useState({});
   const [adminViewMode, setAdminViewMode] = useState('edit'); // 'edit' | 'grid'
 
@@ -82,22 +83,30 @@ function App() {
     fetchPublishStatus();
   }, []);
 
+  // Debounce search query to prevent lag on every keystroke
+  useEffect(() => {
+    const handler = setTimeout(() => {
+      setDebouncedSearchQuery(searchQuery);
+    }, 300);
+    return () => clearTimeout(handler);
+  }, [searchQuery]);
+
   const filteredImages = useMemo(() => {
-    return (allImages || []).filter(img => {
+    const result = (allImages || []).filter(img => {
       const meta = metadata[img] || {};
       
       // 1. Filter Mode
       if (filterMode === 'tagged' && (!meta.title || !meta.explanation)) return false;
       if (filterMode === 'untagged' && meta.title && meta.explanation) return false;
       if (filterMode === 'no-topic' && (meta.topic || !meta.title || !meta.explanation)) return false;
-      if (filterMode === 'ai' && !meta.isAIGenerated) return false;
+      if (filterMode === 'ai' && meta.isAIGenerated !== true) return false;
 
       // 2. Topic Filter
       if (selectedTopic && (!meta.topic || !meta.topic.includes(selectedTopic))) return false;
 
       // 3. Search Query
-      if (searchQuery) {
-        const q = searchQuery.toLowerCase();
+      if (debouncedSearchQuery) {
+        const q = debouncedSearchQuery.toLowerCase();
         const matchTitle = meta.title?.toLowerCase().includes(q);
         const matchFilename = img.toLowerCase().includes(q);
         const matchExplanation = meta.explanation?.toLowerCase().includes(q);
@@ -107,7 +116,9 @@ function App() {
 
       return true;
     });
-  }, [filterMode, selectedTopic, searchQuery, allImages, metadata]);
+
+    return result;
+  }, [filterMode, selectedTopic, debouncedSearchQuery, allImages, metadata]);
 
   // Sync images state with filtered results
   useEffect(() => {
@@ -775,12 +786,13 @@ function App() {
                           setFilterMode('all');
                           setSelectedTopic(null);
                           setSearchQuery('');
-                          // Wait for next tick/render if needed, or rely on effect.
-                          // But we can find index in allImages immediately.
+                          
+                          // We know it's in allImages
                           const idxInAll = allImages.indexOf(filename);
                           if (idxInAll !== -1) {
+                             // Use setTimeout to allow the filter reset to trigger a re-render 
+                             // and update the 'images' array before we set the index.
                              setTimeout(() => {
-                               setImages(allImages);
                                setCurrentIndex(idxInAll);
                              }, 0);
                           }
