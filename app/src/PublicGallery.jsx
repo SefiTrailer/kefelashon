@@ -98,6 +98,7 @@ const THEMES = [
 
 export default function PublicGallery({ images, metadata }) {
     const [shuffledImages, setShuffledImages] = useState([]);
+    const isSelectingResult = useRef(false);
     const [currentIndex, setCurrentIndex] = useState(0);
     const [searchQuery, setSearchQuery] = useState('');
     const [isSearchOpen, setIsSearchOpen] = useState(false);
@@ -257,7 +258,12 @@ export default function PublicGallery({ images, metadata }) {
         }
     };
 
-    useEffect(() => { setCurrentIndex(0); }, [searchQuery, viewMode]);
+    useEffect(() => { 
+        if (!isSelectingResult.current) {
+            setCurrentIndex(0); 
+        }
+        isSelectingResult.current = false;
+    }, [searchQuery, viewMode]);
 
     // Force single view mode on small screens (mobile)
     useEffect(() => {
@@ -1006,7 +1012,7 @@ export default function PublicGallery({ images, metadata }) {
                 isSearchOpen && (
                     <div className="fixed inset-0 z-50 flex items-start justify-center p-4 pt-20">
                         <div className="absolute inset-0 bg-black/80 backdrop-blur-sm" onClick={() => { setIsSearchOpen(false); setSearchQuery(''); }} />
-                        <div className={`relative w-full max-w-2xl bg-slate-900 rounded-[2rem] border border-cyan-500/30 p-2 shadow-[0_0_50px_rgba(6,182,212,0.15)] animate-in fade-in slide-in-from-top-4`}>
+                        <div className={`relative w-full max-w-2xl bg-slate-900 rounded-[2rem] border border-cyan-500/30 p-2 shadow-[0_0_50px_rgba(6,182,212,0.15)] animate-in fade-in slide-in-from-top-4 flex flex-col max-h-[85vh]`}>
                             <div className="flex items-center bg-slate-800 rounded-[1.8rem] px-6 py-4">
                                 <Search size={24} className="text-cyan-400 mr-4" />
                                 <input
@@ -1015,15 +1021,70 @@ export default function PublicGallery({ images, metadata }) {
                                     placeholder="חפש תמונה, כותרת, או נושא..."
                                     value={searchQuery}
                                     onChange={(e) => setSearchQuery(e.target.value)}
-                                    className="w-full bg-transparent text-white text-xl md:text-2xl font-bold placeholder-slate-500 focus:outline-none focus:ring-0 outline-none border-none pr-4"
+                                    className="w-full bg-transparent text-white text-xl md:text-2xl font-bold placeholder-slate-500 focus:outline-none focus:ring-0 outline-none border-none pr-4 text-right"
+                                    dir="rtl"
                                 />
                                 <button onClick={() => { setIsSearchOpen(false); setSearchQuery(''); }} className="ml-2 text-slate-400 hover:text-white bg-slate-700/50 hover:bg-slate-700 p-2 rounded-full transition-all shrink-0">
                                     <X size={24} />
                                 </button>
                             </div>
-                            {searchQuery && (
-                                <div className="p-4 text-center text-cyan-200 mt-2 font-medium bg-slate-800/50 rounded-2xl border border-slate-800">
-                                    נמצאו {filteredImages.length} תוצאות. לחץ על ה-X בתיבה לביטול חיפוש, או סגור את החלון לצפייה.
+
+                            {/* Results List */}
+                            <div className="mt-4 flex-1 overflow-y-auto custom-scrollbar space-y-2 p-2">
+                                {searchQuery && (
+                                    filteredImages.length === 0 ? (
+                                        <div className="text-center py-10 text-slate-400 font-medium">
+                                            לא נמצאו תוצאות לחיפוש "{searchQuery}"
+                                        </div>
+                                    ) : (
+                                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                                            {filteredImages.map((file) => {
+                                                const data = metadata[file];
+                                                return (
+                                                    <button
+                                                        key={file}
+                                                        onClick={() => {
+                                                            isSelectingResult.current = true;
+                                                            const idx = shuffledImages.indexOf(file);
+                                                            if (idx !== -1) {
+                                                                setCurrentIndex(idx);
+                                                                setIsSearchOpen(false);
+                                                                setSearchQuery('');
+                                                                setShowExplanation(false);
+                                                            }
+                                                        }}
+                                                        className="flex items-center gap-4 p-3 bg-slate-800/40 hover:bg-slate-700/60 rounded-2xl border border-white/5 hover:border-cyan-500/30 transition-all text-right group"
+                                                    >
+                                                        <img
+                                                            src={`./images/${encodeURIComponent(file)}`}
+                                                            className="w-16 h-16 object-cover rounded-xl border border-white/10"
+                                                            alt=""
+                                                            loading="lazy"
+                                                        />
+                                                        <div className="flex-1 min-w-0">
+                                                            <div className="text-white font-bold truncate group-hover:text-cyan-400 transition-colors">
+                                                                {data?.title || file}
+                                                            </div>
+                                                            <div className="text-slate-400 text-xs truncate">
+                                                                {data?.topic || ''}
+                                                            </div>
+                                                        </div>
+                                                    </button>
+                                                );
+                                            })}
+                                        </div>
+                                    )
+                                )}
+                                {!searchQuery && (
+                                    <div className="text-center py-10 text-slate-500 italic">
+                                        הקלד משהו כדי להתחיל לחפש...
+                                    </div>
+                                )}
+                            </div>
+
+                            {searchQuery && filteredImages.length > 0 && (
+                                <div className="p-4 text-center text-cyan-200/60 text-xs font-medium border-t border-white/5 mt-2">
+                                    נמצאו {filteredImages.length} תוצאות. לחץ על תמונה כדי לעבור אליה.
                                 </div>
                             )}
                         </div>

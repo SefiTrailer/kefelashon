@@ -105,7 +105,13 @@ async function analyzeImage(filename, retries = 3) {
 
         console.log(`✅ תוצאה ל-"${parsed.title}" [נושא: ${parsed.topic || '?'}]`);
 
-        return { title: parsed.title, explanation: parsed.explanation, topic: parsed.topic || '', isAIGenerated: true };
+        return { 
+            title: parsed.title, 
+            explanation: parsed.explanation, 
+            topic: parsed.topic || '', 
+            isAIGenerated: true,
+            isApproved: false 
+        };
 
     } catch (error) {
         if (retries > 0 && (error.message.includes('429') || error.message.includes('Quota'))) {
@@ -144,11 +150,11 @@ async function main() {
     const toProcess = imagesToProcess.slice(0, LIMIT);
     console.log(`Found ${imagesToProcess.length} images needing AI tags. Processing next ${toProcess.length}...`);
 
-    let updatedCount = 0;
+    let successCount = 0;
 
     for (const filename of toProcess) {
         // Add artificial delay to respect rate limits (15 RPM for free tier usually)
-        if (updatedCount > 0) {
+        if (successCount > 0) {
             console.log('...ממתין 6 שניות לפני הבא...');
             await new Promise(r => setTimeout(r, 6000));
         }
