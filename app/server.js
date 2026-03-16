@@ -318,6 +318,20 @@ app.post('/api/upload', upload.array('images'), (req, res) => {
 app.get('/api/duplicates', async (req, res) => {
     try {
         // Read metadata for all files
+        const folders = [
+            { path: IMAGES_DIR, type: 'source' },
+            { path: NEW_IMAGES_DIR, type: 'new' }
+        ];
+
+        let cache = {};
+        if (fs.existsSync(HASHES_FILE)) {
+            try {
+                cache = JSON.parse(fs.readFileSync(HASHES_FILE, 'utf-8'));
+            } catch (e) {
+                console.error('Error reading hashes cache:', e);
+            }
+        }
+
         let metadata = {};
         if (fs.existsSync(DATA_FILE)) {
             metadata = JSON.parse(fs.readFileSync(DATA_FILE, 'utf-8'));
@@ -333,12 +347,12 @@ app.get('/api/duplicates', async (req, res) => {
                     const mtime = stats.mtimeMs;
                     
                     let hash = null;
-                    if (cache[file] && cache[file].mtime === mtime) {
-                        hash = cache[file].hash;
+                    if (cache[fullPath] && cache[fullPath].mtime === mtime) {
+                        hash = cache[fullPath].hash;
                     } else {
                         hash = await generateAHash(fullPath);
                         if (hash) {
-                            cache[file] = { hash, mtime };
+                            cache[fullPath] = { hash, mtime };
                         }
                     }
 
@@ -346,7 +360,9 @@ app.get('/api/duplicates', async (req, res) => {
                         const fileMeta = metadata[file] || {};
                         allFiles.push({
                             filename: file,
+                            basename: path.basename(file, path.extname(file)),
                             path: fullPath,
+                            size: stats.size,
                             type: folder.type,
                             hash,
                             metadata: fileMeta
@@ -359,7 +375,7 @@ app.get('/api/duplicates', async (req, res) => {
         // Save cache
         fs.writeFileSync(HASHES_FILE, JSON.stringify(cache, null, 2));
 
-        // Group by similarity (Hash OR Same Title)
+        // Group by similarity (Hash OR Same Title OR Same Filename)
         const groups = [];
         const processed = new Set();
 
@@ -369,15 +385,17 @@ app.get('/api/duplicates', async (req, res) => {
             processed.add(i);
 
             const titleI = allFiles[i].metadata?.title?.trim();
+            const baseI = allFiles[i].basename;
 
             for (let j = i + 1; j < allFiles.length; j++) {
                 if (processed.has(j)) continue;
 
-                const hashMatch = getHammingDistance(allFiles[i].hash, allFiles[j].hash) <= 2;
+                const hashMatch = getHammingDistance(allFiles[i].hash, allFiles[j].hash) <= 4;
                 const titleJ = allFiles[j].metadata?.title?.trim();
                 const titleMatch = titleI && titleJ && titleI === titleJ;
+                const filenameMatch = baseI === allFiles[j].basename;
 
-                if (hashMatch || titleMatch) {
+                if (hashMatch || titleMatch || filenameMatch) {
                     group.push(allFiles[j]);
                     processed.add(j);
                 }
@@ -387,7 +405,10 @@ app.get('/api/duplicates', async (req, res) => {
                 // Annotate type for the UI
                 const firstTitle = group[0].metadata?.title;
                 const isTitleMatch = group.every(item => item.metadata?.title && item.metadata?.title === firstTitle);
+                const isFilenameMatch = group.every(item => item.basename === group[0].basename);
+                
                 group.isTitleMatch = isTitleMatch;
+                group.isFilenameMatch = isFilenameMatch;
                 groups.push(group);
             }
         }
@@ -401,38 +422,46 @@ app.get('/api/duplicates', async (req, res) => {
 
 app.post('/api/duplicates/resolve', (req, res) => {
     try {
-        const { action, keep, remove } = req.body;
+        const { action, keep, remove, metadata } = req.body;
         // action: 'delete_new', 'replace_old', 'keep_both', 'merge'
         
         const removePath = remove.path;
         const keepPath = keep.path;
 
-        if (action === 'delete_new' || action === 'replace_old' || action === 'merge') {
+        let data = {};
+        if (fs.existsSync(DATA_FILE)) {
+            data = JSON.parse(fs.readFileSync(DATA_FILE, 'utf-8'));
+        }
+
+        if (action === 'delete_new' || action === 'replace_old' || action === 'merge' || action === 'keep_this') {
             if (fs.existsSync(removePath)) {
                 fs.unlinkSync(removePath);
             }
             
-            // If it was a merge or replace, we might need to update metadata
+            // If it was a replace, move keep to remove's location
             if (action === 'replace_old') {
-                // Move keep to remove's location (if different)
                 if (keepPath !== removePath) {
                     fs.copyFileSync(keepPath, removePath);
-                    // If keep was in 'new', we might want to delete it after copying
                     if (keep.type === 'new') {
                         fs.unlinkSync(keepPath);
                     }
                 }
             }
 
-            // Cleanup metadata if the removed file had any
-            let data = {};
-            if (fs.existsSync(DATA_FILE)) {
-                data = JSON.parse(fs.readFileSync(DATA_FILE, 'utf-8'));
-                if (data[remove.filename]) {
-                    delete data[remove.filename];
-                    fs.writeFileSync(DATA_FILE, JSON.stringify(data, null, 2));
-                }
+            // Update metadata for the kept file if provided
+            if (metadata) {
+                data[keep.filename] = {
+                    ...data[keep.filename],
+                    ...metadata
+                };
             }
+
+            // Cleanup removed file metadata
+            if (data[remove.filename]) {
+                delete data[remove.filename];
+            }
+            
+            fs.writeFileSync(DATA_FILE, JSON.stringify(data, null, 2));
         }
 
         res.json({ success: true });

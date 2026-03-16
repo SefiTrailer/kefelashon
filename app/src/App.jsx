@@ -123,6 +123,13 @@ function App() {
       if (filterMode === 'approved' && meta.isApproved !== true) return false;
       if (filterMode === 'not-approved' && meta.isApproved === true) return false;
       if (filterMode === 'new-images' && fileSources[img] !== 'new') return false;
+      if (filterMode === 'generic-ai') {
+        const isGeneric = meta.explanation?.includes('התמונה ממחישה את הכפל המשמעות הטמון בביטוי');
+        if (!isGeneric) return false;
+      }
+      if (filterMode === 'untitled') {
+        if (!img.includes('עיצוב ללא שם')) return false;
+      }
 
       // 2. Topic Filter
       if (selectedTopic && (!meta.topic || !meta.topic.includes(selectedTopic))) return false;
@@ -452,7 +459,9 @@ function App() {
                   <option value="approved">✅ עברו בקרה / מאושרות</option>
                   <option value="not-approved">⏳ לא עברו בקרה / ממתינות</option>
                   <option value="new-images">🆕 תמונות חדשות (בתיקיית קליטה)</option>
-                </select>
+                  <option value="generic-ai">🤖 הסבר AI גנרי</option>
+                  <option value="untitled">🎨 עיצוב ללא שם</option>
+                 </select>
               </div>
 
               {/* View Mode Toggle */}
