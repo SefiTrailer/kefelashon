@@ -7151,13 +7151,6 @@
     "isApproved": true,
     "isAIGenerated": false
   },
-  "על הקלידים.jpg": {
-    "title": "על הקלידים",
-    "explanation": "ביטוי להכרזה על מישהו שמנגן ב'קלידים', רואים את שלמה ארצי מפרגן לאבי סינגולדה שהוא מנגן על הקלידים, אפילו שאבי בכלל מנגן על גיטרה, רק הוא נמצא פיזית על הקלידים",
-    "topic": "",
-    "isApproved": true,
-    "isAIGenerated": false
-  },
   "MEET לאבנים.jpg": {
     "title": "MEET לאבנים",
     "explanation": "נשמע כמו 'מתלהבנים', רואים מפגש MEET לדמויות של אבנים שהם מאוד מתלהבים",
@@ -8527,7 +8520,7 @@
     "title": "שבעת פילי תבל",
     "explanation": "",
     "topic": "",
-    "isApproved": false,
+    "isApproved": true,
     "isAIGenerated": true
   },
   "שַׁה לכת.png": {
@@ -9355,5 +9348,19 @@
     "title": "לולב צריך אגר",
     "explanation": "",
     "isApproved": true
+  },
+  "על הקלידים 1.jpg": {
+    "title": "על הקלידים",
+    "explanation": "ביטוי להכרזה על מישהו שמנגן ב'קלידים', רואים את שלמה ארצי מפרגן לאבי סינגולדה שהוא מנגן על הקלידים, אפילו שאבי בכלל מנגן על גיטרה, רק הוא נמצא פיזית על הקלידים",
+    "topic": "",
+    "isApproved": true,
+    "isAIGenerated": false
+  },
+  "חד גדיא.jpg": {
+    "title": "חד גדיא",
+    "explanation": "",
+    "topic": "",
+    "isApproved": false,
+    "isAIGenerated": false
   }
 }
