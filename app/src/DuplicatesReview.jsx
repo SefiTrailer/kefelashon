@@ -201,17 +201,19 @@ export default function DuplicatesReview({ onComplete }) {
                                         <div key={iIdx} className={`flex flex-col gap-4 p-5 rounded-3xl border-2 transition-all ${!img.keep ? 'opacity-60 bg-slate-50 grayscale' : isDraft ? 'border-amber-100 bg-amber-50/20' : 'border-teal-50 bg-teal-50/10'}`}>
                                             
                                             {/* Header Info */}
-                                            <div className="flex items-center justify-between pb-2 border-b border-dashed border-slate-200">
+                                            <div className={`flex items-center justify-between pb-3 -mx-2 px-2 rounded-t-2xl border-b border-dashed transition-all ${img.keep ? 'bg-emerald-50/50 border-emerald-200' : 'bg-rose-50/50 border-rose-200'}`}>
                                                 <div className="flex items-center gap-3">
-                                                    <input 
-                                                        type="checkbox"
-                                                        checked={img.keep}
-                                                        onChange={() => toggleKeep(gIdx, iIdx)}
-                                                        className="w-5 h-5 rounded-lg border-2 border-slate-300 text-teal-600 focus:ring-teal-500 transition-all cursor-pointer"
-                                                        id={`keep-${gIdx}-${iIdx}`}
-                                                    />
-                                                    <label htmlFor={`keep-${gIdx}-${iIdx}`} className={`text-sm font-black cursor-pointer ${img.keep ? 'text-teal-700' : 'text-slate-400'}`}>
-                                                        {img.keep ? 'שמור תמונה' : 'מחק תמונה'}
+                                                    <div className="relative flex items-center">
+                                                        <input 
+                                                            type="checkbox"
+                                                            checked={img.keep}
+                                                            onChange={() => toggleKeep(gIdx, iIdx)}
+                                                            className={`w-6 h-6 rounded-lg border-2 transition-all cursor-pointer focus:ring-offset-0 ${img.keep ? 'bg-emerald-500 border-emerald-600 text-white focus:ring-emerald-500' : 'bg-white border-rose-400 text-rose-500 focus:ring-rose-500'}`}
+                                                            id={`keep-${gIdx}-${iIdx}`}
+                                                        />
+                                                    </div>
+                                                    <label htmlFor={`keep-${gIdx}-${iIdx}`} className={`text-sm font-black cursor-pointer transition-all ${img.keep ? 'text-emerald-700' : 'text-rose-600'}`}>
+                                                        {img.keep ? '✅ שמור תמונה זו' : '❌ מחק תמונה זו'}
                                                     </label>
                                                 </div>
                                                 <span className="text-[10px] font-bold bg-slate-200 text-slate-700 px-3 py-1 rounded-full whitespace-nowrap">{formatBytes(img.size)}</span>
@@ -224,12 +226,22 @@ export default function DuplicatesReview({ onComplete }) {
                                                     className={`w-full h-full object-contain p-2 transition-all ${!img.keep ? 'brightness-50' : ''}`}
                                                     alt={img.filename}
                                                 />
-                                                <div className={`absolute bottom-3 left-3 px-3 py-1 rounded-full text-[10px] font-black shadow-lg ${img.type === 'new' ? 'bg-indigo-600 text-white' : 'bg-teal-600 text-white'}`}>
-                                                    {img.type === 'new' ? 'חדש במערכת' : 'קיים במערכת'}
+                                                
+                                                {/* Status Badges */}
+                                                <div className="absolute bottom-3 right-3 flex flex-wrap gap-2">
+                                                    <div className={`px-2.5 py-1 rounded-full text-[9px] font-black shadow-lg ${img.type === 'new' ? 'bg-amber-500 text-white' : 'bg-teal-600 text-white'}`}>
+                                                        {img.type === 'new' ? '📥 העלאה חדשה' : '🖼️ בגלריה העיקרית'}
+                                                    </div>
+                                                    {Object.keys(img.metadata || {}).length > 0 && (
+                                                        <div className="bg-indigo-600 text-white px-2.5 py-1 rounded-full text-[9px] font-black shadow-lg">
+                                                            📝 יש מידע קיים
+                                                        </div>
+                                                    )}
                                                 </div>
+
                                                 {img.keep && isDraft && (
-                                                    <div className="absolute top-3 right-3 bg-amber-500 text-white px-3 py-1 rounded-lg text-[10px] font-bold shadow-lg animate-bounce">
-                                                        ⚠️ חסר מידע
+                                                    <div className="absolute top-3 right-3 bg-rose-500 text-white px-3 py-1 rounded-lg text-[10px] font-bold shadow-lg animate-pulse">
+                                                        ⚠️ דרוש טיפול בטקסט
                                                     </div>
                                                 )}
                                             </div>

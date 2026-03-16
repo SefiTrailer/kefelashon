@@ -367,7 +367,7 @@
     "title": "לומד לסחוט",
     "explanation": "נשמע כמו 'לומד לשחות', רואים אבא עבריין שמלמד את הבן שלו ליד הבריכה איך לסחוט בעלי עסקים, בטח את בעל הבריכה.",
     "topic": "",
-    "isApproved": false,
+    "isApproved": true,
     "isAIGenerated": true
   },
   "אסיפת תורים.jpg": {
@@ -530,7 +530,8 @@
   "קן-גורו.jpg": {
     "title": "קן-גורו",
     "explanation": "'קנגורו' = החיה האוסטרלית, אבל מחולק ל-'קן' + 'גורו'. \n'קן' = שם הבן-זוג הגבר של ברבי (Ken), 'גורו' = מאסטר רוחני/מנהיג. \nבתמונה: קן (של ברבי), לבוש בכתונת כתומה, יושב בתנוחת מדיטציה כמו גורו בהודי — 'קן-גורו'. \nפאנץ': הקנגורו שבמציאות נושא את התינוק בכיסו — הגורו הזה נושא תובנות!",
-    "topic": "חיות, יהדות ומסורת"
+    "topic": "חיות, יהדות ומסורת",
+    "isApproved": true
   },
   "שליש.jpg": {
     "title": "שליש",
@@ -949,7 +950,8 @@
   "אופני הרים.jpg": {
     "title": "אופני הרים",
     "explanation": "משחק מילים טקסטואלי-ויזואלי. הביטוי 'אופני הרים' שידוע כסוג של אופניים לרכיבת שטח, מקבל כאן משמעות מילולית - זוג הרים עם שלג בקצה שלהם שרוכבים על אופניים בעצמם (אופניים של הרים).",
-    "topic": "ספורט, אופניים, טבע וצומח, פוליטיקה ואקטואליה, פתגמים וביטויים"
+    "topic": "ספורט, אופניים, טבע וצומח, פוליטיקה ואקטואליה, פתגמים וביטויים",
+    "isApproved": true
   },
   "אורב (עורב אורב).jpg": {
     "title": "אורב (עורב אורב)",
@@ -2596,7 +2598,8 @@
   "זהירות מן הרה לפניך.jpg": {
     "title": "זהירות מן הרה לפניך",
     "explanation": "נשמע כמו 'זהירות מנהרה לפניך', רואים אישה הרה מלאת הורמונים שכועסת על בעלה",
-    "topic": ""
+    "topic": "",
+    "isApproved": true
   },
   "זיכרון רם.jpg": {
     "title": "זיכרון רם",
@@ -3379,7 +3382,7 @@
     "title": "מזל דגים",
     "explanation": "כי אין כמו הדגים של סבתא 'מזל' המרוקאית.",
     "topic": "חיות",
-    "isApproved": false,
+    "isApproved": true,
     "isAIGenerated": true
   },
   "ללקק את העץ באות.jpg": {
@@ -7043,13 +7046,6 @@
     "isApproved": true,
     "isAIGenerated": false
   },
-  "חתירת מ'שוטים'.jpg": {
-    "title": "חתירת מ'שוטים'",
-    "explanation": "נשמע כמו 'חתירת משוטים', רואים שוטים שהם חותרים באולימפיאדה",
-    "topic": "",
-    "isApproved": true,
-    "isAIGenerated": false
-  },
   "יא עיוניק.jpg": {
     "title": "יא עיוניק",
     "explanation": "נשמע כמו ביטוי במרוקאית 'יא עיוני', רואים בחור מרוקאי שמאוהב במכונית שלו מדגם יונדאי איוניק.",
@@ -7656,7 +7652,7 @@
     "title": "ראול פנים",
     "explanation": "נשמע כמו 'רעול פנים', רואים את הדמות של שחקן הכדורגל ראול, ושל ראול קסטרו, כשהם סוגים של מסיכות ורק הפנים שלהם, כולל מסיכה של 'רעול פנים'",
     "topic": "",
-    "isApproved": false,
+    "isApproved": true,
     "isAIGenerated": true
   },
   "מועדון גיל הזהב.png": {
@@ -7691,21 +7687,21 @@
     "title": "גזה",
     "explanation": "",
     "topic": "פתגמים וביטויים",
-    "isApproved": false,
+    "isApproved": true,
     "isAIGenerated": true
   },
   "צניחת הגן.png": {
     "title": "צניחת הגן",
     "explanation": "נשמע כמו 'צניחת אגן', רואים גן שעושים פעילות עם ההורים לצניחה במצנחים",
     "topic": "",
-    "isApproved": false,
+    "isApproved": true,
     "isAIGenerated": true
   },
   "הפרי האסור.png": {
     "title": "הפרי האסור",
     "explanation": "",
     "topic": "פתגמים וביטויים",
-    "isApproved": false,
+    "isApproved": true,
     "isAIGenerated": true
   },
   "חההה בד.png": {
@@ -7719,7 +7715,7 @@
     "title": "ALL IN TUNE",
     "explanation": "אוזניות חדשניות, שמשמיעות לך את כל החברים הזייפנים שלך ששרים לידך, כשהם שרים בטון הנכון.",
     "topic": "",
-    "isApproved": false,
+    "isApproved": true,
     "isAIGenerated": true
   },
   "המראות.png": {
@@ -7733,133 +7729,133 @@
     "title": "עונת רחצה",
     "explanation": "",
     "topic": "",
-    "isApproved": false,
+    "isApproved": true,
     "isAIGenerated": true
   },
   "כתב עישון.png": {
     "title": "כתב עישון",
     "explanation": "",
     "topic": "",
-    "isApproved": false,
+    "isApproved": true,
     "isAIGenerated": true
   },
   "צריחה אישית.png": {
     "title": "צריחה אישית",
     "explanation": "",
     "topic": "",
-    "isApproved": false,
+    "isApproved": true,
     "isAIGenerated": true
   },
   "מאג-ניב.png": {
     "title": "מאג-ניב",
     "explanation": "",
     "topic": "",
-    "isApproved": false,
+    "isApproved": true,
     "isAIGenerated": true
   },
   "מאיר פנים.png": {
     "title": "מאיר פנים",
     "explanation": "",
     "topic": "",
-    "isApproved": false,
+    "isApproved": true,
     "isAIGenerated": true
   },
   "מְאַפֶּרֶת.png": {
     "title": "מְאַפֶּרֶת",
     "explanation": "",
     "topic": "",
-    "isApproved": false,
+    "isApproved": true,
     "isAIGenerated": true
   },
   "מבוך הורון.png": {
     "title": "מבוך הורון",
     "explanation": "נשמע כמו הישוב 'מבוא חורון'",
     "topic": "",
-    "isApproved": false,
+    "isApproved": true,
     "isAIGenerated": true
   },
   "מבעיר את הנקודה.png": {
     "title": "מבעיר את הנקודה",
     "explanation": "",
     "topic": "",
-    "isApproved": false,
+    "isApproved": true,
     "isAIGenerated": true
   },
   "מגבש עמדה.png": {
     "title": "מגבש עמדה",
     "explanation": "",
     "topic": "",
-    "isApproved": false,
+    "isApproved": true,
     "isAIGenerated": true
   },
   "מגעיל כלים.png": {
     "title": "מגעיל כלים",
     "explanation": "",
     "topic": "",
-    "isApproved": false,
+    "isApproved": true,
     "isAIGenerated": true
   },
   "מדליק נרות.png": {
     "title": "מדליק נרות",
     "explanation": "",
     "topic": "",
-    "isApproved": false,
+    "isApproved": true,
     "isAIGenerated": true
   },
   "מה את בוכה!.png": {
     "title": "מה את בוכה!",
     "explanation": "נשמע כמו 'מטבוחה'",
     "topic": "פתגמים וביטויים",
-    "isApproved": false,
+    "isApproved": true,
     "isAIGenerated": true
   },
   "מהמר כבד.png": {
     "title": "מהמר כבד",
     "explanation": "",
     "topic": "",
-    "isApproved": false,
+    "isApproved": true,
     "isAIGenerated": true
   },
   "מוחות.png": {
     "title": "מוחות",
     "explanation": "",
     "topic": "פתגמים וביטויים",
-    "isApproved": false,
+    "isApproved": true,
     "isAIGenerated": true
   },
   "מוסך דעת.png": {
     "title": "מוסך דעת",
     "explanation": "",
     "topic": "",
-    "isApproved": false,
+    "isApproved": true,
     "isAIGenerated": true
   },
   "מושב קשת.png": {
     "title": "מושב קשת",
     "explanation": "",
     "topic": "",
-    "isApproved": false,
+    "isApproved": true,
     "isAIGenerated": true
   },
   "מטביע חותם.png": {
     "title": "מטביע חותם",
     "explanation": "",
     "topic": "",
-    "isApproved": false,
+    "isApproved": true,
     "isAIGenerated": true
   },
   "מטוס חם כאן.png": {
     "title": "מטוס חם כאן",
     "explanation": "נשמע כמו מטוס חמקן",
     "topic": "",
-    "isApproved": false,
+    "isApproved": true,
     "isAIGenerated": true
   },
   "מטוס קל.png": {
     "title": "מטוס קל",
     "explanation": "נשמע כמו 'מתוסכל'",
     "topic": "",
-    "isApproved": false,
+    "isApproved": true,
     "isAIGenerated": true
   },
   "מטיל עוגן.png": {
@@ -7873,147 +7869,147 @@
     "title": "מטפל זר",
     "explanation": "",
     "topic": "פתגמים וביטויים",
-    "isApproved": false,
+    "isApproved": true,
     "isAIGenerated": true
   },
   "מטפלת רגשית.png": {
     "title": "מטפלת רגשית",
     "explanation": "",
     "topic": "פתגמים וביטויים",
-    "isApproved": false,
+    "isApproved": true,
     "isAIGenerated": true
   },
   "מטרות.png": {
     "title": "מטרות",
     "explanation": "",
     "topic": "פתגמים וביטויים",
-    "isApproved": false,
+    "isApproved": true,
     "isAIGenerated": true
   },
   "אינטר קום.png": {
     "title": "אינטר קום",
     "explanation": "",
     "topic": "פתגמים וביטויים",
-    "isApproved": false,
+    "isApproved": true,
     "isAIGenerated": true
   },
   "מצה את ההבדלים.png": {
     "title": "מצה את ההבדלים",
     "explanation": "",
     "topic": "פתגמים וביטויים",
-    "isApproved": false,
+    "isApproved": true,
     "isAIGenerated": true
   },
   "מיחזור משכנתא.png": {
     "title": "מיחזור משכנתא",
     "explanation": "",
     "topic": "פתגמים וביטויים",
-    "isApproved": false,
+    "isApproved": true,
     "isAIGenerated": true
   },
   "מייקל ג'ק סון.png": {
     "title": "מייקל ג'ק סון",
     "explanation": "",
     "topic": "פתגמים וביטויים",
-    "isApproved": false,
+    "isApproved": true,
     "isAIGenerated": true
   },
   "מלצרצר.png": {
     "title": "מלצרצר",
     "explanation": "",
     "topic": "פתגמים וביטויים",
-    "isApproved": false,
+    "isApproved": true,
     "isAIGenerated": true
   },
   "מנוע מלדבר.png": {
     "title": "מנוע מלדבר",
     "explanation": "",
     "topic": "פתגמים וביטויים",
-    "isApproved": false,
+    "isApproved": true,
     "isAIGenerated": true
   },
   "מנתור.png": {
     "title": "מנתור",
     "explanation": "נשמע כמו 'מנטור'",
     "topic": "פתגמים וביטויים",
-    "isApproved": false,
+    "isApproved": true,
     "isAIGenerated": true
   },
   "מנע חמה.png": {
     "title": "מנע חמה",
     "explanation": "נשמע כמו 'מנה חמה', ו'מנח אמה'",
     "topic": "",
-    "isApproved": false,
+    "isApproved": true,
     "isAIGenerated": true
   },
   "מנת הדגל.png": {
     "title": "מנת הדגל",
     "explanation": "",
     "topic": "חיות, פתגמים וביטויים",
-    "isApproved": false,
+    "isApproved": true,
     "isAIGenerated": true
   },
   "מסי בת חנוקה.png": {
     "title": "מסי בת חנוקה",
     "explanation": "",
     "topic": "",
-    "isApproved": false,
+    "isApproved": true,
     "isAIGenerated": true
   },
   "שאלת קיטבג.png": {
     "title": "שאלת קיטבג",
     "explanation": "",
     "topic": "פתגמים וביטויים",
-    "isApproved": false,
+    "isApproved": true,
     "isAIGenerated": true
   },
   "מעבירים מצד לצד.png": {
     "title": "מעבירים מצד לצד",
     "explanation": "",
     "topic": "פתגמים וביטויים",
-    "isApproved": false,
+    "isApproved": true,
     "isAIGenerated": true
   },
   "מעורר שערה.png": {
     "title": "מעורר שערה",
     "explanation": "",
     "topic": "פתגמים וביטויים",
-    "isApproved": false,
+    "isApproved": true,
     "isAIGenerated": true
   },
   "מעמיד קומקום.png": {
     "title": "מעמיד קומקום",
     "explanation": "",
     "topic": "פתגמים וביטויים",
-    "isApproved": false,
+    "isApproved": true,
     "isAIGenerated": true
   },
   "מפוח אלים.png": {
     "title": "מפוח אלים",
     "explanation": "נשמע כמו 'מפוח עלים'",
     "topic": "פתגמים וביטויים",
-    "isApproved": false,
+    "isApproved": true,
     "isAIGenerated": true
   },
   "מפריס פרסה.png": {
     "title": "מפריס פרסה",
     "explanation": "",
     "topic": "פתגמים וביטויים",
-    "isApproved": false,
+    "isApproved": true,
     "isAIGenerated": true
   },
   "מפתח מאסטר.png": {
     "title": "מפתח מאסטר",
     "explanation": "",
     "topic": "פתגמים וביטויים",
-    "isApproved": false,
+    "isApproved": true,
     "isAIGenerated": true
   },
   "מצא הגולה.png": {
     "title": "מצא הגולה",
     "explanation": "נשמע כמו 'מצה עגולה', רק שפה הוא מצא גולה שיש בתוכה מצת מכונה מרובעת.",
     "topic": "פתגמים וביטויים",
-    "isApproved": false,
+    "isApproved": true,
     "isAIGenerated": true
   },
   "מצלמה נסטרת.png": {
@@ -8027,7 +8023,7 @@
     "title": "מצפה לגרוע מכל",
     "explanation": "",
     "topic": "פתגמים וביטויים",
-    "isApproved": false,
+    "isApproved": true,
     "isAIGenerated": true
   },
   "מקהיל קהילות ברבים.png": {
@@ -8041,490 +8037,490 @@
     "title": "מקוקוס",
     "explanation": "",
     "topic": "פתגמים וביטויים",
-    "isApproved": false,
+    "isApproved": true,
     "isAIGenerated": true
   },
   "מקקוף.png": {
     "title": "מקקוף",
     "explanation": "",
     "topic": "פתגמים וביטויים",
-    "isApproved": false,
+    "isApproved": true,
     "isAIGenerated": true
   },
   "מרימה שבת בצ'יק צ'ק.png": {
     "title": "מרימה שבת בצ'יק צ'ק",
     "explanation": "",
     "topic": "פתגמים וביטויים",
-    "isApproved": false,
+    "isApproved": true,
     "isAIGenerated": true
   },
   "משלוח 'חינם'.png": {
     "title": "משלוח 'חינם'",
     "explanation": "",
     "topic": "פתגמים וביטויים",
-    "isApproved": false,
+    "isApproved": true,
     "isAIGenerated": true
   },
   "משתנה.png": {
     "title": "משתנה",
     "explanation": "",
     "topic": "פתגמים וביטויים",
-    "isApproved": false,
+    "isApproved": true,
     "isAIGenerated": true
   },
   "מתפלפל.png": {
     "title": "מתפלפל",
     "explanation": "",
     "topic": "פתגמים וביטויים",
-    "isApproved": false,
+    "isApproved": true,
     "isAIGenerated": true
   },
   "אורות גבוהיםנמוכים.png": {
     "title": "אורות גבוהים\\נמוכים",
     "explanation": "",
     "topic": "פתגמים וביטויים",
-    "isApproved": false,
+    "isApproved": true,
     "isAIGenerated": true
   },
   "נביא שהדיח.png": {
     "title": "נביא שהדיח",
     "explanation": "",
     "topic": "פתגמים וביטויים",
-    "isApproved": false,
+    "isApproved": true,
     "isAIGenerated": true
   },
   "נְהִי בְּכִי תַמְרוּרִים.png": {
     "title": "נְהִי בְּכִי תַמְרוּרִים",
     "explanation": "",
     "topic": "פתגמים וביטויים",
-    "isApproved": false,
+    "isApproved": true,
     "isAIGenerated": true
   },
   "נחמת שותים.png": {
     "title": "נחמת שותים",
     "explanation": "נשמע כמו 'נחמת שוטים', שוט זה גם ביטוי לכוס שתיה חריפה",
     "topic": "פתגמים וביטויים",
-    "isApproved": false,
+    "isApproved": true,
     "isAIGenerated": true
   },
   "נחשוורוש.png": {
     "title": "נחשוורוש",
     "explanation": "",
     "topic": "פתגמים וביטויים",
-    "isApproved": false,
+    "isApproved": true,
     "isAIGenerated": true
   },
   "נין ג'ה.png": {
     "title": "נין ג'ה",
     "explanation": "",
     "topic": "פתגמים וביטויים",
-    "isApproved": false,
+    "isApproved": true,
     "isAIGenerated": true
   },
   "ניסים סאל.png": {
     "title": "ניסים סא\"ל",
     "explanation": "",
     "topic": "פתגמים וביטויים",
-    "isApproved": false,
+    "isApproved": true,
     "isAIGenerated": true
   },
   "מסגרת אשראי.png": {
     "title": "מסגרת אשראי",
     "explanation": "",
     "topic": "",
-    "isApproved": false,
+    "isApproved": true,
     "isAIGenerated": true
   },
   "נעריה.png": {
     "title": "נעריה",
     "explanation": "נשמע כמו העיר 'נהריה', רק שכאן יש מלא חמורים, ונהר הגעתון באמצע",
     "topic": "פתגמים וביטויים",
-    "isApproved": false,
+    "isApproved": true,
     "isAIGenerated": true
   },
   "נפסל.png": {
     "title": "נפסל",
     "explanation": "",
     "topic": "פתגמים וביטויים",
-    "isApproved": false,
+    "isApproved": true,
     "isAIGenerated": true
   },
   "נשרקן.png": {
     "title": "נשרקן",
     "explanation": "",
     "topic": "",
-    "isApproved": false,
+    "isApproved": true,
     "isAIGenerated": true
   },
   "סוכריהמלחייה.png": {
     "title": "סוכריה\\מלחייה",
     "explanation": "",
     "topic": "",
-    "isApproved": false,
+    "isApproved": true,
     "isAIGenerated": true
   },
   "סופו של דוור.png": {
     "title": "סופו של דוור",
     "explanation": "נשמע כמו 'סופו של כל דבר', רואים את סופוקליס שחורציאניטיס כדוור",
     "topic": "פתגמים וביטויים",
-    "isApproved": false,
+    "isApproved": true,
     "isAIGenerated": true
   },
   "סחיטה רגשית.png": {
     "title": "סחיטה רגשית",
     "explanation": "",
     "topic": "",
-    "isApproved": false,
+    "isApproved": true,
     "isAIGenerated": true
   },
   "סיפור מטלטל.png": {
     "title": "סיפור מטלטל",
     "explanation": "",
     "topic": "",
-    "isApproved": false,
+    "isApproved": true,
     "isAIGenerated": true
   },
   "סלחתי!.png": {
     "title": "סלחתי!",
     "explanation": "רואים את מוחמד סאלח אומר 'סלחתי'",
     "topic": "פתגמים וביטויים",
-    "isApproved": false,
+    "isApproved": true,
     "isAIGenerated": true
   },
   "סנטר כ'פול'.png": {
     "title": "סנטר כ'פול'",
     "explanation": "",
     "topic": "פתגמים וביטויים",
-    "isApproved": false,
+    "isApproved": true,
     "isAIGenerated": true
   },
   "סע ברכה!!!.png": {
     "title": "סע ברכה!!!",
     "explanation": "נשמע כמו שמברכים 'שא ברכה'",
     "topic": "פתגמים וביטויים",
-    "isApproved": false,
+    "isApproved": true,
     "isAIGenerated": true
   },
   "עז רע.png": {
     "title": "עז רע",
     "explanation": "נשמע כמו 'עזרה'",
     "topic": "פתגמים וביטויים",
-    "isApproved": false,
+    "isApproved": true,
     "isAIGenerated": true
   },
   "עומד בקשר.png": {
     "title": "עומד בקשר",
     "explanation": "הוא הקשר הצבאי, והוא עומד בעת שהוא מדבר ב'קשר'",
     "topic": "",
-    "isApproved": false,
+    "isApproved": true,
     "isAIGenerated": true
   },
   "עט נעילת שער.png": {
     "title": "עט נעילת שער",
     "explanation": "",
     "topic": "",
-    "isApproved": false,
+    "isApproved": true,
     "isAIGenerated": true
   },
   "עיקוב בטיסה.png": {
     "title": "עיקוב בטיסה",
     "explanation": "",
     "topic": "",
-    "isApproved": false,
+    "isApproved": true,
     "isAIGenerated": true
   },
   "עירוב תבשילין.png": {
     "title": "עירוב תבשילין",
     "explanation": "",
     "topic": "",
-    "isApproved": false,
+    "isApproved": true,
     "isAIGenerated": true
   },
   "ענן מאובטח.png": {
     "title": "ענן מאובטח",
     "explanation": "",
     "topic": "",
-    "isApproved": false,
+    "isApproved": true,
     "isAIGenerated": true
   },
   "ואפס עצור ועזוב.png": {
     "title": "ואפס עצור ועזוב",
     "explanation": "",
     "topic": "",
-    "isApproved": false,
+    "isApproved": true,
     "isAIGenerated": true
   },
   "עקב הכי less.png": {
     "title": "עקב הכי less",
     "explanation": "",
     "topic": "",
-    "isApproved": false,
+    "isApproved": true,
     "isAIGenerated": true
   },
   "עשן לבן.png": {
     "title": "עשן לבן",
     "explanation": "עשן לבן שלו, ועשן לבת שלו",
     "topic": "",
-    "isApproved": false,
+    "isApproved": true,
     "isAIGenerated": true
   },
   "פוזל.png": {
     "title": "פוזל",
     "explanation": "הוא פותר פזלים הוא 'פוזל'",
     "topic": "",
-    "isApproved": false,
+    "isApproved": true,
     "isAIGenerated": true
   },
   "פונקציה מחזורית.png": {
     "title": "פונקציה מחזורית",
     "explanation": "",
     "topic": "",
-    "isApproved": false,
+    "isApproved": true,
     "isAIGenerated": true
   },
   "פחמימות זה מנחם.png": {
     "title": "פחמימות זה מנחם",
     "explanation": "",
     "topic": "פתגמים וביטויים",
-    "isApproved": false,
+    "isApproved": true,
     "isAIGenerated": true
   },
   "פסיכו-פת.png": {
     "title": "פסיכו-פת",
     "explanation": "",
     "topic": "",
-    "isApproved": false,
+    "isApproved": true,
     "isAIGenerated": true
   },
   "פרח מזכרוני.png": {
     "title": "פרח מזכרוני",
     "explanation": "",
     "topic": "",
-    "isApproved": false,
+    "isApproved": true,
     "isAIGenerated": true
   },
   "פרידה מהסוכה.png": {
     "title": "פרידה מהסוכה",
     "explanation": "",
     "topic": "",
-    "isApproved": false,
+    "isApproved": true,
     "isAIGenerated": true
   },
   "פתיתים בודדים.png": {
     "title": "פתיתים בודדים",
     "explanation": "",
     "topic": "",
-    "isApproved": false,
+    "isApproved": true,
     "isAIGenerated": true
   },
   "צב ירושה.png": {
     "title": "צב ירושה",
     "explanation": "",
     "topic": "",
-    "isApproved": false,
+    "isApproved": true,
     "isAIGenerated": true
   },
   "צוות טקילה.png": {
     "title": "צוות טקילה",
     "explanation": "",
     "topic": "",
-    "isApproved": false,
+    "isApproved": true,
     "isAIGenerated": true
   },
   "צינון כבד  צינון קל.png": {
     "title": "צינון כבד \\ צינון קל",
     "explanation": "",
     "topic": "",
-    "isApproved": false,
+    "isApproved": true,
     "isAIGenerated": true
   },
   "צפון קורע.png": {
     "title": "צפון קורע",
     "explanation": "",
     "topic": "",
-    "isApproved": false,
+    "isApproved": true,
     "isAIGenerated": true
   },
   "קאפייה דתית.png": {
     "title": "קאפייה דתית",
     "explanation": "",
     "topic": "",
-    "isApproved": false,
+    "isApproved": true,
     "isAIGenerated": true
   },
   "קול קורא.png": {
     "title": "קול קורא",
     "explanation": "",
     "topic": "",
-    "isApproved": false,
+    "isApproved": true,
     "isAIGenerated": true
   },
   "קוֹפָה-אִין.png": {
     "title": "קוֹפָה-אִין",
     "explanation": "נשמע כמו קפאין היא ממש IN",
     "topic": "",
-    "isApproved": false,
+    "isApproved": true,
     "isAIGenerated": true
   },
   "קיפופותן.png": {
     "title": "קיפופותן",
     "explanation": "",
     "topic": "פתגמים וביטויים",
-    "isApproved": false,
+    "isApproved": true,
     "isAIGenerated": true
   },
   "קיש-אלון.png": {
     "title": "קיש-אלון",
     "explanation": "",
     "topic": "",
-    "isApproved": false,
+    "isApproved": true,
     "isAIGenerated": true
   },
   "קלף חזק.png": {
     "title": "קלף חזק",
     "explanation": "",
     "topic": "",
-    "isApproved": false,
+    "isApproved": true,
     "isAIGenerated": true
   },
   "קפיצת מדרגה.png": {
     "title": "קפיצת מדרגה",
     "explanation": "",
     "topic": "",
-    "isApproved": false,
+    "isApproved": true,
     "isAIGenerated": true
   },
   "קר סול.png": {
     "title": "קר סול",
     "explanation": "",
     "topic": "",
-    "isApproved": false,
+    "isApproved": true,
     "isAIGenerated": true
   },
   "קרב רב.png": {
     "title": "קרב רב",
     "explanation": "",
     "topic": "",
-    "isApproved": false,
+    "isApproved": true,
     "isAIGenerated": true
   },
   "ראו זה פֶּלֶּה.png": {
     "title": "ראו זה פֶּלֶּה",
     "explanation": "",
     "topic": "",
-    "isApproved": false,
+    "isApproved": true,
     "isAIGenerated": true
   },
   "ראקונדיטור.png": {
     "title": "ראקונדיטור",
     "explanation": "",
     "topic": "",
-    "isApproved": false,
+    "isApproved": true,
     "isAIGenerated": true
   },
   "רבים ביד מעטים.png": {
     "title": "רבים ביד מעטים",
     "explanation": "",
     "topic": "",
-    "isApproved": false,
+    "isApproved": true,
     "isAIGenerated": true
   },
   "רגל מצילה.png": {
     "title": "רגל מצילה",
     "explanation": "",
     "topic": "",
-    "isApproved": false,
+    "isApproved": true,
     "isAIGenerated": true
   },
   "רוגע לך.png": {
     "title": "רוגע לך",
     "explanation": "",
     "topic": "",
-    "isApproved": false,
+    "isApproved": true,
     "isAIGenerated": true
   },
   "רווק עולל.png": {
     "title": "רווק עולל",
     "explanation": "נשמע כמו 'רווק הולל'",
     "topic": "",
-    "isApproved": false,
+    "isApproved": true,
     "isAIGenerated": true
   },
   "רום סרוויס.png": {
     "title": "רום סרוויס",
     "explanation": "",
     "topic": "",
-    "isApproved": false,
+    "isApproved": true,
     "isAIGenerated": true
   },
   "רופאי שיניים.png": {
     "title": "רופאי שיניים",
     "explanation": "",
     "topic": "",
-    "isApproved": false,
+    "isApproved": true,
     "isAIGenerated": true
   },
   "רוקטמן.png": {
     "title": "רוקטמן",
     "explanation": "",
     "topic": "",
-    "isApproved": false,
+    "isApproved": true,
     "isAIGenerated": true
   },
   "רות עבור!.png": {
-    "title": "רות עבור!",
+    "title": "חג הכי רות",
     "explanation": "",
     "topic": "",
-    "isApproved": false,
+    "isApproved": true,
     "isAIGenerated": true
   },
   "רחפן הטלה.png": {
     "title": "רחפן הטלה",
     "explanation": "",
     "topic": "",
-    "isApproved": false,
+    "isApproved": true,
     "isAIGenerated": true
   },
   "רישום מראש.png": {
     "title": "רישום מראש",
     "explanation": "",
     "topic": "",
-    "isApproved": false,
+    "isApproved": true,
     "isAIGenerated": true
   },
   "רכב משפחתי.png": {
     "title": "רכב משפחתי",
     "explanation": "",
     "topic": "",
-    "isApproved": false,
+    "isApproved": true,
     "isAIGenerated": true
   },
   "רכבת טח טיט.png": {
     "title": "רכבת טח טיט",
     "explanation": "",
     "topic": "",
-    "isApproved": false,
+    "isApproved": true,
     "isAIGenerated": true
   },
   "רע על עכברים.png": {
     "title": "רע על עכברים",
     "explanation": "",
     "topic": "",
-    "isApproved": false,
+    "isApproved": true,
     "isAIGenerated": true
   },
   "רץ בטיל.png": {
     "title": "רץ בטיל",
     "explanation": "",
     "topic": "",
-    "isApproved": false,
+    "isApproved": true,
     "isAIGenerated": true
   },
   "בין יושבין ובין מסובין.png": {
     "title": "בין יושבין ובין מסובין",
     "explanation": "",
     "topic": "",
-    "isApproved": false,
+    "isApproved": true,
     "isAIGenerated": true
   },
   "שבעת פילי תבל.png": {
@@ -8538,28 +8534,28 @@
     "title": "שַׁה לכת",
     "explanation": "",
     "topic": "",
-    "isApproved": false,
+    "isApproved": true,
     "isAIGenerated": true
   },
   "שואב 'אבק רובוטי'.png": {
     "title": "שואב 'אבק רובוטי'",
     "explanation": "",
     "topic": "",
-    "isApproved": false,
+    "isApproved": true,
     "isAIGenerated": true
   },
   "המסביר לצרחן.png": {
     "title": "המסביר לצרחן",
     "explanation": "נשמע כמו 'המשביר לצרכן'",
     "topic": "חגים ומועדים, פתגמים וביטויים",
-    "isApproved": false,
+    "isApproved": true,
     "isAIGenerated": true
   },
   "שום דוור.png": {
     "title": "שום דוור",
     "explanation": "",
     "topic": "",
-    "isApproved": false,
+    "isApproved": true,
     "isAIGenerated": true
   },
   "שם... פה....png": {
@@ -8592,33 +8588,20 @@
   },
   "בונה אטארים 1.jpg": {
     "title": "בונה אטארים",
-    "explanation": "רואים דמות של החיה 'בונה' כשהוא בונה אטארים, נשמע כמו 'בונה אתרים'",
+    "explanation": "רואים דמות של החיה 'בונה' כשהוא בונה  קונסולות ATARI , נשמע כמו 'בונה אתרים'",
     "topic": "חיות",
-    "isApproved": false,
+    "isApproved": true,
     "isAIGenerated": false
   },
   "גל שקט 1.jpg": {
     "title": "גל שקט",
     "explanation": "דמות של גל שעושה שקט, רפרנס להשארת רדיו חירום על גל שקט כך שמדווח רק כשיש צורך",
-    "topic": ""
+    "topic": "",
+    "isApproved": true
   },
   "הפרקלי'תות' הצבאית 1.jpg": {
     "title": "הפרקלי'תות' הצבאית",
     "explanation": "נשמע כמו 'פרקליטות צבאית', רואים דמות של פרקליטים צבאיים כשהם דמויות של תותים חמורי סבר",
-    "topic": "",
-    "isApproved": true,
-    "isAIGenerated": false
-  },
-  "הר בכוסות 1.jpg": {
-    "title": "הר בכוסות",
-    "explanation": "נשמע כמו 'ארבע כוסות', רואים 4 כוסות עם ציורים ואיורים של הרים בכוסות",
-    "topic": "יהדות ומסורת",
-    "isApproved": true,
-    "isAIGenerated": true
-  },
-  "זה לא אתי 1.jpg": {
-    "title": "זה לא אתי",
-    "explanation": "רואים את הדמות של מירי רגב, שהיתה מלאה בביקורת שהיא טסה הרבה, אז רואים מישהו שאומר לה ש'זה לא אתי', והיא אומרת שזה בהחלט לא אתי, כי קוראים לה מירי ולא אתי",
     "topic": "",
     "isApproved": true,
     "isAIGenerated": false
@@ -8632,7 +8615,7 @@
   },
   "חלט מפתח 1.jpg": {
     "title": "חלט מפתח",
-    "explanation": "נשמע כמו 'חלת מפתח', הסגולה לפרנסה, רואים דמות שחולט מפתח",
+    "explanation": "נשמע כמו 'חלת מפתח', הסגולה לפרנסה שנהגו להכין חלה בצורה של מפתח, רואים פה איש שהוא חולט מפתח כמו חליטת תה",
     "topic": "חגים ומועדים, סגולות, מפתח",
     "isApproved": true,
     "isAIGenerated": false
@@ -8684,28 +8667,32 @@
     "topic": "משפחה וילדים, בית ויומיום, עברית, פתגמים וביטויים",
     "explanation": "נשמע כמו 'לדבר בבתך', רואים מישהו שבא לבקש רשות להינשא לבת של מישהו, והוא רוצה לדבר איתו בצורה בטוחה",
     "createdAt": 1719181142000,
-    "isAIGenerated": true
+    "isAIGenerated": true,
+    "isApproved": true
   },
   "חנוט תכשיטים 1.jpg": {
     "title": "חנוט תכשיטים",
     "topic": "בית ויומיום, מצריים, פתגמים וביטויים",
     "explanation": "משחק מילים כפול על הפתגם 'חנות תכשיטים'. במקום חנות, רואים מומיה שעברה חניטה (ולכן היא 'חנוט'), וכל גופה עטוף זהב ותכשיטים מרהיבים ('חנוט תכשיטים').",
     "createdAt": 1733247623000,
-    "isAIGenerated": true
+    "isAIGenerated": true,
+    "isApproved": true
   },
   "הסה ל'חרב' 1.jpg": {
     "title": "הסה ל'חרב'",
     "topic": "מוזיקה ותרבות, סלנג, אפוקליפסה, יהדות ומסורת, פתגמים וביטויים",
     "explanation": "נשמע כמו המשנה במסכת אבות 'עשה לך רב!',\nמשחק מילים על הביטוי 'חרב עליי עולמי' (נעשה לי רע מאוד). בתמונה רואים הדמויות מסרטי מארוול, טוני משתיק את הדמות תאנוס, הנבל מהנוקמים שידוע בתור 'משמיד חולמות / משמיד עולמות' שחרב עליו עולמי.",
     "createdAt": 1719521327000,
-    "isAIGenerated": true
+    "isAIGenerated": true,
+    "isApproved": true
   },
   "חתירת מ-שוטים.jpg": {
     "title": "חתירת מ-שוטים",
     "topic": "ספורט",
     "explanation": "משחק מילים על ענף הספורט האולימפי 'חתירת משוטים'. החותרים בסירה מציגים פרצופים משוגעים ואותנטיים ומתנהגים כמו 'שוטים' - כלומר ספורט שנקרא 'חתירה של שוטים' (חתירת מ-שוטים).",
     "createdAt": 1722605729000,
-    "isAIGenerated": true
+    "isAIGenerated": true,
+    "isApproved": true
   },
   "טיגריס.jpg": {
     "title": "טיגריס",
@@ -8719,14 +8706,16 @@
     "topic": "רגשות ותכונות, טבע וצומח, חיות, חגים ומועדים, פוליטיקה ואקטואליה",
     "explanation": "משחק מילים אירוני על 'טיפול שורש' או התייחסות לבעיה ובחינתה 'מהשורש'. הפסיכולוג בתמונה מעניק את הטיפול שלו כאשר הוא יושב וממוקם, פשוטו כמשמעו, בתוך שורש עצום של עץ.",
     "createdAt": 1748735794000,
-    "isAIGenerated": true
+    "isAIGenerated": true,
+    "isApproved": true
   },
   "טעה מולה 1.jpg": {
     "title": "טעה מולה",
     "topic": "משפחה וילדים, מילים",
     "explanation": "משחק מילים שמיעתי על המילה 'תעמולה'. התלמיד נבחן וטועה (כפי שמראים סימוני ה-X האדומים 'טעה'), והוא יושב מול המורה שלו ולכן הוא 'טעה מולה' (נשמע כמו תעמולה).",
     "createdAt": 1754834588000,
-    "isAIGenerated": true
+    "isAIGenerated": true,
+    "isApproved": true
   },
   "יוצא מדעתו.jpg": {
     "title": "יוצא מדעתו",
@@ -8761,34 +8750,35 @@
     "explanation": "נשמע כמו 'דוחה בשאט נפש', רואים בוס שעושה יוגה לעצמו כי זו שעת הנפש שלו, והוא דוחה פגישות ולקוחות",
     "createdAt": 1721592342000,
     "isAIGenerated": true,
-    "topic": "פתגמים וביטויים"
+    "topic": "פתגמים וביטויים",
+    "isApproved": true
   },
   "רקדנים 1.jpg": {
     "title": "רקדנים",
     "explanation": "נשמע כמו 'רק דנים', רויאם בבית המשפט השיראלי דמויות של עובדי משפט רוקדים, והשופט צועק עליהם שכאן 'רק דנים'",
     "topic": "",
-    "isApproved": false,
+    "isApproved": true,
     "isAIGenerated": true
   },
   "כדור ההר עץ 1.jpg": {
     "title": "כדור ההר עץ",
     "explanation": "נשמע כמו כדור הארץ, רואים את הדמות היוונית שמחזיקה במקום את כדור הארץ על כתפיה, היא מחזיקה כדור שבו יש הר ועץ.",
     "topic": "",
-    "isApproved": false,
+    "isApproved": true,
     "isAIGenerated": true
   },
   "כור קום 1.jpg": {
     "title": "כור קום",
     "explanation": "נשמע כמו 'כורכום', רואים דמות של כורכום מעיר דמות של 'כור' גרעיני ישן.",
     "topic": "",
-    "isApproved": false,
+    "isApproved": true,
     "isAIGenerated": true
   },
   "כר-דיאלוג 1.jpg": {
     "title": "כר-דיאלוג",
     "explanation": "נשמע כמו 'קרדיאלוג', רואים דמויות של 'כר' שהם רופאי לב, שהם משוחחים ביניהם ועושים דיאלוג",
     "topic": "",
-    "isApproved": false,
+    "isApproved": true,
     "isAIGenerated": true
   },
   "לומד לסחוט.png": {
@@ -8802,7 +8792,7 @@
     "title": "מטפחת ציפיות",
     "explanation": "נשמע כמו הביטוי 'לטפח ציפיות' לכוון לעתיד טוב יותר, רואים קוסמטיקאית שהיא מטפחת דמויות של ציפיות של כריות",
     "topic": "",
-    "isApproved": false,
+    "isApproved": true,
     "isAIGenerated": true
   },
   "למה 1.jpg": {
@@ -8810,63 +8800,72 @@
     "explanation": "דמות של החיה למה כשהיא שואלת ותמהה 'למה?'",
     "createdAt": 1754477876000,
     "isAIGenerated": true,
-    "topic": "פתגמים וביטויים"
+    "topic": "פתגמים וביטויים",
+    "isApproved": true
   },
   "מבחן מיון ש'מונה' מאתיים 1.jpg": {
     "title": "מבחן מיון ש'מונה' מאתיים",
     "explanation": "נשמע כמו 'מבחן מיון 8200' המבחן כניסה ליחידה היוקרתית, רואים שבוחנים את הנבחן אם הוא יודע 'למנות-לספור' עד 200...",
     "createdAt": 1724059930000,
     "isAIGenerated": true,
-    "topic": "פתגמים וביטויים"
+    "topic": "פתגמים וביטויים",
+    "isApproved": true
   },
   "מגדלי התאומים 1.jpg": {
     "title": "מגדלי התאומים",
     "explanation": "דמות של תאומים שהם מגדלי צמחים ומגדלי בעלי חיים, ברקע רואים את מגדלי התאומים במנהטן.",
     "createdAt": 1730763789000,
     "isAIGenerated": true,
-    "topic": "פתגמים וביטויים"
+    "topic": "פתגמים וביטויים",
+    "isApproved": true
   },
   "מגלגל עיניים 1.jpg": {
     "title": "מגלגל עיניים",
     "explanation": "ביטוי למישהו שלא אכפת לו, רואים מישהו עייף מאוד שמגלגל שתי עיניים גדולות על הרצפה",
     "createdAt": 1753181313000,
     "isAIGenerated": true,
-    "topic": "פתגמים וביטויים"
+    "topic": "פתגמים וביטויים",
+    "isApproved": true
   },
   "מדגדג לו על קצה הלשון 1.jpg": {
     "title": "מדגדג לו על קצה הלשון",
     "explanation": "ביטוי למישהו שרוצה להגיד משהו דחוף והוא כמעט נזכר בזה, רואים שהוא ממש מדגדג לו על קצה הלשון",
     "createdAt": 1752235040000,
     "isAIGenerated": true,
-    "topic": "חיות, פתגמים וביטויים"
+    "topic": "חיות, פתגמים וביטויים",
+    "isApproved": true
   },
   "מה שבע 1.jpg": {
     "title": "מה שבע",
     "explanation": "רפרנס ל-7 לספירת העומר, מהמערכון של הגששים",
     "createdAt": 1745105687000,
     "isAIGenerated": true,
-    "topic": "פתגמים וביטויים"
+    "topic": "פתגמים וביטויים",
+    "isApproved": true
   },
   "מה תן בסתר 1.jpg": {
     "title": "מה תן בסתר",
     "explanation": "נשמע כמו 'מתן בסתר', רואים את 'מתן כהנא' נותן אוכל ל'תן' בהסתרה",
     "createdAt": 1751795333000,
     "isAIGenerated": true,
-    "topic": "פתגמים וביטויים"
+    "topic": "פתגמים וביטויים",
+    "isApproved": true
   },
   "מושך אש 1.jpg": {
     "title": "מושך אש",
     "explanation": "כפשוטו, רואים חייל שמושך דמות של אש",
     "createdAt": 1747043771000,
     "isAIGenerated": true,
-    "topic": "פתגמים וביטויים"
+    "topic": "פתגמים וביטויים",
+    "isApproved": true
   },
   "הפך פח 1.jpg": {
     "title": "הפך פח",
     "explanation": "נשמע כמו 'הפכפך', ביטוי למזג אוויר לא יציב, רואים מזג אוויר עם מצב רוח משתנה, שהפך פח על הרצפה",
     "createdAt": 1744801112000,
     "isAIGenerated": true,
-    "topic": "פתגמים וביטויים"
+    "topic": "פתגמים וביטויים",
+    "isApproved": true
   },
   "מזל דגים 1.jpg": {
     "title": "מזל דגים",
@@ -8880,76 +8879,86 @@
     "explanation": "לא שמנגנים, אלא זו מחרוזת של שיר [שרשרת] של חתונות.",
     "createdAt": 1726702046000,
     "isAIGenerated": true,
-    "topic": "פתגמים וביטויים"
+    "topic": "פתגמים וביטויים",
+    "isApproved": true
   },
   "מינעל קהילתי 1.jpg": {
     "title": "מינעל קהילתי",
     "explanation": "נשמע כמו 'מינהל קהילתי', רואים מינעל ענק שהוא לקהילה",
     "createdAt": 1726052480000,
     "isAIGenerated": true,
-    "topic": "פתגמים וביטויים"
+    "topic": "פתגמים וביטויים",
+    "isApproved": true
   },
   "מיני-פרקים.jpg": {
     "title": "מיני-פרקים",
     "explanation": "משחק מילים על \"‫מיני-פרקים‬\", של סדרת טלויזיה עם פרקים קצרים. רואים את מיני מאוס כשהיא עשויה מ'פרקים' נפרדים כמו פינוקיו.",
     "createdAt": 1746445345000,
     "isAIGenerated": true,
-    "topic": "פתגמים וביטויים"
+    "topic": "פתגמים וביטויים",
+    "isApproved": true
   },
   "מינעל ה'שקים' 1.jpg": {
     "title": "מינעל ה'שקים'",
     "explanation": "נשמע כמו 'מנהל עסקים', רואים סנדלר שהכין נעליים מ'שקים' ישנים",
     "createdAt": 1752694582000,
     "isAIGenerated": true,
-    "topic": "פתגמים וביטויים"
+    "topic": "פתגמים וביטויים",
+    "isApproved": true
   },
   "מלחמת ששת הימים 1.jpg": {
     "title": "מלחמת ששת הימים",
     "explanation": "רפרנס למלחמת ששת הימים, רואים דמויות של 6 ימים [ים ברבים] כשהם נלחמים.",
     "createdAt": 1748184750000,
     "isAIGenerated": true,
-    "topic": "פתגמים וביטויים"
+    "topic": "פתגמים וביטויים",
+    "isApproved": true
   },
   "מנגן בגיטרה 1.jpg": {
     "title": "מנגן בגיטרה",
     "explanation": "רואים דמות של מישהו שמנגן בחליל כשהוא בתוך הגיטרה",
     "createdAt": 1745740473000,
     "isAIGenerated": true,
-    "topic": "פתגמים וביטויים"
+    "topic": "פתגמים וביטויים",
+    "isApproved": true
   },
   "מנגן עלה הצבים 1.jpg": {
     "title": "מנגן עלה הצבים",
     "explanation": "נשמע כמו 'מנגן על העצבים', רואים להקה שמנגנים ג'אז [שיש הרבה שלא אוהבים את המוזיקה הזו] כשהם עומדים על צבים",
     "createdAt": 1727269796000,
     "isAIGenerated": true,
-    "topic": "פתגמים וביטויים"
+    "topic": "פתגמים וביטויים",
+    "isApproved": true
   },
   "מסיבת אירוסים 1.jpg": {
     "title": "מסיבת אירוסים",
     "explanation": "נשמע כמו מסיבה של זוג שמתארס, אבל בתמונה רואים הרבה דמויות של פרח אירוס שהם עושים מסיבה",
     "createdAt": 1762466216000,
     "isAIGenerated": true,
-    "topic": "פתגמים וביטויים"
+    "topic": "פתגמים וביטויים",
+    "isApproved": true
   },
   "מסירת מודעה 1.jpg": {
     "title": "מסירת מודעה",
     "explanation": "רואים איש מוסר מודעה לציבור, ויש אישה שמסירה את המודעה מהלוח, ויש גם שליח שמוסר את המודעה שהוא צריך למסור לאיש.",
     "createdAt": 1720444758000,
     "isAIGenerated": true,
-    "topic": "פתגמים וביטויים"
+    "topic": "פתגמים וביטויים",
+    "isApproved": true
   },
   "מעלה על הנס 1.jpg": {
     "title": "מעלה על הנס",
     "explanation": "כשאדם מזכיר את הניסים שלו, כשהוא מספר אותם, רואים שאי שם 'נס' [גם דגל] על כוס 'נס קפה', עם שירי טילים",
     "createdAt": 1750087068000,
     "isAIGenerated": true,
-    "topic": "פתגמים וביטויים"
+    "topic": "פתגמים וביטויים",
+    "isApproved": true
   },
   "מעמר כפייתי.png": {
     "title": "מעמר כפייתי",
-    "explanation": "",
+    "explanation": "נשמע כמו מהמר כפייתי, רק שהוא עושה 'ערמות של כפיות'",
     "topic": "פתגמים וביטויים",
-    "isApproved": false,
+    "isApproved": true,
     "isAIGenerated": true
   },
   "מעריך בתפילה 1.jpg": {
@@ -8957,28 +8966,32 @@
     "explanation": "נשמע כמו 'מאריך בתפילה', רואים מישהו שמודד דברים באמצע התפילה",
     "createdAt": 1752758668000,
     "isAIGenerated": true,
-    "topic": "יהדות ומסורת, פתגמים וביטויים"
+    "topic": "יהדות ומסורת, פתגמים וביטויים",
+    "isApproved": true
   },
   "מעשן בשרשרת 1.jpg": {
     "title": "מעשן בשרשרת",
     "explanation": "ביטוי למישהו שמעשן בלי הפסקה, רואים דמות של איש שמעשן דגים [ולא סיגריות בכלל] והוא נמצא בתוך לולאה של שרשרת ברזל",
     "createdAt": 1754586040000,
     "isAIGenerated": true,
-    "topic": "פוליטיקה ואקטואליה, פתגמים וביטויים"
+    "topic": "פוליטיקה ואקטואליה, פתגמים וביטויים",
+    "isApproved": true
   },
   "מצפים לילד 1.jpg": {
     "title": "מצפים לילד",
     "explanation": "הם לא מחכים לילד כי יש להם כבר, רק הם מצפים אותו בשוקולד וסוכריות",
     "createdAt": 1764513901000,
     "isAIGenerated": true,
-    "topic": "פתגמים וביטויים"
+    "topic": "פתגמים וביטויים",
+    "isApproved": true
   },
   "מקרר שתי דלתות 1.jpg": {
     "title": "מקרר שתי דלתות",
     "explanation": "נשמע כמו סוג של מקרר שיש לו שתי דלתות לפתיחה, בתמונה זה מקרר עם דלת אחת בלבד, רק שהוא מקרר שתי דמויות של דלתות",
     "createdAt": 1758882782000,
     "isAIGenerated": true,
-    "topic": "פתגמים וביטויים"
+    "topic": "פתגמים וביטויים",
+    "isApproved": true
   },
   "מרווה את צמאונה 1.jpg": {
     "title": "מרווה את צמאונה",
@@ -8992,63 +9005,72 @@
     "explanation": "נשמע כמו שם של נקניק 'מרגז', שהוא ממש מתרגז",
     "createdAt": 1747670394000,
     "isAIGenerated": true,
-    "topic": "פתגמים וביטויים"
+    "topic": "פתגמים וביטויים",
+    "isApproved": true
   },
   "מרק אטום 1.jpg": {
     "title": "מרק אטום",
     "explanation": "נשמע כמו 'מרק כתום', רואים מרק אטומי שעשוי מירקות כתומים.",
     "createdAt": 1723587217000,
     "isAIGenerated": true,
-    "topic": "פתגמים וביטויים"
+    "topic": "פתגמים וביטויים",
+    "isApproved": true
   },
   "משולש ברמודה 1.jpg": {
     "title": "משולש ברמודה",
     "explanation": "רואים דמות של משולש לובש מכנסי ברמודה, ולאו דווקא מהאיזור של 'ברמודה'",
     "createdAt": 1730655212000,
     "isAIGenerated": true,
-    "topic": "פתגמים וביטויים"
+    "topic": "פתגמים וביטויים",
+    "isApproved": true
   },
   "משפחה מרובעת ילדים 1.jpg": {
     "title": "משפחה מרובעת ילדים",
     "explanation": "נשמע כמו 'משפחה מרובת ילדים', רואים משפחה שלימה כשהם מרובעים.",
     "createdAt": 1721050590000,
     "isAIGenerated": true,
-    "topic": "פתגמים וביטויים"
+    "topic": "פתגמים וביטויים",
+    "isApproved": true
   },
   "סודה 1.jpg": {
     "title": "סודה",
     "explanation": "נשמע כמו 'הסוד' שלה, רואים דייט בין מים לסודה, והמים רוצה לדעת את ה'סוד' של איך מכינים את הסודה הזו.",
     "createdAt": 1744738981000,
     "isAIGenerated": true,
-    "topic": "פתגמים וביטויים"
+    "topic": "פתגמים וביטויים",
+    "isApproved": true
   },
   "נוהל 'סיר לחץ'.jpg": {
     "title": "נוהל 'סיר לחץ'",
     "explanation": "נוהל צבאי, רואים את אנשי הצבא אוכלים טשולנט מסיר לחץ, זהו נוהל להורדת לחצים.",
     "createdAt": 1722891244000,
     "isAIGenerated": true,
-    "topic": "פתגמים וביטויים"
+    "topic": "פתגמים וביטויים",
+    "isApproved": true
   },
   "נחתול 1.jpg": {
     "title": "נחתול",
     "explanation": "תפקיד של חתול-נחת במארינס.",
     "createdAt": 1722873312000,
     "isAIGenerated": true,
-    "topic": "חיות, פתגמים וביטויים"
+    "topic": "חיות, פתגמים וביטויים",
+    "isApproved": true
   },
   "ניקוי 'רה' אלים 1.jpg": {
     "title": "ניקוי 'רה' אלים",
     "explanation": "נשמע כמו 'ניקוי רעלים', הם מנקים דמות של תו 'רה' שנראה ממש אלים",
     "createdAt": 1754833765000,
     "isAIGenerated": true,
-    "topic": "פתגמים וביטויים"
+    "topic": "פתגמים וביטויים",
+    "isApproved": true
   },
   "נעל ריצה 1.jpg": {
     "title": "נעל ריצה",
     "explanation": "רואים דמות של נעל ריצה שהוא היה בכלא ו'ריצה' את עונשו, יש עליו עדיין עיקוב חשמלי על הרגל.",
     "createdAt": 1724754917000,
     "isAIGenerated": true,
-    "topic": "פתגמים וביטויים"
+    "topic": "פתגמים וביטויים",
+    "isApproved": true
   },
   "24 לעומר 1.jpg": {
     "title": "24 לעומר",
@@ -9063,48 +9085,54 @@
     "explanation": "נשמע כמו שם המבצע הצבאי 'עם כלביא', רואים דמות של אריה ישראלי שהוא כלא בבית כלא דמות של V איראני, ויש שם סמל של רדיואקטיביות",
     "createdAt": 1750417662000,
     "isAIGenerated": true,
-    "topic": "פתגמים וביטויים"
+    "topic": "פתגמים וביטויים",
+    "isApproved": true
   },
   "לסכן עולם 1.jpg": {
     "title": "לסכן עולם",
     "explanation": "מתוך תפילת עלינו לשבח [בהגייה ליטאית] 'לתקן עולם במלכות...' נשמע כמו 'לסכן עולם...'",
     "createdAt": 1746489030000,
     "isAIGenerated": true,
-    "topic": "פתגמים וביטויים"
+    "topic": "פתגמים וביטויים",
+    "isApproved": true
   },
   "עזבה אותו להנחות 1.jpg": {
     "title": "עזבה אותו להנחות",
     "explanation": "נשמע כמו 'עזבה אותו לאנחות', רואים אישה צעירה שעזבה את בעלה בקניון למקום שיש בו מלא הנחות.",
     "createdAt": 1726232615000,
     "isAIGenerated": true,
-    "topic": "פתגמים וביטויים"
+    "topic": "פתגמים וביטויים",
+    "isApproved": true
   },
   "עפר שזיף 1.jpg": {
     "title": "עפר שזיף",
     "explanation": "נשמע כמו 'אפרשזיף', רואים את הפרי אפרשזיף כשהוא עשוי מחול-עפר",
     "createdAt": 1750808040000,
     "isAIGenerated": true,
-    "topic": "פתגמים וביטויים"
+    "topic": "פתגמים וביטויים",
+    "isApproved": true
   },
   "ערס-על 1.jpg": {
     "title": "ערס-על",
     "explanation": "נשמע כמו ערסל, רואים דמות של ערס נמצא על ערסל, מאחוריו 'הר סל' הר של סלים, והכל קשור לעמודים של סלים של כדורסל.",
     "createdAt": 1744800270000,
     "isAIGenerated": true,
-    "topic": "פתגמים וביטויים"
+    "topic": "פתגמים וביטויים",
+    "isApproved": true
   },
   "פה חמים 1.jpg": {
     "title": "פה חמים",
     "explanation": "נשמע כמו 'פחמים', רואים מישהו מנסה לעשות מנגל רק עם ההבל של הפה החמים שלו.",
     "createdAt": 1745341769000,
     "isAIGenerated": true,
-    "topic": "פתגמים וביטויים"
+    "topic": "פתגמים וביטויים",
+    "isApproved": true
   },
   "פול-האוס 1.jpg": {
     "title": "פול-האוס",
     "explanation": "כמו במשחק הקלפים, רק שפה זה ירק 'פול' בצורה של בית",
     "topic": "",
-    "isApproved": false,
+    "isApproved": true,
     "isAIGenerated": true
   },
   "פורט על הקלידים 1.jpg": {
@@ -9112,42 +9140,48 @@
     "explanation": "נשמע כמו מישהו שמנגן על הקלידים, רואים נגן פסנתר מחונן כשהוא פורט כספים על קלידי הפסנתר.",
     "createdAt": 1734293676000,
     "isAIGenerated": true,
-    "topic": "פתגמים וביטויים"
+    "topic": "פתגמים וביטויים",
+    "isApproved": true
   },
   "פורס משנתו 1.jpg": {
     "title": "פורס משנתו",
     "explanation": "נשמע כמו הביטוי 'פורש משנתו' למישהו שמבאר מה דעתו המוצקה על משהו, רואים איש שפורס לחם לפרוסות תוך כדי שינה.",
     "createdAt": 1733744059000,
     "isAIGenerated": true,
-    "topic": "פתגמים וביטויים"
+    "topic": "פתגמים וביטויים",
+    "isApproved": true
   },
   "פחות מתאים 1.jpg": {
     "title": "פחות מתאים",
     "explanation": "רואים דמות של 'פחות' מינוס, כשהוא נבחר ללהקה, כי הוא הכי מתאים אז זה 'פחות מתאים'.",
     "createdAt": 1730657343000,
     "isAIGenerated": true,
-    "topic": "פתגמים וביטויים"
+    "topic": "פתגמים וביטויים",
+    "isApproved": true
   },
   "פילה דג 1.jpg": {
     "title": "פילה דג",
     "explanation": "נשמע כמו לעשות דג 'פילה' ללא עצמות, רואים דמות של 'פילה' שעושה דג 'פילה'.",
     "createdAt": 1725031263000,
     "isAIGenerated": true,
-    "topic": "חיות, פתגמים וביטויים"
+    "topic": "חיות, פתגמים וביטויים",
+    "isApproved": true
   },
   "פירות מעוצבים 1.jpg": {
     "title": "פירות מעוצבים",
     "explanation": "יכול להישמע כמו 'להעציב פירות' לגרום להם להיות 'מעוצבים', רואים פירות מאוד מאוד עצבים אחרי שאיש עשה בהם צורות ועיצובים",
     "createdAt": 1733480405000,
     "isAIGenerated": true,
-    "topic": "אוכל ושתייה, פתגמים וביטויים"
+    "topic": "אוכל ושתייה, פתגמים וביטויים",
+    "isApproved": true
   },
   "פלפל שטה 1.jpg": {
     "title": "פלפל שטה",
     "explanation": "נשמע כמו הפלפל חריף, רואים דמות של פלפל שאטה, שהיא שטה בים",
     "createdAt": 1759248498000,
     "isAIGenerated": true,
-    "topic": "פתגמים וביטויים"
+    "topic": "פתגמים וביטויים",
+    "isApproved": true
   },
   "פטפוטי ביצים 1.jpg": {
     "title": "פטפוטי ביצים",
@@ -9161,126 +9195,144 @@
     "explanation": "רואים דמות של פר שעוסק בפרדסנות, וגם רואים דמות של פרד שעוסק בפרדסנות.",
     "createdAt": 1723937122000,
     "isAIGenerated": true,
-    "topic": "פתגמים וביטויים"
+    "topic": "פתגמים וביטויים",
+    "isApproved": true
   },
   "פרסומת 'סמויה' 1.jpg": {
     "title": "פרסומת 'סמויה'",
     "explanation": "רואים סוכנת 'סמויה' כשהיא עוקבת אחרי חשודים שנמצאים בהשתקפות של חלון התצוגה, והיא שותה קולה, אז זה בכלל פרסומת לקוקה קולה, כי זו פרסומת סמויה",
     "createdAt": 1746616387000,
     "isAIGenerated": true,
-    "topic": "פתגמים וביטויים"
+    "topic": "פתגמים וביטויים",
+    "isApproved": true
   },
   "פרע אדומה 1.jpg": {
     "title": "פרע אדומה",
     "explanation": "נשמע כמו 'פרה אדומה' שצריך בבית המקדש בשביל להיטהר מאפרה, רואים כהן שפורע את ראש נכדתו הג'ינג'ית, כשיש לה גם פרה אדומה בידה",
     "createdAt": 1749216046000,
     "isAIGenerated": true,
-    "topic": "פתגמים וביטויים"
+    "topic": "פתגמים וביטויים",
+    "isApproved": true
   },
   "פתי מאמין ל'חול' דוור 1.jpg": {
     "title": "פתי מאמין ל'חול' דוור",
     "explanation": "נשמע כמו הביטוי 'פתי מאמין לכל דבר', רואים דמות של פתיבר [בסקוויט] דתי, עם אופי תמים, שהוא מאמין לכל מה שהדוור שעשוי מ'חול' אומר לו.",
     "createdAt": 1749826534000,
     "isAIGenerated": true,
-    "topic": "פתגמים וביטויים"
+    "topic": "פתגמים וביטויים",
+    "isApproved": true
   },
   "צ'ק דחוי 1.jpg": {
     "title": "צ'ק דחוי",
     "explanation": "רואים דמות של צ'ק בנקאי שהוא לא בחברה בכלל, מאוד דחוי חברתית",
     "createdAt": 1727029061000,
     "isAIGenerated": true,
-    "topic": "פתגמים וביטויים"
+    "topic": "פתגמים וביטויים",
+    "isApproved": true
   },
   "צחוק הגורל 1.jpg": {
     "title": "צחוק הגורל",
     "explanation": "רואים את לואי דה פינס כשהוא מוציא גורל בינגו, והוא צוחק את הצחוק המופלא שלו.",
     "createdAt": 1748007535000,
     "isAIGenerated": true,
-    "topic": "פתגמים וביטויים"
+    "topic": "פתגמים וביטויים",
+    "isApproved": true
   },
   "ציר הרשע 1.jpg": {
     "title": "ציר הרשע",
     "explanation": "נשמע כמו 'ציר' של דגים רשעים. רואים דגים רשעים של איראן-חמאס-חיזבאללה",
     "createdAt": 1732711365000,
     "isAIGenerated": true,
-    "topic": "פתגמים וביטויים"
+    "topic": "פתגמים וביטויים",
+    "isApproved": true
   },
   "משוגע עם קבלות 1.jpg": {
     "title": "משוגע עם קבלות",
     "explanation": "רואים משוגע שמוכר מוצרי קבלה מעשית, וגם עם קבלת מס",
     "createdAt": 1750587201000,
     "isAIGenerated": true,
-    "topic": "פתגמים וביטויים"
+    "topic": "פתגמים וביטויים",
+    "isApproved": true
   },
   "קבלן 1.jpg": {
     "title": "קבלן",
     "explanation": "נשמע כמו מישהו ש'מקבל הכל', רואים קבלן שממש מקבל מכולם את כל מה שמביאים לו",
     "createdAt": 1720185045000,
     "isAIGenerated": true,
-    "topic": "פתגמים וביטויים"
+    "topic": "פתגמים וביטויים",
+    "isApproved": true
   },
   "קולט אדים 1.jpg": {
     "title": "קולט אדים",
     "explanation": "נשמע כמו הכלי החשמלי במטבח שקולט אדים, רק שפה זה אקדח מסוג 'קולט' שהוא עשוי מ'אדים'",
     "createdAt": 1724752833000,
     "isAIGenerated": true,
-    "topic": "פתגמים וביטויים"
+    "topic": "פתגמים וביטויים",
+    "isApproved": true
   },
   "COOLER 1.jpg": {
     "title": "COOLER",
     "explanation": "נשמע כמו 'קולר' שמקרר מים, וגם הוא דמות מאוד קולית, הוא איש קול. של מי עדן כמובן.",
     "createdAt": 1748268696000,
     "isAIGenerated": true,
-    "topic": "פתגמים וביטויים"
+    "topic": "פתגמים וביטויים",
+    "isApproved": true
   },
   "קולעים סלים קלים 1.jpg": {
     "title": "קולעים סלים קלים",
     "explanation": "רואים דמויות של שחקני כדורסל מדופלמים, כשהם קולעים סלי נצרים קלילים מאוד",
     "createdAt": 1741805696000,
     "isAIGenerated": true,
-    "topic": "פתגמים וביטויים"
+    "topic": "פתגמים וביטויים",
+    "isApproved": true
   },
   "קונס נכסים 1.jpg": {
     "title": "קונס נכסים",
     "explanation": "נשמע כמו 'כונס נכסים', רואים דמות של פקס-שוטר שנותן קנסות ל'נכסים'",
     "createdAt": 1755170390000,
     "isAIGenerated": true,
-    "topic": "פתגמים וביטויים"
+    "topic": "פתגמים וביטויים",
+    "isApproved": true
   },
   "קור רוח 1.jpg": {
     "title": "קור רוח",
     "explanation": "רוח קפואה ממש",
     "createdAt": 1732449385000,
     "isAIGenerated": true,
-    "topic": "פתגמים וביטויים"
+    "topic": "פתגמים וביטויים",
+    "isApproved": true
   },
   "קורן מאושר 1.jpg": {
     "title": "קורן מאושר",
     "explanation": "רואים דמות של תירס-קורן כשהוא קורן מאושר אחיר שהוא יצא מ'אושר עד'",
     "createdAt": 1749474476000,
     "isAIGenerated": true,
-    "topic": "פוליטיקה ואקטואליה, פתגמים וביטויים"
+    "topic": "פוליטיקה ואקטואליה, פתגמים וביטויים",
+    "isApproved": true
   },
   "קט-בם 1.jpg": {
     "title": "קט-בם",
     "explanation": "נשמע כמו 'כתב\"ם' [כלי טייס בלתי מאוייש], רואים כטב\"ם צעיר מאוד ממש קט, כשאבא שלו מסתכל עליו מהשמיים",
     "createdAt": 1750084206000,
     "isAIGenerated": true,
-    "topic": "פתגמים וביטויים"
+    "topic": "פתגמים וביטויים",
+    "isApproved": true
   },
   "קלקיליה 1.jpg": {
     "title": "קלקיליה",
     "explanation": "כמו שם העיר, רואים עיר ערבית שנהיית מקולקלת",
     "createdAt": 1726843076000,
     "isAIGenerated": true,
-    "topic": "פתגמים וביטויים"
+    "topic": "פתגמים וביטויים",
+    "isApproved": true
   },
   "קנה ביס 1.jpg": {
     "title": "קנה ביס",
     "explanation": "נשמע כמו 'קנאביס', רואים דמות של מכור לסמים רוצה לקנות 'ביס' מהלאפה של השליח וולט, כי הוא נמצא במאנצ' רציני.\nהלוגו של הטקסט הוא כמו של 'תן ביס'",
     "createdAt": 1745153075000,
     "isAIGenerated": true,
-    "topic": "פתגמים וביטויים"
+    "topic": "פתגמים וביטויים",
+    "isApproved": true
   },
   "שבחי ירושלים 1.jpg": {
     "title": "שב\"חי ירושלים",
@@ -9288,5 +9340,20 @@
     "topic": "פוליטיקה ואקטואליה, יהדות ומסורת, פתגמים וביטויים",
     "isApproved": true,
     "isAIGenerated": true
+  },
+  "הר בכוסות.jpg": {
+    "title": "הר בכוסות",
+    "explanation": "נשמע כמו 'ארבע כוסות', רואים 4 כוסות עם ציורים ואיורים של הרים בכוסות",
+    "isApproved": true
+  },
+  "זה לא אתי.jpg": {
+    "title": "זה לא אתי",
+    "explanation": "רואים את הדמות של מירי רגב, שהיתה מלאה בביקורת שהיא טסה הרבה, אז רואים מישהו שאומר לה ש'זה לא אתי', והיא אומרת שזה בהחלט לא אתי, כי קוראים לה מירי ולא אתי",
+    "isApproved": true
+  },
+  "לולב צריך אגד_1.png": {
+    "title": "לולב צריך אגר",
+    "explanation": "",
+    "isApproved": true
   }
 }
