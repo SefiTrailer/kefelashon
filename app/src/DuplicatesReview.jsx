@@ -28,7 +28,8 @@ export default function DuplicatesReview({ onComplete }) {
                 const newGroup = group.map(img => ({
                     ...img,
                     tempTitle: img.metadata?.title || '',
-                    tempExplanation: img.metadata?.explanation || ''
+                    tempExplanation: img.metadata?.explanation || '',
+                    keep: true // Default to keeping all, user can uncheck
                 }));
                 newGroup.isTitleMatch = group.isTitleMatch;
                 newGroup.isFilenameMatch = group.isFilenameMatch;
@@ -59,31 +60,43 @@ export default function DuplicatesReview({ onComplete }) {
         }));
     };
 
+    const toggleKeep = (gIdx, iIdx) => {
+        setGroups(prev => prev.map((g, idx) => {
+            if (idx !== gIdx) return g;
+            const newGroup = g.map((img, imgIdx) => {
+                if (imgIdx !== iIdx) return img;
+                return { ...img, keep: !img.keep };
+            });
+            newGroup.isTitleMatch = g.isTitleMatch;
+            newGroup.isFilenameMatch = g.isFilenameMatch;
+            return newGroup;
+        }));
+    };
+
     const copyMetadata = (gIdx, fromIdx, toIdx) => {
         const fromImg = groups[gIdx][fromIdx];
         updateTempMetadata(gIdx, toIdx, 'tempTitle', fromImg.tempTitle);
         updateTempMetadata(gIdx, toIdx, 'tempExplanation', fromImg.tempExplanation);
     };
 
-    const resolveGroup = async (groupIndex, action, keepIndex, removeIndex) => {
+    const resolveGroup = async (groupIndex) => {
         const group = groups[groupIndex];
-        const keep = group[keepIndex];
-        const remove = group[removeIndex];
+        
+        const resolutions = group.map(img => ({
+            filename: img.filename,
+            action: img.keep ? 'keep' : 'delete',
+            metadata: {
+                title: img.tempTitle,
+                explanation: img.tempExplanation
+            }
+        }));
 
         setResolving(groupIndex);
         try {
             const res = await fetch(`${API_BASE}/api/duplicates/resolve`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ 
-                    action: action || 'keep_this', 
-                    keep, 
-                    remove,
-                    metadata: {
-                        title: keep.tempTitle,
-                        explanation: keep.tempExplanation
-                    }
-                })
+                body: JSON.stringify({ resolutions })
             });
 
             if (!res.ok) throw new Error('Failed to resolve');
@@ -133,7 +146,7 @@ export default function DuplicatesReview({ onComplete }) {
                     <div>
                         <h3 className="font-bold text-amber-900 text-lg">נמצאו {groups.length} קבוצות חשודות ככפולות</h3>
                         <p className="text-amber-700 mt-1">
-                            בכל קבוצה תוכל לערוך את הטקסטים, להעתיק אותם בין התמונות, ולבחור את הגרסה הסופית שתחליף את השאר.
+                            תוכל לערוך את הטקסטים לכל תמונה, לבחור אילו תמונות להשאיר (Keep) ואילו למחוק, ולבצע את השינויים לקבוצה כולה.
                         </p>
                     </div>
                 </div>
@@ -162,7 +175,7 @@ export default function DuplicatesReview({ onComplete }) {
 
                             <div className="relative grid grid-cols-1 md:grid-cols-2 gap-12 items-start">
                                 
-                                {/* Link/Merge Visual in logic */}
+                                {/* Quick Copy Controls */}
                                 <div className="hidden md:flex absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 z-10 flex-col gap-4">
                                      <button 
                                         onClick={() => copyMetadata(gIdx, 1, 0)}
@@ -185,11 +198,22 @@ export default function DuplicatesReview({ onComplete }) {
                                     const isDraft = !img.tempTitle || !img.tempExplanation;
 
                                     return (
-                                        <div key={iIdx} className={`flex flex-col gap-4 p-5 rounded-3xl border-2 transition-all ${isDraft ? 'border-amber-100 bg-amber-50/20' : 'border-teal-50 bg-teal-50/10'}`}>
+                                        <div key={iIdx} className={`flex flex-col gap-4 p-5 rounded-3xl border-2 transition-all ${!img.keep ? 'opacity-60 bg-slate-50 grayscale' : isDraft ? 'border-amber-100 bg-amber-50/20' : 'border-teal-50 bg-teal-50/10'}`}>
                                             
                                             {/* Header Info */}
                                             <div className="flex items-center justify-between pb-2 border-b border-dashed border-slate-200">
-                                                <span className="text-[11px] font-black text-slate-400 truncate max-w-[140px] font-mono" dir="ltr" title={img.filename}>{img.filename}</span>
+                                                <div className="flex items-center gap-3">
+                                                    <input 
+                                                        type="checkbox"
+                                                        checked={img.keep}
+                                                        onChange={() => toggleKeep(gIdx, iIdx)}
+                                                        className="w-5 h-5 rounded-lg border-2 border-slate-300 text-teal-600 focus:ring-teal-500 transition-all cursor-pointer"
+                                                        id={`keep-${gIdx}-${iIdx}`}
+                                                    />
+                                                    <label htmlFor={`keep-${gIdx}-${iIdx}`} className={`text-sm font-black cursor-pointer ${img.keep ? 'text-teal-700' : 'text-slate-400'}`}>
+                                                        {img.keep ? 'שמור תמונה' : 'מחק תמונה'}
+                                                    </label>
+                                                </div>
                                                 <span className="text-[10px] font-bold bg-slate-200 text-slate-700 px-3 py-1 rounded-full whitespace-nowrap">{formatBytes(img.size)}</span>
                                             </div>
 
@@ -197,13 +221,13 @@ export default function DuplicatesReview({ onComplete }) {
                                             <div className="relative aspect-video bg-white rounded-2xl overflow-hidden border border-slate-200 group/img">
                                                 <img 
                                                     src={`${API_BASE}/images/${encodeURIComponent(img.filename)}`} 
-                                                    className="w-full h-full object-contain p-2"
+                                                    className={`w-full h-full object-contain p-2 transition-all ${!img.keep ? 'brightness-50' : ''}`}
                                                     alt={img.filename}
                                                 />
                                                 <div className={`absolute bottom-3 left-3 px-3 py-1 rounded-full text-[10px] font-black shadow-lg ${img.type === 'new' ? 'bg-indigo-600 text-white' : 'bg-teal-600 text-white'}`}>
                                                     {img.type === 'new' ? 'חדש במערכת' : 'קיים במערכת'}
                                                 </div>
-                                                {isDraft && (
+                                                {img.keep && isDraft && (
                                                     <div className="absolute top-3 right-3 bg-amber-500 text-white px-3 py-1 rounded-lg text-[10px] font-bold shadow-lg animate-bounce">
                                                         ⚠️ חסר מידע
                                                     </div>
@@ -211,22 +235,15 @@ export default function DuplicatesReview({ onComplete }) {
                                             </div>
 
                                             {/* Metadata Form */}
-                                            <div className="space-y-4 pt-2">
+                                            <div className={`space-y-4 pt-2 transition-all ${!img.keep ? 'pointer-events-none' : ''}`}>
                                                 <div className="space-y-1.5">
                                                     <div className="flex justify-between items-center px-1">
-                                                        <label className="text-xs font-black text-slate-400 uppercase tracking-tighter">כותרת (שם)</label>
-                                                        <div className="flex gap-2">
-                                                            <button 
-                                                                onClick={() => updateTempMetadata(gIdx, iIdx, 'tempTitle', groups[gIdx][otherIdx].tempTitle)}
-                                                                className="text-[10px] font-bold text-indigo-500 hover:text-indigo-700 transition"
-                                                            >
-                                                                השתמש בשל השנייה
-                                                            </button>
-                                                        </div>
+                                                        <label className="text-xs font-black text-slate-400 uppercase tracking-tighter">כותרת (שם הקובץ ישתנה בהתאם)</label>
                                                     </div>
                                                     <input 
                                                         type="text"
                                                         value={img.tempTitle}
+                                                        disabled={!img.keep}
                                                         onChange={(e) => updateTempMetadata(gIdx, iIdx, 'tempTitle', e.target.value)}
                                                         className={`w-full text-sm px-4 py-2.5 rounded-xl border-2 focus:outline-none focus:ring-4 focus:ring-teal-500/10 transition-all font-bold ${!img.tempTitle ? 'bg-amber-50 border-amber-200 text-amber-700' : 'bg-white border-slate-100 text-slate-800 focus:border-teal-500'}`}
                                                         placeholder="חסר כותרת..."
@@ -236,39 +253,15 @@ export default function DuplicatesReview({ onComplete }) {
                                                 <div className="space-y-1.5">
                                                     <div className="flex justify-between items-center px-1">
                                                         <label className="text-xs font-black text-slate-400 uppercase tracking-tighter">הסבר</label>
-                                                        <button 
-                                                            onClick={() => updateTempMetadata(gIdx, iIdx, 'tempExplanation', groups[gIdx][otherIdx].tempExplanation)}
-                                                            className="text-[10px] font-bold text-indigo-500 hover:text-indigo-700 transition"
-                                                        >
-                                                            העתק הסבר מהשנייה
-                                                        </button>
                                                     </div>
                                                     <textarea 
                                                         value={img.tempExplanation}
+                                                        disabled={!img.keep}
                                                         onChange={(e) => updateTempMetadata(gIdx, iIdx, 'tempExplanation', e.target.value)}
                                                         className={`w-full text-xs px-4 py-3 rounded-xl border-2 focus:outline-none focus:ring-4 focus:ring-teal-500/10 min-h-[90px] resize-none leading-relaxed transition-all ${!img.tempExplanation ? 'bg-amber-50 border-amber-200 text-amber-700' : 'bg-white border-slate-100 text-slate-600 focus:border-teal-500'}`}
                                                         placeholder="חסר הסבר..."
                                                     />
                                                 </div>
-                                            </div>
-
-                                            {/* Action Buttons */}
-                                            <div className="flex flex-col gap-2 mt-4 pt-4 border-t border-slate-100">
-                                                <button 
-                                                    onClick={() => resolveGroup(gIdx, 'keep_this', iIdx, otherIdx)}
-                                                    className="w-full flex items-center justify-center gap-3 bg-teal-600 text-white py-3.5 rounded-2xl font-black hover:bg-teal-700 transition shadow-lg shadow-teal-500/20 active:scale-[0.98]"
-                                                >
-                                                    <CheckCircle size={20} />
-                                                    <span>שמור גרסה זו</span>
-                                                </button>
-                                                
-                                                <button 
-                                                    onClick={() => resolveGroup(gIdx, iIdx === 0 ? 'delete_new' : 'replace_old', otherIdx, iIdx)}
-                                                    className="w-full flex items-center justify-center gap-2 text-rose-500 py-2.5 rounded-xl text-[11px] font-bold hover:bg-rose-50 transition border border-transparent hover:border-rose-100"
-                                                >
-                                                    <Trash2 size={16} />
-                                                    <span>מחק תמונה זו בלבד</span>
-                                                </button>
                                             </div>
                                         </div>
                                     );
@@ -276,13 +269,17 @@ export default function DuplicatesReview({ onComplete }) {
                             </div>
 
                             {/* Group Footer Actions */}
-                            <div className="mt-8 pt-8 border-t-2 border-slate-50 flex justify-center">
+                            <div className="mt-8 pt-8 border-t-2 border-slate-50 flex flex-col items-center gap-4">
                                 <button 
-                                    onClick={() => resolveGroup(gIdx, 'keep_both', 0, 1)}
-                                    className="px-10 py-3 bg-slate-800 text-white rounded-2xl font-black hover:bg-slate-700 transition shadow-xl text-sm tracking-wide"
+                                    onClick={() => resolveGroup(gIdx)}
+                                    disabled={resolving === gIdx || group.every(img => !img.keep)}
+                                    className="px-12 py-4 bg-teal-600 text-white rounded-2xl font-black hover:bg-teal-700 transition shadow-xl shadow-teal-500/20 text-lg tracking-wide disabled:opacity-50 disabled:cursor-not-allowed active:scale-95"
                                 >
-                                    התעלם והשאר את שתיהן
+                                    בצע פעולות לקבוצה #{gIdx + 1}
                                 </button>
+                                {group.every(img => !img.keep) && (
+                                    <p className="text-rose-500 text-sm font-bold animate-pulse">חובה לבחור לפחות תמונה אחת לשמירה (או להתעלם)</p>
+                                )}
                             </div>
                         </div>
                     ))}

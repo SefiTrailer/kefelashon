@@ -17,11 +17,11 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
-const IMAGES_DIR = path.resolve(__dirname, '../app/תמונות מקור');
+const IMAGES_DIR = path.resolve(__dirname, '../app/public/images');
 const NEW_IMAGES_DIR = path.resolve(__dirname, '../תמונות חדשות');
 const DATA_FILE = path.resolve(__dirname, '../data.json');
-const PUBLIC_DIR = path.resolve(__dirname, '../app/public/images'); // Define PUBLIC_DIR
 const HASHES_FILE = path.resolve(__dirname, '../hashes.json');
+const SOURCE_BACKUP_DIR = path.resolve(__dirname, '../app/תמונות מקור'); // Keep for legacy if needed
 
 // Configure multer for file uploads
 const storage = multer.diskStorage({
@@ -47,10 +47,10 @@ app.get('/api/images', (req, res) => {
         if (!fs.existsSync(IMAGES_DIR)) {
             return res.status(404).json({ error: 'Images directory not found' });
         }
-        const sourceFiles = fs.readdirSync(IMAGES_DIR).filter(file => file.endsWith('.png') || file.endsWith('.jpg') || file.endsWith('.jpeg'));
+        const sourceFiles = fs.readdirSync(IMAGES_DIR).filter(file => /\.(png|jpg|jpeg|webp)$/i.test(file));
         let newFiles = [];
         if (fs.existsSync(NEW_IMAGES_DIR)) {
-            newFiles = fs.readdirSync(NEW_IMAGES_DIR).filter(file => file.endsWith('.png') || file.endsWith('.jpg') || file.endsWith('.jpeg'));
+            newFiles = fs.readdirSync(NEW_IMAGES_DIR).filter(file => /\.(png|jpg|jpeg|webp)$/i.test(file));
         }
 
         // Merge files and track their source for the frontend
@@ -125,18 +125,24 @@ app.post('/api/metadata', (req, res) => {
 
         // If there's a title, we try to rename the file
         if (title && title.trim() !== '') {
-            const ext = path.extname(filename);
+            const ext = path.extname(filename).toLowerCase();
             // Sanitize title for Windows filename
             let sanitizedTitle = title.replace(/[<>:"/\\|?*]/g, '').trim();
             if (sanitizedTitle) {
                 let targetFilename = sanitizedTitle + ext;
                 let targetPath = path.join(IMAGES_DIR, targetFilename);
 
-                // If it's a different name, and the target doesn't exist (unless we just overwrite)
+                // If it's a different name, or it's from New folder (must move)
                 if (filename !== targetFilename || isFromNewFolder) {
                     let counter = 1;
-                    while (fs.existsSync(targetPath) && (isFromNewFolder || targetFilename !== filename)) {
-                        targetFilename = `${sanitizedTitle}_${counter}${ext}`;
+                    // Keep looking for a non-conflicting name
+                    while (fs.existsSync(targetPath)) {
+                        // If it's the SAME file we are already editing (case-insensitive check on Windows)
+                        // we only allow it if it's not from 'new'
+                        if (!isFromNewFolder && targetFilename.toLowerCase() === filename.toLowerCase()) {
+                            break; 
+                        }
+                        targetFilename = `${sanitizedTitle} ${counter}${ext}`;
                         targetPath = path.join(IMAGES_DIR, targetFilename);
                         counter++;
                     }
@@ -148,35 +154,23 @@ app.post('/api/metadata', (req, res) => {
                 }
             }
         } else if (isFromNewFolder) {
-            // No title changed, but it's in the new folder - just move it to source as is
-            const targetPath = path.join(IMAGES_DIR, filename);
-            if (!fs.existsSync(targetPath)) {
-                fs.renameSync(oldFilePath, targetPath);
-            } else {
-                // Conflict in source? Generate unique name
-                const ext = path.extname(filename);
-                const base = path.basename(filename, ext);
-                let counter = 1;
-                let altFilename = `${base}_${counter}${ext}`;
-                let altPath = path.join(IMAGES_DIR, altFilename);
-                while (fs.existsSync(altPath)) {
-                    counter++;
-                    altFilename = `${base}_${counter}${ext}`;
-                    altPath = path.join(IMAGES_DIR, altFilename);
-                }
-                fs.renameSync(oldFilePath, altPath);
-                newFilename = altFilename;
+            // No title, but it's in the new folder - just move it to source as is
+            const ext = path.extname(filename).toLowerCase();
+            const base = path.basename(filename, ext);
+            let targetFilename = filename;
+            let targetPath = path.join(IMAGES_DIR, targetFilename);
+            
+            let counter = 1;
+            while (fs.existsSync(targetPath)) {
+                targetFilename = `${base} ${counter}${ext}`;
+                targetPath = path.join(IMAGES_DIR, targetFilename);
+                counter++;
             }
+            fs.renameSync(oldFilePath, targetPath);
+            newFilename = targetFilename;
         }
 
-        // Also sync to public images if it was moved from new or renamed
-        if (isFromNewFolder || newFilename !== filename) {
-            const finalSourcePath = path.join(IMAGES_DIR, newFilename);
-            const finalPublicPath = path.join(PUBLIC_DIR, newFilename);
-            if (fs.existsSync(finalSourcePath)) {
-                fs.copyFileSync(finalSourcePath, finalPublicPath);
-            }
-        }
+        // No need to sync to public images anymore since IMAGES_DIR IS PUBLIC_DIR
 
         // Maintain existing flags if not explicitly provided
         const oldEntry = data[filename] || {};
@@ -244,12 +238,10 @@ app.delete('/api/images/:filename', (req, res) => {
         const { filename } = req.params;
         const sourceFilePath = path.join(IMAGES_DIR, filename);
         const newImagesPath = path.join(NEW_IMAGES_DIR, filename);
-        const publicFilePath = path.join(__dirname, '../app/public/images', filename);
 
         // Delete the physical file from folders if they exist
         if (fs.existsSync(sourceFilePath)) fs.unlinkSync(sourceFilePath);
         if (fs.existsSync(newImagesPath)) fs.unlinkSync(newImagesPath);
-        if (fs.existsSync(publicFilePath)) fs.unlinkSync(publicFilePath);
 
         // Remove from metadata
         let data = {};
@@ -273,10 +265,7 @@ app.post('/api/upload', upload.array('images'), (req, res) => {
         if (!req.files || req.files.length === 0) {
             return res.status(400).json({ error: 'No files uploaded.' });
         }
-
-        if (!fs.existsSync(PUBLIC_DIR)) {
-            fs.mkdirSync(PUBLIC_DIR, { recursive: true });
-        }
+        res.json({ success: true });
 
         let data = {};
         if (fs.existsSync(DATA_FILE)) {
@@ -420,50 +409,43 @@ app.get('/api/duplicates', async (req, res) => {
     }
 });
 
-app.post('/api/duplicates/resolve', (req, res) => {
+app.post('/api/duplicates/resolve', async (req, res) => {
     try {
-        const { action, keep, remove, metadata } = req.body;
-        // action: 'delete_new', 'replace_old', 'keep_both', 'merge'
+        const { resolutions } = req.body;
         
-        const removePath = remove.path;
-        const keepPath = keep.path;
-
         let data = {};
         if (fs.existsSync(DATA_FILE)) {
             data = JSON.parse(fs.readFileSync(DATA_FILE, 'utf-8'));
         }
 
-        if (action === 'delete_new' || action === 'replace_old' || action === 'merge' || action === 'keep_this') {
-            if (fs.existsSync(removePath)) {
-                fs.unlinkSync(removePath);
-            }
-            
-            // If it was a replace, move keep to remove's location
-            if (action === 'replace_old') {
-                if (keepPath !== removePath) {
-                    fs.copyFileSync(keepPath, removePath);
-                    if (keep.type === 'new') {
-                        fs.unlinkSync(keepPath);
-                    }
+        for (const resItem of resolutions) {
+            const { filename, action, metadata } = resItem;
+            const filePath = path.join(IMAGES_DIR, filename);
+            const newPath = path.join(NEW_IMAGES_DIR, filename);
+
+            if (action === 'delete') {
+                if (fs.existsSync(filePath)) fs.unlinkSync(filePath);
+                if (fs.existsSync(newPath)) fs.unlinkSync(newPath);
+                delete data[filename];
+            } else if (action === 'keep') {
+                // Move from 'new' to 'images' if it's there
+                if (fs.existsSync(newPath) && !fs.existsSync(filePath)) {
+                    fs.renameSync(newPath, filePath);
+                }
+                
+                // Update metadata if provided
+                if (metadata) {
+                    data[filename] = {
+                        ...(data[filename] || {}),
+                        title: metadata.title || data[filename]?.title || '',
+                        explanation: metadata.explanation || data[filename]?.explanation || '',
+                        isApproved: true
+                    };
                 }
             }
-
-            // Update metadata for the kept file if provided
-            if (metadata) {
-                data[keep.filename] = {
-                    ...data[keep.filename],
-                    ...metadata
-                };
-            }
-
-            // Cleanup removed file metadata
-            if (data[remove.filename]) {
-                delete data[remove.filename];
-            }
-            
-            fs.writeFileSync(DATA_FILE, JSON.stringify(data, null, 2));
         }
 
+        fs.writeFileSync(DATA_FILE, JSON.stringify(data, null, 2));
         res.json({ success: true });
     } catch (e) {
         console.error('Deduplication Error:', e);
