@@ -1,6 +1,7 @@
 import { useState, useEffect, useMemo, useRef } from 'react';
-import { ChevronRight, ChevronLeft, Save, MessageCircle, CheckCircle, Trash2, Search, X, Upload, Github, Loader, LayoutGrid, Image as ImageIcon } from 'lucide-react';
+import { ChevronRight, ChevronLeft, Save, MessageCircle, CheckCircle, Trash2, Search, X, Upload, Github, Loader, LayoutGrid, Image as ImageIcon, Copy } from 'lucide-react';
 import PublicGallery from './PublicGallery';
+import DuplicatesReview from './DuplicatesReview';
 
 const API_BASE = 'http://localhost:3088';
 
@@ -32,7 +33,7 @@ function App() {
   const [debouncedSearchQuery, setDebouncedSearchQuery] = useState('');
   const [fileSizes, setFileSizes] = useState({});
   const [fileSources, setFileSources] = useState({});
-  const [adminViewMode, setAdminViewMode] = useState('edit'); // 'edit' | 'grid'
+  const [adminViewMode, setAdminViewMode] = useState('edit'); // 'edit' | 'grid' | 'duplicates'
 
   // ── Publish state ──
   const [publishState, setPublishState] = useState('idle'); // idle | loading | success | error | skipped
@@ -129,8 +130,10 @@ function App() {
       // 3. Search Query
       if (debouncedSearchQuery) {
         const q = debouncedSearchQuery.toLowerCase();
+        // Check if the filename itself matches (without extension)
+        const filenameWithoutExt = img.replace(/\.[^/.]+$/, "").toLowerCase();
         const matchTitle = meta.title?.toLowerCase().includes(q);
-        const matchFilename = img.toLowerCase().includes(q);
+        const matchFilename = img.toLowerCase().includes(q) || filenameWithoutExt.includes(q);
         const matchExplanation = meta.explanation?.toLowerCase().includes(q);
         const matchTopic = meta.topic?.toLowerCase().includes(q);
         if (!matchTitle && !matchFilename && !matchExplanation && !matchTopic) return false;
@@ -468,6 +471,13 @@ function App() {
                 >
                   <ImageIcon size={18} />
                 </button>
+                <button
+                  onClick={() => setAdminViewMode('duplicates')}
+                  className={`p-1.5 rounded-md transition-all ${adminViewMode === 'duplicates' ? 'bg-white shadow-sm text-indigo-600' : 'text-slate-400 hover:text-slate-600'}`}
+                  title="בדיקת כפילויות"
+                >
+                  <Copy size={18} />
+                </button>
               </div>
               
               <div className="flex items-center gap-2 text-sm font-semibold text-slate-600">
@@ -641,19 +651,31 @@ function App() {
                   <span>מחק תמונה</span>
                 </button>
               </h2>
-              {/* File Size Badge */}
-              <div className="flex items-center gap-2 text-sm font-mono text-slate-500 font-medium mb-4">
-                <span className="py-0.5 px-2 bg-slate-200/50 rounded-md shadow-sm border border-slate-300">
-                    {fileSizes[images[currentIndex]] ? formatBytes(fileSizes[images[currentIndex]]) : '...'}
-                </span>
+              
+              {/* Filename & Info Row */}
+              <div className="bg-slate-50 border border-slate-100 rounded-xl p-3 mb-4 space-y-2">
+                <div className="flex items-center justify-between text-xs text-slate-400 font-mono" dir="ltr">
+                  <span className="flex items-center gap-1.5 font-bold text-slate-500">
+                    <ImageIcon size={14} /> FILENAME
+                  </span>
+                  <span className="truncate max-w-[200px]" title={currentFile}>{currentFile}</span>
+                </div>
                 
-                {metadata[images[currentIndex]]?.isAIGenerated && (
-                    <span className="flex items-center gap-1 bg-indigo-100 text-indigo-700 text-xs px-2 py-1 rounded-md border border-indigo-200 font-medium shadow-sm transition-all"
-                      title="הסבר זה נוצר על ידי בינה מלאכותית. שמירה ידנית תמחק תווית זו.">
-                      <span className="text-sm">🤖</span> AI Review
+                <div className="flex items-center justify-between">
+                  <div className="flex items-center gap-2 text-sm font-mono text-slate-500 font-medium">
+                    <span className="py-0.5 px-2 bg-slate-200/40 rounded-md border border-slate-200 shadow-sm">
+                        {fileSizes[images[currentIndex]] ? formatBytes(fileSizes[images[currentIndex]]) : '...'}
                     </span>
-                )}
-            </div>
+                  </div>
+                  
+                  {metadata[images[currentIndex]]?.isAIGenerated && (
+                      <span className="flex items-center gap-1 bg-indigo-50 text-indigo-600 text-xs px-2 py-1 rounded-md border border-indigo-100 font-medium shadow-sm"
+                        title="הסבר זה נוצר על ידי בינה מלאכותית.">
+                        🤖 AI Generated
+                      </span>
+                  )}
+                </div>
+              </div>
             </div>
 
             <div className="flex flex-col gap-5 flex-1 mt-1">
@@ -745,6 +767,8 @@ function App() {
             </div>
           </div>
         </div>
+        ) : adminViewMode === 'duplicates' ? (
+          <DuplicatesReview onComplete={() => setAdminViewMode('edit')} />
         ) : (
           <div className="flex-1 min-h-0 overflow-y-auto pr-1 pb-8">
             <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-4">
@@ -768,9 +792,12 @@ function App() {
                     />
                     
                     {/* Overlay Grad */}
-                    <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-slate-900/90 to-transparent p-3 pt-8 pb-3">
+                    <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-slate-900/95 to-transparent p-3 pt-10 pb-3">
                       <p className="text-white text-sm font-bold truncate text-right drop-shadow-md">
                         {data?.title || <span className="text-slate-300 font-normal italic">ללא שם</span>}
+                      </p>
+                      <p className="text-white/40 text-[10px] font-mono truncate text-right mt-0.5" dir="ltr">
+                        {filename}
                       </p>
                     </div>
 

@@ -90,7 +90,12 @@ export default function DuplicatesReview({ onComplete }) {
                 {groups.map((group, gIdx) => (
                     <div key={gIdx} className={`bg-white rounded-3xl border p-6 shadow-sm transition-all ${resolving === gIdx ? 'opacity-50 animate-pulse' : 'hover:border-teal-200 hover:shadow-md'}`}>
                         <div className="flex justify-between items-center mb-6">
-                            <span className="bg-slate-100 text-slate-600 px-3 py-1 rounded-full text-xs font-bold">קבוצה #{gIdx + 1}</span>
+                            <div className="flex items-center gap-3">
+                                <span className={`px-3 py-1 rounded-full text-xs font-bold ${group.isTitleMatch ? 'bg-indigo-100 text-indigo-700' : 'bg-amber-100 text-amber-700'}`}>
+                                    {group.isTitleMatch ? 'שם זהה' : 'דמיון ויזואלי'}
+                                </span>
+                                <span className="text-slate-400 text-xs">קבוצה #{gIdx + 1}</span>
+                            </div>
                             <div className="flex gap-2">
                                 <button 
                                     onClick={() => setGroups(prev => prev.filter((_, i) => i !== gIdx))}
@@ -103,8 +108,13 @@ export default function DuplicatesReview({ onComplete }) {
                         </div>
 
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 items-start">
-                            {group.map((img, iIdx) => (
-                                <div key={iIdx} className="flex flex-col gap-3">
+                            {group.map((img, iIdx) => {
+                                const hasTitle = img.metadata?.title;
+                                const hasExplanation = img.metadata?.explanation;
+                                const isDraft = !hasTitle || !hasExplanation;
+
+                                return (
+                                <div key={iIdx} className={`flex flex-col gap-3 p-4 rounded-2xl border-2 transition-all ${isDraft ? 'border-amber-100 bg-amber-50/30' : 'border-teal-50 bg-teal-50/10'}`}>
                                     <div className="relative aspect-square bg-slate-100 rounded-2xl overflow-hidden border border-slate-200">
                                         <img 
                                             src={`${API_BASE}/images/${encodeURIComponent(img.filename)}`} 
@@ -112,30 +122,52 @@ export default function DuplicatesReview({ onComplete }) {
                                             alt={img.filename}
                                         />
                                         <div className={`absolute top-3 left-3 px-3 py-1 rounded-full text-[10px] font-bold shadow-sm ${img.type === 'new' ? 'bg-indigo-600 text-white' : 'bg-teal-600 text-white'}`}>
-                                            {img.type === 'new' ? 'חדשה (בתיקיית קליטה)' : 'במערכת'}
+                                            {img.type === 'new' ? 'תיקיית קליטה' : 'במערכת'}
                                         </div>
-                                    </div>
-                                    <div className="bg-slate-50 p-3 rounded-xl border border-slate-100">
-                                        <p className="text-xs font-bold text-slate-400 mb-1">שם הקובץ:</p>
-                                        <p className="text-sm text-slate-700 font-mono truncate" dir="ltr" title={img.filename}>{img.filename}</p>
+                                        {isDraft && (
+                                            <div className="absolute bottom-3 right-3 bg-amber-500 text-white px-2 py-1 rounded-md text-[10px] font-bold shadow-lg flex items-center gap-1">
+                                                <AlertTriangle size={10} /> חסר מידע
+                                            </div>
+                                        )}
                                     </div>
 
-                                    <div className="grid grid-cols-2 gap-2 mt-2">
+                                    <div className="space-y-3">
+                                        <div>
+                                            <p className="text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-1">שם הקובץ:</p>
+                                            <p className="text-xs text-slate-500 font-mono truncate" dir="ltr" title={img.filename}>{img.filename}</p>
+                                        </div>
+
+                                        <div className={`p-3 rounded-xl border ${hasTitle ? 'bg-white border-slate-100' : 'bg-amber-100/50 border-amber-200 border-dashed'}`}>
+                                            <p className="text-[10px] font-bold text-slate-400 mb-1">כותרת:</p>
+                                            <p className={`text-sm ${hasTitle ? 'text-slate-800 font-bold' : 'text-amber-600 italic'}`}>
+                                                {hasTitle || 'ללא כותרת'}
+                                            </p>
+                                        </div>
+
+                                        <div className={`p-3 rounded-xl border ${hasExplanation ? 'bg-white border-slate-100' : 'bg-amber-100/50 border-amber-200 border-dashed'}`}>
+                                            <p className="text-[10px] font-bold text-slate-400 mb-1">הסבר:</p>
+                                            <p className={`text-xs leading-relaxed line-clamp-3 ${hasExplanation ? 'text-slate-600' : 'text-amber-600 italic'}`}>
+                                                {hasExplanation || 'חסר הסבר לתמונה זו'}
+                                            </p>
+                                        </div>
+                                    </div>
+
+                                    <div className="grid grid-cols-2 gap-2 mt-2 pt-2 border-t border-slate-100">
                                         <button 
                                             onClick={() => resolveGroup(gIdx, 'keep_this', iIdx, 1 - iIdx)}
-                                            className="flex items-center justify-center gap-2 bg-white text-teal-700 border border-teal-200 py-2 rounded-xl text-sm font-bold hover:bg-teal-50 transition"
+                                            className="flex items-center justify-center gap-2 bg-teal-600 text-white py-2.5 rounded-xl text-xs font-bold hover:bg-teal-700 transition shadow-sm"
                                         >
                                             <CheckCircle size={14} /> בחר בזו
                                         </button>
                                         <button 
                                             onClick={() => resolveGroup(gIdx, iIdx === 0 ? 'delete_new' : 'replace_old', 1 - iIdx, iIdx)}
-                                            className="flex items-center justify-center gap-2 bg-white text-rose-600 border border-rose-100 py-2 rounded-xl text-sm font-bold hover:bg-rose-50 transition"
+                                            className="flex items-center justify-center gap-2 bg-white text-rose-600 border border-rose-100 py-2.5 rounded-xl text-xs font-bold hover:bg-rose-50 transition"
                                         >
                                             <Trash2 size={14} /> מחק זו
                                         </button>
                                     </div>
                                 </div>
-                            ))}
+                            );})}
                         </div>
 
                         <div className="mt-8 pt-6 border-t border-slate-100 flex flex-wrap gap-3 justify-center">

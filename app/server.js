@@ -5,6 +5,7 @@ import path from 'path';
 import { fileURLToPath } from 'url';
 import { execSync } from 'child_process';
 import multer from 'multer'; // Import multer
+import { generateAHash, getHammingDistance } from './utils/image-hash.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -20,6 +21,7 @@ const IMAGES_DIR = path.resolve(__dirname, '../app/תמונות מקור');
 const NEW_IMAGES_DIR = path.resolve(__dirname, '../תמונות חדשות');
 const DATA_FILE = path.resolve(__dirname, '../data.json');
 const PUBLIC_DIR = path.resolve(__dirname, '../app/public/images'); // Define PUBLIC_DIR
+const HASHES_FILE = path.resolve(__dirname, '../hashes.json');
 
 // Configure multer for file uploads
 const storage = multer.diskStorage({
@@ -133,7 +135,7 @@ app.post('/api/metadata', (req, res) => {
                 // If it's a different name, and the target doesn't exist (unless we just overwrite)
                 if (filename !== targetFilename || isFromNewFolder) {
                     let counter = 1;
-                    while (fs.existsSync(targetPath) && (targetFilename !== filename || !isFromNewFolder)) {
+                    while (fs.existsSync(targetPath) && (isFromNewFolder || targetFilename !== filename)) {
                         targetFilename = `${sanitizedTitle}_${counter}${ext}`;
                         targetPath = path.join(IMAGES_DIR, targetFilename);
                         counter++;
@@ -312,6 +314,134 @@ app.post('/api/upload', upload.array('images'), (req, res) => {
     }
 });
 
+// Duplicate detection logic
+app.get('/api/duplicates', async (req, res) => {
+    try {
+        // Read metadata for all files
+        let metadata = {};
+        if (fs.existsSync(DATA_FILE)) {
+            metadata = JSON.parse(fs.readFileSync(DATA_FILE, 'utf-8'));
+        }
+
+        const allFiles = [];
+        for (const folder of folders) {
+            if (fs.existsSync(folder.path)) {
+                const files = fs.readdirSync(folder.path).filter(f => /\.(png|jpg|jpeg|webp)$/i.test(f));
+                for (const file of files) {
+                    const fullPath = path.join(folder.path, file);
+                    const stats = fs.statSync(fullPath);
+                    const mtime = stats.mtimeMs;
+                    
+                    let hash = null;
+                    if (cache[file] && cache[file].mtime === mtime) {
+                        hash = cache[file].hash;
+                    } else {
+                        hash = await generateAHash(fullPath);
+                        if (hash) {
+                            cache[file] = { hash, mtime };
+                        }
+                    }
+
+                    if (hash) {
+                        const fileMeta = metadata[file] || {};
+                        allFiles.push({
+                            filename: file,
+                            path: fullPath,
+                            type: folder.type,
+                            hash,
+                            metadata: fileMeta
+                        });
+                    }
+                }
+            }
+        }
+
+        // Save cache
+        fs.writeFileSync(HASHES_FILE, JSON.stringify(cache, null, 2));
+
+        // Group by similarity (Hash OR Same Title)
+        const groups = [];
+        const processed = new Set();
+
+        for (let i = 0; i < allFiles.length; i++) {
+            if (processed.has(i)) continue;
+            const group = [allFiles[i]];
+            processed.add(i);
+
+            const titleI = allFiles[i].metadata?.title?.trim();
+
+            for (let j = i + 1; j < allFiles.length; j++) {
+                if (processed.has(j)) continue;
+
+                const hashMatch = getHammingDistance(allFiles[i].hash, allFiles[j].hash) <= 2;
+                const titleJ = allFiles[j].metadata?.title?.trim();
+                const titleMatch = titleI && titleJ && titleI === titleJ;
+
+                if (hashMatch || titleMatch) {
+                    group.push(allFiles[j]);
+                    processed.add(j);
+                }
+            }
+
+            if (group.length > 1) {
+                // Annotate type for the UI
+                const firstTitle = group[0].metadata?.title;
+                const isTitleMatch = group.every(item => item.metadata?.title && item.metadata?.title === firstTitle);
+                group.isTitleMatch = isTitleMatch;
+                groups.push(group);
+            }
+        }
+
+        res.json({ groups });
+    } catch (e) {
+        console.error('Duplicates Scan Error:', e);
+        res.status(500).json({ error: e.message });
+    }
+});
+
+app.post('/api/duplicates/resolve', (req, res) => {
+    try {
+        const { action, keep, remove } = req.body;
+        // action: 'delete_new', 'replace_old', 'keep_both', 'merge'
+        
+        const removePath = remove.path;
+        const keepPath = keep.path;
+
+        if (action === 'delete_new' || action === 'replace_old' || action === 'merge') {
+            if (fs.existsSync(removePath)) {
+                fs.unlinkSync(removePath);
+            }
+            
+            // If it was a merge or replace, we might need to update metadata
+            if (action === 'replace_old') {
+                // Move keep to remove's location (if different)
+                if (keepPath !== removePath) {
+                    fs.copyFileSync(keepPath, removePath);
+                    // If keep was in 'new', we might want to delete it after copying
+                    if (keep.type === 'new') {
+                        fs.unlinkSync(keepPath);
+                    }
+                }
+            }
+
+            // Cleanup metadata if the removed file had any
+            let data = {};
+            if (fs.existsSync(DATA_FILE)) {
+                data = JSON.parse(fs.readFileSync(DATA_FILE, 'utf-8'));
+                if (data[remove.filename]) {
+                    delete data[remove.filename];
+                    fs.writeFileSync(DATA_FILE, JSON.stringify(data, null, 2));
+                }
+            }
+        }
+
+        res.json({ success: true });
+    } catch (e) {
+        console.error('Deduplication Error:', e);
+        res.status(500).json({ error: e.message });
+    }
+});
+
 // ── Publish to GitHub ────────────────────────────────────────────────────────
 
 /**
@@ -330,7 +460,7 @@ function runGit(command, cwd = REPO_ROOT) {
 // GET /api/publish/status — returns last commit hash + message + timestamp
 app.get('/api/publish/status', (req, res) => {
     try {
-        const log = runGit('git log -1 --format=%H|||%s|||%ci');
+        const log = runGit('git log -1 "--format=%H|||%s|||%ci"');
         const [hash, subject, date] = log.split('|||');
         res.json({ hash: hash?.slice(0, 7), message: subject, date, ok: true });
     } catch (e) {
