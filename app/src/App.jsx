@@ -26,6 +26,7 @@ function App() {
   const [explanation, setExplanation] = useState('');
   const [topic, setTopic] = useState('');
   const [isApproved, setIsApproved] = useState(false);
+  const [needsAIImprovement, setNeedsAIImprovement] = useState(false);
   const [isSaving, setIsSaving] = useState(false);
   const [error, setError] = useState(null);
   const [isSearchOpen, setIsSearchOpen] = useState(false);
@@ -128,6 +129,7 @@ function App() {
       if (filterMode === 'new-images' && fileSources[img] !== 'new') return false;
       if (filterMode === 'ai-improved' && meta.isAIImproved !== true) return false;
       if (filterMode === 'ai-added' && meta.isAIAdded !== true) return false;
+      if (filterMode === 'needs-ai' && meta.needsAIImprovement !== true) return false;
       if (filterMode === 'generic-ai') {
         const isGeneric = meta.explanation?.includes('התמונה ממחישה את הכפל המשמעות הטמון בביטוי');
         if (!isGeneric) return false;
@@ -194,6 +196,7 @@ function App() {
       genericAi: 0,
       aiImproved: 0,
       aiAdded: 0,
+      needsAi: 0,
       untitled: 0
     };
 
@@ -213,6 +216,7 @@ function App() {
       if (fileSources[img] === 'new') fc.newImages++;
       if (meta.isAIImproved === true) fc.aiImproved++;
       if (meta.isAIAdded === true) fc.aiAdded++;
+      if (meta.needsAIImprovement === true) fc.needsAi++;
       if (meta.explanation?.includes('התמונה ממחישה את הכפל המשמעות הטמון בביטוי')) fc.genericAi++;
       if (img.includes('עיצוב ללא שם')) fc.untitled++;
 
@@ -301,6 +305,7 @@ function App() {
       setExplanation(data?.explanation || '');
       setTopic(data?.topic || '');
       setIsApproved(data?.isApproved || false);
+      setNeedsAIImprovement(data?.needsAIImprovement || false);
     }
   }, [currentIndex, images, metadata]);
 
@@ -320,7 +325,8 @@ function App() {
           title,
           explanation,
           topic,
-          isApproved
+          isApproved,
+          needsAIImprovement
         })
       });
 
@@ -514,6 +520,7 @@ function App() {
                   <option value="new-images">🆕 תמונות חדשות (בתיקיית קליטה) [{filterCounts.newImages}]</option>
                   <option value="ai-improved">🤖 הסברים שופרו - AI [{filterCounts.aiImproved}]</option>
                   <option value="ai-added">🤖 הסברים חדשים - AI [{filterCounts.aiAdded}]</option>
+                  <option value="needs-ai">🚩 דרוש שיפור AI [{filterCounts.needsAi}]</option>
                   <option value="generic-ai">🤖 הסבר AI גנרי [{filterCounts.genericAi}]</option>
                   <option value="untitled">🎨 עיצוב ללא שם [{filterCounts.untitled}]</option>
                  </select>
@@ -857,30 +864,44 @@ function App() {
                 <textarea
                   value={explanation}
                   onChange={(e) => setExplanation(e.target.value)}
-                  placeholder="הסבר את משמעות כפל הלשון בפירוט..."
                   className="w-full flex-1 min-h-[120px] px-4 py-3 bg-slate-50 border border-slate-200 rounded-2xl focus:outline-none focus:ring-4 focus:ring-teal-500/20 focus:border-teal-500 transition-all text-slate-700 resize-none leading-relaxed"
                 />
               </div>
             </div>
 
-            <div className="flex items-center gap-3 mt-4 px-2">
-              <label className="relative flex cursor-pointer items-center rounded-full p-2" htmlFor="checkbox">
+            <div className="flex flex-col gap-3 mt-4 px-2">
+              <div className="flex items-center gap-3">
+                <label className="relative flex cursor-pointer items-center rounded-full p-2" htmlFor="checkbox">
+                  <input
+                    type="checkbox"
+                    id="checkbox"
+                    checked={isApproved}
+                    onChange={(e) => setIsApproved(e.target.checked)}
+                    className="peer relative h-6 w-6 cursor-pointer appearance-none rounded-md border border-slate-300 transition-all before:absolute before:top-2/4 before:left-2/4 before:block before:h-12 before:w-12 before:-translate-y-2/4 before:-translate-x-2/4 before:rounded-full before:bg-teal-500 before:opacity-0 before:transition-opacity checked:border-teal-500 checked:bg-teal-500 checked:before:bg-teal-500 hover:before:opacity-10"
+                  />
+                  <span className="pointer-events-none absolute top-2/4 left-2/4 -translate-y-2/4 -translate-x-2/4 text-white opacity-0 transition-opacity peer-checked:opacity-100">
+                    <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" viewBox="0 0 20 20" fill="currentColor" stroke="currentColor" strokeWidth="1">
+                      <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd"></path>
+                    </svg>
+                  </span>
+                </label>
+                <label className="cursor-pointer text-slate-700 font-bold select-none" htmlFor="checkbox">
+                  תמונה מאושרת / עברה בקרה ✅
+                </label>
+              </div>
+
+              <div className="flex items-center gap-3 bg-rose-50 p-3 rounded-2xl border border-rose-100">
                 <input
                   type="checkbox"
-                  id="checkbox"
-                  checked={isApproved}
-                  onChange={(e) => setIsApproved(e.target.checked)}
-                  className="peer relative h-6 w-6 cursor-pointer appearance-none rounded-md border border-slate-300 transition-all before:absolute before:top-2/4 before:left-2/4 before:block before:h-12 before:w-12 before:-translate-y-2/4 before:-translate-x-2/4 before:rounded-full before:bg-teal-500 before:opacity-0 before:transition-opacity checked:border-teal-500 checked:bg-teal-500 checked:before:bg-teal-500 hover:before:opacity-10"
+                  id="needsAI"
+                  checked={needsAIImprovement}
+                  onChange={(e) => setNeedsAIImprovement(e.target.checked)}
+                  className="h-6 w-6 rounded border-rose-300 text-rose-600 focus:ring-rose-500 cursor-pointer"
                 />
-                <span className="pointer-events-none absolute top-2/4 left-2/4 -translate-y-2/4 -translate-x-2/4 text-white opacity-0 transition-opacity peer-checked:opacity-100">
-                  <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" viewBox="0 0 20 20" fill="currentColor" stroke="currentColor" strokeWidth="1">
-                    <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd"></path>
-                  </svg>
-                </span>
-              </label>
-              <label className="cursor-pointer text-slate-700 font-bold select-none text-lg" htmlFor="checkbox">
-                תמונה מאושרת / עברה בקרה
-              </label>
+                <label htmlFor="needsAI" className="text-sm font-bold text-rose-700 cursor-pointer select-none">
+                  דרוש שיפור נוסף ב-AI 🤖 (סמן אם ההסבר דורש תיקון)
+                </label>
+              </div>
             </div>
 
             <div className="pt-4 border-t border-slate-100 flex flex-col sm:flex-row gap-3 mt-2 shrink-0">

@@ -178,6 +178,7 @@ app.post('/api/metadata', (req, res) => {
         const finalAI = isAIGenerated !== undefined ? Boolean(isAIGenerated) : Boolean(oldEntry.isAIGenerated);
         const finalAIImproved = oldEntry.isAIImproved; // Preserve this flag
         const finalAIAdded = oldEntry.isAIAdded;       // Preserve this flag
+        const finalNeedsAI = req.body.needsAIImprovement !== undefined ? Boolean(req.body.needsAIImprovement) : Boolean(oldEntry.needsAIImprovement);
 
         // Remove old entry if renamed
         if (newFilename !== filename && data[filename]) {
@@ -215,7 +216,8 @@ app.post('/api/metadata', (req, res) => {
             isApproved: finalApproved,
             isAIGenerated: finalAI,
             isAIImproved: finalAIImproved,
-            isAIAdded: finalAIAdded
+            isAIAdded: finalAIAdded,
+            needsAIImprovement: finalNeedsAI
         };
         fs.writeFileSync(DATA_FILE, JSON.stringify(data, null, 2));
 
