@@ -2929,28 +2929,32 @@
     "explanation": "משחק מילים שמיעתי על המילה \"עץ\". התמונה מציגה עץ (Etz) גדול המהלך בצעדים בטוחים לכיוון מסוים, כפרשנות מילולית למילים \"עץ בא\".",
     "topic": "",
     "isApproved": false,
-    "isAIGenerated": false
+    "isAIGenerated": false,
+    "isAIAdded": true
   },
   "CAT SHOP.jpg": {
     "title": "CAT SHOP",
     "explanation": "משחק מילים שמיעתי על המילה \"קצ'ופ\" (Ketchup). התמונה מציגה חנות ייעודית לחתולים (Cat Shop) שעיצובה וחזותה מזכירים בצורה הומוריסטית בקבוק קטשופ מוכר.",
     "topic": "",
     "isApproved": false,
-    "isAIGenerated": true
+    "isAIGenerated": true,
+    "isAIAdded": true
   },
   "לק סוס.jpg": {
     "title": "לק סוס",
     "explanation": "משחק מילים הומוריסטי על שילוב של טיפוח ובעלי חיים. התמונה מציגה סוס ענקי המקבל טיפול לק (Laki) מושקע בפרסותיו, כפרשנות מילולית לצליל המילים.",
     "topic": "חיות, סוס",
     "isApproved": false,
-    "isAIGenerated": true
+    "isAIGenerated": true,
+    "isAIAdded": true
   },
   "מכור ל-TIKTOOK.jpg": {
     "title": "מכור ל-TIKTOOK",
     "explanation": "משחק מילים המשלב את הרשת החברתית טיקטוק עם צלילי תקתוק. התמונה מציגה אדם המכור לצלילי שעונים מתקתקים (Tik-Tuk), כפרשנות שמיעתית לשם האפליקציה.",
     "topic": "",
     "isApproved": false,
-    "isAIGenerated": true
+    "isAIGenerated": true,
+    "isAIAdded": true
   },
   "חיוך על הפנים.jpg": {
     "title": "חיוך על הפנים",
@@ -3026,8 +3030,9 @@
     "title": "כורסה נפתחת",
     "explanation": "פרשנות חזותית מילולית לסוג הרהיט. התמונה מציגה כורסה נוחה שבמקום להיפתח למיטה, היא פותחת \"פה\" ענקי או \"לב\" רחב ומנהלת אינטראקציה עם הסביבה.",
     "topic": "רגשות ותכונות, הומור ופנאי, בית ויומיום",
-    "isApproved": true,
-    "isAIGenerated": true
+    "isApproved": false,
+    "isAIGenerated": true,
+    "isAIAdded": true
   },
   "הוצאה לעור.jpg": {
     "title": "הוצאה לעור",
@@ -3218,7 +3223,8 @@
     "explanation": "משחק מילים חזותי המשלב דמות של כבש (Keves) עם היצור המיתולוגי/דו-חי סלמנדרה. התמונה מציגה כבש בעל עור מנוקד וזנב של סלמנדרה.",
     "topic": "",
     "isApproved": false,
-    "isAIGenerated": true
+    "isAIGenerated": true,
+    "isAIAdded": true
   },
   "כדור רגל.jpg": {
     "title": "כדור רגל",
@@ -3233,14 +3239,16 @@
     "explanation": "פרשנות חזותית מילולית לביטוי המתאר הבקעת שער בכדורסל. במקום משחק ספורטיבי, התמונה מציגה שער ברזל גדול המוכנס לתוך צנצנת כבישה (כמו מלפפונים חמוצים).",
     "topic": "",
     "isApproved": false,
-    "isAIGenerated": true
+    "isAIGenerated": true,
+    "isAIAdded": true
   },
   "כונן מדא.jpg": {
     "title": "כונן מד\"א",
     "explanation": "משחק מילים שמיעתי על התפקיד במד\"א. במקום איש צוות רפואי, התמונה מציגה כונן קשיח של מחשב (Konan) הלבוש במדי מד\"א ועליו סמל הארגון.",
     "topic": "",
     "isApproved": false,
-    "isAIGenerated": true
+    "isAIGenerated": true,
+    "isAIAdded": true
   },
   "כוס מתיקה.jpg": {
     "title": "כוס מתיקה",
@@ -3271,7 +3279,8 @@
     "explanation": "פרשנות חזותית מילולית לביטוי הידוע. התמונה מציגה אדם העומד פיזית על גבו של חבר שלו ומתפלל בלהט, כשהוא נענה תחילה.",
     "topic": "",
     "isApproved": false,
-    "isAIGenerated": true
+    "isAIGenerated": true,
+    "isAIAdded": true
   },
   "כלי שאה.jpg": {
     "title": "כלי שאה",
@@ -3293,7 +3302,8 @@
     "explanation": "פרשנות חזותית מילולית למושג הפיזיקלי. במקום מבחנות מחוברות, התמונה מציגה כלי אוכל (מזלגות, סכינים) שהם שלובים וקשורים זה בזה בצורה מורכבת.",
     "topic": "",
     "isApproved": false,
-    "isAIGenerated": true
+    "isAIGenerated": true,
+    "isAIAdded": true
   },
   "כמה לירות בבקשה.jpg": {
     "title": "כמה לירות בבקשה",
@@ -3324,21 +3334,24 @@
     "explanation": "משחק מילים שמיעתי על הפסוק המקראי. התמונה מציגה נשר גדול המאיר את הקן שלו בעזרת מנורה או פנס (יאיר), כפרשנות מילולית למילה.",
     "topic": "פוליטיקה ואקטואליה",
     "isApproved": false,
-    "isAIGenerated": true
+    "isAIGenerated": true,
+    "isAIAdded": true
   },
   "כסא חשמלי.jpg": {
     "title": "כסא חשמלי",
     "explanation": "פרשנות חזותית מילולית למונח המפחיד. במקום כיסא הוצאה להורג, התמונה מציגה כיסא מעוצב שעשוי כולו מברקים, ניצוצות וחוטי חשמל זוהרים.",
     "topic": "טכנולוגיה ומדע, חשמל",
     "isApproved": false,
-    "isAIGenerated": true
+    "isAIGenerated": true,
+    "isAIAdded": true
   },
   "כפות ידיים מגורות.jpg": {
     "title": "כפות ידיים מגורות",
     "explanation": "משחק מילים שמיעתי המשלב רגישות בעור עם הגרלת פיס. התמונה מציגה כפות ידיים אנושיות המכוסות בציפוי כסוף של כרטיסי גירוד, כשהן עוברות פעולה של \"גירוד\".",
     "topic": "",
     "isApproved": false,
-    "isAIGenerated": true
+    "isAIGenerated": true,
+    "isAIAdded": true
   },
   "כפות תמרים.jpg": {
     "title": "כפות תמרים",
@@ -3391,7 +3404,8 @@
     "explanation": "משחק מילים שמיעתי על הביטוי \"לא יאה\" (לא מתאים/מכובד). התמונה מציגה דמות נשית (אולי לאה המקראית) שהסובבים אותה מכריזים עליה שהיא \"לא יאה\" (לא לאה).",
     "topic": "",
     "isApproved": false,
-    "isAIGenerated": true
+    "isAIGenerated": true,
+    "isAIAdded": true
   },
   "לא!.jpg": {
     "title": "לא!",
@@ -3413,7 +3427,8 @@
     "explanation": "פרשנות חזותית מילולית לביטוי. התמונה מציגה אדם המביט בנוף כה יפה, שבאופן פיזי נוצר מצב שהאוויר נעתק מריאותיו והוא נאלץ להחזיק את נשימתו.",
     "topic": "",
     "isApproved": false,
-    "isAIGenerated": true
+    "isAIGenerated": true,
+    "isAIAdded": true
   },
   "קפה לוחמים.jpg": {
     "title": "קפה לוחמים",
@@ -3428,7 +3443,8 @@
     "explanation": "משחק מילים חזותי המשלב דמויות אנושיות במצב של פריסה. התמונה מציגה דמויות לחם הפורסות את ידיהן לרווחה או מבצעות תרגילי פריסה (שפגט), כפרשנות למילה.",
     "topic": "",
     "isApproved": false,
-    "isAIGenerated": true
+    "isAIGenerated": true,
+    "isAIAdded": true
   },
   "לידה כלה.jpg": {
     "title": "לידה כלה",
@@ -3443,7 +3459,8 @@
     "explanation": "פרשנות חזותית מילולית למושג הרפואי. במקום תינוק שנולד בבית, התמונה מציגה רגע פלאי שבו בית קטן וחדש יוצא מתוך אדריכלות של בית גדול יותר, ממש בתהליך של \"לידה\".",
     "topic": "בית ויומיום, בית",
     "isApproved": false,
-    "isAIGenerated": true
+    "isAIGenerated": true,
+    "isAIAdded": true
   },
   "לימודי קריעה.jpg": {
     "title": "לימודי קריעה",
@@ -3534,7 +3551,8 @@
     "explanation": "פרשנות חזותית מילולית לביטוי הכלכלי על צמצום. התמונה מציגה אדם המשתמש בשדכן משרדי (מהדק) גדול כדי להדק פיזית את החגורה למכנסיים שלו.",
     "topic": "חגים ומועדים",
     "isApproved": false,
-    "isAIGenerated": true
+    "isAIGenerated": true,
+    "isAIAdded": true
   },
   "כדאי הוא רש-B.jpg": {
     "title": "כדאי הוא רש-B",
@@ -3634,28 +3652,32 @@
     "explanation": "פרשנות חזותית מילולית לתרופות. התמונה מציגה כדורי משחק (כמו כדורסל או כדורגל) היושבים על ספת הפסיכולוג ומנהלים שיחה עמוקה על חרדותיהם.",
     "topic": "",
     "isApproved": false,
-    "isAIGenerated": true
+    "isAIGenerated": true,
+    "isAIAdded": true
   },
   "כוח סוס.jpg": {
     "title": "כוח סוס",
     "explanation": "פרשנות חזותית מילולית ליחידת המידה. המושג מוצג כסוס גיבור-על בעל חליפה ושרירים נפוחים, המפגין כוח פיזי אגדי ובלתי מבוטל.",
     "topic": "חיות, סוס",
     "isApproved": false,
-    "isAIGenerated": true
+    "isAIGenerated": true,
+    "isAIAdded": true
   },
   "כח לעומר.jpg": {
     "title": "כח לעומר",
     "explanation": "משחק מילים המשלב את המספר 28 (כ\"ח) עם ספירת העומר. התמונה מציגה רפרנס חזותי המקשר בין יום ה-28 בספירה למושג הכוח והגבורה.",
     "topic": "",
     "isApproved": false,
-    "isAIGenerated": true
+    "isAIGenerated": true,
+    "isAIAdded": true
   },
   "שיח לא מכבד.jpg": {
     "title": "שיח לא מכבד",
     "explanation": "משחק מילים המשלב תקשורת בין-אישית עם עולם הצומח. התמונה מציגה שיח קוצני בטבע הנראה כמביע זלזול וחוסר כבוד כלפי הסובבים אותו, כפרשנות לביטוי.",
     "topic": "",
     "isApproved": false,
-    "isAIGenerated": true
+    "isAIGenerated": true,
+    "isAIAdded": true
   },
   "הרדמה מ'לאה'.jpg": {
     "title": "הרדמה מ'לאה'",
@@ -3725,7 +3747,8 @@
     "explanation": "פרשנות חזותית מילולית לביטוי הספורטיבי. במקום הכנה לגול, התמונה מציגה שף מקצועי המבשל שער ברזל בתוך סיר ענק על אש גבוהה.",
     "topic": "",
     "isApproved": false,
-    "isAIGenerated": true
+    "isAIGenerated": true,
+    "isAIAdded": true
   },
   "מגדל מגורים.jpg": {
     "title": "מגדל מגורים",
@@ -3792,7 +3815,8 @@
     "explanation": "משחק מילים שמיעתי על שילוב של תמיהה ותעופה. התמונה מציגה דמות הנראית כמי שמרחפת באוויר ביהירות, כשהסובבים שואלים אותה בתמיהה: \"מה את עפה?\".",
     "topic": "",
     "isApproved": false,
-    "isAIGenerated": true
+    "isAIGenerated": true,
+    "isAIAdded": true
   },
   "מה הפילים.jpg": {
     "title": "מה הפילים?",
@@ -3859,7 +3883,8 @@
     "explanation": "פרשנות חזותית מילולית למונח. התמונה מציגה פריטי מזון (המבורגר, צ'יפס) הנועלים נעלי ריצה ודוהרים במהירות שיא על מסלול מירוצים.",
     "topic": "",
     "isApproved": false,
-    "isAIGenerated": true
+    "isAIGenerated": true,
+    "isAIAdded": true
   },
   "מחברת חש בון.jpg": {
     "title": "מחברת חש בון",
@@ -4229,7 +4254,8 @@
     "explanation": "משחק מילים חזותי המשלב עיתונות עם איברי העופות. התמונה מציגה מקור גדול של ציפור (עיתונאית) האוחז במיקרופון ובפנקס, ומדווח על אירועים חדשותיים.",
     "topic": "",
     "isApproved": false,
-    "isAIGenerated": true
+    "isAIGenerated": true,
+    "isAIAdded": true
   },
   "מקט דם.jpg": {
     "title": "מק\"ט דם",
@@ -4328,7 +4354,8 @@
     "explanation": "משחק מילים מורכב המשלב משחק חברתי עם כאבו של השכול. התמונה מציגה פרשנות חזותית המנסה להמחיש את החוויה הבלתי אפשרית של אובדן דרך אלמנטים של משחק.",
     "topic": "",
     "isApproved": false,
-    "isAIGenerated": true
+    "isAIGenerated": true,
+    "isAIAdded": true
   },
   "משחק נגד השעון.jpg": {
     "title": "משחק נגד השעון",
@@ -4365,7 +4392,8 @@
     "explanation": "פרשנות חזותית מילולית לביטוי. התמונה מציגה אדם המבצע גלגולים פיזיים במורד הגבעה כשפניו מלאות בצחוק רם ובלתי נשלט.",
     "topic": "",
     "isApproved": false,
-    "isAIGenerated": true
+    "isAIGenerated": true,
+    "isAIAdded": true
   },
   "מתחמן.jpg": {
     "title": "מתחמן",
@@ -4697,28 +4725,32 @@
     "explanation": "משחק מילים המשלב את המקצוע של מעצב השיער עם צמרות העצים. התמונה מציגה ספר המבצע תספורת מורכבת ומעוצבת לצמרת של עץ גבוה בלב יער.",
     "topic": "",
     "isApproved": false,
-    "isAIGenerated": true
+    "isAIGenerated": true,
+    "isAIAdded": true
   },
   "סרט לשיער.jpg": {
     "title": "סרט לשיער",
     "explanation": "פרשנות חזותית מילולית לאביזר היופי. בתמונה נראים קווצות שיער היושבות בבית קולנוע וצופות בריכוז רב ב\"סרט\" המוקרן על המסך הגדול במיוחד עבורן.",
     "topic": "",
     "isApproved": false,
-    "isAIGenerated": true
+    "isAIGenerated": true,
+    "isAIAdded": true
   },
   "סרט מתח.jpg": {
     "title": "סרט מתח",
     "explanation": "משחק מילים שמיעתי על סוג הסרט הקולנועי. התמונה מציגה גלילי פילם (סרט) המתוחים פיזית עד לקצה היכולת שלהם, כפרשנות מילולית למילה \"מתח\".",
     "topic": "",
     "isApproved": false,
-    "isAIGenerated": true
+    "isAIGenerated": true,
+    "isAIAdded": true
   },
   "להיכנס לפאניקה!.jpg": {
     "title": "להיכנס לפאניקה!",
     "explanation": "משחק מילים שמיעתי על הרגש. במקום פחד וחרדה, התמונה מציגה אדם הנכנס בדלת של חנות או מותג דמיוני בשם \"פאניקה\", כפרשנות מילולית לקריאה.",
     "topic": "",
     "isApproved": false,
-    "isAIGenerated": true
+    "isAIGenerated": true,
+    "isAIAdded": true
   },
   "עב-רירי.jpg": {
     "title": "עב-רירי",
@@ -4786,7 +4818,8 @@
     "explanation": "משחק מילים שמיעתי המשלב את המנה המפורסמת עם הר סיני. התמונה מציגה תרנגולת (עוף) העומדת בגאווה בראש הר סיני, כפרשנות מילולית ומקראית לביטוי.",
     "topic": "",
     "isApproved": false,
-    "isAIGenerated": true
+    "isAIGenerated": true,
+    "isAIAdded": true
   },
   "עופה.jpg": {
     "title": "עופה",
@@ -5804,8 +5837,9 @@
     "title": "שרנו ביטלס בקולות...",
     "explanation": "משחק מילים שמיעתי על להקת הביטלס. התמונה מציגה אנשים השרים את שירי הלהקה כשהם אוחזים ומחזיקים ב\"קולות\" (סוג של לחמים או פריטים שמיעתיים) בידיהם.",
     "topic": "פוליטיקה ואקטואליה",
-    "isApproved": true,
-    "isAIGenerated": true
+    "isApproved": false,
+    "isAIGenerated": true,
+    "isAIAdded": true
   },
   "שתיקת הכבסים.jpg": {
     "title": "שתיקת הכבסים",
@@ -6356,8 +6390,9 @@
     "title": "שומר חוק",
     "explanation": "פרשנות חזותית מילולית למקצוע. התמונה מציגה שומר חמוש העומד ומגן על לוחות הברית או ספר חוקים שעליו כתוב באותיות גדולות המילה \"חוק\".",
     "topic": "",
-    "isApproved": true,
-    "isAIGenerated": true
+    "isApproved": false,
+    "isAIGenerated": true,
+    "isAIAdded": true
   },
   "אור ברווז.jpg": {
     "title": "אור ברווז",
@@ -7934,8 +7969,9 @@
     "title": "גזה",
     "explanation": "משחק מילים שמיעתי על שם העיר עזה. התמונה מציגה תחבושת גזה (Gauze) רפואית המעוצבת או מונחת בצורה המביעה רפרנס הומוריסטי או חזותי לשם הדומה.",
     "topic": "פתגמים וביטויים",
-    "isApproved": true,
-    "isAIGenerated": true
+    "isApproved": false,
+    "isAIGenerated": true,
+    "isAIAdded": true
   },
   "צניחת הגן.png": {
     "title": "צניחת הגן",
@@ -7948,8 +7984,9 @@
     "title": "הפרי האסור",
     "explanation": "פרשנות חזותית מילולית למושג המקראי. התמונה מציגה פרי (כמו תפוח) כשהוא לבוש במדי אסיר מפוספסים ויושב מאחורי סורג ובריח בתוך תא כלא סגור.",
     "topic": "פתגמים וביטויים",
-    "isApproved": true,
-    "isAIGenerated": true
+    "isApproved": false,
+    "isAIGenerated": true,
+    "isAIAdded": true
   },
   "חההה בד.png": {
     "title": "חההה בד",
@@ -7977,43 +8014,49 @@
     "title": "עונת רחצה",
     "explanation": "משחק מילים שמיעתי המשלב את עונת הים עם שם פרטי. התמונה מציגה דמות בשם \"עונה\" כשהיא עסוקה בפעולת רחצה אינטנסיבית, תחת הכותרת של התקופה בשנה.",
     "topic": "",
-    "isApproved": true,
-    "isAIGenerated": true
+    "isApproved": false,
+    "isAIGenerated": true,
+    "isAIAdded": true
   },
   "כתב עישון.png": {
     "title": "כתב עישון",
     "explanation": "משחק מילים שמיעתי המשלב עיתונות עם המלה \"עישון\". התמונה מציגה כתב עיתונות העשוי כולו מעשן מיתמר, או שהוא מדווח על אירוע בעודו מעלה עשן בעצמו.",
     "topic": "",
-    "isApproved": true,
-    "isAIGenerated": true
+    "isApproved": false,
+    "isAIGenerated": true,
+    "isAIAdded": true
   },
   "צריחה אישית.png": {
     "title": "צריחה אישית",
     "explanation": "משחק מילים שמיעתי על המושג \"צריכה אישית\". במקום קנייה לשימוש עצמי, התמונה מציגה אדם הפורץ בצרחה (צעקה) רמה ופרטית במיוחד בחדר סגור.",
     "topic": "",
-    "isApproved": true,
-    "isAIGenerated": true
+    "isApproved": false,
+    "isAIGenerated": true,
+    "isAIAdded": true
   },
   "מאג-ניב.png": {
     "title": "מאג-ניב",
     "explanation": "משחק מילים המשלב את המלה סלנג \"מגניב\" עם כלי הנשק מאג וניב (ניב של פיל או ביטוי שפתי). התמונה מציגה מקלע מאג בעל ניבים חדים שיוצר מראה \"מגניב\".",
     "topic": "",
-    "isApproved": true,
-    "isAIGenerated": true
+    "isApproved": false,
+    "isAIGenerated": true,
+    "isAIAdded": true
   },
   "מאיר פנים.png": {
     "title": "מאיר פנים",
     "explanation": "פרשנות חזותית מילולית לביטוי המתאר חביבות. התמונה מציגה פנים אנושיות המאירות באור יום חזק או בנורות חשמל מתוכן, כשהן ממש \"מאירות\" את הסביבה.",
     "topic": "",
-    "isApproved": true,
-    "isAIGenerated": true
+    "isApproved": false,
+    "isAIGenerated": true,
+    "isAIAdded": true
   },
   "מְאַפֶּרֶת.png": {
     "title": "מְאַפֶּרֶת",
     "explanation": "משחק מילים חזותי ושמיעתי. במקום מאפרת מקצועית המורחת איפור, התמונה מציגה \"מאפרה\" (כלי לאפר סיגריות) המעוצבת כדמות אנושית העוסקת במלאכת האיפור.",
     "topic": "",
-    "isApproved": true,
-    "isAIGenerated": true
+    "isApproved": false,
+    "isAIGenerated": true,
+    "isAIAdded": true
   },
   "מבוך הורון.png": {
     "title": "מבוך הורון",
@@ -8027,29 +8070,33 @@
     "title": "מבעיר את הנקודה",
     "explanation": "פרשנות חזותית מילולית לביטוי המתאר הדגשה. התמונה מציגה אדם המדליק אש ממש בתוך סימן של נקודה (.) קטנה הנמצאת בסוף משפט או על דף.",
     "topic": "",
-    "isApproved": true,
-    "isAIGenerated": true
+    "isApproved": false,
+    "isAIGenerated": true,
+    "isAIAdded": true
   },
   "מגבש עמדה.png": {
     "title": "מגבש עמדה",
     "explanation": "פרשנות חזותית מילולית לביטוי המתאר גיבוש דעה. התמונה מציגה עמדת שמירה או עמידה פיזית שהופכת אט אט לגביש (קריסטל) מנצנץ ומוצק.",
     "topic": "",
-    "isApproved": true,
-    "isAIGenerated": true
+    "isApproved": false,
+    "isAIGenerated": true,
+    "isAIAdded": true
   },
   "מגעיל כלים.png": {
     "title": "מגעיל כלים",
     "explanation": "משחק מילים שמיעתי על הפעולה ההלכתית \"הגעלה\". במקום הכשרת כלים, התמונה מציגה כלי מטבח הנראים מלוכלכים ודוחים (מגעילים) במיוחד למראה.",
     "topic": "",
-    "isApproved": true,
-    "isAIGenerated": true
+    "isApproved": false,
+    "isAIGenerated": true,
+    "isAIAdded": true
   },
   "מדליק נרות.png": {
     "title": "מדליק נרות",
     "explanation": "משחק מילים המשלב את המנהג הדתי עם סלנג. התמונה מציגה נרות חגיגיים הנראים במראה הומוריסטי כדמויות \"מדליקות\" (מאוד מגניבות) עם משקפי שמש וחזות אופנתית.",
     "topic": "",
-    "isApproved": true,
-    "isAIGenerated": true
+    "isApproved": false,
+    "isAIGenerated": true,
+    "isAIAdded": true
   },
   "מה את בוכה!.png": {
     "title": "מה את בוכה!",
@@ -8063,36 +8110,41 @@
     "title": "מהמר כבד",
     "explanation": "פרשנות חזותית מילולית לביטוי. התמונה מציגה מהמר בקזינו המנסה להרים ולהמר בעזרת משקולות ענקיות וכבדות במיוחד, כביטוי פיזי למילה \"כבד\".",
     "topic": "",
-    "isApproved": true,
-    "isAIGenerated": true
+    "isApproved": false,
+    "isAIGenerated": true,
+    "isAIAdded": true
   },
   "מוחות.png": {
     "title": "מוחות",
     "explanation": "משחק מילים שמיעתי על המילה \"מוח\". התמונה מציגה פעולה של ניגוב או מחיקה (Mochot) של משהו מהלוח, כפרשנות שמיעתית לאיבר החשיבה.",
     "topic": "פתגמים וביטויים",
-    "isApproved": true,
-    "isAIGenerated": true
+    "isApproved": false,
+    "isAIGenerated": true,
+    "isAIAdded": true
   },
   "מוסך דעת.png": {
     "title": "מוסך דעת",
     "explanation": "משחק מילים שמיעתי על המושג \"מוסח דעת\". התמונה מציגה מוסך לתיקון רכבים (Musach) שבו במקום מכוניות, מתקנים ומשפרים את ה\"דעת\" והידע של האנשים.",
     "topic": "",
-    "isApproved": true,
-    "isAIGenerated": true
+    "isApproved": false,
+    "isAIGenerated": true,
+    "isAIAdded": true
   },
   "מושב קשת.png": {
     "title": "מושב קשת",
     "explanation": "פרשנות חזותית מילולית המשלבת יישוב עם תופעת הטבע. התמונה מציגה מושב (כיסא) המעוצב כולו בצבעי הקשת בענן, כשהוא מייצג את שם היישוב קשת.",
     "topic": "",
-    "isApproved": true,
-    "isAIGenerated": true
+    "isApproved": false,
+    "isAIGenerated": true,
+    "isAIAdded": true
   },
   "מטביע חותם.png": {
     "title": "מטביע חותם",
     "explanation": "פרשנות חזותית מילולית לביטוי המתאר השפעה. התמונה מציגה אדם המטביע פיזית חותמת (חותם) בתוך מים עמוקים, כפרשנות לפעולת ההטבעה.",
     "topic": "",
-    "isApproved": true,
-    "isAIGenerated": true
+    "isApproved": false,
+    "isAIGenerated": true,
+    "isAIAdded": true
   },
   "מטוס חם כאן.png": {
     "title": "מטוס חם כאן",
@@ -8121,64 +8173,73 @@
     "title": "מטפל זר",
     "explanation": "משחק מילים על המקצוע. במקום עובד זר, התמונה מציגה אדם המעניק טיפול מסור וטיפוח לזר פרחים (Zar) גדול וצבעוני.",
     "topic": "פתגמים וביטויים",
-    "isApproved": true,
-    "isAIGenerated": true
+    "isApproved": false,
+    "isAIGenerated": true,
+    "isAIAdded": true
   },
   "מטפלת רגשית.png": {
     "title": "מטפלת רגשית",
     "explanation": "פרשנות חזותית מילולית למקצוע. התמונה מציגה מטפלת המבצעת את עבודתה כשהיא בעצמה שרויה בסערת רגשות עזה, בוכה וצוחקת בו-זמנית.",
     "topic": "פתגמים וביטויים",
-    "isApproved": true,
-    "isAIGenerated": true
+    "isApproved": false,
+    "isAIGenerated": true,
+    "isAIAdded": true
   },
   "מטרות.png": {
     "title": "מטרות",
     "explanation": "משחק מילים שמיעתי על השם \"מטרה\". התמונה מציגה שמיים הממטירים (Matrot) גשם חזק של חפצים או רעיונות, כפרשנות שמיעתית למילה.",
     "topic": "פתגמים וביטויים",
-    "isApproved": true,
-    "isAIGenerated": true
+    "isApproved": false,
+    "isAIGenerated": true,
+    "isAIAdded": true
   },
   "אינטר קום.png": {
     "title": "אינטר קום",
     "explanation": "משחק מילים המשלב את המכשיר \"אינטרקום\" עם פקודה. התמונה מציגה אדם הסובל מהפרעת אינטרנט המנסה לקום (קומי!) מהכיסא, כפרשנות מבדחת לשם המכשיר.",
     "topic": "פתגמים וביטויים",
-    "isApproved": true,
-    "isAIGenerated": true
+    "isApproved": false,
+    "isAIGenerated": true,
+    "isAIAdded": true
   },
   "מצה את ההבדלים.png": {
     "title": "מצה את ההבדלים",
     "explanation": "משחק מילים שמיעתי על המשחק \"מצא את ההבדלים\". התמונה מציגה מצה של פסח העומדת בין שני פריטים דומים, כשהיא בעצמה מהווה את ה\"הבדל\" המהותי ביניהם.",
     "topic": "פתגמים וביטויים, יהדות ומסורת, מצה, חגים ומועדים",
-    "isApproved": true,
-    "isAIGenerated": true
+    "isApproved": false,
+    "isAIGenerated": true,
+    "isAIAdded": true
   },
   "מיחזור משכנתא.png": {
     "title": "מיחזור משכנתא",
     "explanation": "פרשנות חזותית מילולית למושג הפיננסי. התמונה מציגה אדם המשליך את מסמכי המשכנתא הישנים שלו לתוך פח מחזור כחול, כחלק מתהליך ה\"מחזור\" של ההלוואה.",
     "topic": "פתגמים וביטויים",
-    "isApproved": true,
-    "isAIGenerated": true
+    "isApproved": false,
+    "isAIGenerated": true,
+    "isAIAdded": true
   },
   "מייקל ג'ק סון.png": {
     "title": "מייקל ג'ק סון",
     "explanation": "משחק מילים שמיעתי על שמו של הזמר מייקל ג'קסון. התמונה מציגה שלושה דורות: מייקל המבוגר, ג'ק הצעיר ובנו הקטן (סון), היוצרים יחד את השם המפורסם.",
     "topic": "פתגמים וביטויים",
-    "isApproved": true,
-    "isAIGenerated": true
+    "isApproved": false,
+    "isAIGenerated": true,
+    "isAIAdded": true
   },
   "מלצרצר.png": {
     "title": "מלצרצר",
     "explanation": "הכלאה דמיונית בעיצוב הומוריסטי המשלבת מלצר (Meltzar) עם החרק צרצר (Tzartzur). המלצרצר מוצג כחרק הלבוש בבגדי שירות אלגנטיים ומגיש צרצורים כמנה עיקרית.",
     "topic": "פתגמים וביטויים",
-    "isApproved": true,
-    "isAIGenerated": true
+    "isApproved": false,
+    "isAIGenerated": true,
+    "isAIAdded": true
   },
   "מנוע מלדבר.png": {
     "title": "מנוע מלדבר",
     "explanation": "פרשנות חזותית מילולית לביטוי המתאר שתיקה מאולצת. התמונה מציגה מנוע של מכונית המנסה לדבר אך נחסם פיזית על ידי אביזרים טכניים, מה שהופך אותו ל\"מנוע\" מלדבר.",
     "topic": "פתגמים וביטויים",
-    "isApproved": true,
-    "isAIGenerated": true
+    "isApproved": false,
+    "isAIGenerated": true,
+    "isAIAdded": true
   },
   "מנתור.png": {
     "title": "מנתור",
@@ -8200,43 +8261,49 @@
     "title": "מנת הדגל",
     "explanation": "פרשנות חזותית מילולית למושג הקולינרי. התמונה מציגה צלחת יוקרתית המוגשת במסעדה, כשבמרכזה מונח דגל ישראל גדול ומרשים כחלק מהמנה המוצעת.",
     "topic": "חיות, פתגמים וביטויים, פוליטיקה ואקטואליה, דגל",
-    "isApproved": true,
-    "isAIGenerated": true
+    "isApproved": false,
+    "isAIGenerated": true,
+    "isAIAdded": true
   },
   "מסי בת חנוקה.png": {
     "title": "מסי בת חנוקה",
     "explanation": "משחק מילים המשלב את הכדורגלן מסי עם המילה \"מסיבת חנוכה\". התמונה מציגה את מסי חוגג במסיבת חנוכה עליזה, כשהוא מחזיק סופגנייה ומדליק חנוכייה.",
     "topic": "",
-    "isApproved": true,
-    "isAIGenerated": true
+    "isApproved": false,
+    "isAIGenerated": true,
+    "isAIAdded": true
   },
   "שאלת קיטבג.png": {
     "title": "שאלת קיטבג",
     "explanation": "פרשנות חזותית מילולית לביטוי הסלנג הצבאי. התמונה מציגה תיק קיטבג גדול המפתח פה ושואל את החיילים סביבו שאלה מותרת ומיותרת לחלוטין.",
     "topic": "פתגמים וביטויים",
-    "isApproved": true,
-    "isAIGenerated": true
+    "isApproved": false,
+    "isAIGenerated": true,
+    "isAIAdded": true
   },
   "מעבירים מצד לצד.png": {
     "title": "מעבירים מצד לצד",
     "explanation": "פרשנות חזותית מילולית לביטוי. התמונה מציגה דמויות המעבירות חפצים מצד אחד של הדף לצד השני, תוך שהן חוצות גבולות של ספר או מחברת.",
     "topic": "פתגמים וביטויים",
-    "isApproved": true,
-    "isAIGenerated": true
+    "isApproved": false,
+    "isAIGenerated": true,
+    "isAIAdded": true
   },
   "מעורר שערה.png": {
     "title": "מעורר שערה",
     "explanation": "משחק מילים שמיעתי המשלב \"מעורר סערה\" (storm) עם המילה \"שערה\" (hair). התמונה מציגה שעון מעורר המעיר בעדינות שערה אחת ארוכה ובודדת מתוך שנתה.",
     "topic": "פתגמים וביטויים",
-    "isApproved": true,
-    "isAIGenerated": true
+    "isApproved": false,
+    "isAIGenerated": true,
+    "isAIAdded": true
   },
   "מעמיד קומקום.png": {
     "title": "מעמיד קומקום",
     "explanation": "פרשנות חזותית מילולית לפעולת הכנת התה. התמונה מציגה קומקום חשמלי העומד באופן יציב ומרשים על רגליים אנושיות, כשהוא \"מעמיד\" את עצמו מול הצופה.",
     "topic": "פתגמים וביטויים",
-    "isApproved": true,
-    "isAIGenerated": true
+    "isApproved": false,
+    "isAIGenerated": true,
+    "isAIAdded": true
   },
   "מפוח אלים.png": {
     "title": "מפוח אלים",
@@ -8250,15 +8317,17 @@
     "title": "מפריס פרסה",
     "explanation": "פרשנות חזותית מילולית לסימן הטהרה. התמונה מציגה חיה המבצעת את פעולת ה\"פריסה\" של פרסת סוס על גבי לחם או שטח מסוים, כפרשנות מבדחת למילה.",
     "topic": "פתגמים וביטויים",
-    "isApproved": true,
-    "isAIGenerated": true
+    "isApproved": false,
+    "isAIGenerated": true,
+    "isAIAdded": true
   },
   "מפתח מאסטר.png": {
     "title": "מפתח מאסטר",
     "explanation": "משחק מילים שמיעתי המשלב מפתח \"מאסטר\" עם מורה או רב (מאסטר). התמונה מציגה מפתח גדול ומרשים הלבוש בגלימת אקדמאי ומרצה בפני קהל של מפתחות קטנים.",
     "topic": "פתגמים וביטויים",
-    "isApproved": true,
-    "isAIGenerated": true
+    "isApproved": false,
+    "isAIGenerated": true,
+    "isAIAdded": true
   },
   "מצא הגולה.png": {
     "title": "מצא הגולה",
@@ -8278,8 +8347,9 @@
     "title": "מצפה לגרוע מכל",
     "explanation": "משחק מילים המשלב נקודת תצפית (מצפה) עם פסולת (גרוע). התמונה מציגה מצפה נוף מפואר המשקיף היישר לתוך ערמה גדולה של גרוטאות וזבל, כפרשנות לביטוי.",
     "topic": "פתגמים וביטויים",
-    "isApproved": true,
-    "isAIGenerated": true
+    "isApproved": false,
+    "isAIGenerated": true,
+    "isAIAdded": true
   },
   "מקהיל קהילות ברבים.png": {
     "title": "מקהיל קהילות ברבים",
@@ -8292,64 +8362,73 @@
     "title": "מקוקוס",
     "explanation": "משחק מילים שמיעתי המשלב פרי קוקוס עם רשת המזון מקדונלד'ס. התמונה מציגה סניף דמיוני של \"מק-קוקוס\" המגיש ארוחות המבוססות כולן על טהרת הקוקוס.",
     "topic": "פתגמים וביטויים",
-    "isApproved": true,
-    "isAIGenerated": true
+    "isApproved": false,
+    "isAIGenerated": true,
+    "isAIAdded": true
   },
   "מקקוף.png": {
     "title": "מקקוף",
     "explanation": "הכלאה דמיונית בעיצוב הומוריסטי המשלבת מקק (Makak) עם קוף (Kof). היצור מוצג כקוף קטן בעל מחושים וכנפיים של מקק, המטפס במיומנות על העצים.",
     "topic": "פתגמים וביטויים",
-    "isApproved": true,
-    "isAIGenerated": true
+    "isApproved": false,
+    "isAIGenerated": true,
+    "isAIAdded": true
   },
   "מרימה שבת בצ'יק צ'ק.png": {
     "title": "מרימה שבת בצ'יק צ'ק",
     "explanation": "פרשנות חזותית מילולית לביטוי על התארגנות מהירה. התמונה מציגה דמות המרימה פיזית את יום השבת (או סמלי השבת) בקלות ובמהירות בעזרת זרועות חזקות.",
     "topic": "פתגמים וביטויים",
-    "isApproved": true,
-    "isAIGenerated": true
+    "isApproved": false,
+    "isAIGenerated": true,
+    "isAIAdded": true
   },
   "משלוח 'חינם'.png": {
     "title": "משלוח 'חינם'",
     "explanation": "פרשנות חזותית מילולית למושג המסחרי. התמונה מציגה חבילה או משלוח המיועדים למסירה לאדם ששמו הוא \"חינם\", כפרשנות מילולית למילה.",
     "topic": "פתגמים וביטויים, משל",
-    "isApproved": true,
-    "isAIGenerated": true
+    "isApproved": false,
+    "isAIGenerated": true,
+    "isAIAdded": true
   },
   "משתנה.png": {
     "title": "משתנה",
     "explanation": "משחק מילים חזותי המשלב את המונח המתמטי (Variable) עם מתקן השירותים (Urinal). התמונה מציגה משתנה בבית שימוש המכוסה כולה בנוסחאות ומשתנים מתמטיים מסובכים.",
     "topic": "פתגמים וביטויים",
-    "isApproved": true,
-    "isAIGenerated": true
+    "isApproved": false,
+    "isAIGenerated": true,
+    "isAIAdded": true
   },
   "מתפלפל.png": {
     "title": "מתפלפל",
     "explanation": "פרשנות חזותית מילולית לביטוי המתאר דיון מעמיק. התמונה מציגה אדם ההופך אט אט לפלפל חריף ככל שהוא מעמיק בשיחה ומתלהב מהטיעונים שלו.",
     "topic": "פתגמים וביטויים",
-    "isApproved": true,
-    "isAIGenerated": true
+    "isApproved": false,
+    "isAIGenerated": true,
+    "isAIAdded": true
   },
   "אורות גבוהיםנמוכים.png": {
     "title": "אורות גבוהים\\נמוכים",
     "explanation": "פרשנות חזותית מילולית לפונקציית התאורה ברכב. התמונה מציגה גופי תאורה המותקנים בגבהים שונים - חלקם גבוהים מאוד וחלקם נמוכים מאוד לקרקע.",
     "topic": "פתגמים וביטויים",
-    "isApproved": true,
-    "isAIGenerated": true
+    "isApproved": false,
+    "isAIGenerated": true,
+    "isAIAdded": true
   },
   "נביא שהדיח.png": {
     "title": "נביא שהדיח",
     "explanation": "משחק מילים שמיעתי המשלב \"נביא שהדיח\" (במשמעות דתית של הסתה) עם פעולת הדחת כלים. התמונה מציגה נביא מקראי העוסק בהדחת כלים נמרצת בכיור המטבח.",
     "topic": "פתגמים וביטויים",
-    "isApproved": true,
-    "isAIGenerated": true
+    "isApproved": false,
+    "isAIGenerated": true,
+    "isAIAdded": true
   },
   "נְהִי בְּכִי תַמְרוּרִים.png": {
     "title": "נְהִי בְּכִי תַמְרוּרִים",
     "explanation": "פרשנות חזותית מילולית לביטוי המתאר בכי תמרורים (חזק). התמונה מציגה קבוצת תמרורי תנועה העומדים בצד הדרך ופורצים בבכי קורע לב מסיבות לא ידועות.",
     "topic": "פתגמים וביטויים",
-    "isApproved": true,
-    "isAIGenerated": true
+    "isApproved": false,
+    "isAIGenerated": true,
+    "isAIAdded": true
   },
   "נחמת שותים.png": {
     "title": "נחמת שותים",
@@ -8362,29 +8441,33 @@
     "title": "נחשוורוש",
     "explanation": "משחק מילים חזותי המשלב את המלך אחשורוש עם המילה \"נחש\". התמונה מציגה את דמותו של המלך כשהוא עוטה עור של נחש או בעל תכונות נחשיות בולטות בראשו.",
     "topic": "פתגמים וביטויים",
-    "isApproved": true,
-    "isAIGenerated": true
+    "isApproved": false,
+    "isAIGenerated": true,
+    "isAIAdded": true
   },
   "נין ג'ה.png": {
     "title": "נין ג'ה",
     "explanation": "משחק מילים שמיעתי על המילה \"נינג'ה\". התמונה מציגה נין (נין של מישהו) הלבוש כלוחם יפני מסורתי ומבצע תנועות לחימה המשלבות את השם \"ג'ה\".",
     "topic": "פתגמים וביטויים",
-    "isApproved": true,
-    "isAIGenerated": true
+    "isApproved": false,
+    "isAIGenerated": true,
+    "isAIAdded": true
   },
   "ניסים סאל.png": {
     "title": "ניסים סא\"ל",
     "explanation": "משחק מילים שמיעתי על דרגה צבאית. התמונה מציגה את הראפר ניסים בלאק כשהוא נושא דרגת סגן-אלוף (סא\"ל) על כתפיו כחלק מהופעתו.",
     "topic": "פתגמים וביטויים",
-    "isApproved": true,
-    "isAIGenerated": true
+    "isApproved": false,
+    "isAIGenerated": true,
+    "isAIAdded": true
   },
   "מסגרת אשראי.png": {
     "title": "מסגרת אשראי",
     "explanation": "פרשנות חזותית מילולית למושג הבנקאי. התמונה מציגה מסגרת תמונה מפוארת הבנויה כולה מכרטיסי אשראי צבעוניים ותקפים, המקיפה בגאווה את תוכן התמונה.",
     "topic": "פוליטיקה ואקטואליה",
-    "isApproved": true,
-    "isAIGenerated": true
+    "isApproved": false,
+    "isAIGenerated": true,
+    "isAIAdded": true
   },
   "נעריה.png": {
     "title": "נעריה",
@@ -8397,22 +8480,25 @@
     "title": "נפסל",
     "explanation": "משחק מילים חזותי המשלב את הפסילה בתחרות עם המילה \"פסל\". התמונה מציגה דמות הנעמדת בבת אחת והופכת לפסל (Pesel) קפום ודומם, כפרשנות מילולית לצליל המילה.",
     "topic": "פתגמים וביטויים",
-    "isApproved": true,
-    "isAIGenerated": true
+    "isApproved": false,
+    "isAIGenerated": true,
+    "isAIAdded": true
   },
   "נשרקן.png": {
     "title": "נשרקן",
     "explanation": "הכלאה דמיונית בעיצוב הומוריסטי המשלבת נשר (Nesher) רב עוצמה עם שרקן (חזיר ים) קטן וחביב. היצור מוצג כנשר בעל גוף פרוותי של שרקן, המשלב תעופה עם חמידות.",
     "topic": "חיות, שרקן, פוליטיקה ואקטואליה",
-    "isApproved": true,
-    "isAIGenerated": true
+    "isApproved": false,
+    "isAIGenerated": true,
+    "isAIAdded": true
   },
   "סוכריהמלחייה.png": {
     "title": "סוכריה\\מלחייה",
     "explanation": "משחק מילים חזותי המשלב סוכרייה מתוקה עם מלחייה. התמונה מציגה שילוב בלתי אפשרי של טעמים, כשהסוכרייה משמשת ככלי לפיזור מלח או שהיא עצמה עשויה מגבישי מלח גדולים.",
     "topic": "",
-    "isApproved": true,
-    "isAIGenerated": true
+    "isApproved": false,
+    "isAIGenerated": true,
+    "isAIAdded": true
   },
   "סופו של דוור.png": {
     "title": "סופו של דוור",
@@ -8425,15 +8511,17 @@
     "title": "סחיטה רגשית",
     "explanation": "פרשנות חזותית מילולית לביטוי המתאר מניפולציה. התמונה מציגה דמות המבצעת פעולה פיזית של סחיטה (כמו סחיטת לימון או סמרטוט) על דמות אחרת שנראית מלאה ברגשות גועשים.",
     "topic": "",
-    "isApproved": true,
-    "isAIGenerated": true
+    "isApproved": false,
+    "isAIGenerated": true,
+    "isAIAdded": true
   },
   "סיפור מטלטל.png": {
     "title": "סיפור מטלטל",
     "explanation": "פרשנות חזותית מילולית לביטוי המתאר אירוע מזעזע. התמונה מציגה ספר פתוח שבו המילים והדמויות מטלטלות פיזית מצד לצד בעוצמה רבה, כאילו הן בלב סערה בים.",
     "topic": "",
-    "isApproved": true,
-    "isAIGenerated": true
+    "isApproved": false,
+    "isAIGenerated": true,
+    "isAIAdded": true
   },
   "סלחתי!.png": {
     "title": "סלחתי!",
@@ -8447,8 +8535,9 @@
     "title": "סנטר כ'פול'",
     "explanation": "משחק מילים שמיעתי על המונח האנטומי \"סנטר כפול\". התמונה מציגה את אזור הסנטר בפנים, כשבמקום כפל עור, מונח עליו פול (סוג של קטנית) אחד גדול ומרשים.",
     "topic": "פתגמים וביטויים",
-    "isApproved": true,
-    "isAIGenerated": true
+    "isApproved": false,
+    "isAIGenerated": true,
+    "isAIAdded": true
   },
   "סע ברכה!!!.png": {
     "title": "סע ברכה!!!",
@@ -8478,43 +8567,49 @@
     "title": "עט נעילת שער",
     "explanation": "משחק מילים שמיעתי על התפילה \"בעת נעילת שער\". התמונה מציגה עט (Et) המשמש כבריח לנעילת שער גדול, כפרשנות מילולית לצליל המילה המתארת זמן.",
     "topic": "",
-    "isApproved": true,
-    "isAIGenerated": true
+    "isApproved": false,
+    "isAIGenerated": true,
+    "isAIAdded": true
   },
   "עיקוב בטיסה.png": {
     "title": "עיקוב בטיסה",
     "explanation": "משחק מילים שמיעתי על המושג \"עיכוב בטיסה\". התמונה מציגה פעולה של מעקב או עיקוב (Ikuv) אחרי מטוס בעודו נמצא באוויר, כפרשנות מילולית לצליל המילה.",
     "topic": "",
-    "isApproved": true,
-    "isAIGenerated": true
+    "isApproved": false,
+    "isAIGenerated": true,
+    "isAIAdded": true
   },
   "עירוב תבשילין.png": {
     "title": "עירוב תבשילין",
     "explanation": "פרשנות חזותית מילולית למושג ההלכתי. התמונה מציגה ערבוב כאוטי ומורכב במיוחד של סוגי תבשילים שונים לחלוטין בתוך סיר אחד, תחת הכותרת של המנהג הדתי.",
     "topic": "",
-    "isApproved": true,
-    "isAIGenerated": true
+    "isApproved": false,
+    "isAIGenerated": true,
+    "isAIAdded": true
   },
   "ענן מאובטח.png": {
     "title": "ענן מאובטח",
     "explanation": "פרשנות חזותית מילולית למושג הטכנולוגי. התמונה מציגה ענן לבן ורך בשמיים כשהוא מוגן על ידי מנעול ענק, גדר תיל או מאבטח חמוש העומד לצידו.",
     "topic": "",
-    "isApproved": true,
-    "isAIGenerated": true
+    "isApproved": false,
+    "isAIGenerated": true,
+    "isAIAdded": true
   },
   "ואפס עצור ועזוב.png": {
     "title": "ואפס עצור ועזוב",
     "explanation": "פרשנות חזותית מילולית לביטוי המקראי. התמונה מציגה את הספרה אפס (0) כשהיא נראית עצובה, נטושה (\"עזובה\") ואף מוחזקת במעצר (\"עצורה\") על ידי רשויות החוק.",
     "topic": "",
-    "isApproved": true,
-    "isAIGenerated": true
+    "isApproved": false,
+    "isAIGenerated": true,
+    "isAIAdded": true
   },
   "עקב הכי less.png": {
     "title": "עקב הכי less",
     "explanation": "משחק מילים שמיעתי על הדמות המיתולוגית אכילס (Achilles). התמונה מציגה עקב של רגל אנושית כשהוא מאופיין בחסך מסוים או שהוא פשוט \"פחות\" (Less) ממה שהוא אמור להיות.",
     "topic": "",
-    "isApproved": true,
-    "isAIGenerated": true
+    "isApproved": false,
+    "isAIGenerated": true,
+    "isAIAdded": true
   },
   "עשן לבן.png": {
     "title": "עשן לבן",
@@ -8536,85 +8631,97 @@
     "title": "פונקציה מחזורית",
     "explanation": "משחק מילים חזותי המשלב מתמטיקה עם איכות הסביבה. התמונה מציגה גרף של פונקציה מתמטית שבו הקווים והנקודות עשויים מחומרים המיועדים למחזור (בקבוקים, נייר וכו').",
     "topic": "",
-    "isApproved": true,
-    "isAIGenerated": true
+    "isApproved": false,
+    "isAIGenerated": true,
+    "isAIAdded": true
   },
   "פחמימות זה מנחם.png": {
     "title": "פחמימות זה מנחם",
     "explanation": "משחק מילים שמיעתי על הביטוי המתאר אוכל מנחם. התמונה מציגה קבוצת פחמימות (לחמים, פסטה) כשהן ניגשות לנחם אדם בשם מנחם או שהן בעצמן מעוצבות כדמות של אדם מנחם.",
     "topic": "פתגמים וביטויים",
-    "isApproved": true,
-    "isAIGenerated": true
+    "isApproved": false,
+    "isAIGenerated": true,
+    "isAIAdded": true
   },
   "פסיכו-פת.png": {
     "title": "פסיכו-פת",
     "explanation": "משחק מילים המשלב \"פסיכופת\" עם המילה \"פת\" (חתיכת לחם). התמונה מציגה חתיכת לחם קטנה (פת) המגלה סימני פסיכוזה משעשעים או חובשת חליפת משוגעים.",
     "topic": "",
-    "isApproved": true,
-    "isAIGenerated": true
+    "isApproved": false,
+    "isAIGenerated": true,
+    "isAIAdded": true
   },
   "פרח מזכרוני.png": {
     "title": "פרח מזכרוני",
     "explanation": "פרשנות חזותית מילולית לביטוי המתאר שיכחה. התמונה מציגה פרח צבעוני וריחני הצומח פיזית מתוך מוח או זיכרון אנושי, ופורח החוצה מתוכו.",
     "topic": "",
-    "isApproved": true,
-    "isAIGenerated": true
+    "isApproved": false,
+    "isAIGenerated": true,
+    "isAIAdded": true
   },
   "פרידה מהסוכה.png": {
     "title": "פרידה מהסוכה",
     "explanation": "משחק מילים שמיעתי על פעולת הפרידה. בתמונה נראית פרדה (Prida - נקבת החמור) העומדת בתוך סוכה ומסרבת לצאת ממנה בסוף החג, כפרשנות מילולית למילה.",
     "topic": "",
-    "isApproved": true,
-    "isAIGenerated": true
+    "isApproved": false,
+    "isAIGenerated": true,
+    "isAIAdded": true
   },
   "פתיתים בודדים.png": {
     "title": "פתיתים בודדים",
     "explanation": "פרשנות חזותית מילולית לתיאור המאכל. התמונה מציגה פתיתים היושבים לבדם בפינת הצלחת ונראים בודדים, עצובים ומחפשים חברה, מעבר להקשר הקולינרי.",
     "topic": "",
-    "isApproved": true,
-    "isAIGenerated": true
+    "isApproved": false,
+    "isAIGenerated": true,
+    "isAIAdded": true
   },
   "צב ירושה.png": {
     "title": "צב ירושה",
     "explanation": "משחק מילים חזותי המשלב \"צו ירושה\" עם החיה \"צב\". התמונה מציגה צב זקן ואיטי המקבל לידיו ירושה גדולה או שהוא בעצמו רשום בתוך צו ירושה רשמי.",
     "topic": "חיות",
-    "isApproved": true,
-    "isAIGenerated": true
+    "isApproved": false,
+    "isAIGenerated": true,
+    "isAIAdded": true
   },
   "צוות טקילה.png": {
     "title": "צוות טקילה",
     "explanation": "משחק מילים על שם היחידה המיוחדת. התמונה מציגה צוות לוחמים מיומן העוסק במשימה מבצעית בעודם מחזיקים כוסות טקילה ולימון, כפרשנות הומוריסטית לשמם.",
     "topic": "",
-    "isApproved": true,
-    "isAIGenerated": true
+    "isApproved": false,
+    "isAIGenerated": true,
+    "isAIAdded": true
   },
   "צינון כבד  צינון קל.png": {
     "title": "צינון כבד \\ צינון קל",
     "explanation": "פרשנות חזותית מילולית למחלת החורף. התמונה מציגה הבדל בין דמות הסובלת מצינון קל (קצת נזלת) לבין דמות הסובלת מצינון \"כבד\" (מחזיקה משקולות ענקיות בעוד תוך כדי עיטוש).",
     "topic": "",
-    "isApproved": true,
-    "isAIGenerated": true
+    "isApproved": false,
+    "isAIGenerated": true,
+    "isAIAdded": true
   },
   "צפון קורע.png": {
     "title": "צפון קורע",
     "explanation": "משחק מילים שמיעתי על המדינה \"צפון קוריאה\". התמונה מציגה את אזור הצפון של הארץ כשהוא עובר פעולה של קריעה פיזית (Korei) או שהוא פשוט \"קורע\" מצחוק.",
     "topic": "",
-    "isApproved": true,
-    "isAIGenerated": true
+    "isApproved": false,
+    "isAIGenerated": true,
+    "isAIAdded": true
   },
   "קאפייה דתית.png": {
     "title": "קאפייה דתית",
     "explanation": "משחק מילים שמיעתי המשלב כפייה דתית עם כיסוי הראש \"קאפייה\". התמונה מציגה קאפייה המונחת על ראשו של אדם בצורה כפויה או שהיא מעוצבת עם אלמנטים דתיים מובהקים.",
     "topic": "",
-    "isApproved": true,
-    "isAIGenerated": true
+    "isApproved": false,
+    "isAIGenerated": true,
+    "isAIAdded": true
   },
   "קול קורא.png": {
     "title": "קול קורא",
     "explanation": "פרשנות חזותית מילולית לביטוי המתאר קריאת השכמה או הודעה. התמונה מציגה גלי קול או רמקול גדול האוחז בספר וקורא בו בריכוז רב, כפרשנות מילולית למילה \"קורא\".",
     "topic": "",
-    "isApproved": true,
-    "isAIGenerated": true
+    "isApproved": false,
+    "isAIGenerated": true,
+    "isAIAdded": true
   },
   "קוֹפָה-אִין.png": {
     "title": "קוֹפָה-אִין",
@@ -8628,78 +8735,89 @@
     "title": "קיפופותן",
     "explanation": "הכלאה דמיונית המשלבת קוף (Kof), פיל (Pil) ותן (Tan). היצור המוצג בתמונה מאופיין בתכונות של שלושת בעלי החיים יחד, ויוצר מראה סוריאליסטי ומשעשע.",
     "topic": "פתגמים וביטויים",
-    "isApproved": true,
-    "isAIGenerated": true
+    "isApproved": false,
+    "isAIGenerated": true,
+    "isAIAdded": true
   },
   "קיש-אלון.png": {
     "title": "קיש-אלון",
     "explanation": "משחק מילים שמיעתי על המילה \"כישלון\". התמונה מציגה מאפה קיש (Quiche) גדול שהוצמד לו עץ אלון (Alon), וביחד הם יוצרים פרשנות הומוריסטית למילה המתארת חוסר הצלחה.",
     "topic": "",
-    "isApproved": true,
-    "isAIGenerated": true
+    "isApproved": false,
+    "isAIGenerated": true,
+    "isAIAdded": true
   },
   "קלף חזק.png": {
     "title": "קלף חזק",
     "explanation": "פרשנות חזותית מילולית לביטוי המתאר יתרון. התמונה מציגה קלף משחק (כמו אס) בעל שרירים נפוחים וזרועות חזקות המדגימים כוח פיזי רב, כפרשנות מילולית למילה \"חזק\".",
     "topic": "",
-    "isApproved": true,
-    "isAIGenerated": true
+    "isApproved": false,
+    "isAIGenerated": true,
+    "isAIAdded": true
   },
   "קפיצת מדרגה.png": {
     "title": "קפיצת מדרגה",
     "explanation": "פרשנות חזותית מילולית לביטוי המתאר התקדמות. התמונה מציגה אדם המבצע קפיצה פיזית מרשימה מעל מדרגת אבן גדולה, כביטוי מוחשי ופשוט למטאפורה הידועה.",
     "topic": "",
-    "isApproved": true,
-    "isAIGenerated": true
+    "isApproved": false,
+    "isAIGenerated": true,
+    "isAIAdded": true
   },
   "קר סול.png": {
     "title": "קר סול",
     "explanation": "משחק מילים שמיעתי על המילה \"קרסול\" (Ankle). התמונה מציגה שילוב של קור (Kar) עז עם התו המוזיקלי סול (Sol), היוצרים יחד פרשנות הומוריסטית לאיבר בגוף.",
     "topic": "",
-    "isApproved": true,
-    "isAIGenerated": true
+    "isApproved": false,
+    "isAIGenerated": true,
+    "isAIAdded": true
   },
   "קרב רב.png": {
     "title": "קרב רב",
     "explanation": "משחק מילים המשלב את מקצוע האתלטיקה עם תואר דתי. התמונה מציגה תחרות ספורטיבית מאומצת (קרב) שבה המשתתף הראשי הוא רב (Rav) מכובד הלבוש בבגדי ספורט.",
     "topic": "יהדות ומסורת",
-    "isApproved": true,
-    "isAIGenerated": true
+    "isApproved": false,
+    "isAIGenerated": true,
+    "isAIAdded": true
   },
   "ראו זה פֶּלֶּה.png": {
     "title": "ראו זה פֶּלֶּה",
     "explanation": "משחק מילים שמיעתי המשלב את המילה \"פלא\" עם כדורגלן העבר פלה. התמונה מציגה את פלה האגדי מבצע מהלך כדורגל מדהים, כשהצופים קוראים בהתרגשות: \"ראו זה פלה!\"",
     "topic": "",
-    "isApproved": true,
-    "isAIGenerated": true
+    "isApproved": false,
+    "isAIGenerated": true,
+    "isAIAdded": true
   },
   "ראקונדיטור.png": {
     "title": "ראקונדיטור",
     "explanation": "הכלאה דמיונית בעיצוב הומוריסטי המשלבת ראקון (Raccoon) עם קונדיטור (שף קינוחים). התמונה מציגה ראקון חביב החובש כובע שף ורוקח עוגות ומאפים מושקעים במיוחד.",
     "topic": "",
-    "isApproved": true,
-    "isAIGenerated": true
+    "isApproved": false,
+    "isAIGenerated": true,
+    "isAIAdded": true
   },
   "רבים ביד מעטים.png": {
     "title": "רבים ביד מעטים",
     "explanation": "משחק מילים על הביטוי מחג החנוכה. התמונה מציגה קבוצת אנשים (רבים) הנמצאים פיזית בתוך כף יד של ענק (מעט), כפרשנות מילולית ומפתיעה לטקסט הידוע.",
     "topic": "יהדות ומסורת",
-    "isApproved": true,
-    "isAIGenerated": true
+    "isApproved": false,
+    "isAIGenerated": true,
+    "isAIAdded": true
   },
   "רגל מצילה.png": {
     "title": "רגל מצילה",
     "explanation": "משחק מילים חזותי המשלב פעולת הצלה עם כלי נגינה. התמונה מציגה רגל אנושית שבמקום כף רגל, מסתיימת במצילת (Metztila) נחושת בוהקת שמצילה את המצב.",
     "topic": "",
-    "isApproved": true,
-    "isAIGenerated": true
+    "isApproved": false,
+    "isAIGenerated": true,
+    "isAIAdded": true
   },
   "רוגע לך.png": {
     "title": "רוגע לך",
     "explanation": "משחק מילים שמיעתי על המאפה \"רוגלך\". התמונה מציגה אדם השרוי במצב של רוגע (Roga) מוחלט בעודו אוכל רוגלך, כפרשנות שמיעתית לשם העוגייה.",
     "topic": "",
-    "isApproved": true,
-    "isAIGenerated": true
+    "isApproved": false,
+    "isAIGenerated": true,
+    "isAIAdded": true
   },
   "רווק עולל.png": {
     "title": "רווק עולל",
@@ -8713,99 +8831,113 @@
     "title": "רום סרוויס",
     "explanation": "משחק מילים המשלב שירות חדרים עם משקה הרום. התמונה מציגה מלצר במלון המגיש בקבוקי רום (Rum) בלבד על מגש כסוף, כפרשנות מילולית למושג \"Room Service\".",
     "topic": "",
-    "isApproved": true,
-    "isAIGenerated": true
+    "isApproved": false,
+    "isAIGenerated": true,
+    "isAIAdded": true
   },
   "רופאי שיניים.png": {
     "title": "רופאי שיניים",
     "explanation": "פרשנות חזותית מילולית למקצוע. התמונה מציגה רופאים שהם בעצמם עשויים משיניים או שהם רופאים ענקיים המטפלים בשן בודדת שגדלה למימדים של בית.",
     "topic": "אוכל ושתייה, פאי",
-    "isApproved": true,
-    "isAIGenerated": true
+    "isApproved": false,
+    "isAIGenerated": true,
+    "isAIAdded": true
   },
   "רוקטמן.png": {
     "title": "רוקטמן",
     "explanation": "משחק מילים שמיעתי המשלב את הביטוי \"רוקטמן\" עם עולם הירקות. התמונה מציגה גיבור-על העשוי כולו מעלי רוקט (Rocket) טריים העפים לחלל בעזרת מנוע סילון.",
     "topic": "",
-    "isApproved": true,
-    "isAIGenerated": true
+    "isApproved": false,
+    "isAIGenerated": true,
+    "isAIAdded": true
   },
   "רות עבור!.png": {
     "title": "חג הכי רות",
     "explanation": "משחק מילים שמיעתי על ביטוי הקשר הצבאי. התמונה מציגה דמות בשם \"רות\" כשהיא עוברת פיזית גבול או מכשול, כפרשנות מילולית לקריאת המכשיר.",
     "topic": "חגים ומועדים",
-    "isApproved": true,
-    "isAIGenerated": true
+    "isApproved": false,
+    "isAIGenerated": true,
+    "isAIAdded": true
   },
   "רחפן הטלה.png": {
     "title": "רחפן הטלה",
     "explanation": "משחק מילים שמיעתי המשלב רחפן עם החיה \"טלה\" (גדי). התמונה מציגה רחפן טכנולוגי הנושא באוויר טלה קטן וחמוד, כפרשנות מילולית למילה \"הטלה\".",
     "topic": "",
-    "isApproved": true,
-    "isAIGenerated": true
+    "isApproved": false,
+    "isAIGenerated": true,
+    "isAIAdded": true
   },
   "רישום מראש.png": {
     "title": "רישום מראש",
     "explanation": "פרשנות חזותית מילולית למושג הבירוקרטי. התמונה מציגה אמן המבצע רישום אמנותי (ציור) של ראש (Rosh) אנושי באופן ישיר ומיידי, כביטוי לפעולת הרישום.",
     "topic": "",
-    "isApproved": true,
-    "isAIGenerated": true
+    "isApproved": false,
+    "isAIGenerated": true,
+    "isAIAdded": true
   },
   "רכב משפחתי.png": {
     "title": "רכב משפחתי",
     "explanation": "פרשנות חזותית מילולית לסוג הרכב. התמונה מציגה מכונית שאינה עשויה ממתכת אלא מורכבת ומתופעלת פיזית על ידי כל בני המשפחה הפועלים יחד כמנוע וגלגלים.",
     "topic": "טכנולוגיה ומדע, רכב",
-    "isApproved": true,
-    "isAIGenerated": true
+    "isApproved": false,
+    "isAIGenerated": true,
+    "isAIAdded": true
   },
   "רכבת טח טיט.png": {
     "title": "רכבת טח טיט",
     "explanation": "משחק מילים שמיעתי על המילה \"תחתית\" (Subway). התמונה מציגה רכבת הנוסעת בתוך מסלול העשוי מחומרים של טחב (Tach) וטיט (Tit), כפרשנות מילולית לצליל.",
     "topic": "טכנולוגיה ומדע, רכב",
-    "isApproved": true,
-    "isAIGenerated": true
+    "isApproved": false,
+    "isAIGenerated": true,
+    "isAIAdded": true
   },
   "רע על עכברים.png": {
     "title": "רע על עכברים",
     "explanation": "משחק מילים שמיעתי על \"רעל עכברים\". התמונה מציגה עכבר הנראה במצב רוח רע (Ra) במיוחד או שהוא עובר חוויה לא נעימה, כפרשנות מילולית למילה.",
     "topic": "",
-    "isApproved": true,
-    "isAIGenerated": true
+    "isApproved": false,
+    "isAIGenerated": true,
+    "isAIAdded": true
   },
   "רץ בטיל.png": {
     "title": "רץ בטיל",
     "explanation": "פרשנות חזותית מילולית לביטוי המתאר מהירות. התמונה מציגה אדם הרץ במהירות עצומה בתוך חלל של טיל אמיתי המשוגר לשמיים, כביטוי מוחשי למהירותו.",
     "topic": "",
-    "isApproved": true,
-    "isAIGenerated": true
+    "isApproved": false,
+    "isAIGenerated": true,
+    "isAIAdded": true
   },
   "בין יושבין ובין מסובין.png": {
     "title": "בין יושבין ובין מסובין",
     "explanation": "פרשנות חזותית מילולית למשפט מההגדה של פסח. התמונה מציגה דמויות היושבות על הספה מצד אחד, ודמויות שהן בעצמן עשויות מ\"ספה\" (מסובין) מצידו השני.",
     "topic": "",
-    "isApproved": true,
-    "isAIGenerated": true
+    "isApproved": false,
+    "isAIGenerated": true,
+    "isAIAdded": true
   },
   "שבעת פילי תבל.png": {
     "title": "שבעת פילי תבל",
     "explanation": "משחק מילים שמיעתי על \"שבעת פלאי תבל\". התמונה מציגה את שבעת פלאי העולם העתיק כשהם מיוצגים או נתמכים על ידי שבעה פילים (Pilim) ענקיים ומרשימים.",
     "topic": "",
-    "isApproved": true,
-    "isAIGenerated": true
+    "isApproved": false,
+    "isAIGenerated": true,
+    "isAIAdded": true
   },
   "שַׁה לכת.png": {
     "title": "שַׁה לכת",
     "explanation": "משחק מילים שמיעתי על המילה \"שלכת\". התמונה מציגה כבשה קטנה (שה) היוצאת לצעידה (לכת) בתוך ערימה גדולה של עלי שלכת יבשים וצבעוניים בסתיו.",
     "topic": "",
-    "isApproved": true,
-    "isAIGenerated": true
+    "isApproved": false,
+    "isAIGenerated": true,
+    "isAIAdded": true
   },
   "שואב 'אבק רובוטי'.png": {
     "title": "שואב 'אבק רובוטי'",
     "explanation": "פרשנות חזותית מילולית למכשיר הניקוי. התמונה מציגה רובוט מתוחכם השואב באמצעות צינור אבק כוכבים אמיתי מהחלל החיצון, כפרשנות מילולית למילה \"אבק\".",
     "topic": "טכנולוגיה ומדע, רובוט",
-    "isApproved": true,
-    "isAIGenerated": true
+    "isApproved": false,
+    "isAIGenerated": true,
+    "isAIAdded": true
   },
   "המסביר לצרחן.png": {
     "title": "המסביר לצרחן",
@@ -8819,8 +8951,9 @@
     "title": "שום דוור",
     "explanation": "משחק מילים שמיעתי על הביטוי \"שום דבר\" (כלום). התמונה מציגה ראש שום (Shum) הלבוש במדי דוור ומחלק מכתבים בתיבות הדואר של השכונה.",
     "topic": "",
-    "isApproved": true,
-    "isAIGenerated": true
+    "isApproved": false,
+    "isAIGenerated": true,
+    "isAIAdded": true
   },
   "שם... פה....png": {
     "title": "שם... פה...",
@@ -9633,8 +9766,9 @@
   "לולב צריך אגד_1.png": {
     "title": "לולב צריך אגר",
     "explanation": "משחק מילים המשלב את המנהג של אגילת הלולב עם חברת האוטובוסים \"אגד\". התמונה מציגה לולב של סוכות המנסה לעלות על אוטובוס של אגד, כפרשנות למילה.",
-    "isApproved": true,
-    "topic": ""
+    "isApproved": false,
+    "topic": "",
+    "isAIAdded": true
   },
   "על הקלידים 1.jpg": {
     "title": "על הקלידים",
@@ -9648,6 +9782,7 @@
     "explanation": "פרשנות חזותית מילולית לשיר מההגדה. התמונה מציגה גדי אחד (Chad Gadya) קטן וחמוד כשהוא עומד במרכז הבמה וזוהר באור יקרות, כפרשנות פשוטה ומקסימה.",
     "topic": "חיות, גדי",
     "isApproved": false,
-    "isAIGenerated": false
+    "isAIGenerated": false,
+    "isAIAdded": true
   }
 }

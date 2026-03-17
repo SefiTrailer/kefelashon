@@ -127,6 +127,7 @@ function App() {
       if (filterMode === 'not-approved' && meta.isApproved === true) return false;
       if (filterMode === 'new-images' && fileSources[img] !== 'new') return false;
       if (filterMode === 'ai-improved' && meta.isAIImproved !== true) return false;
+      if (filterMode === 'ai-added' && meta.isAIAdded !== true) return false;
       if (filterMode === 'generic-ai') {
         const isGeneric = meta.explanation?.includes('התמונה ממחישה את הכפל המשמעות הטמון בביטוי');
         if (!isGeneric) return false;
@@ -192,6 +193,7 @@ function App() {
       newImages: 0,
       genericAi: 0,
       aiImproved: 0,
+      aiAdded: 0,
       untitled: 0
     };
 
@@ -210,6 +212,7 @@ function App() {
       if (meta.isApproved !== true) fc.notApproved++;
       if (fileSources[img] === 'new') fc.newImages++;
       if (meta.isAIImproved === true) fc.aiImproved++;
+      if (meta.isAIAdded === true) fc.aiAdded++;
       if (meta.explanation?.includes('התמונה ממחישה את הכפל המשמעות הטמון בביטוי')) fc.genericAi++;
       if (img.includes('עיצוב ללא שם')) fc.untitled++;
 
@@ -509,7 +512,8 @@ function App() {
                   <option value="approved">✅ עברו בקרה / מאושרות [{filterCounts.approved}]</option>
                   <option value="not-approved">⏳ לא עברו בקרה / ממתינות [{filterCounts.notApproved}]</option>
                   <option value="new-images">🆕 תמונות חדשות (בתיקיית קליטה) [{filterCounts.newImages}]</option>
-                  <option value="ai-improved">🤖 שיפורי AI (עבור בקרה) [{filterCounts.aiImproved}]</option>
+                  <option value="ai-improved">🤖 הסברים שופרו - AI [{filterCounts.aiImproved}]</option>
+                  <option value="ai-added">🤖 הסברים חדשים - AI [{filterCounts.aiAdded}]</option>
                   <option value="generic-ai">🤖 הסבר AI גנרי [{filterCounts.genericAi}]</option>
                   <option value="untitled">🎨 עיצוב ללא שם [{filterCounts.untitled}]</option>
                  </select>
