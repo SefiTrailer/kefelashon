@@ -266,13 +266,13 @@ export default function PublicGallery({ images, metadata }) {
         if (e) e.stopPropagation();
         
         const url = window.location.href;
-        const qrImagePath = './qrcode.png';
+        const qrImagePath = './qrcode.webp';
 
         try {
             // 1. Fetch the image as a blob
             const response = await fetch(qrImagePath);
             const blob = await response.blob();
-            const file = new File([blob], 'qrcode.png', { type: blob.type });
+            const file = new File([blob], 'qrcode.webp', { type: blob.type });
 
             // 2. Try Web Share API (Files support)
             if (navigator.share && navigator.canShare && navigator.canShare({ files: [file] })) {
@@ -416,7 +416,7 @@ export default function PublicGallery({ images, metadata }) {
 
                             {/* ── Mobile-Only Header Block (Hidden on Desktop) ── */}
                             <div className="flex lg:hidden flex-col items-center shrink-0 mb-4 bg-slate-900/60 backdrop-blur-xl border border-white/10 rounded-[2.5rem] px-6 py-5 shadow-xl w-full">
-                                <img src="./logo.png" alt="כפלשון" className="h-32 sm:h-36 object-contain drop-shadow-[0_0_20px_rgba(236,72,153,0.5)]" />
+                                <img src="./logo.webp" alt="כפלשון" className="h-32 sm:h-36 object-contain drop-shadow-[0_0_20px_rgba(236,72,153,0.5)]" />
                                 <div className="text-center font-medium mt-3 text-base sm:text-lg text-slate-300 leading-relaxed">
                                     ברוכים הבאים ל<strong className="text-white mx-1 drop-shadow-md">'כפלשון'</strong>!
                                     <br />
@@ -431,19 +431,19 @@ export default function PublicGallery({ images, metadata }) {
                                     </a>
                                 </div>
                                 {/* Mobile Paybox Donation */}
-                                <div className="mt-4 flex flex-row items-center justify-center gap-2 px-2">
-                                    <p className="text-white/70 text-[11px] text-right font-medium leading-tight max-w-[150px]">
-                                        נהנית? צחקת? האתר חינמי....<br />
-                                        רוצה לתת טיפ לאחזקת האתר?
-                                    </p>
+                                <div className="mt-4 w-full px-2">
                                     <a
                                         href="https://links.payboxapp.com/pKXjNclWz1b"
                                         target="_blank"
                                         rel="noreferrer"
-                                        className="flex items-center gap-1.5 px-3 py-1 bg-[#00AEEF] hover:bg-[#0090C5] text-white rounded-full transition-all active:scale-95 shadow-lg font-bold text-[10px] shrink-0"
+                                        className="flex items-center justify-center gap-3 w-full px-4 py-2.5 rounded-2xl bg-[#00AEEF] hover:bg-[#0090C5] active:scale-95 transition-all shadow-[0_4px_20px_rgba(0,174,239,0.5)] border border-[#00d4ff]/40 group"
+                                        style={{ boxShadow: '0 4px 20px rgba(0,174,239,0.45), inset 0 1px 0 rgba(255,255,255,0.25)' }}
                                     >
-                                        <span>טיפ בפייבוקס</span>
-                                        <img src="./paybox-logo.webp" alt="Paybox" className="w-8 h-auto" />
+                                        <div className="flex flex-col items-end leading-tight">
+                                            <span className="text-white font-bold text-sm">תרמו טיפ בפייבוקס 💙</span>
+                                            <span className="text-white/75 text-[10px] font-medium">האתר חינמי — תמכו בהמשך!</span>
+                                        </div>
+                                        <img src="./paybox-logo.webp" alt="Paybox" className="h-7 w-auto shrink-0 brightness-0 invert" />
                                     </a>
                                 </div>
                             </div>
@@ -552,11 +552,12 @@ export default function PublicGallery({ images, metadata }) {
                                                 <>
                                                     <img
                                                         key={currentFile}
-                                                        src={`./images/${encodeURIComponent(currentFile)}`}
+                                                        src={`./images/${encodeURIComponent(currentFile.replace(/\.(jpg|jpeg|png)$/i, '.webp'))}`}
                                                         alt={fileMetadata?.title || 'תמונה'}
                                                         className="w-full h-full object-contain filter drop-shadow-[0_10px_25px_rgba(0,0,0,0.7)] relative z-10 animate-in zoom-in-95 duration-500"
                                                         style={{ borderRadius: '12px' }}
                                                         loading="lazy"
+                                                        onError={(ev) => { ev.currentTarget.src = `./images/${encodeURIComponent(currentFile)}`; }}
                                                     />
                                                 </>
                                             ) : (
@@ -564,10 +565,11 @@ export default function PublicGallery({ images, metadata }) {
                                                     {displayImages.slice(currentIndex, currentIndex + getGridSize()).map((file, idx) => (
                                                         <div key={file} className="relative aspect-square w-full h-full max-h-full max-w-full flex items-center justify-center cursor-zoom-in group" onClick={(e) => { e.stopPropagation(); setCurrentIndex(currentIndex + idx); setViewMode('single'); openFullscreen(); }}>
                                                             <img
-                                                                src={`./images/${encodeURIComponent(file)}`}
+                                                                src={`./images/${encodeURIComponent(file.replace(/\.(jpg|jpeg|png)$/i, '.webp'))}`}
                                                                 alt={metadata[file]?.title || 'תמונה'}
                                                                 className="w-full h-full object-contain filter drop-shadow-md rounded-xl transition-transform group-hover:scale-105"
                                                                 loading="lazy"
+                                                                onError={(ev) => { ev.currentTarget.src = `./images/${encodeURIComponent(file)}`; }}
                                                             />
                                                             <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 flex items-center justify-center transition-opacity rounded-xl z-20 pointer-events-none">
                                                                 <span className="text-white font-bold text-sm lg:text-base border border-white/30 bg-black/40 px-4 py-2 rounded-full backdrop-blur-md shadow-lg drop-shadow-[0_2px_4px_rgba(0,0,0,0.8)]">
@@ -817,7 +819,7 @@ export default function PublicGallery({ images, metadata }) {
                         <div className="hidden lg:flex flex-col items-center justify-evenly w-full flex-1">
                             <div className="flex justify-center w-full shrink-0">
                                 <img
-                                    src="./logo.png"
+                                    src="./logo.webp"
                                     alt="כפלשון"
                                     className="object-contain drop-shadow-[0_0_32px_rgba(236,72,153,0.7)] transition-transform hover:scale-105"
                                     style={{ height: isMobile ? '80px' : `${sidebarH * 0.2}px`, transform: 'scaleX(1.15)' }}
@@ -846,19 +848,19 @@ export default function PublicGallery({ images, metadata }) {
                                         </a>
                                     </span>
                                     {/* Paybox Donation Section */}
-                                    <div className="w-full flex flex-col sm:flex-row items-center justify-center gap-3 mt-4 px-2">
-                                        <p className="text-white/80 text-center sm:text-right leading-snug font-medium" style={{ fontSize: isMobile ? '13px' : `${sidebarH * 0.017}px` }}>
-                                            נהנית? צחקת? האתר חינמי....<br />
-                                            רוצה לתת טיפ לאחזקת האתר?
-                                        </p>
+                                    <div className="w-full mt-4 px-2">
                                         <a
                                             href="https://links.payboxapp.com/pKXjNclWz1b"
                                             target="_blank"
                                             rel="noreferrer"
-                                            className="flex items-center gap-2 px-4 py-1.5 bg-[#00AEEF] hover:bg-[#0090C5] text-white rounded-full transition-all hover:scale-105 shadow-lg group font-bold text-xs shrink-0"
+                                            className="flex items-center justify-between w-full rounded-2xl overflow-hidden transition-all hover:scale-[1.03] hover:brightness-110 shadow-[0_6px_24px_rgba(0,174,239,0.5)] border border-[#00d4ff]/30"
+                                            style={{ background: 'linear-gradient(135deg, #0096CC 0%, #00AEEF 50%, #00C8F0 100%)', boxShadow: '0 6px 24px rgba(0,174,239,0.5), inset 0 1px 0 rgba(255,255,255,0.25)', padding: `${Math.max(10, sidebarH * 0.014)}px ${Math.max(14, sidebarH * 0.02)}px` }}
                                         >
-                                            <span>טיפ בפייבוקס</span>
-                                            <img src="./paybox-logo.webp" alt="Paybox" className="w-10 h-auto" />
+                                            <div className="flex flex-col items-start leading-tight">
+                                                <span className="text-white font-bold" style={{ fontSize: `${Math.max(13, sidebarH * 0.02)}px` }}>💙 תרמו טיפ בפייבוקס</span>
+                                                <span className="text-white/80 font-medium" style={{ fontSize: `${Math.max(10, sidebarH * 0.015)}px` }}>האתר חינמי — תמכו בהמשך יצירת תוכן!</span>
+                                            </div>
+                                            <img src="./paybox-logo.webp" alt="Paybox" className="h-8 w-auto shrink-0 brightness-0 invert" />
                                         </a>
                                     </div>
                                 </div>
@@ -876,7 +878,7 @@ export default function PublicGallery({ images, metadata }) {
                                         className="relative group cursor-pointer rounded-2xl shadow-[0_8px_25px_rgba(0,0,0,0.5)] bg-white overflow-hidden flex-1 flex items-center justify-center border-[3px] border-white/80 transition-all duration-500 hover:shadow-[0_0_35px_rgba(255,105,180,0.6)] hover:border-pink-300 hover:scale-[1.02] aspect-square"
                                         onClick={handleQRCodeClick}
                                     >
-                                        <img src="./qrcode.png" alt="QR Code" className="w-full h-full object-contain transition-transform duration-700 group-hover:scale-110 group-hover:rotate-1" />
+                                        <img src="./qrcode.webp" alt="QR Code" className="w-full h-full object-contain transition-transform duration-700 group-hover:scale-110 group-hover:rotate-1" />
                                         <div className="absolute inset-0 bg-black/75 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col items-center justify-center text-white backdrop-blur-sm z-10">
                                             <Share2 size={28} className="mb-2 text-pink-400 drop-shadow-[0_0_8px_rgba(236,72,153,0.8)] animate-pulse" />
                                             <span className="text-[11px] font-bold text-center leading-tight tracking-wide px-2">לשיתוף האתר<br />לחץ כאן</span>

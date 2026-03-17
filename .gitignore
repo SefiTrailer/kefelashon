@@ -1,4 +1,4 @@
-﻿node_modules/
+node_modules/
 app/node_modules/
 app/dist/
 .env
@@ -6,4 +6,6 @@ app/dist/
 app/תמונות מקור/
 app/deleted_candidates/
 **/תמונות מקור משחקי מילים/
+# Original heavy images before WebP conversion (kept locally, not deployed to GitHub)
+app/public/images_originals/
 .DS_Store
