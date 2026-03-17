@@ -441,7 +441,7 @@ export default function PublicGallery({ images, metadata }) {
                                     >
                                         <div className="flex flex-col items-end leading-tight">
                                             <span className="text-white font-bold text-sm">תרמו טיפ בפייבוקס 💙</span>
-                                            <span className="text-white/75 text-[10px] font-medium">האתר חינמי — תמכו בהמשך!</span>
+                                            <span className="text-white/75 text-[10px] font-medium">האתר חינמי - תמכו בו!</span>
                                         </div>
                                         <img src="./paybox-logo.webp" alt="Paybox" className="h-7 w-auto shrink-0 brightness-0 invert" />
                                     </a>
@@ -858,7 +858,7 @@ export default function PublicGallery({ images, metadata }) {
                                         >
                                             <div className="flex flex-col items-start leading-tight">
                                                 <span className="text-white font-bold" style={{ fontSize: `${Math.max(13, sidebarH * 0.02)}px` }}>💙 תרמו טיפ בפייבוקס</span>
-                                                <span className="text-white/80 font-medium" style={{ fontSize: `${Math.max(10, sidebarH * 0.015)}px` }}>האתר חינמי — תמכו בהמשך יצירת תוכן!</span>
+                                                <span className="text-white/80 font-medium" style={{ fontSize: `${Math.max(10, sidebarH * 0.015)}px` }}>האתר חינמי - תמכו בו!</span>
                                             </div>
                                             <img src="./paybox-logo.webp" alt="Paybox" className="h-8 w-auto shrink-0 brightness-0 invert" />
                                         </a>
