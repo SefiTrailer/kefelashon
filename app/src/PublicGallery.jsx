@@ -433,7 +433,8 @@ export default function PublicGallery({ images, metadata }) {
                                 {/* Mobile Paybox Donation */}
                                 <div className="mt-4 flex flex-row items-center justify-center gap-2 px-2">
                                     <p className="text-white/70 text-[11px] text-right font-medium leading-tight max-w-[150px]">
-                                        נהנית? צחקת? האתר חינמי. רוצה לתת טיפ לאחזקת האתר?
+                                        נהנית? צחקת? האתר חינמי....<br />
+                                        רוצה לתת טיפ לאחזקת האתר?
                                     </p>
                                     <a
                                         href="https://links.payboxapp.com/pKXjNclWz1b"
@@ -442,7 +443,7 @@ export default function PublicGallery({ images, metadata }) {
                                         className="flex items-center gap-1.5 px-3 py-1 bg-[#00AEEF] hover:bg-[#0090C5] text-white rounded-full transition-all active:scale-95 shadow-lg font-bold text-[10px] shrink-0"
                                     >
                                         <span>טיפ בפייבוקס</span>
-                                        <img src="./paybox-logo.svg" alt="Paybox" className="w-4 h-4 brightness-0 invert" />
+                                        <img src="./paybox-logo.svg" alt="Paybox" className="w-8 h-auto" />
                                     </a>
                                 </div>
                             </div>
@@ -847,7 +848,8 @@ export default function PublicGallery({ images, metadata }) {
                                     {/* Paybox Donation Section */}
                                     <div className="w-full flex flex-col sm:flex-row items-center justify-center gap-3 mt-4 px-2">
                                         <p className="text-white/80 text-center sm:text-right leading-snug font-medium" style={{ fontSize: isMobile ? '13px' : `${sidebarH * 0.017}px` }}>
-                                            נהנית? צחקת? האתר חינמי. רוצה לתת טיפ לאחזקת האתר?
+                                            נהנית? צחקת? האתר חינמי....<br />
+                                            רוצה לתת טיפ לאחזקת האתר?
                                         </p>
                                         <a
                                             href="https://links.payboxapp.com/pKXjNclWz1b"
@@ -856,7 +858,7 @@ export default function PublicGallery({ images, metadata }) {
                                             className="flex items-center gap-2 px-4 py-1.5 bg-[#00AEEF] hover:bg-[#0090C5] text-white rounded-full transition-all hover:scale-105 shadow-lg group font-bold text-xs shrink-0"
                                         >
                                             <span>טיפ בפייבוקס</span>
-                                            <img src="./paybox-logo.svg" alt="Paybox" className="w-5 h-5 brightness-0 invert" />
+                                            <img src="./paybox-logo.svg" alt="Paybox" className="w-10 h-auto" />
                                         </a>
                                     </div>
                                 </div>
