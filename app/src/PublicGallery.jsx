@@ -1107,10 +1107,11 @@ export default function PublicGallery({ images, metadata }) {
                             <div className="flex-1 flex flex-col items-center justify-center h-full max-h-[95vh] pointer-events-auto">
                                 <div className="relative inline-flex items-center justify-center max-w-[70vw] lg:max-w-[55vw] xl:max-w-[65vw]">
                                     <img
-                                        src={`./images/${encodeURIComponent(currentFile)}`}
+                                        src={`./images/${encodeURIComponent(currentFile.replace(/\.(jpg|jpeg|png)$/i, '.webp'))}`}
                                         alt={fileMetadata?.title || 'תמונה'}
                                         className="max-h-[85vh] xl:max-h-[92vh] object-contain drop-shadow-[0_0_60px_rgba(0,0,0,0.9)] rounded-2xl cursor-zoom-out"
                                         onClick={(e) => { e.stopPropagation(); setIsFullscreen(false); }}
+                                        onError={(ev) => { ev.currentTarget.src = `./images/${encodeURIComponent(currentFile)}`; }}
                                     />
                                     <button
                                         onClick={(e) => { e.stopPropagation(); nextImage(); }}
