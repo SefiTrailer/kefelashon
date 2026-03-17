@@ -430,6 +430,23 @@ export default function PublicGallery({ images, metadata }) {
                                         <Linkedin size={18} fill="currentColor" strokeWidth={1} className="shrink-0" />
                                     </a>
                                 </div>
+                                {/* Mobile Paybox Donation */}
+                                <div className="mt-4 flex flex-col items-center">
+                                    <p className="text-white/70 text-xs text-center mb-2 font-medium max-w-xs">
+                                        נהנית? צחקת? האתר חינמי. האם תרצה לתת טיפ לאחזקת האתר?
+                                    </p>
+                                    <a
+                                        href="https://links.payboxapp.com/pKXjNclWz1b"
+                                        target="_blank"
+                                        rel="noreferrer"
+                                        className="flex items-center gap-2 px-5 py-1.5 bg-[#00AEEF] hover:bg-[#0090C5] text-white rounded-full transition-all active:scale-95 shadow-lg font-bold text-xs"
+                                    >
+                                        <span>טיפ בפייבוקס</span>
+                                        <svg viewBox="0 0 100 100" className="w-5 h-5 fill-white">
+                                            <path d="M15,10 L85,10 C87.76,10 90,12.24 90,15 L90,85 C90,87.76 87.76,90 85,90 L15,90 C12.24,90 10,87.76 10,85 L10,15 C10,12.24 12.24,10 15,10 Z M33,35 L33,70 L48,70 L48,55 L58,55 C66.28,55 73,48.28 73,40 C73,31.72 66.28,25 58,25 L33,25 L33,35 Z M48,35 L48,45 L58,45 C60.76,45 63,42.76 63,40 C63,37.24 60.76,35 58,35 L48,35 Z" />
+                                        </svg>
+                                    </a>
+                                </div>
                             </div>
 
                             {/* Frame */}
@@ -829,6 +846,23 @@ export default function PublicGallery({ images, metadata }) {
                                             <Linkedin style={{ width: `${sidebarH * 0.023}px`, height: `${sidebarH * 0.023}px` }} fill="currentColor" strokeWidth={1} className="shrink-0" />
                                         </a>
                                     </span>
+                                    {/* Paybox Donation Section */}
+                                    <div className="w-full flex flex-col items-center mt-4">
+                                        <p className="text-white/80 text-center leading-snug mb-2 font-medium" style={{ fontSize: isMobile ? '14px' : `${sidebarH * 0.018}px` }}>
+                                            נהנית? צחקת? האתר חינמי. האם תרצה לתת טיפ לאחזקת האתר?
+                                        </p>
+                                        <a
+                                            href="https://links.payboxapp.com/pKXjNclWz1b"
+                                            target="_blank"
+                                            rel="noreferrer"
+                                            className="flex items-center gap-2 px-6 py-2 bg-[#00AEEF] hover:bg-[#0090C5] text-white rounded-full transition-all hover:scale-105 shadow-lg group font-bold text-sm"
+                                        >
+                                            <span>טיפ בפייבוקס</span>
+                                            <svg viewBox="0 0 100 100" className="w-6 h-6 fill-white">
+                                                <path d="M15,10 L85,10 C87.76,10 90,12.24 90,15 L90,85 C90,87.76 87.76,90 85,90 L15,90 C12.24,90 10,87.76 10,85 L10,15 C10,12.24 12.24,10 15,10 Z M33,35 L33,70 L48,70 L48,55 L58,55 C66.28,55 73,48.28 73,40 C73,31.72 66.28,25 58,25 L33,25 L33,35 Z M48,35 L48,45 L58,45 C60.76,45 63,42.76 63,40 C63,37.24 60.76,35 58,35 L48,35 Z" />
+                                            </svg>
+                                        </a>
+                                    </div>
                                 </div>
                             </div>
                         </div>
