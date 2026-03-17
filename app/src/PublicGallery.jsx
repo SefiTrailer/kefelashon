@@ -431,18 +431,18 @@ export default function PublicGallery({ images, metadata }) {
                                     </a>
                                 </div>
                                 {/* Mobile Paybox Donation */}
-                                <div className="mt-4 flex flex-col items-center">
-                                    <p className="text-white/70 text-xs text-center mb-2 font-medium max-w-xs">
-                                        נהנית? צחקת? האתר חינמי. האם תרצה לתת טיפ לאחזקת האתר?
+                                <div className="mt-4 flex flex-row items-center justify-center gap-2 px-2">
+                                    <p className="text-white/70 text-[11px] text-right font-medium leading-tight max-w-[150px]">
+                                        נהנית? צחקת? האתר חינמי. רוצה לתת טיפ לאחזקת האתר?
                                     </p>
                                     <a
                                         href="https://links.payboxapp.com/pKXjNclWz1b"
                                         target="_blank"
                                         rel="noreferrer"
-                                        className="flex items-center gap-2 px-5 py-1.5 bg-[#00AEEF] hover:bg-[#0090C5] text-white rounded-full transition-all active:scale-95 shadow-lg font-bold text-xs"
+                                        className="flex items-center gap-1.5 px-3 py-1 bg-[#00AEEF] hover:bg-[#0090C5] text-white rounded-full transition-all active:scale-95 shadow-lg font-bold text-[10px] shrink-0"
                                     >
                                         <span>טיפ בפייבוקס</span>
-                                        <svg viewBox="0 0 100 100" className="w-5 h-5 fill-white">
+                                        <svg viewBox="0 0 100 100" className="w-4 h-4 fill-white">
                                             <path d="M15,10 L85,10 C87.76,10 90,12.24 90,15 L90,85 C90,87.76 87.76,90 85,90 L15,90 C12.24,90 10,87.76 10,85 L10,15 C10,12.24 12.24,10 15,10 Z M33,35 L33,70 L48,70 L48,55 L58,55 C66.28,55 73,48.28 73,40 C73,31.72 66.28,25 58,25 L33,25 L33,35 Z M48,35 L48,45 L58,45 C60.76,45 63,42.76 63,40 C63,37.24 60.76,35 58,35 L48,35 Z" />
                                         </svg>
                                     </a>
@@ -847,18 +847,18 @@ export default function PublicGallery({ images, metadata }) {
                                         </a>
                                     </span>
                                     {/* Paybox Donation Section */}
-                                    <div className="w-full flex flex-col items-center mt-4">
-                                        <p className="text-white/80 text-center leading-snug mb-2 font-medium" style={{ fontSize: isMobile ? '14px' : `${sidebarH * 0.018}px` }}>
-                                            נהנית? צחקת? האתר חינמי. האם תרצה לתת טיפ לאחזקת האתר?
+                                    <div className="w-full flex flex-col sm:flex-row items-center justify-center gap-3 mt-4 px-2">
+                                        <p className="text-white/80 text-center sm:text-right leading-snug font-medium" style={{ fontSize: isMobile ? '13px' : `${sidebarH * 0.017}px` }}>
+                                            נהנית? צחקת? האתר חינמי. רוצה לתת טיפ לאחזקת האתר?
                                         </p>
                                         <a
                                             href="https://links.payboxapp.com/pKXjNclWz1b"
                                             target="_blank"
                                             rel="noreferrer"
-                                            className="flex items-center gap-2 px-6 py-2 bg-[#00AEEF] hover:bg-[#0090C5] text-white rounded-full transition-all hover:scale-105 shadow-lg group font-bold text-sm"
+                                            className="flex items-center gap-2 px-4 py-1.5 bg-[#00AEEF] hover:bg-[#0090C5] text-white rounded-full transition-all hover:scale-105 shadow-lg group font-bold text-xs shrink-0"
                                         >
                                             <span>טיפ בפייבוקס</span>
-                                            <svg viewBox="0 0 100 100" className="w-6 h-6 fill-white">
+                                            <svg viewBox="0 0 100 100" className="w-4 h-4 fill-white">
                                                 <path d="M15,10 L85,10 C87.76,10 90,12.24 90,15 L90,85 C90,87.76 87.76,90 85,90 L15,90 C12.24,90 10,87.76 10,85 L10,15 C10,12.24 12.24,10 15,10 Z M33,35 L33,70 L48,70 L48,55 L58,55 C66.28,55 73,48.28 73,40 C73,31.72 66.28,25 58,25 L33,25 L33,35 Z M48,35 L48,45 L58,45 C60.76,45 63,42.76 63,40 C63,37.24 60.76,35 58,35 L48,35 Z" />
                                             </svg>
                                         </a>
