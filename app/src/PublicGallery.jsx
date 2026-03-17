@@ -443,7 +443,7 @@ export default function PublicGallery({ images, metadata }) {
                                         className="flex items-center gap-1.5 px-3 py-1 bg-[#00AEEF] hover:bg-[#0090C5] text-white rounded-full transition-all active:scale-95 shadow-lg font-bold text-[10px] shrink-0"
                                     >
                                         <span>טיפ בפייבוקס</span>
-                                        <img src="./paybox-logo.svg" alt="Paybox" className="w-8 h-auto" />
+                                        <img src="./paybox-logo.webp" alt="Paybox" className="w-8 h-auto" />
                                     </a>
                                 </div>
                             </div>
@@ -858,7 +858,7 @@ export default function PublicGallery({ images, metadata }) {
                                             className="flex items-center gap-2 px-4 py-1.5 bg-[#00AEEF] hover:bg-[#0090C5] text-white rounded-full transition-all hover:scale-105 shadow-lg group font-bold text-xs shrink-0"
                                         >
                                             <span>טיפ בפייבוקס</span>
-                                            <img src="./paybox-logo.svg" alt="Paybox" className="w-10 h-auto" />
+                                            <img src="./paybox-logo.webp" alt="Paybox" className="w-10 h-auto" />
                                         </a>
                                     </div>
                                 </div>
