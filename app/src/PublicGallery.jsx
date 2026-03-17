@@ -439,7 +439,7 @@ export default function PublicGallery({ images, metadata }) {
                                         className="flex items-center justify-center gap-3 w-full px-4 py-2.5 rounded-2xl bg-[#00AEEF] hover:bg-[#0090C5] active:scale-95 transition-all shadow-[0_4px_20px_rgba(0,174,239,0.5)] border border-[#00d4ff]/40 group"
                                         style={{ boxShadow: '0 4px 20px rgba(0,174,239,0.45), inset 0 1px 0 rgba(255,255,255,0.25)' }}
                                     >
-                                        <div className="flex flex-col items-end leading-tight">
+                                        <div className="flex flex-col items-center leading-tight text-center">
                                             <span className="text-white font-bold text-sm">תרמו טיפ בפייבוקס 💙</span>
                                             <span className="text-white/75 text-[10px] font-medium">האתר חינמי - תמכו בו!</span>
                                         </div>
@@ -856,7 +856,7 @@ export default function PublicGallery({ images, metadata }) {
                                             className="flex items-center justify-between w-full rounded-2xl overflow-hidden transition-all hover:scale-[1.03] hover:brightness-110 shadow-[0_6px_24px_rgba(0,174,239,0.5)] border border-[#00d4ff]/30"
                                             style={{ background: 'linear-gradient(135deg, #0096CC 0%, #00AEEF 50%, #00C8F0 100%)', boxShadow: '0 6px 24px rgba(0,174,239,0.5), inset 0 1px 0 rgba(255,255,255,0.25)', padding: `${Math.max(10, sidebarH * 0.014)}px ${Math.max(14, sidebarH * 0.02)}px` }}
                                         >
-                                            <div className="flex flex-col items-start leading-tight">
+                                            <div className="flex flex-col items-center text-center leading-tight flex-1">
                                                 <span className="text-white font-bold" style={{ fontSize: `${Math.max(13, sidebarH * 0.02)}px` }}>💙 תרמו טיפ בפייבוקס</span>
                                                 <span className="text-white/80 font-medium" style={{ fontSize: `${Math.max(10, sidebarH * 0.015)}px` }}>האתר חינמי - תמכו בו!</span>
                                             </div>
