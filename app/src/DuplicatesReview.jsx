@@ -29,6 +29,7 @@ export default function DuplicatesReview({ onComplete }) {
                     ...img,
                     tempTitle: img.metadata?.title || '',
                     tempExplanation: img.metadata?.explanation || '',
+                    tempTopic: img.metadata?.topic || '',
                     keep: true // Default to keeping all, user can uncheck
                 }));
                 newGroup.isTitleMatch = group.isTitleMatch;
@@ -77,6 +78,7 @@ export default function DuplicatesReview({ onComplete }) {
         const fromImg = groups[gIdx][fromIdx];
         updateTempMetadata(gIdx, toIdx, 'tempTitle', fromImg.tempTitle);
         updateTempMetadata(gIdx, toIdx, 'tempExplanation', fromImg.tempExplanation);
+        updateTempMetadata(gIdx, toIdx, 'tempTopic', fromImg.tempTopic);
     };
 
     const resolveGroup = async (groupIndex) => {
@@ -87,7 +89,8 @@ export default function DuplicatesReview({ onComplete }) {
             action: img.keep ? 'keep' : 'delete',
             metadata: {
                 title: img.tempTitle,
-                explanation: img.tempExplanation
+                explanation: img.tempExplanation,
+                topic: img.tempTopic
             }
         }));
 
@@ -195,7 +198,7 @@ export default function DuplicatesReview({ onComplete }) {
 
                                 {group.map((img, iIdx) => {
                                     const otherIdx = 1 - iIdx;
-                                    const isDraft = !img.tempTitle || !img.tempExplanation;
+                                    const isDraft = !img.tempTitle?.trim() || !img.tempExplanation?.trim() || !img.tempTopic?.trim();
 
                                     return (
                                         <div key={iIdx} className={`flex flex-col gap-4 p-5 rounded-3xl border-2 transition-all ${!img.keep ? 'opacity-60 bg-slate-50 grayscale' : isDraft ? 'border-amber-100 bg-amber-50/20' : 'border-teal-50 bg-teal-50/10'}`}>
@@ -272,6 +275,20 @@ export default function DuplicatesReview({ onComplete }) {
                                                         onChange={(e) => updateTempMetadata(gIdx, iIdx, 'tempExplanation', e.target.value)}
                                                         className={`w-full text-xs px-4 py-3 rounded-xl border-2 focus:outline-none focus:ring-4 focus:ring-teal-500/10 min-h-[90px] resize-none leading-relaxed transition-all ${!img.tempExplanation ? 'bg-amber-50 border-amber-200 text-amber-700' : 'bg-white border-slate-100 text-slate-600 focus:border-teal-500'}`}
                                                         placeholder="חסר הסבר..."
+                                                    />
+                                                </div>
+
+                                                <div className="space-y-1.5">
+                                                    <div className="flex justify-between items-center px-1">
+                                                        <label className="text-xs font-black text-slate-400 uppercase tracking-tighter">נושא (Topic)</label>
+                                                    </div>
+                                                    <input 
+                                                        type="text"
+                                                        value={img.tempTopic}
+                                                        disabled={!img.keep}
+                                                        onChange={(e) => updateTempMetadata(gIdx, iIdx, 'tempTopic', e.target.value)}
+                                                        className={`w-full text-sm px-4 py-2.5 rounded-xl border-2 focus:outline-none focus:ring-4 focus:ring-teal-500/10 transition-all font-bold ${!img.tempTopic ? 'bg-amber-50 border-amber-200 text-amber-700' : 'bg-white border-slate-100 text-slate-800 focus:border-teal-500'}`}
+                                                        placeholder="חסר נושא..."
                                                     />
                                                 </div>
                                             </div>

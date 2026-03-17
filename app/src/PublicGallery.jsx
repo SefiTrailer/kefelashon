@@ -679,7 +679,21 @@ export default function PublicGallery({ images, metadata }) {
                                                     <p className={`text-base text-white/90 leading-relaxed text-right dir-rtl font-medium`}>
                                                         {fileMetadata?.explanation}
                                                     </p>
-                                                    <div className="mt-6 pt-3 border-t border-white/10 text-white/50 text-xs font-medium text-right dir-rtl">
+                                                    
+                                                    {fileMetadata?.topic && (
+                                                        <div className="mt-4 pt-3 border-t border-white/10 text-right">
+                                                            <span className="text-white/40 text-xs font-bold block mb-1">נושאים:</span>
+                                                            <div className="flex flex-wrap gap-2 justify-end">
+                                                                {fileMetadata.topic.split(',').map(t => t.trim()).filter(Boolean).map(tag => (
+                                                                    <span key={tag} className="text-[10px] bg-white/10 px-2 py-0.5 rounded-full border border-white/10 text-white/80">
+                                                                        {tag}
+                                                                    </span>
+                                                                ))}
+                                                            </div>
+                                                        </div>
+                                                    )}
+
+                                                    <div className="mt-6 pt-3 border-t border-white/10 text-white/50 text-[10px] font-medium text-right dir-rtl">
                                                         * ההסבר נוסח ע"י בינה מלאכותית (AI) ועלול להכיל אי דיוקים.
                                                     </div>
                                                 </div>
@@ -1011,7 +1025,21 @@ export default function PublicGallery({ images, metadata }) {
                                                 <p key={index} className="mb-3 last:mb-0">{paragraph}</p>
                                             ))}
                                         </div>
-                                        <div className="mt-4 pt-3 border-t border-white/10 text-white/40 text-[11px] font-medium">
+
+                                        {fileMetadata?.topic && (
+                                            <div className="mt-6 pt-4 border-t border-white/10 text-right">
+                                                <span className="text-white/40 text-xs font-bold block mb-1">נושאים וקטגוריות:</span>
+                                                <div className="flex flex-wrap gap-2 justify-end">
+                                                    {fileMetadata.topic.split(',').map(t => t.trim()).filter(Boolean).map(tag => (
+                                                        <span key={tag} className="text-xs bg-white/10 px-2.5 py-1 rounded-full border border-white/10 text-cyan-200/80">
+                                                            {tag}
+                                                        </span>
+                                                    ))}
+                                                </div>
+                                            </div>
+                                        )}
+
+                                        <div className="mt-6 pt-3 border-t border-white/10 text-white/40 text-[11px] font-medium">
                                             * ההסבר נוסח ע"י בינה מלאכותית (AI) ועלול להכיל אי דיוקים.
                                         </div>
                                     </div>

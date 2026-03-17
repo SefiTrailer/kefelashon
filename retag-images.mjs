@@ -6,28 +6,21 @@ const master = JSON.parse(fs.readFileSync('./tags_master.json', 'utf-8'));
 const normalizeTags = (topicStr) => {
     if (!topicStr) return [];
     const rawTags = topicStr.split(',').map(t => t.trim()).filter(Boolean);
-    const normalized = new Set();
+    const result = new Set();
     
     rawTags.forEach(tag => {
+        // Always keep the original tag if it's meaningful
+        result.add(tag);
+        
+        // Also add the mapped general category if it exists
         if (master.mappings[tag]) {
-            normalized.add(master.mappings[tag]);
-        } else if (master.categories.includes(tag)) {
-            normalized.add(tag);
-        } else {
-            // If it's a very specific tag not in master, we keep it for now but maybe we should've mapped it
-            // Let's try to find a partial match in master mappings
-            let found = false;
-            for (const [key, val] of Object.entries(master.mappings)) {
-                if (tag.includes(key) || key.includes(tag)) {
-                    normalized.add(val);
-                    found = true;
-                    break;
-                }
-            }
-            if (!found) normalized.add(tag);
+            result.add(master.mappings[tag]);
         }
     });
-    return Array.from(normalized);
+
+    // Special case: if we have a sub-tag but not its major category yet, 
+    // we let the autoTag rules handle it or we could add more mapping logic here.
+    return Array.from(result);
 };
 
 // Keyword based auto-tagging
@@ -36,20 +29,27 @@ const autoTag = (item) => {
     const tags = new Set(normalizeTags(item.topic));
 
     const rules = {
-        "חיות": ["כלב", "חתול", "חיה", "חיות", "דג", "ציפור", "גדי", "סוס", "גמל", "שור", "חמור", "פרה", "תרנגול"],
-        "יהדות ומסורת": ["רב", "גמרא", "תורה", "בית כנסת", "תפילה", "מצווה", "חסיד", "יהודי", "הלכה", "ברסלב", "מדרש"],
-        "אוכל ושתייה": ["אוכל", "מאכל", "שתיה", "מתוק", "חלב", "בשרי", "חלבי", "יין", "לחם", "עוגה", "ירקות", "פירות"],
-        "חגים ומועדים": ["פסח", "סוכות", "ראש השנה", "חנוכה", "פורים", "שבועות", "יום כיפור", "צום", "חג", "מועד", "מצה", "חמץ"],
-        "פוליטיקה ואקטואליה": ["שר", "ממשלה", "כנסת", "נשיא", "בחירות", "פוליטיקה", "ראש הממשלה", "ביבי", "נתניהו"],
-        "פתגמים וביטויים": ["ביטוי", "פתגם", "משל", "מטבע לשון", "כפל לשון"],
-        "בית ויומיום": ["בית", "חדר", "רהיט", "בגד", "מטבח", "מקלחת", "ניקיון", "סלון"],
-        "טכנולוגיה ומדע": ["מחשב", "טלפון", "טכנולוגיה", "חשמל", "מכשיר", "אינטרנט", "אפל", "גוגל", "רכב", "מכונית"]
+        "חיות": ["כלב", "חתול", "חיה", "חיות", "דג", "ציפור", "גדי", "סוס", "גמל", "שור", "חמור", "פרה", "תרנגול", "נמלה", "כבש", "עכביש", "לוטרה", "באפלו", "לובסטר", "דינוזאור", "צב", "אריה", "תוכי", "ארנב", "שרקן"],
+        "יהדות ומסורת": ["רב", "גמרא", "תורה", "בית כנסת", "תפילה", "מצווה", "חסיד", "יהודי", "הלכה", "ברסלב", "מדרש", "צדיק", "מצה", "חמץ", "ספירת העומר", "מירון", "ביתר", "תורני"],
+        "אוכל ושתייה": ["אוכל", "מאכל", "שתיה", "מתוק", "חלב", "בשרי", "חלבי", "יין", "לחם", "עוגה", "ירקות", "פירות", "מרק", "פיסטוק", "פאי", "סופגניה", "בטטה", "אבטיח"],
+        "חגים ומועדים": ["פסח", "סוכות", "ראש השנה", "חנוכה", "פורים", "שבועות", "יום כיפור", "צום", "חג", "מועד", "מצה", "חמץ", "מירון", "לג בעומר", "עצמאות"],
+        "פוליטיקה ואקטואליה": ["שר", "ממשלה", "כנסת", "נשיא", "בחירות", "פוליטיקה", "ראש הממשלה", "ביבי", "נתניהו", "טראמפ", "איראן", "דגל", "חייל", "צה\"ל", "צבא", "משטרה", "מג\"ב", "קואליציה"],
+        "פתגמים וביטויים": ["ביטוי", "פתגם", "משל", "מטבע לשון", "כפל לשון", "שיח מכבד"],
+        "בית ויומיום": ["בית", "חדר", "רהיט", "בגד", "מטבח", "מקלחת", "ניקיון", "סלון", "קולב", "סבון", "מגבונים", "חולצה", "ציפית", "מיטה"],
+        "טכנולוגיה ומדע": ["מחשב", "טלפון", "טכנולוגיה", "חשמל", "מכשיר", "אינטרנט", "אפל", "גוגל", "רכב", "מכונית", "רובוט", "נאס\"א", "אטומי", "גרעין"]
     };
 
+    // Sub-tags generation: if a keyword is found, add it as a specific tag too
     for (const [category, keywords] of Object.entries(rules)) {
-        if (keywords.some(kw => text.includes(kw))) {
-            tags.add(category);
-        }
+        keywords.forEach(kw => {
+            if (text.includes(kw)) {
+                tags.add(category);
+                // Also add the specific keyword if it's "interesting" (longer than 2 chars)
+                if (kw.length > 2) {
+                    tags.add(kw);
+                }
+            }
+        });
     }
 
     return Array.from(tags).join(', ');

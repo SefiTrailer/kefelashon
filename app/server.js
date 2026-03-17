@@ -192,24 +192,12 @@ app.post('/api/metadata', (req, res) => {
                 const normalizedSet = new Set();
                 
                 rawTags.forEach(tag => {
-                    // Direct mapping or category match
+                    // Always keep the original tag
+                    normalizedSet.add(tag);
+                    
+                    // Also add the mapped general category if it exists
                     if (master.mappings && master.mappings[tag]) {
                         normalizedSet.add(master.mappings[tag]);
-                    } else if (master.categories && master.categories.includes(tag)) {
-                        normalizedSet.add(tag);
-                    } else {
-                        // Fuzzy match / Partial match
-                        let found = false;
-                        if (master.mappings) {
-                            for (const [key, val] of Object.entries(master.mappings)) {
-                                if (tag.includes(key) || key.includes(tag)) {
-                                    normalizedSet.add(val);
-                                    found = true;
-                                    break;
-                                }
-                            }
-                        }
-                        if (!found) normalizedSet.add(tag);
                     }
                 });
                 normalizedTopic = Array.from(normalizedSet).join(', ');
@@ -439,6 +427,7 @@ app.post('/api/duplicates/resolve', async (req, res) => {
                         ...(data[filename] || {}),
                         title: metadata.title || data[filename]?.title || '',
                         explanation: metadata.explanation || data[filename]?.explanation || '',
+                        topic: metadata.topic || data[filename]?.topic || '',
                         isApproved: true
                     };
                 }

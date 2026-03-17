@@ -40,6 +40,9 @@ function App() {
   const [publishResult, setPublishResult] = useState(null);
   const [lastCommit, setLastCommit] = useState(null);
   const [masterCategories, setMasterCategories] = useState([]);
+  const [isTopicModalOpen, setIsTopicModalOpen] = useState(false);
+  const [topicSearchQuery, setTopicSearchQuery] = useState('');
+  const [newTagInput, setNewTagInput] = useState('');
 
   // Detect public mode: either via env var (production build) or if not on localhost
   const isPublicViewer = import.meta.env.VITE_PUBLIC_VIEWER === 'true' || 
@@ -115,7 +118,7 @@ function App() {
       const meta = metadata[img] || {};
       
       // 1. Filter Mode
-      if (filterMode === 'tagged' && (!meta.title || !meta.explanation)) return false;
+      if (filterMode === 'tagged' && (!meta.title?.trim() || !meta.explanation?.trim() || !meta.topic?.trim())) return false;
       if (filterMode === 'no-title' && meta.title) return false;
       if (filterMode === 'no-explanation' && meta.explanation) return false;
       if (filterMode === 'no-topic' && meta.topic) return false;
@@ -174,12 +177,56 @@ function App() {
     }
   }, [filteredImages, filterMode, selectedTopic, debouncedSearchQuery]);
 
-  // Derived unique topics list
-  const allTopics = Array.from(new Set(
-    Object.values(metadata)
-      .filter(m => m.topic)
-      .flatMap(m => m.topic.split(',').map(t => t.trim()))
-  )).sort();
+  // Derived counts for filters and topics
+  const { filterCounts, topicCounts, allTopics } = useMemo(() => {
+    const fc = {
+      all: allImages.length,
+      tagged: 0,
+      noTitle: 0,
+      noExplanation: 0,
+      noTopic: 0,
+      ai: 0,
+      approved: 0,
+      notApproved: 0,
+      newImages: 0,
+      genericAi: 0,
+      untitled: 0
+    };
+
+    const tc = {};
+    
+    allImages.forEach(img => {
+      const meta = metadata[img] || {};
+      
+      // Filter counts
+      if (meta.title?.trim() && meta.explanation?.trim() && meta.topic?.trim()) fc.tagged++;
+      if (!meta.title) fc.noTitle++;
+      if (!meta.explanation) fc.noExplanation++;
+      if (!meta.topic) fc.noTopic++;
+      if (meta.isAIGenerated === true) fc.ai++;
+      if (meta.isApproved === true) fc.approved++;
+      if (meta.isApproved !== true) fc.notApproved++;
+      if (fileSources[img] === 'new') fc.newImages++;
+      if (meta.explanation?.includes('התמונה ממחישה את הכפל המשמעות הטמון בביטוי')) fc.genericAi++;
+      if (img.includes('עיצוב ללא שם')) fc.untitled++;
+
+      // Topic counts
+      if (meta.topic) {
+        meta.topic.split(',').forEach(t => {
+          const trimmed = t.trim();
+          if (trimmed) {
+            tc[trimmed] = (tc[trimmed] || 0) + 1;
+          }
+        });
+      }
+    });
+
+    return { 
+      filterCounts: fc, 
+      topicCounts: tc, 
+      allTopics: Object.keys(tc).sort() 
+    };
+  }, [allImages, metadata, fileSources]);
 
 
 
@@ -407,7 +454,7 @@ function App() {
   }
 
   const currentFile = images[currentIndex];
-  const isCompleted = metadata[currentFile]?.title && metadata[currentFile]?.explanation;
+  const isCompleted = metadata[currentFile]?.title?.trim() && metadata[currentFile]?.explanation?.trim() && metadata[currentFile]?.topic?.trim();
   const progressPercentage = allImages.length ? (Object.keys(metadata).length / allImages.length) * 100 : 0;
 
   if (isPublicViewer) {
@@ -450,17 +497,17 @@ function App() {
                   className="bg-transparent border-none focus:ring-0 py-1.5 focus:outline-none text-slate-700 cursor-pointer"
                   dir="rtl"
                 >
-                  <option value="all">כל התמונות ({allImages.length})</option>
-                  <option value="tagged">מלאות (כותרת והסבר)</option>
-                  <option value="no-title">ללא כותרת</option>
-                  <option value="no-explanation">ללא הסבר</option>
-                  <option value="no-topic">ללא נושא (Topic)</option>
-                  <option value="ai">🤖 תויגו רק ב-AI</option>
-                  <option value="approved">✅ עברו בקרה / מאושרות</option>
-                  <option value="not-approved">⏳ לא עברו בקרה / ממתינות</option>
-                  <option value="new-images">🆕 תמונות חדשות (בתיקיית קליטה)</option>
-                  <option value="generic-ai">🤖 הסבר AI גנרי</option>
-                  <option value="untitled">🎨 עיצוב ללא שם</option>
+                  <option value="all">כל התמונות [{filterCounts.all}]</option>
+                  <option value="tagged">מלאות (כותרת, הסבר ונושא) [{filterCounts.tagged}]</option>
+                  <option value="no-title">ללא כותרת [{filterCounts.noTitle}]</option>
+                  <option value="no-explanation">ללא הסבר [{filterCounts.noExplanation}]</option>
+                  <option value="no-topic">ללא נושא (Topic) [{filterCounts.noTopic}]</option>
+                  <option value="ai">🤖 תויגו רק ב-AI [{filterCounts.ai}]</option>
+                  <option value="approved">✅ עברו בקרה / מאושרות [{filterCounts.approved}]</option>
+                  <option value="not-approved">⏳ לא עברו בקרה / ממתינות [{filterCounts.notApproved}]</option>
+                  <option value="new-images">🆕 תמונות חדשות (בתיקיית קליטה) [{filterCounts.newImages}]</option>
+                  <option value="generic-ai">🤖 הסבר AI גנרי [{filterCounts.genericAi}]</option>
+                  <option value="untitled">🎨 עיצוב ללא שם [{filterCounts.untitled}]</option>
                  </select>
               </div>
 
@@ -506,16 +553,23 @@ function App() {
 
             {/* Topics Row */}
             <div className="flex flex-wrap justify-end gap-2 mt-2 max-w-2xl overflow-hidden">
-               {allTopics.slice(0, 15).map(t => (
+               {allTopics.slice(0, 30).map(t => (
                  <button
                    key={t}
                    onClick={() => setSelectedTopic(selectedTopic === t ? null : t)}
                    className={`text-[10px] px-2 py-0.5 rounded-full border transition-all ${selectedTopic === t ? 'bg-teal-600 border-teal-600 text-white shadow-sm' : 'bg-white border-slate-200 text-slate-500 hover:border-teal-200 hover:text-teal-600'}`}
                  >
-                   {t}
+                   {t} [{topicCounts[t] || 0}]
                  </button>
                ))}
-               {allTopics.length > 15 && <span className="text-[10px] text-slate-300">...</span>}
+               {allTopics.length > 30 && (
+                 <button 
+                  onClick={() => setIsTopicModalOpen(true)}
+                  className="text-[10px] text-teal-600 hover:underline font-bold"
+                 >
+                   +{allTopics.length - 30} נוספים...
+                 </button>
+               )}
             </div>
 
             {/* ── Publish to GitHub button ── */}
@@ -702,20 +756,89 @@ function App() {
               </div>
 
               <div className="space-y-2">
-                <label className="text-sm font-bold text-slate-700 ml-1">נושא / קטגוריה</label>
-                <input
-                  type="text"
-                  value={topic}
-                  onChange={(e) => setTopic(e.target.value)}
-                  placeholder="לדוגמה: חיות, היסטוריה, אוכל..."
-                  list="master-tags"
-                  className="w-full text-lg px-5 py-4 bg-slate-50 border border-slate-200 rounded-2xl focus:outline-none focus:ring-4 focus:ring-teal-500/20 focus:border-teal-500 transition-all font-medium text-slate-800"
-                />
-                <datalist id="master-tags">
-                  {masterCategories.map(cat => (
-                    <option key={cat} value={cat} />
+                <label className="text-sm font-bold text-slate-700 ml-1">נושאים וקטגוריות</label>
+                <div className="bg-slate-50 border border-slate-200 rounded-2xl p-3 min-h-[60px] flex flex-wrap gap-2 focus-within:ring-4 focus-within:ring-teal-500/20 focus-within:border-teal-500 transition-all">
+                  {topic.split(',').map(t => t.trim()).filter(Boolean).map((tag, idx) => (
+                    <span key={`${tag}-${idx}`} className="flex items-center gap-1.5 bg-teal-100 text-teal-800 px-3 py-1.5 rounded-xl border border-teal-200 text-sm font-bold animate-in zoom-in-95 duration-200">
+                      {tag}
+                      <button 
+                        type="button" 
+                        onClick={() => {
+                          const newTags = topic.split(',').map(t => t.trim()).filter(t => t !== tag && t !== '');
+                          setTopic(newTags.join(', '));
+                        }}
+                        className="p-0.5 hover:bg-teal-200 rounded-full text-teal-600 transition-colors"
+                      >
+                        <X size={14} />
+                      </button>
+                    </span>
                   ))}
-                </datalist>
+                  <div className="flex-1 min-w-[120px] flex items-center gap-2">
+                    <input
+                      type="text"
+                      value={newTagInput}
+                      onChange={(e) => setNewTagInput(e.target.value)}
+                      onKeyDown={(e) => {
+                        if (e.key === 'Enter' || e.key === ',') {
+                          e.preventDefault();
+                          const val = newTagInput.trim().replace(/,/g, '');
+                          if (val) {
+                            const tags = topic ? topic.split(',').map(t => t.trim()) : [];
+                            if (!tags.includes(val)) {
+                              setTopic(topic ? `${topic}, ${val}` : val);
+                            }
+                            setNewTagInput('');
+                          }
+                        }
+                      }}
+                      placeholder="הוסף תיוג חדש..."
+                      className="w-full bg-transparent border-none focus:ring-0 text-sm font-medium text-slate-800 p-1"
+                      dir="rtl"
+                      list="master-tags"
+                    />
+                    {newTagInput && (
+                      <button
+                        type="button"
+                        onClick={() => {
+                            const val = newTagInput.trim().replace(/,/g, '');
+                            if (val) {
+                              const tags = topic ? topic.split(',').map(t => t.trim()) : [];
+                              if (!tags.includes(val)) {
+                                setTopic(topic ? `${topic}, ${val}` : val);
+                              }
+                              setNewTagInput('');
+                            }
+                        }}
+                        className="bg-teal-500 text-white p-1 rounded-lg hover:bg-teal-600 transition-all shrink-0"
+                      >
+                         <CheckCircle size={16} />
+                      </button>
+                    )}
+                  </div>
+                  <datalist id="master-tags">
+                    {masterCategories.map(cat => (
+                      <option key={cat} value={cat} />
+                    ))}
+                  </datalist>
+                </div>
+                {/* Quick Add Tags */}
+                <div className="flex flex-wrap gap-1.5 mt-1">
+                  {masterCategories.slice(0, 10).map(cat => (
+                    <button
+                      key={cat}
+                      type="button"
+                      onClick={() => {
+                        const tags = topic ? topic.split(',').map(t => t.trim()) : [];
+                        if (!tags.includes(cat)) {
+                          setTopic(topic ? `${topic}, ${cat}` : cat);
+                        }
+                      }}
+                      className="text-[10px] bg-slate-100 hover:bg-teal-100 text-slate-500 hover:text-teal-700 px-2 py-1 rounded-md border border-slate-200 transition-colors"
+                    >
+                      + {cat}
+                    </button>
+                  ))}
+                </div>
               </div>
 
               <div className="space-y-2 flex-1 flex flex-col">
@@ -979,6 +1102,84 @@ function App() {
           יצירת קשר בווסטאפ
         </span>
       </a>
+
+      {/* Topic Browser Modal */}
+      {isTopicModalOpen && (
+        <div className="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 flex items-center justify-center p-4">
+          <div className="bg-white rounded-3xl shadow-2xl w-full max-w-2xl max-h-[85vh] flex flex-col overflow-hidden animate-in fade-in zoom-in-95 duration-200">
+            <div className="p-6 border-b border-slate-100 flex items-center justify-between bg-slate-50/50">
+              <h3 className="text-xl font-bold text-slate-800 flex items-center gap-2">
+                <LayoutGrid className="text-teal-600" size={24} />
+                בחר נושא לסינון
+              </h3>
+              <button
+                onClick={() => {
+                  setIsTopicModalOpen(false);
+                  setTopicSearchQuery('');
+                }}
+                className="p-2 text-slate-400 hover:text-slate-600 hover:bg-slate-100 rounded-full transition-colors"
+              >
+                <X size={24} />
+              </button>
+            </div>
+
+            <div className="p-6 border-b border-slate-100">
+              <div className="relative">
+                <Search size={20} className="absolute right-4 top-1/2 -translate-y-1/2 text-slate-400" />
+                <input
+                  type="text"
+                  placeholder="חפש נושא או קטגוריה..."
+                  value={topicSearchQuery}
+                  onChange={(e) => setTopicSearchQuery(e.target.value)}
+                  autoFocus
+                  className="w-full pr-12 pl-5 py-4 bg-slate-50 border border-slate-200 rounded-2xl focus:outline-none focus:ring-4 focus:ring-teal-500/20 focus:border-teal-500 transition-all font-medium text-slate-800 text-lg"
+                  dir="rtl"
+                />
+              </div>
+            </div>
+
+            <div className="flex-1 overflow-y-auto p-4 bg-slate-50/30">
+                <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
+                    <button
+                      onClick={() => {
+                        setSelectedTopic(null);
+                        setIsTopicModalOpen(false);
+                      }}
+                      className={`p-4 rounded-2xl border transition-all text-center font-bold ${!selectedTopic ? 'bg-teal-600 border-teal-600 text-white shadow-lg' : 'bg-white border-slate-100 text-slate-600 hover:border-teal-300'}`}
+                    >
+                      כל הנושאים
+                    </button>
+                    {allTopics
+                      .filter(t => t.toLowerCase().includes(topicSearchQuery.toLowerCase()))
+                      .map(t => (
+                        <button
+                          key={t}
+                          onClick={() => {
+                            setSelectedTopic(selectedTopic === t ? null : t);
+                            setIsTopicModalOpen(false);
+                          }}
+                          className={`p-4 rounded-2xl border transition-all text-center flex flex-col items-center justify-center gap-1 ${selectedTopic === t ? 'bg-teal-600 border-teal-600 text-white shadow-lg' : 'bg-white border-slate-100 text-slate-600 hover:border-teal-300'}`}
+                        >
+                          <span className="font-bold">{t}</span>
+                          <span className={`text-[10px] ${selectedTopic === t ? 'text-teal-100' : 'text-slate-400'}`}>[{topicCounts[t] || 0} תמונות]</span>
+                        </button>
+                      ))}
+                </div>
+                {allTopics.filter(t => t.toLowerCase().includes(topicSearchQuery.toLowerCase())).length === 0 && (
+                  <div className="text-center p-8 text-slate-500 italic">
+                    לא נמצאו נושאים תואמים...
+                  </div>
+                )}
+            </div>
+            
+            <div className="p-4 bg-slate-50 border-t border-slate-100 text-center">
+                <p className="text-xs text-slate-400 font-medium italic">
+                    סה"כ {allTopics.length} נושאים במערכת
+                </p>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
