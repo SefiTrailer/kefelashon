@@ -27,6 +27,7 @@ function App() {
   const [topic, setTopic] = useState('');
   const [isApproved, setIsApproved] = useState(false);
   const [needsAIImprovement, setNeedsAIImprovement] = useState(false);
+  const [aiSuggestion, setAiSuggestion] = useState(null);
   const [isSaving, setIsSaving] = useState(false);
   const [error, setError] = useState(null);
   const [isSearchOpen, setIsSearchOpen] = useState(false);
@@ -306,6 +307,7 @@ function App() {
       setTopic(data?.topic || '');
       setIsApproved(data?.isApproved || false);
       setNeedsAIImprovement(data?.needsAIImprovement || false);
+      setAiSuggestion(data?.aiSuggestion || null);
     }
   }, [currentIndex, images, metadata]);
 
@@ -326,7 +328,8 @@ function App() {
           explanation,
           topic,
           isApproved,
-          needsAIImprovement
+          needsAIImprovement,
+          aiSuggestion
         })
       });
 
@@ -864,9 +867,37 @@ function App() {
                 <textarea
                   value={explanation}
                   onChange={(e) => setExplanation(e.target.value)}
-                  className="w-full flex-1 min-h-[120px] px-4 py-3 bg-slate-50 border border-slate-200 rounded-2xl focus:outline-none focus:ring-4 focus:ring-teal-500/20 focus:border-teal-500 transition-all text-slate-700 resize-none leading-relaxed"
+                  placeholder="הסבר את משמעות כפל הלשון בפירוט..."
+                  className={`w-full flex-1 min-h-[120px] px-4 py-3 bg-slate-50 border border-slate-200 rounded-2xl focus:outline-none focus:ring-4 focus:ring-teal-500/20 focus:border-teal-500 transition-all text-slate-700 resize-none leading-relaxed ${aiSuggestion ? 'ring-2 ring-amber-200 border-amber-300' : ''}`}
                 />
               </div>
+
+              {aiSuggestion && (
+                <div className="space-y-2 flex-1 flex flex-col animate-in slide-in-from-left duration-300">
+                  <label className="text-sm font-bold text-amber-700 ml-1 flex justify-between items-center">
+                    <span className="flex items-center gap-2">🤖 הצעה לשיפור (AI)</span>
+                    <button 
+                      onClick={() => {
+                        setExplanation(aiSuggestion);
+                        setAiSuggestion(null);
+                      }}
+                      className="bg-amber-100 text-amber-800 px-3 py-1 rounded-lg text-xs font-bold hover:bg-amber-200 transition-colors flex items-center gap-1"
+                    >
+                      <CheckCircle size={14} /> אמץ הצעה
+                    </button>
+                  </label>
+                  <div className="w-full flex-1 min-h-[120px] px-4 py-3 bg-amber-50/50 border border-amber-200 rounded-2xl text-slate-700 leading-relaxed overflow-y-auto whitespace-pre-wrap relative italic">
+                    {aiSuggestion}
+                    <button 
+                       onClick={() => setAiSuggestion(null)}
+                       className="absolute top-2 left-2 p-1 text-amber-400 hover:text-amber-600 transition-colors"
+                       title="הסר הצעה זו"
+                    >
+                      <X size={16} />
+                    </button>
+                  </div>
+                </div>
+              )}
             </div>
 
             <div className="flex flex-col gap-3 mt-4 px-2">
