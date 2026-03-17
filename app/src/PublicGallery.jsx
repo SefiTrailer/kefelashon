@@ -416,7 +416,12 @@ export default function PublicGallery({ images, metadata }) {
 
                             {/* ── Mobile-Only Header Block (Hidden on Desktop) ── */}
                             <div className="flex lg:hidden flex-col items-center shrink-0 mb-4 bg-slate-900/60 backdrop-blur-xl border border-white/10 rounded-[2.5rem] px-6 py-5 shadow-xl w-full">
-                                <img src="./logo.webp" alt="כפלשון" className="h-32 sm:h-36 object-contain drop-shadow-[0_0_20px_rgba(236,72,153,0.5)]" />
+                                <img 
+                                    src="./logo.webp" 
+                                    alt="כפלשון" 
+                                    className="h-32 sm:h-36 object-contain drop-shadow-[0_0_20px_rgba(236,72,153,0.5)]" 
+                                    onError={(e) => { e.target.onerror = null; e.target.src = './logo.png'; }}
+                                />
                                 <div className="text-center font-medium mt-3 text-base sm:text-lg text-slate-300 leading-relaxed">
                                     ברוכים הבאים ל<strong className="text-white mx-1 drop-shadow-md">'כפלשון'</strong>!
                                     <br />
@@ -443,7 +448,12 @@ export default function PublicGallery({ images, metadata }) {
                                             <span className="text-white font-bold text-sm">תרמו טיפ בפייבוקס 💙</span>
                                             <span className="text-white/75 text-[10px] font-medium">האתר חינמי - תמכו בו!</span>
                                         </div>
-                                        <img src="./paybox-logo.webp" alt="Paybox" className="h-7 w-auto shrink-0 brightness-0 invert" />
+                                        <img 
+                                            src="./paybox-logo.webp" 
+                                            alt="Paybox" 
+                                            className="h-7 w-auto shrink-0 brightness-0 invert" 
+                                            onError={(e) => { e.target.onerror = null; e.target.src = './paybox-logo.png'; }}
+                                        />
                                     </a>
                                 </div>
                             </div>
@@ -823,6 +833,7 @@ export default function PublicGallery({ images, metadata }) {
                                     alt="כפלשון"
                                     className="object-contain drop-shadow-[0_0_32px_rgba(236,72,153,0.7)] transition-transform hover:scale-105"
                                     style={{ height: isMobile ? '80px' : `${sidebarH * 0.2}px`, transform: 'scaleX(1.15)' }}
+                                    onError={(e) => { e.target.onerror = null; e.target.src = './logo.png'; }}
                                 />
                             </div>
 
@@ -860,7 +871,12 @@ export default function PublicGallery({ images, metadata }) {
                                                 <span className="text-white font-bold" style={{ fontSize: `${Math.max(13, sidebarH * 0.02)}px` }}>💙 תרמו טיפ בפייבוקס</span>
                                                 <span className="text-white/80 font-medium" style={{ fontSize: `${Math.max(10, sidebarH * 0.015)}px` }}>האתר חינמי - תמכו בו!</span>
                                             </div>
-                                            <img src="./paybox-logo.webp" alt="Paybox" className="h-8 w-auto shrink-0 brightness-0 invert" />
+                                            <img 
+                                                src="./paybox-logo.webp" 
+                                                alt="Paybox" 
+                                                className="h-8 w-auto shrink-0 brightness-0 invert" 
+                                                onError={(e) => { e.target.onerror = null; e.target.src = './paybox-logo.png'; }}
+                                            />
                                         </a>
                                     </div>
                                 </div>
@@ -918,7 +934,12 @@ export default function PublicGallery({ images, metadata }) {
                                         style={{ width: `${sidebarH * 0.22}px`, height: `${sidebarH * 0.22}px` }}
                                         onClick={handleQRCodeClick}
                                     >
-                                        <img src="./qrcode.png" alt="QR Code" className="w-full h-full object-contain transition-transform duration-700 group-hover:scale-110 group-hover:rotate-1" />
+                                        <img 
+                                            src="./qrcode.webp" 
+                                            alt="QR Code" 
+                                            className="w-full h-full object-contain transition-transform duration-700 group-hover:scale-110 group-hover:rotate-1" 
+                                            onError={(e) => { e.target.onerror = null; e.target.src = './qrcode.png'; }}
+                                        />
                                         <div className="absolute inset-0 bg-black/75 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col items-center justify-center text-white backdrop-blur-sm z-10">
                                             <Share2 size={28} className="mb-2 text-pink-400 drop-shadow-[0_0_8px_rgba(236,72,153,0.8)] animate-pulse" />
                                             <span className="text-[11px] font-bold text-center leading-tight tracking-wide px-2">לשיתוף האתר<br />לחץ כאן</span>
