@@ -442,9 +442,7 @@ export default function PublicGallery({ images, metadata }) {
                                         className="flex items-center gap-1.5 px-3 py-1 bg-[#00AEEF] hover:bg-[#0090C5] text-white rounded-full transition-all active:scale-95 shadow-lg font-bold text-[10px] shrink-0"
                                     >
                                         <span>טיפ בפייבוקס</span>
-                                        <svg viewBox="0 0 100 100" className="w-4 h-4 fill-white">
-                                            <path d="M15,10 L85,10 C87.76,10 90,12.24 90,15 L90,85 C90,87.76 87.76,90 85,90 L15,90 C12.24,90 10,87.76 10,85 L10,15 C10,12.24 12.24,10 15,10 Z M33,35 L33,70 L48,70 L48,55 L58,55 C66.28,55 73,48.28 73,40 C73,31.72 66.28,25 58,25 L33,25 L33,35 Z M48,35 L48,45 L58,45 C60.76,45 63,42.76 63,40 C63,37.24 60.76,35 58,35 L48,35 Z" />
-                                        </svg>
+                                        <img src="./paybox-logo.svg" alt="Paybox" className="w-4 h-4 brightness-0 invert" />
                                     </a>
                                 </div>
                             </div>
@@ -858,9 +856,7 @@ export default function PublicGallery({ images, metadata }) {
                                             className="flex items-center gap-2 px-4 py-1.5 bg-[#00AEEF] hover:bg-[#0090C5] text-white rounded-full transition-all hover:scale-105 shadow-lg group font-bold text-xs shrink-0"
                                         >
                                             <span>טיפ בפייבוקס</span>
-                                            <svg viewBox="0 0 100 100" className="w-4 h-4 fill-white">
-                                                <path d="M15,10 L85,10 C87.76,10 90,12.24 90,15 L90,85 C90,87.76 87.76,90 85,90 L15,90 C12.24,90 10,87.76 10,85 L10,15 C10,12.24 12.24,10 15,10 Z M33,35 L33,70 L48,70 L48,55 L58,55 C66.28,55 73,48.28 73,40 C73,31.72 66.28,25 58,25 L33,25 L33,35 Z M48,35 L48,45 L58,45 C60.76,45 63,42.76 63,40 C63,37.24 60.76,35 58,35 L48,35 Z" />
-                                            </svg>
+                                            <img src="./paybox-logo.svg" alt="Paybox" className="w-5 h-5 brightness-0 invert" />
                                         </a>
                                     </div>
                                 </div>
