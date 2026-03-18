@@ -24,6 +24,10 @@ const DATA_FILE = path.resolve(__dirname, '../data.json');
 const HASHES_FILE = path.resolve(__dirname, '../hashes.json');
 const SOURCE_BACKUP_DIR = path.resolve(__dirname, '../app/תמונות מקור'); // Keep for legacy if needed
 
+console.log('IMAGES_DIR:', IMAGES_DIR);
+console.log('NEW_IMAGES_DIR:', NEW_IMAGES_DIR);
+console.log('DATA_FILE:', DATA_FILE);
+
 // Configure multer for file uploads
 const storage = multer.diskStorage({
     destination: function (req, file, cb) {
@@ -60,17 +64,17 @@ app.get('/api/images', (req, res) => {
         sourceFiles.forEach(f => fileSources[f] = 'source');
         newFiles.forEach(f => fileSources[f] = 'new');
 
+        console.log(`[API] /api/images - Public: ${sourceFiles.length}, New: ${newFiles.length}, Total: ${files.length}`);
+
         let data = {};
         if (fs.existsSync(DATA_FILE)) {
             data = JSON.parse(fs.readFileSync(DATA_FILE, 'utf-8'));
         }
 
         files.sort((a, b) => {
-            const aTagged = data[a]?.title && data[a]?.explanation ? 1 : 0;
-            const bTagged = data[b]?.title && data[b]?.explanation ? 1 : 0;
-            if (aTagged !== bTagged) {
-                return aTagged - bTagged;
-            }
+            const aDate = data[a]?.dateMillis || 0;
+            const bDate = data[b]?.dateMillis || 0;
+            if (aDate !== bDate) return bDate - aDate;
             return a.localeCompare(b);
         });
 
@@ -264,7 +268,6 @@ app.post('/api/upload', upload.array('images'), async (req, res) => {
         if (!req.files || req.files.length === 0) {
             return res.status(400).json({ error: 'No files uploaded.' });
         }
-        res.json({ success: true });
 
         let data = {};
         if (fs.existsSync(DATA_FILE)) {
