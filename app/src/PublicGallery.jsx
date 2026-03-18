@@ -448,7 +448,7 @@ export default function PublicGallery({ images, metadata }) {
                                         style={{ boxShadow: '0 4px 20px rgba(0,174,239,0.45), inset 0 1px 0 rgba(255,255,255,0.25)' }}
                                     >
                                         <div className="flex flex-col items-center leading-tight text-center">
-                                            <span className="text-white font-bold text-sm">תרמו טיפ בפייבוקס 💙</span>
+                                            <span className="text-white font-bold text-sm">תנו טיפ בפייבוקס 💙</span>
                                             <span className="text-white/75 text-[10px] font-medium">האתר חינמי - תמכו בו!</span>
                                         </div>
                                         <img 
@@ -674,7 +674,7 @@ export default function PublicGallery({ images, metadata }) {
                                                 >
                                                     <span className="text-white/70 text-sm font-bold pointer-events-none">מיון:</span>
                                                     <div className="relative flex items-center bg-transparent text-white text-sm font-medium pr-1 pl-6 hover:text-white/80 transition-colors z-10 w-[110px] justify-start whitespace-nowrap">
-                                                        <span>{sortOrder === 'newest' ? 'הכל חדש' : (sortOrder === 'oldest' ? 'הכל ישן' : 'אקראי')}</span>
+                                                        <span>{sortOrder === 'newest' ? 'מהכי חדש' : (sortOrder === 'oldest' ? 'מהכי ישן' : 'אקראי')}</span>
                                                         <div className={`absolute left-1 text-white/50 text-[10px] transition-transform ${isSortOpen ? 'rotate-180' : ''}`}>▲</div>
 
                                                         {/* Upwards Dropdown Menu (Click based) */}
@@ -683,11 +683,11 @@ export default function PublicGallery({ images, metadata }) {
                                                                 <div
                                                                     className={`px-4 py-2.5 text-sm text-right transition-colors ${sortOrder === 'newest' ? 'text-white font-bold bg-white/10' : 'text-white/70 hover:bg-white/5'}`}
                                                                     onClick={(e) => { e.stopPropagation(); setSortOrder('newest'); setIsSortOpen(false); }}
-                                                                >מהחדש לישן</div>
+                                                                >מהכי חדש</div>
                                                                 <div
                                                                     className={`px-4 py-2.5 text-sm text-right transition-colors ${sortOrder === 'oldest' ? 'text-white font-bold bg-white/10' : 'text-white/70 hover:bg-white/5'}`}
                                                                     onClick={(e) => { e.stopPropagation(); setSortOrder('oldest'); setIsSortOpen(false); }}
-                                                                >מהישן לחדש</div>
+                                                                >מהכי ישן</div>
                                                                 <div
                                                                     className={`px-4 py-2.5 text-sm text-right transition-colors ${sortOrder === 'random' ? 'text-white font-bold bg-white/10' : 'text-white/70 hover:bg-white/5'}`}
                                                                     onClick={(e) => { e.stopPropagation(); setSortOrder('random'); setIsSortOpen(false); }}
@@ -781,7 +781,7 @@ export default function PublicGallery({ images, metadata }) {
                                                     onClick={(e) => { e.stopPropagation(); setSortOrder('newest'); }}
                                                     className={`px-3 py-1.5 text-xs font-bold transition-all ${sortOrder === 'newest' ? `bg-gradient-to-br ${theme.frameGrad} text-white` : 'text-white/50 hover:text-white bg-white/5'}`}
                                                 >
-                                                    הכי חדשים
+                                                    מהכי חדש
                                                 </button>
                                                 <div className="w-px bg-white/15 shrink-0" />
                                                 <button
@@ -871,7 +871,7 @@ export default function PublicGallery({ images, metadata }) {
                                             style={{ background: 'linear-gradient(135deg, #0096CC 0%, #00AEEF 50%, #00C8F0 100%)', boxShadow: '0 6px 24px rgba(0,174,239,0.5), inset 0 1px 0 rgba(255,255,255,0.25)', padding: `${Math.max(10, sidebarH * 0.014)}px ${Math.max(14, sidebarH * 0.02)}px` }}
                                         >
                                             <div className="flex flex-col items-center text-center leading-tight flex-1">
-                                                <span className="text-white font-bold" style={{ fontSize: `${Math.max(13, sidebarH * 0.02)}px` }}>💙 תרמו טיפ בפייבוקס</span>
+                                                <span className="text-white font-bold" style={{ fontSize: `${Math.max(13, sidebarH * 0.02)}px` }}>💙 תנו טיפ בפייבוקס</span>
                                                 <span className="text-white/80 font-medium" style={{ fontSize: `${Math.max(10, sidebarH * 0.015)}px` }}>האתר חינמי - תמכו בו!</span>
                                             </div>
                                             <img 
