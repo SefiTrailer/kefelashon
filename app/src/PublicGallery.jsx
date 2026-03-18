@@ -156,26 +156,16 @@ export default function PublicGallery({ images, metadata }) {
     };
 
     useEffect(() => {
-        // Sort tagged images first, untagged images after. Inside groups, sort by file timestamp or random.
-        const tagged = [];
-        const untagged = [];
-
-        images.forEach(img => {
-            const hasInfo = metadata[img]?.title || metadata[img]?.explanation;
-            if (hasInfo) tagged.push(img);
-            else untagged.push(img);
-        });
-
         const sortArray = (arr) => {
-            if (sortOrder === 'newest') {
-                return arr.sort((a, b) => {
+            if (sortOrder === 'newest' || sortOrder === 'oldest') {
+                return [...arr].sort((a, b) => {
                     const dateA = metadata[a]?.dateMillis || 0;
                     const dateB = metadata[b]?.dateMillis || 0;
                     if (dateA !== dateB) {
                         return sortOrder === 'newest' ? dateB - dateA : dateA - dateB;
                     }
 
-                    // Fallback to older logic if dateMillis not present
+                    // Fallback to filename-based date if dateMillis not present
                     const extractDate = (filename) => {
                         const match = filename.match(/_(\d{8})_(\d{6})_/);
                         return match ? parseInt(match[1] + match[2], 10) : 0;
@@ -190,7 +180,7 @@ export default function PublicGallery({ images, metadata }) {
                     return 0;
                 });
             } else {
-                // Fisher-Yates Shuffle for Random to ensure stable grouping
+                // Fisher-Yates Shuffle for Random
                 const shuffled = [...arr];
                 for (let i = shuffled.length - 1; i > 0; i--) {
                     const j = Math.floor(Math.random() * (i + 1));
@@ -200,8 +190,21 @@ export default function PublicGallery({ images, metadata }) {
             }
         };
 
-        const sorted = [...sortArray(tagged), ...sortArray(untagged)];
-        setShuffledImages(sorted);
+        if (sortOrder === 'newest' || sortOrder === 'oldest') {
+            // Sort everything together by date
+            setShuffledImages(sortArray(images));
+        } else {
+            // Split into groups for Random sort (Tagged first)
+            const tagged = [];
+            const untagged = [];
+            images.forEach(img => {
+                const hasInfo = metadata[img]?.title || metadata[img]?.explanation;
+                if (hasInfo) tagged.push(img);
+                else untagged.push(img);
+            });
+            const sorted = [...sortArray(tagged), ...sortArray(untagged)];
+            setShuffledImages(sorted);
+        }
     }, [images, metadata, sortOrder]);
 
     const filteredImages = useMemo(() => {

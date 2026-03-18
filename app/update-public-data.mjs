@@ -16,26 +16,38 @@ const PUBLIC_DATA_FILE = path.resolve(__dirname, 'public/public-data.json');
 const data = JSON.parse(fs.readFileSync(DATA_FILE, 'utf-8'));
 
 // Get all images already in public/images
-const publicImages = fs.existsSync(PUBLIC_IMAGES_DIR)
+const allPublicFiles = fs.existsSync(PUBLIC_IMAGES_DIR)
     ? fs.readdirSync(PUBLIC_IMAGES_DIR).filter(f => /\.(jpg|jpeg|png|webp)$/i.test(f))
     : [];
+
+// Prioritize WebP: Group by base name and pick .webp if exists
+const imageGroups = {};
+for (const f of allPublicFiles) {
+    const base = f.replace(/\.(jpg|jpeg|png|webp)$/i, '');
+    const ext = path.extname(f).toLowerCase();
+    if (!imageGroups[base] || ext === '.webp') {
+        imageGroups[base] = f;
+    }
+}
+const publicImages = Object.values(imageGroups);
 
 const publicFiles = [];
 const publicData = {};
 const fileStats = {};
 
 for (const filename of publicImages) {
-    // The public image might be .webp while data.json key is .png/.jpg — normalize
-    const noExt = filename.replace(/\.(jpg|jpeg|png|webp)$/i, '');
-
-    // Try exact match or .png variant
+    const base = filename.replace(/\.(jpg|jpeg|png|webp)$/i, '');
+    
+    // Try to find metadata using various possible original extensions
     const metaKey = data[filename]
         ? filename
-        : data[noExt + '.png']
-            ? noExt + '.png'
-            : data[noExt + '.jpg']
-                ? noExt + '.jpg'
-                : null;
+        : data[base + '.png']
+            ? base + '.png'
+            : data[base + '.jpg']
+                ? base + '.jpg'
+                : data[base + '.jpeg']
+                    ? base + '.jpeg'
+                    : null;
 
     const meta = metaKey ? data[metaKey] : null;
 
@@ -61,12 +73,12 @@ for (const filename of publicImages) {
     }
 }
 
-// Sort: tagged first, then alphabetical
+// Sort: newest first
 publicFiles.sort((a, b) => {
-    const aT = publicData[a]?.title ? 1 : 0;
-    const bT = publicData[b]?.title ? 1 : 0;
-    if (aT !== bT) return bT - aT;
-    return a.localeCompare(b);
+    const timeA = publicData[a]?.dateMillis || 0;
+    const timeB = publicData[b]?.dateMillis || 0;
+    if (timeA !== timeB) return timeB - timeA;
+    return b.localeCompare(a);
 });
 
 fs.writeFileSync(PUBLIC_DATA_FILE, JSON.stringify({ files: publicFiles, data: publicData, fileStats }, null, 2));

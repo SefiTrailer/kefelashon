@@ -34,10 +34,16 @@ async function convertFile(inputPath, outputPath, options = {}) {
     }
 
     try {
-        const inputStat = fs.statSync(inputPath);
+        totalOriginalBytes += inputStat.size;
         await sharp(inputPath)
             .webp({ quality, lossless })
             .toFile(outputPath);
+            
+        // Delete original after success
+        if (fs.existsSync(inputPath)) {
+            fs.unlinkSync(inputPath);
+        }
+
         const outputStat = fs.statSync(outputPath);
 
         totalOriginalBytes += inputStat.size;

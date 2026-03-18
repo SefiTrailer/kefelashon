@@ -5,6 +5,7 @@ import path from 'path';
 import { fileURLToPath } from 'url';
 import { execSync } from 'child_process';
 import multer from 'multer'; // Import multer
+import sharp from 'sharp';
 import { generateAHash, getHammingDistance } from './utils/image-hash.js';
 
 const __filename = fileURLToPath(import.meta.url);
@@ -258,7 +259,7 @@ app.delete('/api/images/:filename', (req, res) => {
 });
 
 // Upload endpoint
-app.post('/api/upload', upload.array('images'), (req, res) => {
+app.post('/api/upload', upload.array('images'), async (req, res) => {
     try {
         if (!req.files || req.files.length === 0) {
             return res.status(400).json({ error: 'No files uploaded.' });
@@ -272,25 +273,40 @@ app.post('/api/upload', upload.array('images'), (req, res) => {
 
         const uploadedFilenames = [];
 
-        req.files.forEach(file => {
+        for (const file of req.files) {
             const originalPath = file.path;
-            const publicPath = path.join(PUBLIC_DIR, file.filename);
+            const webpFilename = file.filename.replace(/\.[^.]+$/, '') + '.webp';
+            const publicWebpPath = path.join(IMAGES_DIR, webpFilename);
 
-            // Copy to public directory
-            fs.copyFileSync(originalPath, publicPath);
+            try {
+                // Convert to WebP immediately
+                await sharp(originalPath)
+                    .webp({ quality: 85 })
+                    .toFile(publicWebpPath);
 
-            // Initialize metadata if it doesn't exist
-            if (!data[file.filename]) {
-                data[file.filename] = {
-                    title: "",
-                    explanation: "",
-                    topic: "",
-                    isAIGenerated: false,
-                    createdAt: Date.now()
-                };
+                // Initialize metadata if it doesn't exist (using .webp extension as key)
+                if (!data[webpFilename]) {
+                    data[webpFilename] = {
+                        title: "",
+                        explanation: "",
+                        topic: "",
+                        isAIGenerated: false,
+                        createdAt: Date.now()
+                    };
+                }
+                uploadedFilenames.push(webpFilename);
+
+                // Delete the original uploaded file (PNG/JPG) from IMAGES_DIR
+                // Multer already saved it to IMAGES_DIR based on the storage config
+                if (fs.existsSync(originalPath)) {
+                    fs.unlinkSync(originalPath);
+                }
+            } catch (err) {
+                console.error(`Error converting uploaded file ${file.filename}:`, err);
+                // Fallback: if conversion fails, keep the original but it might lead to issues
+                uploadedFilenames.push(file.filename);
             }
-            uploadedFilenames.push(file.filename);
-        });
+        }
 
         // Save updated metadata
         fs.writeFileSync(DATA_FILE, JSON.stringify(data, null, 2));
