@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>כפל לשון</title>
+  <script>
+    // GitHub Pages SPA redirect trick
+    // Saves the path to sessionStorage and redirects to index.html
+    // index.html then reads it and restores the URL via history.replaceState
+    var path = window.location.pathname;
+    sessionStorage.setItem('spa_redirect', path);
+    window.location.replace('/');
+  </script>
+</head>
+<body></body>
+</html>
