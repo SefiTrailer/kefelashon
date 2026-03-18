@@ -554,7 +554,7 @@ export default function PublicGallery({ images, metadata }) {
                                         onTouchEnd={onTouchEnd}
                                     >
                                         {/* Image area — no rounded-t needed; inner card's overflow-hidden clips it */}
-                                        <div className={`relative flex-1 flex flex-col items-center justify-center bg-black/40 w-full overflow-hidden cursor-zoom-in min-h-0`}
+                                        <div className={`relative ${isMobile && viewMode === 'single' ? 'aspect-square' : 'flex-1'} flex flex-col items-center justify-center bg-black/40 w-full overflow-hidden cursor-zoom-in min-h-0`}
                                             style={{ padding: viewMode === 'single' ? '8px' : '0px' }}
                                             onClick={() => viewMode === 'single' ? openFullscreen() : null}>
 
