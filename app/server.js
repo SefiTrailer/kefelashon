@@ -180,6 +180,7 @@ app.post('/api/metadata', (req, res) => {
         const finalAIAdded = oldEntry.isAIAdded;       // Preserve this flag
         const finalNeedsAI = req.body.needsAIImprovement !== undefined ? Boolean(req.body.needsAIImprovement) : Boolean(oldEntry.needsAIImprovement);
         const finalAISuggestion = req.body.aiSuggestion !== undefined ? req.body.aiSuggestion : oldEntry.aiSuggestion;
+        const finalCreatedAt = oldEntry.createdAt || Date.now(); // Preserve creation time or set it if missing
 
         // Remove old entry if renamed
         if (newFilename !== filename && data[filename]) {
@@ -219,7 +220,8 @@ app.post('/api/metadata', (req, res) => {
             isAIImproved: finalAIImproved,
             isAIAdded: finalAIAdded,
             needsAIImprovement: finalNeedsAI,
-            aiSuggestion: finalAISuggestion
+            aiSuggestion: finalAISuggestion,
+            createdAt: finalCreatedAt
         };
         fs.writeFileSync(DATA_FILE, JSON.stringify(data, null, 2));
 
@@ -283,7 +285,8 @@ app.post('/api/upload', upload.array('images'), (req, res) => {
                     title: "",
                     explanation: "",
                     topic: "",
-                    isAIGenerated: false
+                    isAIGenerated: false,
+                    createdAt: Date.now()
                 };
             }
             uploadedFilenames.push(file.filename);
@@ -480,7 +483,20 @@ app.get('/api/publish/status', (req, res) => {
 app.post('/api/publish', async (req, res) => {
     const log = [];
     try {
-        // 1. Regenerate public-data.json from data.json (fast — no image recompression)
+// 1. Convert new images to WebP automatically before updating data
+        log.push('🖼️  ממיר תמונות ל-WebP...');
+        try {
+            const convertOut = execSync('node convert-to-webp.mjs', {
+                cwd: REPO_ROOT,
+                encoding: 'utf-8',
+                timeout: 120000
+            }).trim();
+            // Optional: log.push(convertOut.split('\n').pop() || 'המרה הסתיימה');
+        } catch(e) {
+            log.push(`⚠️  שגיאה בהמרת WebP: ${e.message}`);
+        }
+
+        // 2. Regenerate public-data.json from data.json (fast — no image recompression)
         log.push('⚙️  מעדכן public-data.json...');
         const prepareOut = execSync('node update-public-data.mjs', {
             cwd: path.resolve(__dirname),

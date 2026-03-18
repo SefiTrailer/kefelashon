@@ -17,7 +17,7 @@ const data = JSON.parse(fs.readFileSync(DATA_FILE, 'utf-8'));
 
 // Get all images already in public/images
 const publicImages = fs.existsSync(PUBLIC_IMAGES_DIR)
-    ? fs.readdirSync(PUBLIC_IMAGES_DIR).filter(f => /\.(jpg|jpeg|png)$/i.test(f))
+    ? fs.readdirSync(PUBLIC_IMAGES_DIR).filter(f => /\.(jpg|jpeg|png|webp)$/i.test(f))
     : [];
 
 const publicFiles = [];
@@ -25,8 +25,8 @@ const publicData = {};
 const fileStats = {};
 
 for (const filename of publicImages) {
-    // The public image might be .jpg while data.json key is .png — normalize
-    const noExt = filename.replace(/\.(jpg|jpeg|png)$/i, '');
+    // The public image might be .webp while data.json key is .png/.jpg — normalize
+    const noExt = filename.replace(/\.(jpg|jpeg|png|webp)$/i, '');
 
     // Try exact match or .png variant
     const metaKey = data[filename]

@@ -562,7 +562,7 @@ export default function PublicGallery({ images, metadata }) {
                                                 <>
                                                     <img
                                                         key={currentFile}
-                                                        src={`./images/${encodeURIComponent(currentFile.replace(/\.(jpg|jpeg|png)$/i, '.webp'))}`}
+                                                        src={`./images/${encodeURIComponent(currentFile.replace(/\.(jpg|jpeg|png)$/i, '.webp'))}?v=${fileMetadata?.dateMillis || ''}`}
                                                         alt={fileMetadata?.title || 'תמונה'}
                                                         className="w-full h-full object-contain filter drop-shadow-[0_10px_25px_rgba(0,0,0,0.7)] relative z-10 animate-in zoom-in-95 duration-500"
                                                         style={{ borderRadius: '12px' }}
@@ -575,7 +575,7 @@ export default function PublicGallery({ images, metadata }) {
                                                     {displayImages.slice(currentIndex, currentIndex + getGridSize()).map((file, idx) => (
                                                         <div key={file} className="relative aspect-square w-full h-full max-h-full max-w-full flex items-center justify-center cursor-zoom-in group" onClick={(e) => { e.stopPropagation(); setCurrentIndex(currentIndex + idx); setViewMode('single'); openFullscreen(); }}>
                                                             <img
-                                                                src={`./images/${encodeURIComponent(file.replace(/\.(jpg|jpeg|png)$/i, '.webp'))}`}
+                                                                src={`./images/${encodeURIComponent(file.replace(/\.(jpg|jpeg|png)$/i, '.webp'))}?v=${metadata[file]?.dateMillis || ''}`}
                                                                 alt={metadata[file]?.title || 'תמונה'}
                                                                 className="w-full h-full object-contain filter drop-shadow-md rounded-xl transition-transform group-hover:scale-105"
                                                                 loading="lazy"

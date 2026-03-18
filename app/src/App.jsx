@@ -668,7 +668,7 @@ function App() {
             <div className="relative w-full flex-1 min-h-0 bg-slate-100 flex items-center justify-center p-4">
               {images.length > 0 ? (
                 <img
-                  src={`${API_BASE}/images/${encodeURIComponent(currentFile)}`}
+                  src={`${API_BASE}/images/${encodeURIComponent(currentFile)}?v=${fileSizes[currentFile] || ''}`}
                   alt={title || currentFile}
                   className="w-full h-full object-contain drop-shadow-md rounded-lg"
                 />
