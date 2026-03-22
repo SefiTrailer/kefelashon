@@ -6,7 +6,7 @@ const THEMES = [
     {
         id: 'dark',
         label: '🌌 חלל עמוק',
-        className: 'theme-dark',
+        className: 'theme-dark-purple',
         textClass: 'text-cyan-400',
         bgStyle: 'bg-slate-950',
         frameGrad: 'from-pink-500 via-purple-500 to-cyan-500',

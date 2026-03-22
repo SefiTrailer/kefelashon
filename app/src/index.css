@@ -44,6 +44,22 @@ body {
   --glow-color: rgba(57, 255, 20, 0.4);
 }
 
+/* ── Theme: Day Light ── */
+.theme-light {
+  --bg-from: #f1f5f9;
+  --bg-via: #f8fafc;
+  --bg-to: #ffffff;
+  --accent-1: #7c3aed;
+  --accent-2: #38bdf8;
+  --accent-3: #f43f5e;
+  --card-bg: rgba(255, 255, 255, 0.9);
+  --card-border: rgba(124, 58, 237, 0.2);
+  --text-primary: #1e1b4b;
+  --text-secondary: #6d28d9;
+  --frame-gradient: linear-gradient(135deg, #38bdf8, #818cf8, #f472b6);
+  --glow-color: rgba(124, 58, 237, 0.2);
+}
+
 /* ── Theme: Pastel Cloud ── */
 .theme-pastel {
   --bg-from: #fdf2f8;

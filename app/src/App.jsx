@@ -28,6 +28,7 @@ function App() {
   const [isApproved, setIsApproved] = useState(false);
   const [needsAIImprovement, setNeedsAIImprovement] = useState(false);
   const [aiSuggestion, setAiSuggestion] = useState(null);
+  const [isMobile, setIsMobile] = useState(window.innerWidth < 1024);
   const [isSaving, setIsSaving] = useState(false);
   const [error, setError] = useState(null);
   const [isSearchOpen, setIsSearchOpen] = useState(false);
@@ -476,7 +477,11 @@ function App() {
   const progressPercentage = allImages.length ? (Object.keys(metadata).length / allImages.length) * 100 : 0;
 
   if (isPublicViewer) {
-    return <PublicGallery images={images} metadata={metadata} />;
+    return (
+      <div className="w-full h-screen min-h-screen overflow-hidden bg-slate-950">
+        <PublicGallery images={images} metadata={metadata} />
+      </div>
+    );
   }
 
   return (
