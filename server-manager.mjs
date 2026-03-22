@@ -236,7 +236,11 @@ const html = `
                     <div class="info">
                         <div class="status-dot \${s.pid ? 'active' : ''}"></div>
                         <div>
-                            <div class="name">\${s.name}</div>
+                            <div class="name" 
+                                 style="\${s.pid ? 'cursor: pointer; color: #818cf8; text-decoration: underline;' : ''}"
+                                 onclick="\${s.pid ? \`openLink('http://localhost:\${s.port}')\` : ''}">
+                                \${s.name}
+                            </div>
                             <div class="port">פורט: \${s.port}</div>
                         </div>
                     </div>
@@ -310,6 +314,15 @@ const server = http.createServer((req, res) => {
     } else if (method === 'GET' && url === '/open-gui') {
         openAppMode(`http://localhost:${PORT}`);
         res.end('ok');
+    } else if (method === 'POST' && url === '/open-link') {
+        let body = '';
+        req.on('data', chunk => { body += chunk; });
+        req.on('end', () => {
+            const { url } = JSON.parse(body);
+            log(`Opening external link: ${url}`);
+            exec(`start ${url}`);
+            res.end('ok');
+        });
     } else {
         res.writeHead(404);
         res.end();
