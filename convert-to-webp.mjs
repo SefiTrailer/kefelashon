@@ -13,6 +13,11 @@ import { fileURLToPath } from 'url';
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const PUBLIC = path.join(__dirname, 'app', 'public');
 const IMAGES_DIR = path.join(PUBLIC, 'images');
+const BACKUP_DIR = path.join(__dirname, 'app', 'תמונות מקור');
+
+if (!fs.existsSync(BACKUP_DIR)) {
+    fs.mkdirSync(BACKUP_DIR, { recursive: true });
+}
 
 let totalOriginalBytes = 0;
 let totalWebpBytes = 0;
@@ -35,13 +40,26 @@ async function convertFile(inputPath, outputPath, options = {}) {
     }
 
     try {
+        sharp.cache(false); // Disable cache to prevent file locking issues
         totalOriginalBytes += inputStat.size;
         await sharp(inputPath)
             .webp({ quality, lossless })
             .toFile(outputPath);
             
-        // Delete original after success
+        // Move original to backup folder after success
         if (fs.existsSync(inputPath)) {
+            const fileName = path.basename(inputPath);
+            const backupPath = path.join(BACKUP_DIR, fileName);
+            
+            // If file already exists in backup, append a suffix to avoid overwrite
+            let finalBackupPath = backupPath;
+            if (fs.existsSync(finalBackupPath)) {
+                const ext = path.extname(fileName);
+                const base = path.basename(fileName, ext);
+                finalBackupPath = path.join(BACKUP_DIR, `${base}_${Date.now()}${ext}`);
+            }
+            
+            fs.copyFileSync(inputPath, finalBackupPath);
             fs.unlinkSync(inputPath);
         }
 
@@ -115,7 +133,7 @@ async function main() {
     console.log(`📦 Original total: ${origTotalMB}MB → WebP total: ${webpTotalMB}MB`);
     console.log(`💾 Saved: ${savedMB}MB (${savedPct}% reduction)`);
     console.log('='.repeat(60));
-    console.log('\n⚠️  Originals NOT deleted. Update code references to use .webp extensions.');
+    console.log('\n✅ Originals moved to "app/תמונות מקור". Update code references to use .webp extensions.');
 }
 
 main().catch(console.error);
