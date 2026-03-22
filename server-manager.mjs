@@ -30,7 +30,6 @@ function startServer(type) {
     const { cmd, cwd } = servers[type];
     const [command, ...args] = cmd.split(' ');
     
-    // Windows specifically needs shell: true for npm/node in some contexts
     const child = spawn(command, args, { 
         cwd: path.join(__dirname, cwd), 
         shell: true,
@@ -46,18 +45,27 @@ function startServer(type) {
     });
 }
 
-// Stop a server (Reliable Windows Kill)
+// Stop a server
 function stopServer(type) {
     if (!servers[type].pid) return;
-    
-    // Use taskkill to kill the whole process tree (important for Vite/npm)
     exec(`taskkill /F /T /PID ${servers[type].pid}`, (err) => {
         if (err) {
             log(`Failed to kill ${type}: ${err}`);
-            // Fallback
             servers[type].pid = null; 
         }
     });
+}
+
+// Browser App Mode launch
+function openAppMode(url) {
+    log(`Attempting to open App Mode for: ${url}`);
+    const cmd = `start msedge --app=${url}`;
+    try {
+        exec(cmd);
+        log('Browser launch command sent.');
+    } catch (err) {
+        log(`Browser launch error: ${err.message}`);
+    }
 }
 
 const html = `
@@ -238,7 +246,7 @@ const html = `
                         <div>
                             <div class="name" 
                                  style="\${s.pid ? 'cursor: pointer; color: #818cf8; text-decoration: underline;' : ''}"
-                                 onclick="\${s.pid ? \`openLink('http://localhost:\${s.port}')\` : ''}">
+                                 onclick="\${s.pid ? \\\`openLink('http://localhost:\${s.port}')\\\` : ''}">
                                 \${s.name}
                             </div>
                             <div class="port">פורט: \${s.port}</div>
@@ -246,8 +254,8 @@ const html = `
                     </div>
                     <div class="actions">
                         \${s.pid 
-                            ? \`<button class="btn-stop" onclick="action('stop', '\${id}')">כבה</button>\`
-                            : \`<button class="btn-start" onclick="action('start', '\${id}')">הפעל</button>\`
+                            ? \\\`<button class="btn-stop" onclick="action('stop', '\${id}')">כבה</button>\\\`
+                            : \\\`<button class="btn-start" onclick="action('start', '\${id}')">הפעל</button>\\\`
                         }
                     </div>
                 </div>
@@ -257,9 +265,24 @@ const html = `
         }
 
         async function action(type, id) {
-            const url = id ? \`/\${type}/\${id}\` : \`/\${type}\`;
+            const url = id ? \\\`/\${type}/\${id}\\\` : \\\`/\${type}\\\`;
             await fetch(url, { method: 'POST' });
             updateStatus();
+        }
+
+        async function openLink(url) {
+            await fetch('/open-link', { 
+                method: 'POST', 
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify({ url }) 
+            });
+        }
+
+        async function exitManager() {
+            if (confirm('האם לסגור את מרכז השליטה? (השרתים ימשיכו לרוץ)')) {
+                await fetch('/exit-manager', { method: 'POST' });
+                window.close();
+            }
         }
 
         setInterval(updateStatus, 1500);
@@ -269,22 +292,7 @@ const html = `
 </html>
 `;
 
-// Search for browser to open in --app mode
-function openAppMode(url) {
-    log(`Attempting to open App Mode for: ${url}`);
-    
-    // Windows: Try 'start msedge' which is the most reliable
-    const cmd = `start msedge --app=${url}`;
-    
-    log(`Executing sync command: ${cmd}`);
-    try {
-        exec(cmd);
-        log('Browser launch command sent.');
-    } catch (err) {
-        log(`Browser launch error: ${err.message}`);
-    }
-}
-
+// Start manager server
 const server = http.createServer((req, res) => {
     const { url, method } = req;
 
