@@ -484,481 +484,242 @@ function App() {
       <div className="w-full max-w-7xl flex flex-col gap-4 h-full min-h-0">
 
         {/* Header & Progress */}
-        <header className="shrink-0 flex flex-col md:flex-row md:items-center justify-between bg-white/70 backdrop-blur-md p-4 lg:p-5 rounded-2xl shadow-sm border border-slate-100">
-          <div>
-            <h1 className="text-3xl font-extrabold text-slate-800 tracking-tight">
-              כפל <span className="text-teal-600">לשון</span>
-            </h1>
-            <p className="text-slate-500 mt-1">מערכת ניהול תמונות ומשמעויות</p>
-          </div>
+        {/* Header & Progress */}
+        <header className="shrink-0 flex flex-col bg-white/80 backdrop-blur-md p-2 md:p-3 rounded-2xl shadow-sm border border-slate-100">
+          <div className="flex flex-col md:flex-row md:items-center justify-between gap-2">
+            <div className="flex items-center justify-between w-full md:w-auto">
+              <div className="flex items-center gap-2">
+                <h1 className="text-lg md:text-2xl font-extrabold text-slate-800 tracking-tight leading-none">
+                  כפל <span className="text-teal-600">לשון</span>
+                </h1>
+                <span className="hidden sm:inline text-[9px] text-slate-400 font-bold uppercase tracking-widest border border-slate-200 px-1.5 py-0.5 rounded">ADMIN</span>
+              </div>
+              <div className="md:hidden flex items-center gap-2">
+                 <button onClick={() => setIsTopicModalOpen(true)} className="p-1.5 bg-teal-50 text-teal-600 rounded-lg"><LayoutGrid size={16} /></button>
+                 <span className="text-[10px] font-bold text-slate-600 bg-teal-100 px-2 py-1 rounded-lg">
+                  {Object.keys(metadata).length} / {allImages.length}
+                </span>
+              </div>
+            </div>
 
-          <div className="mt-4 md:mt-0 flex flex-col items-end gap-3">
-            {/* Progress + Search row */}
-            <div className="flex flex-wrap items-center justify-end gap-3">
-              {/* Main Search Input */}
-              <div className="relative group min-w-[200px]">
-                <Search size={16} className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 group-focus-within:text-teal-500 transition-colors" />
+            <div className="flex flex-wrap items-center justify-start md:justify-end gap-2">
+              <div className="relative group w-full sm:w-auto sm:min-w-[150px]">
+                <Search size={12} className="absolute right-2.5 top-1/2 -translate-y-1/2 text-slate-400 group-focus-within:text-teal-500" />
                 <input 
                   type="text"
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
-                  placeholder="חיפוש חופשי..."
-                  className="w-full pr-10 pl-4 py-2 bg-slate-50 border border-slate-200 rounded-xl text-sm focus:ring-4 focus:ring-teal-500/10 focus:border-teal-500 outline-none transition-all"
+                  placeholder="חיפוש..."
+                  className="w-full pr-8 pl-2 py-1 bg-slate-50 border border-slate-200 rounded-xl text-[11px] outline-none"
                   dir="rtl"
                 />
               </div>
 
-              <div className="flex items-center gap-2 bg-slate-50 border border-slate-200 rounded-lg px-2 shadow-sm font-medium text-slate-600 text-sm">
+              <div className="flex bg-slate-50 border border-slate-200 rounded-xl px-1 h-7 items-center">
                 <select 
                   value={filterMode} 
                   onChange={(e) => setFilterMode(e.target.value)}
-                  className="bg-transparent border-none focus:ring-0 py-1.5 focus:outline-none text-slate-700 cursor-pointer"
+                  className="bg-transparent border-none focus:ring-0 py-0 text-[10px] text-slate-700 font-bold"
                   dir="rtl"
                 >
-                  <option value="all">כל התמונות [{filterCounts.all}]</option>
-                  <option value="tagged">מלאות (כותרת, הסבר ונושא) [{filterCounts.tagged}]</option>
-                  <option value="no-title">ללא כותרת [{filterCounts.noTitle}]</option>
-                  <option value="no-explanation">ללא הסבר [{filterCounts.noExplanation}]</option>
-                  <option value="no-topic">ללא נושא (Topic) [{filterCounts.noTopic}]</option>
-                  <option value="ai">🤖 תויגו רק ב-AI [{filterCounts.ai}]</option>
-                  <option value="approved">✅ עברו בקרה / מאושרות [{filterCounts.approved}]</option>
-                  <option value="not-approved">⏳ לא עברו בקרה / ממתינות [{filterCounts.notApproved}]</option>
-                  <option value="new-images">🆕 תמונות חדשות (בתיקיית קליטה) [{filterCounts.newImages}]</option>
-                  <option value="ai-improved">🤖 הסברים שופרו - AI [{filterCounts.aiImproved}]</option>
-                  <option value="ai-added">🤖 הסברים חדשים - AI [{filterCounts.aiAdded}]</option>
-                  <option value="ai-suggestions">🎨 הצעות לשיפור AI [{filterCounts.aiSuggestions}]</option>
-                  <option value="needs-ai">🚩 דרוש שיפור AI [{filterCounts.needsAi}]</option>
-                  <option value="generic-ai">🤖 הסבר AI גנרי [{filterCounts.genericAi}]</option>
-                  <option value="untitled">🎨 עיצוב ללא שם [{filterCounts.untitled}]</option>
-                 </select>
+                  <option value="all">הכל ({filterCounts.all})</option>
+                  <option value="tagged">מלא ({filterCounts.tagged})</option>
+                  <option value="no-title">ללא כו' ({filterCounts.noTitle})</option>
+                  <option value="no-explanation">ללא הס' ({filterCounts.noExplanation})</option>
+                  <option value="no-topic">ללא נו' ({filterCounts.noTopic})</option>
+                  <option value="ai">🤖 AI ({filterCounts.ai})</option>
+                  <option value="approved">✅ מאושר ({filterCounts.approved})</option>
+                  <option value="not-approved">⏳ ממתין ({filterCounts.notApproved})</option>
+                  <option value="new-images">🆕 חדש ({filterCounts.newImages})</option>
+                </select>
               </div>
 
-              {/* View Mode Toggle */}
-              <div className="flex bg-slate-100 rounded-lg p-1">
-                <button
-                  onClick={() => setAdminViewMode('grid')}
-                  className={`p-1.5 rounded-md transition-all ${adminViewMode === 'grid' ? 'bg-white shadow-sm text-teal-600' : 'text-slate-400 hover:text-slate-600'}`}
-                  title="תצוגת גלריה"
-                >
-                  <LayoutGrid size={18} />
-                </button>
-                <button
-                  onClick={() => setAdminViewMode('edit')}
-                  className={`p-1.5 rounded-md transition-all ${adminViewMode === 'edit' ? 'bg-white shadow-sm text-teal-600' : 'text-slate-400 hover:text-slate-600'}`}
-                  title="תצוגת עריכה"
-                >
-                  <ImageIcon size={18} />
-                </button>
-                <button
-                  onClick={() => setAdminViewMode('duplicates')}
-                  className={`p-1.5 rounded-md transition-all ${adminViewMode === 'duplicates' ? 'bg-white shadow-sm text-indigo-600' : 'text-slate-400 hover:text-slate-600'}`}
-                  title="בדיקת כפילויות"
-                >
-                  <Copy size={18} />
-                </button>
-              </div>
-              
-              <div className="flex items-center gap-2 text-sm font-semibold text-slate-600">
-                <span className="bg-teal-100 text-teal-800 py-1 px-3 rounded-full">
-                  {Object.keys(metadata).length} / {allImages.length}
-                </span>
+              <div className="flex bg-slate-100 rounded-lg p-0.5 h-7">
+                <button onClick={() => setAdminViewMode('grid')} className={`px-1.5 rounded-md ${adminViewMode === 'grid' ? 'bg-white text-teal-600 shadow-sm' : 'text-slate-400'}`}><LayoutGrid size={12} /></button>
+                <button onClick={() => setAdminViewMode('edit')} className={`px-1.5 rounded-md ${adminViewMode === 'edit' ? 'bg-white text-teal-600 shadow-sm' : 'text-slate-400'}`}><ImageIcon size={12} /></button>
+                <button onClick={() => setAdminViewMode('duplicates')} className={`px-1.5 rounded-md ${adminViewMode === 'duplicates' ? 'bg-white text-indigo-600 shadow-sm' : 'text-slate-400'}`}><Copy size={12} /></button>
               </div>
 
-              {/* Progress bar */}
-              <div className="w-32 h-2 bg-slate-200 rounded-full overflow-hidden">
-                <div
-                  className="h-full bg-gradient-to-r from-teal-400 to-teal-600 rounded-full transition-all duration-500 ease-out"
-                  style={{ width: `${progressPercentage}%` }}
-                />
+              <div className="hidden md:flex items-center gap-2">
+                <div className="w-16 h-1 bg-slate-200 rounded-full overflow-hidden">
+                  <div className="h-full bg-teal-500 rounded-full" style={{ width: `${progressPercentage}%` }} />
+                </div>
+                <span className="text-[10px] font-bold text-slate-400">{Object.keys(metadata).length}/{allImages.length}</span>
               </div>
-            </div>
 
-            {/* Topics Row */}
-            <div className="flex flex-wrap justify-end gap-2 mt-2 max-w-2xl overflow-hidden">
-               {allTopics.slice(0, 30).map(t => (
-                 <button
-                   key={t}
-                   onClick={() => setSelectedTopic(selectedTopic === t ? null : t)}
-                   className={`text-[10px] px-2 py-0.5 rounded-full border transition-all ${selectedTopic === t ? 'bg-teal-600 border-teal-600 text-white shadow-sm' : 'bg-white border-slate-200 text-slate-500 hover:border-teal-200 hover:text-teal-600'}`}
-                 >
-                   {t} [{topicCounts[t] || 0}]
-                 </button>
-               ))}
-               {allTopics.length > 30 && (
-                 <button 
-                  onClick={() => setIsTopicModalOpen(true)}
-                  className="text-[10px] text-teal-600 hover:underline font-bold"
-                 >
-                   +{allTopics.length - 30} נוספים...
-                 </button>
-               )}
-            </div>
-
-            {/* ── Publish to GitHub button ── */}
-            <div className="flex flex-col items-end gap-1">
-              <div className="flex items-center gap-3 w-full sm:w-auto overflow-x-auto sm:overflow-visible pb-2 sm:pb-0">
-                {/* Upload Button */}
-                <label className="flex items-center gap-2 bg-indigo-50 border-2 border-indigo-200 text-indigo-700 px-5 py-2.5 rounded-xl font-bold hover:bg-indigo-100 hover:border-indigo-300 transition-all cursor-pointer shadow-sm ml-auto sm:ml-0 whitespace-nowrap">
-                  <input 
-                    type="file" 
-                    multiple 
-                    accept="image/*"
-                    onChange={handleUpload} 
-                    className="hidden" 
-                  />
-                  <Upload size={18} />
-                  <span className="hidden sm:inline">העלה יצירות</span>
-                  <span className="sm:hidden">העלה</span>
+              <div className="flex items-center gap-1.5">
+                <label className="flex items-center gap-1 bg-indigo-50 border border-indigo-100 text-indigo-700 px-2 py-1 rounded-lg text-[10px] font-bold cursor-pointer transition-colors hover:bg-indigo-100">
+                  <input type="file" multiple accept="image/*" onChange={handleUpload} className="hidden" />
+                  <Upload size={12} />
+                  <span>העלה</span>
                 </label>
-
-                {/* GitHub Publish Button */}
-                <button
-                  onClick={handlePublish}
-                  disabled={publishState === 'loading'}
-                  className={`flex items-center gap-2 px-5 py-2 rounded-xl text-sm font-bold shadow-sm border transition-all ${publishState === 'loading'
-                    ? 'bg-slate-100 text-slate-400 border-slate-200 cursor-wait'
-                    : publishState === 'success'
-                      ? 'bg-green-50 text-green-700 border-green-200 hover:bg-green-100'
-                      : publishState === 'error'
-                        ? 'bg-red-50 text-red-700 border-red-200 hover:bg-red-100'
-                        : publishState === 'skipped'
-                          ? 'bg-amber-50 text-amber-700 border-amber-200 hover:bg-amber-100'
-                          : 'bg-slate-800 text-white border-slate-700 hover:bg-slate-700'
-                  }`}
-                  title="פרסם שינויי תוכן (תמונות + data.json) לגיטהאב"
-                >
-                  {publishState === 'loading' ? (
-                    <><Loader size={15} className="animate-spin" /> מפרסם...</>
-                  ) : publishState === 'success' ? (
-                    <><CheckCircle size={15} /> פורסם! #{publishResult?.hash}</>
-                  ) : publishState === 'error' ? (
-                    <><X size={15} /> שגיאה — נסה שוב</>
-                  ) : publishState === 'skipped' ? (
-                    <><CheckCircle size={15} /> אין שינויים חדשים</>
-                  ) : (
-                    <><Upload size={15} /> פרסם לגיטהאב</>
-                  )}
+                <button onClick={handlePublish} disabled={publishState === 'loading'} className="flex items-center gap-1 px-2 py-1 rounded-lg text-[10px] font-bold bg-slate-800 text-white hover:bg-slate-700 disabled:opacity-50">
+                  {publishState === 'loading' ? <Loader size={10} className="animate-spin" /> : <Github size={10} />}
+                  <span>{publishState === 'loading' ? 'מפרסם' : 'פרסם'}</span>
                 </button>
               </div>
-
-              {/* Last commit info */}
-              {lastCommit && publishState === 'idle' && (
-                <p className="text-xs text-slate-400 font-mono" dir="ltr">
-                  last: {lastCommit.hash} · {lastCommit.message}
-                </p>
-              )}
-
-              {/* Error detail */}
-              {publishState === 'error' && publishResult?.error && (
-                <p className="text-xs text-red-500 max-w-xs text-right" dir="rtl">
-                  {publishResult.error.split('\n')[0]}
-                </p>
-              )}
             </div>
+          </div>
+
+          {/* Topics Desktop Only */}
+          <div className="hidden lg:flex items-center gap-1.5 mt-2 pt-2 border-t border-slate-100/50 overflow-x-auto no-scrollbar">
+             {allTopics.slice(0, 50).map(t => (
+               <button
+                 key={t}
+                 onClick={() => setSelectedTopic(selectedTopic === t ? null : t)}
+                 className={`text-[9px] px-2 py-0.5 rounded-md border transition-all whitespace-nowrap font-bold ${selectedTopic === t ? 'bg-teal-600 border-teal-600 text-white' : 'bg-white border-slate-100 text-slate-500 hover:border-teal-300'}`}
+               >
+                 {t} <span className="opacity-40 font-normal">[{topicCounts[t] || 0}]</span>
+               </button>
+             ))}
           </div>
         </header>
 
         {/* Main Content Area */}
         {adminViewMode === 'edit' ? (
-        <div className="grid grid-cols-1 lg:grid-cols-[1fr_400px] gap-6 flex-1 min-h-0">
-
-          {/* Image Viewer Panel */}
-          <div className="flex flex-col bg-white rounded-3xl shadow-xl shadow-slate-200/50 overflow-hidden border border-slate-100 min-h-0">
-            {/* Image Container with precise aspect ratio matching */}
-            <div className="relative w-full flex-1 min-h-0 bg-slate-100 flex items-center justify-center p-4">
-              {images.length > 0 ? (
-                <img
-                  src={`${API_BASE}/images/${encodeURIComponent(currentFile)}?v=${fileSizes[currentFile] || ''}`}
-                  alt={title || currentFile}
-                  className="w-full h-full object-contain drop-shadow-md rounded-lg"
-                />
-              ) : (
-                <div className="flex flex-col items-center justify-center text-slate-400 gap-3">
-                   <ImageIcon size={48} className="opacity-20" />
-                   <p className="font-medium">אין תמונות העונות לסינון זה</p>
-                </div>
-              )}
-
-              {/* Status Badge */}
-              {isCompleted && (
-                <div className="absolute top-4 right-4 bg-white/90 backdrop-blur text-teal-600 font-bold px-4 py-2 rounded-full shadow-lg flex items-center gap-2">
-                  <CheckCircle size={18} />
-                  <span>מעודכן</span>
-                </div>
-              )}
-
-              {/* Image Counter */}
-              <div className="absolute bottom-4 left-4 bg-black/60 backdrop-blur-sm text-white text-sm font-medium px-4 py-1.5 rounded-full">
-                {currentIndex + 1} / {images.length}
-              </div>
-            </div>
-
-            {/* Navigation Controls */}
-            <div className="flex items-center justify-between p-4 bg-slate-50 border-t border-slate-100">
-              <button
-                onClick={nextImage}
-                disabled={currentIndex === images.length - 1}
-                className="flex items-center gap-2 px-4 py-2 rounded-xl font-medium text-slate-700 bg-white shadow-sm border border-slate-200 hover:bg-slate-50 hover:text-teal-600 disabled:opacity-50 disabled:hover:bg-white transition-all"
-              >
-                <ChevronRight size={20} />
-                <span>הבא</span>
-              </button>
-
-              <span className="text-xs text-slate-400 font-mono truncate max-w-[150px]" dir="ltr">
-                {currentFile}
-              </span>
-
-              <button
-                onClick={prevImage}
-                disabled={currentIndex === 0}
-                className="flex items-center gap-2 px-4 py-2 rounded-xl font-medium text-slate-700 bg-white shadow-sm border border-slate-200 hover:bg-slate-50 hover:text-teal-600 disabled:opacity-50 disabled:hover:bg-white transition-all"
-              >
-                <span>הקודם</span>
-                <ChevronLeft size={20} />
-              </button>
-            </div>
-          </div>
-
-          {/* Editor Panel */}
-          <div className="flex flex-col gap-4 bg-white p-6 rounded-3xl shadow-xl shadow-slate-200/50 border border-slate-100 min-h-0 overflow-y-auto">
+        <div className="flex flex-col lg:flex-row gap-4 md:gap-6 flex-1 min-h-0 relative">
+          
+          {/* Editor Panel (Right side in RTL desktop) */}
+          <div className="flex flex-col gap-4 bg-white p-4 md:p-6 rounded-3xl shadow-xl shadow-slate-200/50 border border-slate-100 min-h-0 overflow-y-auto lg:w-[400px] order-2 lg:order-1">
             <div className="shrink-0">
-              <h2 className="text-xl font-bold text-slate-800 mb-4 flex items-center justify-between">
-                <div className="flex items-center gap-3">
-                  <span className="bg-teal-100 text-teal-600 w-10 h-10 rounded-xl flex items-center justify-center">✍️</span>
+              <h2 className="text-lg md:text-xl font-bold text-slate-800 mb-3 flex items-center justify-between">
+                <div className="flex items-center gap-2">
+                  <span className="bg-teal-100 text-teal-600 w-8 h-8 rounded-lg flex items-center justify-center text-sm">✍️</span>
                   עריכת פרטים
                 </div>
                 <button
                   onClick={handleDelete}
-                  className="p-2 text-rose-500 hover:bg-rose-50 rounded-lg transition-colors flex items-center gap-2 text-sm font-medium border border-transparent hover:border-rose-100"
-                  title="מחק תמונה זו"
+                  className="p-1.5 text-rose-500 hover:bg-rose-50 rounded-lg transition-colors flex items-center gap-2 text-xs font-medium"
                 >
-                  <Trash2 size={18} />
-                  <span>מחק תמונה</span>
+                  <Trash2 size={16} />
+                  <span>מחק</span>
                 </button>
               </h2>
               
-              {/* Filename & Info Row */}
-              <div className="bg-slate-50 border border-slate-100 rounded-xl p-3 mb-4 space-y-2">
-                <div className="flex items-center justify-between text-xs text-slate-400 font-mono" dir="ltr">
+              <div className="bg-slate-50 border border-slate-100 rounded-xl p-2.5 mb-2 space-y-1.5">
+                <div className="flex items-center justify-between text-[10px] text-slate-400 font-mono" dir="ltr">
                   <span className="flex items-center gap-1.5 font-bold text-slate-500">
-                    <ImageIcon size={14} /> FILENAME
+                    <ImageIcon size={12} /> FILE
                   </span>
-                  <span className="truncate max-w-[200px]" title={currentFile}>{currentFile}</span>
+                  <span className="truncate max-w-[150px]">{currentFile}</span>
                 </div>
-                
                 <div className="flex items-center justify-between">
-                  <div className="flex items-center gap-2 text-sm font-mono text-slate-500 font-medium">
-                    <span className="py-0.5 px-2 bg-slate-200/40 rounded-md border border-slate-200 shadow-sm">
-                        {fileSizes[images[currentIndex]] ? formatBytes(fileSizes[images[currentIndex]]) : '...'}
-                    </span>
-                  </div>
-                  
-                  {metadata[images[currentIndex]]?.isAIGenerated && (
-                      <span className="flex items-center gap-1 bg-indigo-50 text-indigo-600 text-xs px-2 py-1 rounded-md border border-indigo-100 font-medium shadow-sm"
-                        title="הסבר זה נוצר על ידי בינה מלאכותית.">
-                        🤖 AI Generated
-                      </span>
-                  )}
+                  <span className="text-[10px] font-mono text-slate-500 font-bold bg-slate-200/40 px-1.5 py-0.5 rounded border border-slate-200">
+                      {fileSizes[images[currentIndex]] ? formatBytes(fileSizes[images[currentIndex]]) : '...'}
+                  </span>
                 </div>
               </div>
             </div>
 
-            <div className="flex flex-col gap-5 flex-1 mt-1">
-              <div className="space-y-2">
-                <label className="text-sm font-bold text-slate-700 ml-1 flex items-center justify-between">
-                  <span>שם התמונה (המשחק מילים)</span>
-                </label>
+            <div className="flex flex-col gap-4 flex-1">
+              <div className="space-y-1">
+                <label className="text-[11px] font-bold text-slate-700 ml-1">שם התמונה (משחק מילים)</label>
                 <input
                   type="text"
                   value={title}
                   onChange={(e) => setTitle(e.target.value)}
-                  placeholder="לדוגמה: אבטיח (אב-טיח)..."
-                  className="w-full text-lg px-5 py-4 bg-slate-50 border border-slate-200 rounded-2xl focus:outline-none focus:ring-4 focus:ring-teal-500/20 focus:border-teal-500 transition-all font-medium text-slate-800"
+                  className="w-full text-sm px-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl focus:ring-4 focus:ring-teal-500/10 focus:border-teal-500 outline-none transition-all font-bold text-slate-800"
                 />
               </div>
 
-              <div className="space-y-2">
-                <label className="text-sm font-bold text-slate-700 ml-1">נושאים וקטגוריות</label>
-                <div className="bg-slate-50 border border-slate-200 rounded-2xl p-3 min-h-[60px] flex flex-wrap gap-2 focus-within:ring-4 focus-within:ring-teal-500/20 focus-within:border-teal-500 transition-all">
+              <div className="space-y-1">
+                <label className="text-[11px] font-bold text-slate-700 ml-1">נושאים וקטגוריות</label>
+                <div className="bg-slate-50 border border-slate-200 rounded-xl p-2 min-h-[50px] flex flex-wrap gap-1.5">
                   {topic.split(',').map(t => t.trim()).filter(Boolean).map((tag, idx) => (
-                    <span key={`${tag}-${idx}`} className="flex items-center gap-1.5 bg-teal-100 text-teal-800 px-3 py-1.5 rounded-xl border border-teal-200 text-sm font-bold animate-in zoom-in-95 duration-200">
+                    <span key={`${tag}-${idx}`} className="flex items-center gap-1 bg-teal-100 text-teal-800 px-2 py-0.5 rounded-lg border border-teal-200 text-[10px] font-bold">
                       {tag}
-                      <button 
-                        type="button" 
-                        onClick={() => {
-                          const newTags = topic.split(',').map(t => t.trim()).filter(t => t !== tag && t !== '');
-                          setTopic(newTags.join(', '));
-                        }}
-                        className="p-0.5 hover:bg-teal-200 rounded-full text-teal-600 transition-colors"
-                      >
-                        <X size={14} />
-                      </button>
+                      <button onClick={() => setTopic(topic.split(',').map(t => t.trim()).filter(t => t !== tag).join(', '))} className="p-0.5 hover:bg-teal-200 rounded-full"><X size={10} /></button>
                     </span>
                   ))}
-                  <div className="flex-1 min-w-[120px] flex items-center gap-2">
-                    <input
-                      type="text"
-                      value={newTagInput}
-                      onChange={(e) => setNewTagInput(e.target.value)}
-                      onKeyDown={(e) => {
-                        if (e.key === 'Enter' || e.key === ',') {
-                          e.preventDefault();
-                          const val = newTagInput.trim().replace(/,/g, '');
-                          if (val) {
-                            const tags = topic ? topic.split(',').map(t => t.trim()) : [];
-                            if (!tags.includes(val)) {
-                              setTopic(topic ? `${topic}, ${val}` : val);
-                            }
-                            setNewTagInput('');
-                          }
-                        }
-                      }}
-                      placeholder="הוסף תיוג חדש..."
-                      className="w-full bg-transparent border-none focus:ring-0 text-sm font-medium text-slate-800 p-1"
-                      dir="rtl"
-                      list="master-tags"
-                    />
-                    {newTagInput && (
-                      <button
-                        type="button"
-                        onClick={() => {
-                            const val = newTagInput.trim().replace(/,/g, '');
-                            if (val) {
-                              const tags = topic ? topic.split(',').map(t => t.trim()) : [];
-                              if (!tags.includes(val)) {
-                                setTopic(topic ? `${topic}, ${val}` : val);
-                              }
-                              setNewTagInput('');
-                            }
-                        }}
-                        className="bg-teal-500 text-white p-1 rounded-lg hover:bg-teal-600 transition-all shrink-0"
-                      >
-                         <CheckCircle size={16} />
-                      </button>
-                    )}
-                  </div>
-                  <datalist id="master-tags">
-                    {masterCategories.map(cat => (
-                      <option key={cat} value={cat} />
-                    ))}
-                  </datalist>
-                </div>
-                {/* Quick Add Tags */}
-                <div className="flex flex-wrap gap-1.5 mt-1">
-                  {masterCategories.slice(0, 10).map(cat => (
-                    <button
-                      key={cat}
-                      type="button"
-                      onClick={() => {
-                        const tags = topic ? topic.split(',').map(t => t.trim()) : [];
-                        if (!tags.includes(cat)) {
-                          setTopic(topic ? `${topic}, ${cat}` : cat);
-                        }
-                      }}
-                      className="text-[10px] bg-slate-100 hover:bg-teal-100 text-slate-500 hover:text-teal-700 px-2 py-1 rounded-md border border-slate-200 transition-colors"
-                    >
-                      + {cat}
-                    </button>
-                  ))}
+                  <input
+                    type="text"
+                    value={newTagInput}
+                    onChange={(e) => setNewTagInput(e.target.value)}
+                    onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ',') { e.preventDefault(); const val = newTagInput.trim().replace(/,/g, ''); if (val) { const tags = topic ? topic.split(',').map(t => t.trim()) : []; if (!tags.includes(val)) setTopic(topic ? `${topic}, ${val}` : val); setNewTagInput(''); } } }}
+                    placeholder="+"
+                    className="flex-1 min-w-[50px] bg-transparent border-none focus:ring-0 text-xs font-bold p-1"
+                    dir="rtl"
+                  />
                 </div>
               </div>
 
-              <div className="space-y-2 flex-1 flex flex-col">
-                <label className="text-sm font-bold text-slate-700 ml-1 flex justify-between">
-                  <span>הסבר (להרחבה / LLM)</span>
-                  <span className="font-normal text-slate-400 text-xs">יוסתר למשתמשים בממשק הסופי</span>
-                </label>
+              <div className="space-y-1 flex-1 flex flex-col">
+                <label className="text-[11px] font-bold text-slate-700 ml-1">הסבר</label>
                 <textarea
                   value={explanation}
                   onChange={(e) => setExplanation(e.target.value)}
-                  placeholder="הסבר את משמעות כפל הלשון בפירוט..."
-                  className={`w-full flex-1 min-h-[120px] px-4 py-3 bg-slate-50 border border-slate-200 rounded-2xl focus:outline-none focus:ring-4 focus:ring-teal-500/20 focus:border-teal-500 transition-all text-slate-700 resize-none leading-relaxed ${aiSuggestion ? 'ring-2 ring-amber-200 border-amber-300' : ''}`}
+                  className="w-full flex-1 min-h-[80px] px-3 py-2 bg-slate-50 border border-slate-200 rounded-xl text-xs leading-relaxed resize-none"
                 />
               </div>
 
-              {aiSuggestion && (
-                <div className="space-y-2 flex-1 flex flex-col animate-in slide-in-from-left duration-300">
-                  <label className="text-sm font-bold text-amber-700 ml-1 flex justify-between items-center">
-                    <span className="flex items-center gap-2">🤖 הצעה לשיפור (AI)</span>
-                    <button 
-                      onClick={() => {
-                        setExplanation(aiSuggestion);
-                        setAiSuggestion(null);
-                      }}
-                      className="bg-amber-100 text-amber-800 px-3 py-1 rounded-lg text-xs font-bold hover:bg-amber-200 transition-colors flex items-center gap-1"
-                    >
-                      <CheckCircle size={14} /> אמץ הצעה
-                    </button>
-                  </label>
-                  <div className="w-full flex-1 min-h-[120px] px-4 py-3 bg-amber-50/50 border border-amber-200 rounded-2xl text-slate-700 leading-relaxed overflow-y-auto whitespace-pre-wrap relative italic">
-                    {aiSuggestion}
-                    <button 
-                       onClick={() => setAiSuggestion(null)}
-                       className="absolute top-2 left-2 p-1 text-amber-400 hover:text-amber-600 transition-colors"
-                       title="הסר הצעה זו"
-                    >
-                      <X size={16} />
-                    </button>
-                  </div>
-                </div>
-              )}
-            </div>
-
-            <div className="flex flex-col gap-3 mt-4 px-2">
-              <div className="flex items-center gap-3">
-                <label className="relative flex cursor-pointer items-center rounded-full p-2" htmlFor="checkbox">
+              <div className="flex flex-col gap-2">
+                <div className="flex items-center gap-2">
                   <input
                     type="checkbox"
                     id="checkbox"
                     checked={isApproved}
                     onChange={(e) => setIsApproved(e.target.checked)}
-                    className="peer relative h-6 w-6 cursor-pointer appearance-none rounded-md border border-slate-300 transition-all before:absolute before:top-2/4 before:left-2/4 before:block before:h-12 before:w-12 before:-translate-y-2/4 before:-translate-x-2/4 before:rounded-full before:bg-teal-500 before:opacity-0 before:transition-opacity checked:border-teal-500 checked:bg-teal-500 checked:before:bg-teal-500 hover:before:opacity-10"
+                    className="h-4 w-4 rounded border-slate-300 text-teal-600 cursor-pointer"
                   />
-                  <span className="pointer-events-none absolute top-2/4 left-2/4 -translate-y-2/4 -translate-x-2/4 text-white opacity-0 transition-opacity peer-checked:opacity-100">
-                    <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" viewBox="0 0 20 20" fill="currentColor" stroke="currentColor" strokeWidth="1">
-                      <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd"></path>
-                    </svg>
-                  </span>
-                </label>
-                <label className="cursor-pointer text-slate-700 font-bold select-none" htmlFor="checkbox">
-                  תמונה מאושרת / עברה בקרה ✅
-                </label>
+                  <label className="cursor-pointer text-slate-700 font-bold text-xs" htmlFor="checkbox">תמונה מאושרת ✅</label>
+                </div>
               </div>
 
-              <div className="flex items-center gap-3 bg-rose-50 p-3 rounded-2xl border border-rose-100">
-                <input
-                  type="checkbox"
-                  id="needsAI"
-                  checked={needsAIImprovement}
-                  onChange={(e) => setNeedsAIImprovement(e.target.checked)}
-                  className="h-6 w-6 rounded border-rose-300 text-rose-600 focus:ring-rose-500 cursor-pointer"
+              <div className="flex gap-2 shrink-0">
+                <button
+                  onClick={() => handleSave(true)}
+                  disabled={isSaving}
+                  className="flex-1 flex items-center justify-center gap-2 bg-teal-600 hover:bg-teal-700 text-white py-3 rounded-xl font-bold transition-all disabled:opacity-50 text-sm shadow-md"
+                >
+                  {isSaving ? <Loader size={16} className="animate-spin" /> : <>שמור והמשך <ChevronLeft size={16} /></>}
+                </button>
+                <button
+                  onClick={() => handleSave(false)}
+                  disabled={isSaving}
+                  className="w-20 lg:w-32 flex items-center justify-center bg-white text-teal-700 border border-teal-200 hover:bg-teal-50 rounded-xl font-bold transition-all disabled:opacity-50"
+                >
+                  <Save size={16} />
+                </button>
+              </div>
+            </div>
+          </div>
+
+          {/* Image Viewer Panel (Left side in RTL desktop) */}
+          <div className="flex flex-col bg-white rounded-3xl shadow-xl shadow-slate-200/50 overflow-hidden border border-slate-100 flex-1 min-h-[300px] lg:min-h-0 order-1 lg:order-2">
+            <div className="relative w-full flex-1 min-h-0 bg-slate-50 flex items-center justify-center p-2">
+              {images.length > 0 ? (
+                <img
+                  src={`${API_BASE}/images/${encodeURIComponent(currentFile)}?v=${fileSizes[currentFile] || ''}`}
+                  alt={title || currentFile}
+                  className="max-w-full max-h-full object-contain drop-shadow-md rounded-lg"
                 />
-                <label htmlFor="needsAI" className="text-sm font-bold text-rose-700 cursor-pointer select-none">
-                  דרוש שיפור נוסף ב-AI 🤖 (סמן אם ההסבר דורש תיקון)
-                </label>
+              ) : (
+                <div className="flex flex-col items-center justify-center text-slate-300 gap-2">
+                   <ImageIcon size={32} />
+                   <p className="text-xs font-bold">אין תמונות</p>
+                </div>
+              )}
+              <div className="absolute bottom-3 left-3 bg-black/50 backdrop-blur-sm text-white text-[10px] font-bold px-3 py-1 rounded-full">
+                {currentIndex + 1} / {images.length}
               </div>
             </div>
 
-            <div className="pt-4 border-t border-slate-100 flex flex-col sm:flex-row gap-3 mt-2 shrink-0">
+            <div className="flex items-center justify-between p-3 bg-slate-50 border-t border-slate-100 shrink-0">
               <button
-                onClick={() => handleSave(true)}
-                disabled={isSaving}
-                className="flex-1 flex items-center justify-center gap-2 bg-gradient-to-l from-teal-500 to-teal-600 hover:from-teal-600 hover:to-teal-700 text-white py-4 px-6 rounded-2xl font-bold shadow-lg shadow-teal-500/30 transform active:scale-[0.98] transition-all disabled:opacity-70"
+                onClick={nextImage}
+                disabled={currentIndex === images.length - 1}
+                className="flex items-center gap-1.5 px-4 py-2 rounded-xl font-bold text-slate-700 bg-white shadow-sm border border-slate-200 hover:bg-slate-50 hover:text-teal-600 disabled:opacity-30 transition-all text-xs"
               >
-                {isSaving ? (
-                  <div className="w-5 h-5 border-2 border-white/50 border-t-white rounded-full animate-spin"></div>
-                ) : (
-                  <>שמור והמשך לבא <ChevronLeft size={20} /></>
-                )}
+                <ChevronRight size={16} />
+                <span>הבא</span>
               </button>
-
               <button
-                onClick={() => handleSave(false)}
-                disabled={isSaving}
-                className="sm:w-32 flex items-center justify-center gap-2 bg-white text-teal-700 border-2 border-teal-100 hover:bg-teal-50 py-4 px-6 rounded-2xl font-bold transition-all disabled:opacity-70"
+                onClick={prevImage}
+                disabled={currentIndex === 0}
+                className="flex items-center gap-1.5 px-4 py-2 rounded-xl font-bold text-slate-700 bg-white shadow-sm border border-slate-200 hover:bg-slate-50 hover:text-teal-600 disabled:opacity-30 transition-all text-xs"
               >
-                <Save size={20} />
-                שמור
+                <span>הקודם</span>
+                <ChevronLeft size={16} />
               </button>
             </div>
           </div>
