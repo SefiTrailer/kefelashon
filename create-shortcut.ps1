@@ -19,9 +19,11 @@ $VbsContent | Out-File -FilePath $VbsPath -Encoding Ascii -Force
 $WshShell = New-Object -ComObject WScript.Shell
 $Shortcut = $WshShell.CreateShortcut($ShortcutPath)
 
-$Shortcut.TargetPath = "wscript.exe"
-$Shortcut.Arguments = """$VbsPath"""
+# Point to the Batch file but run it minimized/hidden via cmd
+$Shortcut.TargetPath = "cmd.exe"
+$Shortcut.Arguments = "/c start /min """" ""$CurrentDir\run-manager.bat"""
 $Shortcut.WorkingDirectory = "$CurrentDir"
+$Shortcut.WindowStyle = 7 # Minimized
 $Shortcut.Description = "Manage Kefel Lashon Servers"
 $Shortcut.IconLocation = "shell32.dll, 44" # Computer icon
 $Shortcut.Save()

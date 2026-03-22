@@ -6,6 +6,15 @@ import fs from 'fs';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const PORT = 3099;
+const LOG_FILE = path.join(__dirname, 'manager.log');
+
+function log(msg) {
+    const line = `[${new Date().toISOString()}] ${msg}\n`;
+    fs.appendFileSync(LOG_FILE, line);
+    console.log(msg);
+}
+
+log('--- Manager Starting ---');
 
 // Server statuses & PIDs
 const servers = {
@@ -29,10 +38,10 @@ function startServer(type) {
     });
 
     servers[type].pid = child.pid;
-    console.log(`🚀 Started ${servers[type].name} (PID: ${child.pid})`);
+    log(`🚀 Started ${servers[type].name} (PID: ${child.pid})`);
 
     child.on('exit', () => {
-        console.log(`🛑 ${servers[type].name} stopped.`);
+        log(`🛑 ${servers[type].name} stopped.`);
         servers[type].pid = null;
     });
 }
@@ -44,7 +53,7 @@ function stopServer(type) {
     // Use taskkill to kill the whole process tree (important for Vite/npm)
     exec(`taskkill /F /T /PID ${servers[type].pid}`, (err) => {
         if (err) {
-            console.error(`Failed to kill ${type}:`, err);
+            log(`Failed to kill ${type}: ${err}`);
             // Fallback
             servers[type].pid = null; 
         }
@@ -258,21 +267,27 @@ const html = `
 
 // Search for browser to open in --app mode
 function openAppMode(url) {
+    log(`Attempting to open App Mode for: ${url}`);
+    
+    // Fallback using 'start' which is more robust
+    const fallBackCmd = `start msedge --app=${url}`;
+    
     const edgePath = 'C:\\Program Files (x86)\\Microsoft\\Edge\\Application\\msedge.exe';
+    const edgePath2 = 'C:\\Program Files\\Microsoft\\Edge\\Application\\msedge.exe';
     const chromePath = 'C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe';
     
-    let browserCmd = 'start';
-    let args = [url];
+    let browserCmd = null;
 
-    if (fs.existsSync(edgePath)) {
-        browserCmd = `"${edgePath}"`;
-        args = [`--app=${url}`];
-    } else if (fs.existsSync(chromePath)) {
-        browserCmd = `"${chromePath}"`;
-        args = [`--app=${url}`];
-    }
+    if (fs.existsSync(edgePath)) browserCmd = `"${edgePath}"`;
+    else if (fs.existsSync(edgePath2)) browserCmd = `"${edgePath2}"`;
+    else if (fs.existsSync(chromePath)) browserCmd = `"${chromePath}"`;
 
-    exec(`${browserCmd} ${args.join(' ')}`);
+    const finalCmd = browserCmd ? `${browserCmd} --app=${url}` : fallBackCmd;
+    log(`Executing command: ${finalCmd}`);
+
+    exec(finalCmd, (err) => {
+        if (err) log(`Browser launch error: ${err.message}`);
+    });
 }
 
 const server = http.createServer((req, res) => {
@@ -301,13 +316,25 @@ const server = http.createServer((req, res) => {
     } else if (method === 'POST' && url === '/exit-manager') {
         res.end('ok');
         process.exit(0);
+    } else if (method === 'GET' && url === '/open-gui') {
+        openAppMode(`http://localhost:${PORT}`);
+        res.end('ok');
     } else {
         res.writeHead(404);
         res.end();
     }
 });
 
+server.on('error', (e) => {
+    if (e.code === 'EADDRINUSE') {
+        log('Manager already running. Triggering GUI...');
+        http.get(`http://localhost:${PORT}/open-gui`, () => {
+            process.exit(0);
+        });
+    }
+});
+
 server.listen(PORT, () => {
-    console.log(`✨ Manager Dashboard active at http://localhost:${PORT}`);
+    log(`✨ Manager Dashboard active at http://localhost:${PORT}`);
     openAppMode(`http://localhost:${PORT}`);
 });
