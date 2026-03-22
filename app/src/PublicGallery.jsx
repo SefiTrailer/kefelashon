@@ -555,7 +555,7 @@ export default function PublicGallery({ images, metadata }) {
                                         <div className={`relative flex-1 flex flex-col justify-center items-center h-full ${!isMobile && viewMode === 'single' ? 'w-auto' : 'w-full'} min-h-0`}>
                                             {/* Mobile: Consolidated Header Row (Search | Title | Explanation) */}
                                             {isMobile && viewMode === 'single' && (
-                                                <div className="w-full flex items-center justify-between gap-2 px-4 mb-4 mt-14 shrink-0">
+                                                <div className="relative w-full flex items-center justify-between gap-2 px-4 mb-4 mt-14 shrink-0">
                                                     {/* Right: Search (Starts from right in RTL) */}
                                                     <button
                                                         onClick={() => setIsSearchOpen(true)}
