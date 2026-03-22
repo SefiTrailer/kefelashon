@@ -23,9 +23,10 @@ let errors = 0;
 async function convertFile(inputPath, outputPath, options = {}) {
     const { quality = 82, lossless = false } = options;
 
+    const inputStat = fs.statSync(inputPath);
+
     // Skip if output already exists and is newer
     if (fs.existsSync(outputPath)) {
-        const inputStat = fs.statSync(inputPath);
         const outputStat = fs.statSync(outputPath);
         if (outputStat.mtimeMs >= inputStat.mtimeMs) {
             skipped++;

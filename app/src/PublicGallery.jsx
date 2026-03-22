@@ -473,14 +473,47 @@ export default function PublicGallery({ images, metadata }) {
             >
                 {/* Mobile Floating Tab Toggle */}
                 {isMobile && (
-                    <div className="fixed top-6 right-6 z-[60] pointer-events-none">
-                        <button 
-                            onClick={(e) => { e.stopPropagation(); setActiveMobileTab(activeMobileTab === 'info' ? 'gallery' : 'info'); }}
-                            className={`${theme.headerBtnAboutCls} px-5 py-2 rounded-full backdrop-blur-md border border-white/20 shadow-2xl transition-all hover:scale-105 active:scale-95 flex items-center justify-center text-sm font-bold pointer-events-auto`}
-                        >
-                            {activeMobileTab === 'info' ? 'לגלריה' : 'לדף הראשי'}
-                        </button>
-                    </div>
+                    <>
+                        <div className="fixed top-6 right-6 z-[60] pointer-events-none">
+                            <button 
+                                onClick={(e) => { e.stopPropagation(); setActiveMobileTab(activeMobileTab === 'info' ? 'gallery' : 'info'); }}
+                                className={`${theme.headerBtnAboutCls} px-5 py-2 rounded-full backdrop-blur-md border border-white/20 shadow-2xl transition-all hover:scale-105 active:scale-95 flex items-center justify-center text-sm font-bold pointer-events-auto`}
+                            >
+                                {activeMobileTab === 'info' ? 'לגלריה' : 'לדף הראשי'}
+                            </button>
+                        </div>
+                        
+                        {/* Mobile Floating Sort Toggle - Only in Gallery View */}
+                        {activeMobileTab === 'gallery' && (
+                            <div className="fixed top-6 left-6 z-[60] pointer-events-none">
+                                <div className="relative flex flex-col items-start gap-2">
+                                    <button 
+                                        onClick={(e) => { e.stopPropagation(); setIsSortOpen(!isSortOpen); }}
+                                        className={`${theme.headerBtnSearchCls} w-[100px] h-[38px] rounded-full backdrop-blur-md border border-white/20 shadow-2xl transition-all hover:scale-105 active:scale-95 flex items-center justify-center text-sm font-bold pointer-events-auto`}
+                                    >
+                                        מיון: {sortOrder === 'newest' ? 'חדש' : (sortOrder === 'oldest' ? 'ישן' : 'אקראי')}
+                                    </button>
+                                    
+                                    {isSortOpen && (
+                                        <div className="absolute top-11 left-0 pointer-events-auto w-32 bg-slate-800/95 backdrop-blur-md rounded-xl border border-white/10 shadow-2xl animate-in fade-in zoom-in-95 duration-200 flex flex-col overflow-hidden">
+                                            <div
+                                                className={`px-4 py-3 text-sm text-right transition-colors ${sortOrder === 'newest' ? 'text-white font-bold bg-white/10' : 'text-white/70 hover:bg-white/5'}`}
+                                                onClick={(e) => { e.stopPropagation(); setSortOrder('newest'); setIsSortOpen(false); }}
+                                            >הכי חדש</div>
+                                            <div
+                                                className={`px-4 py-3 text-sm text-right transition-colors ${sortOrder === 'oldest' ? 'text-white font-bold bg-white/10' : 'text-white/70 hover:bg-white/5'}`}
+                                                onClick={(e) => { e.stopPropagation(); setSortOrder('oldest'); setIsSortOpen(false); }}
+                                            >הכי ישן</div>
+                                            <div
+                                                className={`px-4 py-3 text-sm text-right transition-colors ${sortOrder === 'random' ? 'text-white font-bold bg-white/10' : 'text-white/70 hover:bg-white/5'}`}
+                                                onClick={(e) => { e.stopPropagation(); setSortOrder('random'); setIsSortOpen(false); }}
+                                            >אקראי</div>
+                                        </div>
+                                    )}
+                                </div>
+                            </div>
+                        )}
+                    </>
                 )}
 
                 {/* ── Left/Main: Search + Image Frame ── */}
@@ -509,7 +542,7 @@ export default function PublicGallery({ images, metadata }) {
                                     </div>
                                 </button>
 
-                                <div className={`relative ${theme.innerBg} rounded-[1.8rem] sm:rounded-[2.2rem] flex flex-col ${!isMobile ? 'w-full h-full' : 'flex-1 w-full'} min-h-0 overflow-hidden mx-auto`}>
+                                <div className={`relative ${theme.innerBg} rounded-[1.8rem] sm:rounded-[2.2rem] flex flex-col ${!isMobile ? 'w-full h-full' : 'flex-1 w-full'} min-h-0 mx-auto`}>
                                         {!isMobile && viewMode === 'single' && (
                                             <div className="px-3 sm:px-6 py-4 flex items-center justify-between gap-3 relative flex-shrink-0 z-20 w-full min-h-[5rem] overflow-hidden">
                                                 <div className={`absolute bottom-0 left-0 w-full h-[2px] bg-gradient-to-r ${theme.frameGrad} opacity-60`} />
@@ -575,15 +608,17 @@ export default function PublicGallery({ images, metadata }) {
                                                     </div>
 
                                                     {/* Left: Explanation */}
-                                                    {fileMetadata && fileMetadata.explanation ? (
-                                                        <button 
-                                                            onClick={() => setShowExplanation(p => !p)} 
-                                                            className="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-slate-900/60 border border-cyan-500/30 text-cyan-50 text-xs font-bold shadow-lg transition-transform active:scale-95 shrink-0"
-                                                        >
-                                                            <span>הסבר</span>
-                                                            <Info className={`w-3.5 h-3.5 transition-transform ${showExplanation ? '-rotate-90' : 'rotate-0'}`} />
-                                                        </button>
-                                                    ) : <div className="w-9" />}
+                                                    <div className="flex flex-col items-center gap-2 shrink-0">
+                                                        {fileMetadata && fileMetadata.explanation ? (
+                                                            <button 
+                                                                onClick={() => setShowExplanation(p => !p)} 
+                                                                className="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-slate-900/60 border border-cyan-500/30 text-cyan-50 text-xs font-bold shadow-lg transition-transform active:scale-95 shrink-0"
+                                                            >
+                                                                <span>הסבר</span>
+                                                                <Info className={`w-3.5 h-3.5 transition-transform ${showExplanation ? '-rotate-90' : 'rotate-0'}`} />
+                                                            </button>
+                                                        ) : <div className="w-9" />}
+                                                    </div>
                                                 </div>
                                             )}
 
@@ -654,7 +689,7 @@ export default function PublicGallery({ images, metadata }) {
                                         </div>
 
                                         {/* Tag Footer - Strictly Fixed Height to Prevent Layout Shift */}
-                                        <div className={`bg-black/50 backdrop-blur-md border-t border-white/10 p-3 sm:p-4 rounded-b-[1.8rem] sm:rounded-b-[2.2rem] flex flex-col sm:flex-row items-center justify-center sm:justify-between gap-4 relative z-30 shrink-0 flex-none overflow-hidden ${viewMode === 'single' ? 'h-[110px] lg:h-[90px]' : ''}`}>
+                                        <div className={`bg-black/50 backdrop-blur-md border-t border-white/10 p-3 sm:p-4 rounded-b-[1.8rem] sm:rounded-b-[2.2rem] flex flex-col sm:flex-row items-center justify-center sm:justify-between gap-4 relative z-30 shrink-0 flex-none ${viewMode === 'single' ? 'h-[110px] lg:h-[90px]' : ''}`}>
                                             <div className="flex flex-wrap gap-2 items-center justify-center flex-1">
                                                 <span className="text-white/60 text-sm font-bold">תגיות:</span>
                                                 {(() => {
