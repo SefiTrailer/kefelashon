@@ -34,7 +34,7 @@ jobs:
 
       - name: Build Public Viewer
         working-directory: ./app
-        run: npx vite build
+        run: npm run build:public
         env:
           VITE_PUBLIC_VIEWER: "true"
 
