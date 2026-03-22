@@ -28,7 +28,7 @@ function App() {
   const [isApproved, setIsApproved] = useState(false);
   const [needsAIImprovement, setNeedsAIImprovement] = useState(false);
   const [aiSuggestion, setAiSuggestion] = useState(null);
-  const [isMobile, setIsMobile] = useState(window.innerWidth < 1024);
+  const [isMobile, setIsMobile] = useState(window.innerWidth < 768);
   const [isSaving, setIsSaving] = useState(false);
   const [error, setError] = useState(null);
   const [isSearchOpen, setIsSearchOpen] = useState(false);
@@ -106,6 +106,14 @@ function App() {
     fetchImages();
     fetchPublishStatus();
     fetchMasterTags();
+  }, []);
+
+  useEffect(() => {
+    const handleResize = () => {
+      setIsMobile(window.innerWidth < 768);
+    };
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
   }, []);
 
   // Debounce search query to prevent lag on every keystroke
@@ -475,21 +483,17 @@ function App() {
   const currentFile = images[currentIndex];
   const isCompleted = metadata[currentFile]?.title?.trim() && metadata[currentFile]?.explanation?.trim() && metadata[currentFile]?.topic?.trim();
   const progressPercentage = allImages.length ? (Object.keys(metadata).length / allImages.length) * 100 : 0;
-
+  
   if (isPublicViewer) {
-    return (
-      <div className="w-full h-screen min-h-screen overflow-hidden bg-slate-950">
-        <PublicGallery images={images} metadata={metadata} />
-      </div>
-    );
+    return <PublicGallery images={images} metadata={metadata} />;
   }
 
   return (
-    <div className="h-screen overflow-hidden bg-gradient-to-br from-slate-50 to-teal-50/30 flex flex-col items-center p-4 font-sans">
-      <div className="w-full max-w-7xl flex flex-col gap-4 h-full min-h-0">
+    <div className={`h-screen overflow-hidden flex flex-col items-center ${isPublicViewer ? 'p-0' : 'p-2 sm:p-4'} font-sans ${isPublicViewer ? 'bg-slate-950' : 'bg-gradient-to-br from-slate-50 to-teal-50/30'}`}>
+      <div className={`w-full ${isPublicViewer ? 'max-w-[1920px]' : 'max-w-7xl'} flex flex-col gap-4 h-full min-h-0`}>
 
-        {/* Header & Progress */}
-        {/* Header & Progress */}
+        {/* Header & Progress (Admin Only) */}
+        {!isPublicViewer && (
         <header className="shrink-0 flex flex-col bg-white/80 backdrop-blur-md p-2 md:p-3 rounded-2xl shadow-sm border border-slate-100">
           <div className="flex flex-col md:flex-row md:items-center justify-between gap-2">
             <div className="flex items-center justify-between w-full md:w-auto">
@@ -566,7 +570,6 @@ function App() {
             </div>
           </div>
 
-          {/* Topics Desktop Only */}
           <div className="hidden lg:flex items-center gap-1.5 mt-2 pt-2 border-t border-slate-100/50 overflow-x-auto no-scrollbar">
              {allTopics.slice(0, 50).map(t => (
                <button
@@ -579,156 +582,147 @@ function App() {
              ))}
           </div>
         </header>
+        )}
 
         {/* Main Content Area */}
-        {adminViewMode === 'edit' ? (
-        <div className="flex flex-col lg:flex-row gap-4 md:gap-6 flex-1 min-h-0 relative">
-          
-          {/* Editor Panel (Right side in RTL desktop) */}
-          <div className="flex flex-col gap-4 bg-white p-4 md:p-6 rounded-3xl shadow-xl shadow-slate-200/50 border border-slate-100 min-h-0 overflow-y-auto lg:w-[400px] order-2 lg:order-1">
-            <div className="shrink-0">
-              <h2 className="text-lg md:text-xl font-bold text-slate-800 mb-3 flex items-center justify-between">
-                <div className="flex items-center gap-2">
-                  <span className="bg-teal-100 text-teal-600 w-8 h-8 rounded-lg flex items-center justify-center text-sm">✍️</span>
-                  עריכת פרטים
-                </div>
-                <button
-                  onClick={handleDelete}
-                  className="p-1.5 text-rose-500 hover:bg-rose-50 rounded-lg transition-colors flex items-center gap-2 text-xs font-medium"
-                >
-                  <Trash2 size={16} />
-                  <span>מחק</span>
-                </button>
-              </h2>
-              
-              <div className="bg-slate-50 border border-slate-100 rounded-xl p-2.5 mb-2 space-y-1.5">
-                <div className="flex items-center justify-between text-[10px] text-slate-400 font-mono" dir="ltr">
-                  <span className="flex items-center gap-1.5 font-bold text-slate-500">
-                    <ImageIcon size={12} /> FILE
-                  </span>
-                  <span className="truncate max-w-[150px]">{currentFile}</span>
-                </div>
-                <div className="flex items-center justify-between">
-                  <span className="text-[10px] font-mono text-slate-500 font-bold bg-slate-200/40 px-1.5 py-0.5 rounded border border-slate-200">
-                      {fileSizes[images[currentIndex]] ? formatBytes(fileSizes[images[currentIndex]]) : '...'}
-                  </span>
-                </div>
-              </div>
-            </div>
-
-            <div className="flex flex-col gap-4 flex-1">
-              <div className="space-y-1">
-                <label className="text-[11px] font-bold text-slate-700 ml-1">שם התמונה (משחק מילים)</label>
-                <input
-                  type="text"
-                  value={title}
-                  onChange={(e) => setTitle(e.target.value)}
-                  className="w-full text-sm px-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl focus:ring-4 focus:ring-teal-500/10 focus:border-teal-500 outline-none transition-all font-bold text-slate-800"
-                />
-              </div>
-
-              <div className="space-y-1">
-                <label className="text-[11px] font-bold text-slate-700 ml-1">נושאים וקטגוריות</label>
-                <div className="bg-slate-50 border border-slate-200 rounded-xl p-2 min-h-[50px] flex flex-wrap gap-1.5">
-                  {topic.split(',').map(t => t.trim()).filter(Boolean).map((tag, idx) => (
-                    <span key={`${tag}-${idx}`} className="flex items-center gap-1 bg-teal-100 text-teal-800 px-2 py-0.5 rounded-lg border border-teal-200 text-[10px] font-bold">
-                      {tag}
-                      <button onClick={() => setTopic(topic.split(',').map(t => t.trim()).filter(t => t !== tag).join(', '))} className="p-0.5 hover:bg-teal-200 rounded-full"><X size={10} /></button>
+        {isPublicViewer ? (
+          <div className="flex-1 min-h-0 flex flex-col relative">
+             <PublicGallery images={images} metadata={metadata} />
+          </div>
+        ) : adminViewMode === 'edit' ? (
+          <div className="flex flex-col lg:flex-row gap-4 md:gap-6 flex-1 min-h-0 relative">
+            
+            {/* Editor Panel */}
+            <div className="flex flex-col gap-4 bg-white p-4 md:p-6 rounded-3xl shadow-xl shadow-slate-200/50 border border-slate-100 min-h-0 overflow-y-auto lg:w-[400px] order-2 lg:order-1">
+              <div className="shrink-0">
+                <h2 className="text-lg md:text-xl font-bold text-slate-800 mb-3 flex items-center justify-between">
+                  <div className="flex items-center gap-2">
+                    <span className="bg-teal-100 text-teal-600 w-8 h-8 rounded-lg flex items-center justify-center text-sm">✍️</span>
+                    עריכת פרטים
+                  </div>
+                  <button onClick={handleDelete} className="p-1.5 text-rose-500 hover:bg-rose-50 rounded-lg transition-colors flex items-center gap-2 text-xs font-medium">
+                    <Trash2 size={16} />
+                    <span>מחק</span>
+                  </button>
+                </h2>
+                
+                <div className="bg-slate-50 border border-slate-100 rounded-xl p-2.5 mb-2 space-y-1.5">
+                  <div className="flex items-center justify-between text-[10px] text-slate-400 font-mono" dir="ltr">
+                    <span className="flex items-center gap-1.5 font-bold text-slate-500">
+                      <ImageIcon size={12} /> FILE
                     </span>
-                  ))}
+                    <span className="truncate max-w-[150px]">{currentFile}</span>
+                  </div>
+                  <div className="flex items-center justify-between">
+                    <span className="text-[10px] font-mono text-slate-500 font-bold bg-slate-200/40 px-1.5 py-0.5 rounded border border-slate-200">
+                        {fileSizes[images[currentIndex]] ? formatBytes(fileSizes[images[currentIndex]]) : '...'}
+                    </span>
+                  </div>
+                </div>
+              </div>
+
+              <div className="flex flex-col gap-4 flex-1">
+                <div className="space-y-1">
+                  <label className="text-[11px] font-bold text-slate-700 ml-1">שם התמונה (משחק מילים)</label>
                   <input
                     type="text"
-                    value={newTagInput}
-                    onChange={(e) => setNewTagInput(e.target.value)}
-                    onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ',') { e.preventDefault(); const val = newTagInput.trim().replace(/,/g, ''); if (val) { const tags = topic ? topic.split(',').map(t => t.trim()) : []; if (!tags.includes(val)) setTopic(topic ? `${topic}, ${val}` : val); setNewTagInput(''); } } }}
-                    placeholder="+"
-                    className="flex-1 min-w-[50px] bg-transparent border-none focus:ring-0 text-xs font-bold p-1"
-                    dir="rtl"
+                    value={title}
+                    onChange={(e) => setTitle(e.target.value)}
+                    className="w-full text-sm px-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl focus:ring-4 focus:ring-teal-500/10 focus:border-teal-500 outline-none transition-all font-bold text-slate-800"
                   />
+                </div>
+
+                <div className="space-y-1">
+                  <label className="text-[11px] font-bold text-slate-700 ml-1">נושאים וקטגוריות</label>
+                  <div className="bg-slate-50 border border-slate-200 rounded-xl p-2 min-h-[50px] flex flex-wrap gap-1.5">
+                    {topic.split(',').map(t => t.trim()).filter(Boolean).map((tag, idx) => (
+                      <span key={`${tag}-${idx}`} className="flex items-center gap-1 bg-teal-100 text-teal-800 px-2 py-0.5 rounded-lg border border-teal-200 text-[10px] font-bold">
+                        {tag}
+                        <button onClick={() => setTopic(topic.split(',').map(t => t.trim()).filter(t => t !== tag).join(', '))} className="p-0.5 hover:bg-teal-200 rounded-full"><X size={10} /></button>
+                      </span>
+                    ))}
+                    <input
+                      type="text"
+                      value={newTagInput}
+                      onChange={(e) => setNewTagInput(e.target.value)}
+                      onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ',') { e.preventDefault(); const val = newTagInput.trim().replace(/,/g, ''); if (val) { const tags = topic ? topic.split(',').map(t => t.trim()) : []; if (!tags.includes(val)) setTopic(topic ? `${topic}, ${val}` : val); setNewTagInput(''); } } }}
+                      placeholder="+"
+                      className="flex-1 min-w-[50px] bg-transparent border-none focus:ring-0 text-xs font-bold p-1"
+                      dir="rtl"
+                    />
+                  </div>
+                </div>
+
+                <div className="space-y-1 flex-1 flex flex-col">
+                  <label className="text-[11px] font-bold text-slate-700 ml-1">הסבר</label>
+                  <textarea
+                    value={explanation}
+                    onChange={(e) => setExplanation(e.target.value)}
+                    className="w-full flex-1 min-h-[80px] px-3 py-2 bg-slate-50 border border-slate-200 rounded-xl text-xs leading-relaxed resize-none"
+                  />
+                </div>
+
+                <div className="flex flex-col gap-2">
+                  <div className="flex items-center gap-2">
+                    <input
+                      type="checkbox"
+                      id="checkbox"
+                      checked={isApproved}
+                      onChange={(e) => setIsApproved(e.target.checked)}
+                      className="h-4 w-4 rounded border-slate-300 text-teal-600 cursor-pointer"
+                    />
+                    <label className="cursor-pointer text-slate-700 font-bold text-xs" htmlFor="checkbox">תמונה מאושרת ✅</label>
+                  </div>
+                </div>
+
+                <div className="flex gap-2 shrink-0">
+                  <button
+                    onClick={() => handleSave(true)}
+                    disabled={isSaving}
+                    className="flex-1 flex items-center justify-center gap-2 bg-teal-600 hover:bg-teal-700 text-white py-3 rounded-xl font-bold transition-all disabled:opacity-50 text-sm shadow-md"
+                  >
+                    {isSaving ? <Loader size={16} className="animate-spin" /> : <>שמור והמשך <ChevronLeft size={16} /></>}
+                  </button>
+                  <button onClick={() => handleSave(false)} disabled={isSaving} className="w-20 lg:w-32 flex items-center justify-center bg-white text-teal-700 border border-teal-200 hover:bg-teal-50 rounded-xl font-bold transition-all disabled:opacity-50">
+                    <Save size={16} />
+                  </button>
+                </div>
+              </div>
+            </div>
+
+            {/* Image Viewer Panel */}
+            <div className="flex flex-col bg-white rounded-3xl shadow-xl shadow-slate-200/50 overflow-hidden border border-slate-100 flex-1 min-h-[300px] lg:min-h-0 order-1 lg:order-2">
+              <div className="relative w-full h-full flex flex-col overflow-hidden bg-slate-950 transition-colors duration-700" id="public-gallery-root">
+      {/* Top Header - Unified Scaling */}
+                {images.length > 0 ? (
+                  <img
+                    src={`${API_BASE}/images/${encodeURIComponent(currentFile)}?v=${fileSizes[currentFile] || ''}`}
+                    alt={title || currentFile}
+                    className="max-w-full max-h-full object-contain drop-shadow-md rounded-lg"
+                  />
+                ) : (
+                  <div className="flex flex-col items-center justify-center text-slate-300 gap-2">
+                     <ImageIcon size={32} />
+                     <p className="text-xs font-bold">אין תמונות</p>
+                  </div>
+                )}
+                <div className="absolute bottom-3 left-3 bg-black/50 backdrop-blur-sm text-white text-[10px] font-bold px-3 py-1 rounded-full">
+                  {currentIndex + 1} / {images.length}
                 </div>
               </div>
 
-              <div className="space-y-1 flex-1 flex flex-col">
-                <label className="text-[11px] font-bold text-slate-700 ml-1">הסבר</label>
-                <textarea
-                  value={explanation}
-                  onChange={(e) => setExplanation(e.target.value)}
-                  className="w-full flex-1 min-h-[80px] px-3 py-2 bg-slate-50 border border-slate-200 rounded-xl text-xs leading-relaxed resize-none"
-                />
-              </div>
-
-              <div className="flex flex-col gap-2">
-                <div className="flex items-center gap-2">
-                  <input
-                    type="checkbox"
-                    id="checkbox"
-                    checked={isApproved}
-                    onChange={(e) => setIsApproved(e.target.checked)}
-                    className="h-4 w-4 rounded border-slate-300 text-teal-600 cursor-pointer"
-                  />
-                  <label className="cursor-pointer text-slate-700 font-bold text-xs" htmlFor="checkbox">תמונה מאושרת ✅</label>
-                </div>
-              </div>
-
-              <div className="flex gap-2 shrink-0">
-                <button
-                  onClick={() => handleSave(true)}
-                  disabled={isSaving}
-                  className="flex-1 flex items-center justify-center gap-2 bg-teal-600 hover:bg-teal-700 text-white py-3 rounded-xl font-bold transition-all disabled:opacity-50 text-sm shadow-md"
-                >
-                  {isSaving ? <Loader size={16} className="animate-spin" /> : <>שמור והמשך <ChevronLeft size={16} /></>}
+              <div className="flex items-center justify-between p-3 bg-slate-50 border-t border-slate-100 shrink-0">
+                <button onClick={nextImage} disabled={currentIndex === images.length - 1} className="flex items-center gap-1.5 px-4 py-2 rounded-xl font-bold text-slate-700 bg-white shadow-sm border border-slate-200 hover:bg-slate-50 hover:text-teal-600 disabled:opacity-30 transition-all text-xs">
+                  <ChevronRight size={16} />
+                  <span>הבא</span>
                 </button>
-                <button
-                  onClick={() => handleSave(false)}
-                  disabled={isSaving}
-                  className="w-20 lg:w-32 flex items-center justify-center bg-white text-teal-700 border border-teal-200 hover:bg-teal-50 rounded-xl font-bold transition-all disabled:opacity-50"
-                >
-                  <Save size={16} />
+                <button onClick={prevImage} disabled={currentIndex === 0} className="flex items-center gap-1.5 px-4 py-2 rounded-xl font-bold text-slate-700 bg-white shadow-sm border border-slate-200 hover:bg-slate-50 hover:text-teal-600 disabled:opacity-30 transition-all text-xs">
+                  <span>הקודם</span>
+                  <ChevronLeft size={16} />
                 </button>
               </div>
             </div>
           </div>
-
-          {/* Image Viewer Panel (Left side in RTL desktop) */}
-          <div className="flex flex-col bg-white rounded-3xl shadow-xl shadow-slate-200/50 overflow-hidden border border-slate-100 flex-1 min-h-[300px] lg:min-h-0 order-1 lg:order-2">
-            <div className="relative w-full flex-1 min-h-0 bg-slate-50 flex items-center justify-center p-2">
-              {images.length > 0 ? (
-                <img
-                  src={`${API_BASE}/images/${encodeURIComponent(currentFile)}?v=${fileSizes[currentFile] || ''}`}
-                  alt={title || currentFile}
-                  className="max-w-full max-h-full object-contain drop-shadow-md rounded-lg"
-                />
-              ) : (
-                <div className="flex flex-col items-center justify-center text-slate-300 gap-2">
-                   <ImageIcon size={32} />
-                   <p className="text-xs font-bold">אין תמונות</p>
-                </div>
-              )}
-              <div className="absolute bottom-3 left-3 bg-black/50 backdrop-blur-sm text-white text-[10px] font-bold px-3 py-1 rounded-full">
-                {currentIndex + 1} / {images.length}
-              </div>
-            </div>
-
-            <div className="flex items-center justify-between p-3 bg-slate-50 border-t border-slate-100 shrink-0">
-              <button
-                onClick={nextImage}
-                disabled={currentIndex === images.length - 1}
-                className="flex items-center gap-1.5 px-4 py-2 rounded-xl font-bold text-slate-700 bg-white shadow-sm border border-slate-200 hover:bg-slate-50 hover:text-teal-600 disabled:opacity-30 transition-all text-xs"
-              >
-                <ChevronRight size={16} />
-                <span>הבא</span>
-              </button>
-              <button
-                onClick={prevImage}
-                disabled={currentIndex === 0}
-                className="flex items-center gap-1.5 px-4 py-2 rounded-xl font-bold text-slate-700 bg-white shadow-sm border border-slate-200 hover:bg-slate-50 hover:text-teal-600 disabled:opacity-30 transition-all text-xs"
-              >
-                <span>הקודם</span>
-                <ChevronLeft size={16} />
-              </button>
-            </div>
-          </div>
-        </div>
         ) : adminViewMode === 'duplicates' ? (
           <DuplicatesReview onComplete={() => setAdminViewMode('edit')} />
         ) : (
@@ -775,7 +769,7 @@ function App() {
                       )}
                     </div>
 
-                    {/* Delete Button Area (shows only on hover) */}
+                    {/* Delete Button Area */}
                     <button
                       onClick={async (e) => {
                         e.stopPropagation();
@@ -797,7 +791,6 @@ function App() {
                         }
                       }}
                       className="absolute top-2 left-2 p-1.5 bg-rose-500 hover:bg-rose-600 text-white rounded-md shadow-md opacity-0 group-hover:opacity-100 transition-opacity"
-                      title="מחק כליל תמונה זו"
                     >
                       <Trash2 size={14} />
                     </button>
@@ -808,6 +801,19 @@ function App() {
           </div>
         )}
       </div>
+
+      {/* WhatsApp Floating CTA (Admin Only) */}
+      {!isPublicViewer && (
+      <a
+        href="https://wa.me/972500000000?text=שלום,%20הגעתי%20ממערכת%20כפל%20לשון"
+        target="_blank"
+        rel="noreferrer"
+        className="fixed bottom-6 left-6 bg-[#25D366] text-white p-4 rounded-full shadow-lg hover:shadow-xl hover:scale-110 transition-all flex items-center justify-center group"
+      >
+        <MessageCircle size={28} />
+        <span className="max-w-0 overflow-hidden whitespace-nowrap group-hover:max-w-xs group-hover:mr-3 transition-all duration-300 font-medium">יצירת קשר</span>
+      </a>
+      )}
 
       {/* Search Modal */}
       {isSearchOpen && (
@@ -919,7 +925,7 @@ function App() {
         </div>
       )}
 
-      {/* WhatsApp Floating CTA */}
+      {!isPublicViewer && (
       <a
         href="https://wa.me/972500000000?text=שלום,%20הגעתי%20ממערכת%20כפל%20לשון"
         target="_blank"
@@ -932,6 +938,7 @@ function App() {
           יצירת קשר בווסטאפ
         </span>
       </a>
+      )}
 
       {/* Topic Browser Modal */}
       {isTopicModalOpen && (

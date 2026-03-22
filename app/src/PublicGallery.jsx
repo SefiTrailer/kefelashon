@@ -199,7 +199,7 @@ export default function PublicGallery({ images, metadata }) {
                     setGalleryAspectRatio(rect.width / rect.height);
                 }
             }
-            setIsMobile(window.innerWidth < 1024);
+            setIsMobile(window.innerWidth < 768);
         };
         measure();
         const raf = requestAnimationFrame(measure);
@@ -461,7 +461,7 @@ export default function PublicGallery({ images, metadata }) {
 
     return (
         <div
-            className={`h-[100dvh] lg:h-screen lg:overflow-hidden ${theme.bgStyle} text-white font-['Fredoka',sans-serif] flex flex-col items-center ${isMobile ? 'justify-center px-4 py-4' : 'lg:py-6'} relative ${theme.className} overflow-hidden`}
+            className={`fixed inset-0 z-50 ${theme.bgStyle} text-white font-['Fredoka',sans-serif] flex flex-col items-center ${isMobile ? 'justify-center px-4 py-4' : 'lg:py-6'} ${theme.className} overflow-hidden`}
             style={{ letterSpacing: '0.01em' }}
         >
             {/* ── Main Layout Container ── */}
