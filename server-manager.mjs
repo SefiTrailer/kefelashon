@@ -207,6 +207,10 @@ const html = `
             <button class="btn-all btn-all-start" onclick="action('start-all')">הפעל הכל</button>
             <button class="btn-all btn-all-stop" onclick="action('stop-all')">כבה הכל</button>
         </div>
+        
+        <div style="margin-top: 1rem;">
+            <button class="btn-all" style="background: rgba(148, 163, 184, 0.1); color: #94a3b8; border: 1px solid rgba(148, 163, 184, 0.3);" onclick="exitManager()">סגור מרכז שליטה</button>
+        </div>
 
         <div class="footer">
             Manager running on port ${PORT} | Antigravity AI
