@@ -13,7 +13,7 @@ Set WshShell = CreateObject("WScript.Shell")
 WshShell.Run """$NodePath"" ""$MjsPath""", 0, False
 "@
 
-$VbsContent | Out-File -FilePath $VbsPath -Encoding UTF8 -Force
+$VbsContent | Out-File -FilePath $VbsPath -Encoding Ascii -Force
 
 # Create the Shortcut
 $WshShell = New-Object -ComObject WScript.Shell
