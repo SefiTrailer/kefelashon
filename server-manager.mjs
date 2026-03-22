@@ -269,25 +269,16 @@ const html = `
 function openAppMode(url) {
     log(`Attempting to open App Mode for: ${url}`);
     
-    // Fallback using 'start' which is more robust
-    const fallBackCmd = `start msedge --app=${url}`;
+    // Windows: Try 'start msedge' which is the most reliable
+    const cmd = `start msedge --app=${url}`;
     
-    const edgePath = 'C:\\Program Files (x86)\\Microsoft\\Edge\\Application\\msedge.exe';
-    const edgePath2 = 'C:\\Program Files\\Microsoft\\Edge\\Application\\msedge.exe';
-    const chromePath = 'C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe';
-    
-    let browserCmd = null;
-
-    if (fs.existsSync(edgePath)) browserCmd = `"${edgePath}"`;
-    else if (fs.existsSync(edgePath2)) browserCmd = `"${edgePath2}"`;
-    else if (fs.existsSync(chromePath)) browserCmd = `"${chromePath}"`;
-
-    const finalCmd = browserCmd ? `${browserCmd} --app=${url}` : fallBackCmd;
-    log(`Executing command: ${finalCmd}`);
-
-    exec(finalCmd, (err) => {
-        if (err) log(`Browser launch error: ${err.message}`);
-    });
+    log(`Executing sync command: ${cmd}`);
+    try {
+        exec(cmd);
+        log('Browser launch command sent.');
+    } catch (err) {
+        log(`Browser launch error: ${err.message}`);
+    }
 }
 
 const server = http.createServer((req, res) => {
