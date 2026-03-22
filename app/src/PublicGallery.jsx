@@ -466,7 +466,7 @@ export default function PublicGallery({ images, metadata }) {
         >
             {/* ── Main Layout Container ── */}
             <div 
-                className={`relative w-full max-w-[1400px] px-0 lg:px-4 mx-auto flex flex-col lg:flex-row gap-8 lg:gap-12 ${isMobile ? 'items-center justify-center' : 'items-stretch justify-center'} flex-1 min-h-0`}
+                className={`relative w-full max-w-[1400px] px-0 lg:px-4 mx-auto flex flex-col lg:flex-row gap-8 lg:gap-[4vw] xl:gap-12 ${isMobile ? 'items-center justify-center' : 'items-stretch justify-center'} flex-1 min-h-0`}
                 onTouchStart={isMobile ? onGlobalTouchStart : undefined}
                 onTouchMove={isMobile ? onGlobalTouchMove : undefined}
                 onTouchEnd={isMobile ? onGlobalTouchEnd : undefined}
@@ -484,7 +484,7 @@ export default function PublicGallery({ images, metadata }) {
                 )}
 
                 {/* ── Left/Main: Search + Image Frame ── */}
-                <div className={`${!isMobile && viewMode === 'single' ? 'w-fit flex-none' : 'w-full flex-1'} max-w-2xl md:max-w-4xl flex-col items-center relative shrink-0 mx-auto min-h-0 ${isMobile && activeMobileTab === 'info' ? 'hidden' : 'flex'}`}>
+                <div className={`${!isMobile && viewMode === 'single' ? 'w-fit flex-none' : 'w-full flex-1'} flex-col items-center relative shrink-0 mx-auto min-h-0 ${isMobile && activeMobileTab === 'info' ? 'hidden' : 'flex'}`}>
                     {displayImages.length === 0 ? (
                         <div className="text-center bg-white/10 backdrop-blur-lg p-12 rounded-3xl border border-white/20">
                             <span className="text-6xl mb-4 block">😢</span>
@@ -495,7 +495,7 @@ export default function PublicGallery({ images, metadata }) {
                         <div className="w-full relative flex-1 flex flex-col min-h-0">
                             <div
                                 className={`relative ${!isMobile ? 'aspect-square h-full w-auto flex-none' : 'w-full flex-1'} max-w-full max-h-full p-[3px] sm:p-1.5 md:p-[10px] rounded-[2rem] sm:rounded-[2.5rem] shadow-[0_20px_60px_rgba(0,0,0,0.55)] flex flex-col min-h-0 ${isMobile ? 'mt-0' : 'mt-0 lg:mt-0'} bg-gradient-to-br ${theme.frameGrad} mx-auto`}
-                                style={{ willChange: 'transform', ...(!isMobile && sidebarH ? { width: `${sidebarH}px` } : {}) }}
+                                style={{ willChange: 'transform', ...(!isMobile && sidebarH ? { width: `${sidebarH}px`, maxWidth: '60vw' } : {}) }}
                             >
                                 {/* Nav Arrows - Desktop */}
                                 <button onClick={(e) => { e.stopPropagation(); nextImage(); }} style={{ right: '5px' }} className={`hidden lg:flex absolute top-1/2 -translate-y-1/2 translate-x-1/2 z-50 w-12 h-12 md:w-14 md:h-14 rounded-full bg-gradient-to-br ${theme.frameGrad} items-center justify-center shadow-lg transition-all hover:scale-110 ${currentIndex + getGridSize() >= displayImages.length ? 'opacity-0 pointer-events-none' : ''}`}>
@@ -768,7 +768,7 @@ export default function PublicGallery({ images, metadata }) {
                     </div>
 
                 {!isMobile && (
-                    <div ref={sidebarRef} className={`w-full lg:w-[380px] xl:w-[440px] shrink-0 mt-0 lg:mt-0 flex flex-col bg-slate-900/60 backdrop-blur-xl border border-white/10 rounded-[2.5rem] shadow-2xl relative min-h-0 lg:self-stretch`}>
+                    <div ref={sidebarRef} className={`w-full lg:w-[340px] xl:w-[420px] shrink-0 mt-0 lg:mt-0 flex flex-col bg-slate-900/60 backdrop-blur-xl border border-white/10 rounded-[2.5rem] shadow-2xl relative min-h-0 lg:self-stretch`}>
                         <div className="absolute inset-0 bg-gradient-to-br from-white/5 to-transparent pointer-events-none rounded-[2.5rem]" />
 
                         {/* Desktop Floating Explanation View */}
@@ -855,7 +855,7 @@ export default function PublicGallery({ images, metadata }) {
 
                 {/* Mobile: Dynamic Tabs Section */}
                 {isMobile && (
-                    <div ref={sidebarRef} className={`w-full lg:w-[380px] xl:w-[440px] shrink-0 flex flex-col bg-slate-900/60 backdrop-blur-xl border border-white/10 rounded-3xl relative h-full max-h-full min-h-0 overflow-hidden ${activeMobileTab === 'gallery' ? 'hidden' : 'flex'}`}>
+                    <div ref={sidebarRef} className={`w-full lg:w-[340px] xl:w-[420px] shrink-0 flex flex-col bg-slate-900/60 backdrop-blur-xl border border-white/10 rounded-3xl relative h-full max-h-full min-h-0 overflow-hidden ${activeMobileTab === 'gallery' ? 'hidden' : 'flex'}`}>
                         <div className="absolute inset-0 bg-gradient-to-br from-white/5 to-transparent pointer-events-none rounded-3xl" />
                         <div className="flex flex-col items-center justify-between flex-1 w-full overflow-hidden no-scrollbar p-4 md:p-6 h-full">
                             <div className="flex flex-col items-center w-full flex-1 justify-start">
