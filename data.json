@@ -75,7 +75,21 @@
     "topic": "מילים ומשחקי לשון, חמץ, פסח, יהדות ומסורת, עייפות",
     "isApproved": true,
     "isAIGenerated": true,
-    "createdAt": 1772468311000
+    "createdAt": 1772468311000,
+    "social_posts": [
+      {
+        "platform": "facebook",
+        "date": "2026-03-23T21:06:25.511Z"
+      },
+      {
+        "platform": "x",
+        "date": "2026-03-23T21:18:05.198Z"
+      },
+      {
+        "platform": "instagram",
+        "date": "2026-03-23T21:19:22.003Z"
+      }
+    ]
   },
   "אי RUN.webp": {
     "title": "אי RUN",
@@ -3108,7 +3122,13 @@
     "topic": "יהדות ומסורת, פוליטיקה ואקטואליה, יהודי, ישראל, תכשיט, פוליטיקה ישראלית, משפחה וילדים, ילדים",
     "isApproved": true,
     "isAIGenerated": false,
-    "createdAt": 1772468311000
+    "createdAt": 1772468311000,
+    "social_posts": [
+      {
+        "platform": "instagram",
+        "date": "2026-03-23T21:13:40.726Z"
+      }
+    ]
   },
   "חבילת גלישה.webp": {
     "title": "חבילת גלישה",
@@ -5613,7 +5633,21 @@
     "topic": "חיות, יהדות ומסורת, פרה, תורה, פסח, חגים ומועדים, בקר, תורה ולימוד, רבנים, מוזיקה ותרבות, ספרות",
     "isApproved": true,
     "isAIGenerated": true,
-    "createdAt": 1772468311000
+    "createdAt": 1772468311000,
+    "social_posts": [
+      {
+        "platform": "instagram",
+        "date": "2026-03-23T21:35:19.846Z"
+      },
+      {
+        "platform": "facebook",
+        "date": "2026-03-23T21:35:23.758Z"
+      },
+      {
+        "platform": "x",
+        "date": "2026-03-23T21:35:39.404Z"
+      }
+    ]
   },
   "צבר.webp": {
     "title": "צבר",
@@ -5637,7 +5671,25 @@
     "topic": "חגים ומועדים, יהדות ומסורת, חמץ, פוליטיקה ואקטואליה, פסח, פוליטיקה ישראלית",
     "isApproved": true,
     "isAIGenerated": true,
-    "createdAt": 1772468311000
+    "createdAt": 1772468311000,
+    "social_posts": [
+      {
+        "platform": "instagram",
+        "date": "2026-03-23T21:21:41.099Z"
+      },
+      {
+        "platform": "facebook",
+        "date": "2026-03-23T21:21:45.561Z"
+      },
+      {
+        "platform": "x",
+        "date": "2026-03-23T21:22:04.096Z"
+      },
+      {
+        "platform": "x",
+        "date": "2026-03-23T21:26:05.188Z"
+      }
+    ]
   },
   "המקור.webp": {
     "title": "המקור",
@@ -10141,7 +10193,13 @@
     "topic": "חגים ומועדים, אוכל ושתייה, יהדות ומסורת, בית ויומיום",
     "isApproved": true,
     "isAIGenerated": true,
-    "createdAt": 1773686166000
+    "createdAt": 1773686166000,
+    "social_posts": [
+      {
+        "platform": "x",
+        "date": "2026-03-23T20:46:44.497Z"
+      }
+    ]
   },
   "שבעת פילי תבל.webp": {
     "title": "שבעת פילי תבל",

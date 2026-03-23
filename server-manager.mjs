@@ -80,7 +80,8 @@ const html = `
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Kefel Lashon - Control Center</title>
+    <title>כפל לשון - מרכז שליטה</title>
+    <link rel="icon" type="image/x-icon" href="/favicon.ico">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
     <style>
         :root {
@@ -244,9 +245,64 @@ const html = `
         }
 
         .welcome-screen p { color: #64748b; margin-top: 1rem; }
+
+        /* Modal Styling */
+        .modal-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.7);
+            backdrop-blur: 8px;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+            animation: fadeIn 0.2s ease-out;
+        }
+        
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+        
+        .modal {
+            background: #1e293b;
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 24px;
+            padding: 2.5rem;
+            max-width: 440px;
+            width: 100%;
+            text-align: center;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+        }
+        
+        .modal h2 { margin-top: 0; font-size: 1.25rem; }
+        .modal p { color: #94a3b8; font-size: 0.9rem; margin-bottom: 2rem; line-height: 1.5; }
+        
+        .modal-actions { display: flex; gap: 1rem; }
+        .modal-btn {
+            flex: 1;
+            padding: 0.75rem;
+            border-radius: 12px;
+            font-weight: 700;
+            transition: all 0.2s;
+        }
+        
+        .btn-cancel { background: rgba(255,255,255,0.05); color: white; border: 1px solid rgba(255,255,255,0.1); }
+        .btn-cancel:hover { background: rgba(255,255,255,0.1); }
+        .btn-confirm { background: #ef4444; color: white; border: none; box-shadow: 0 4px 12px rgba(239, 68, 68, 0.3); }
+        .btn-confirm:hover { background: #dc2626; transform: translateY(-1px); }
     </style>
 </head>
 <body>
+    <div id="exitModal" class="modal-overlay">
+        <div class="modal">
+            <div style="font-size: 3rem; margin-bottom: 1rem;">🛑</div>
+            <h2>כיבוי מערכת</h2>
+            <p>האם אתה בטוח שברצונך לכבות את כל השרתים ולסגור את האפליקציה?</p>
+            <div class="modal-actions">
+                <button class="modal-btn btn-confirm" onclick="confirmExit()">כן, כבה הכל</button>
+                <button class="modal-btn btn-cancel" onclick="hideExitModal()">ביטול</button>
+            </div>
+        </div>
+    </div>
+
     <div class="sidebar">
         <h1>מרכז שליטה - כפל לשון</h1>
         
@@ -277,6 +333,7 @@ const html = `
 
     <script>
         let currentView = 'status';
+        let firstLoad = true;
 
         async function updateStatus() {
             const resp = await fetch('/status');
@@ -302,7 +359,16 @@ const html = `
                 \`;
             });
             
+            
             document.getElementById('serverList').innerHTML = htmlArr.join('');
+
+            // Auto-view on first load if admin is already running
+            if (firstLoad && data.admin && data.admin.pid) {
+                firstLoad = false;
+                viewPath('admin', 5555);
+            } else if (firstLoad) {
+                firstLoad = false;
+            }
         }
 
         function viewPath(id, port) {
@@ -316,12 +382,35 @@ const html = `
             const url = id ? '/' + type + '/' + id : '/' + type;
             await fetch(url, { method: 'POST' });
             updateStatus();
+            
+            // Auto-switch to Admin Panel view if it was started
+            if (type === 'start-all' || (type === 'start' && id === 'admin')) {
+                setTimeout(() => viewPath('admin', 5555), 1000);
+            }
         }
 
-        async function exitManager() {
-            if (confirm('האם אתה בטוח שברצונך לכבות את כל השרתים ולסגור את האפליקציה?')) {
+        function exitManager() {
+            document.getElementById('exitModal').style.display = 'flex';
+        }
+
+        function hideExitModal() {
+            document.getElementById('exitModal').style.display = 'none';
+        }
+
+        async function confirmExit() {
+            const btn = document.querySelector('.btn-confirm');
+            btn.disabled = true;
+            btn.innerText = 'מכבה...';
+            
+            try {
                 await fetch('/exit-manager', { method: 'POST' });
-                window.close();
+                // Small delay to let the browser process the response before closing
+                setTimeout(() => {
+                    window.close();
+                }, 500);
+            } catch (e) {
+                console.error('Exit failed', e);
+                hideExitModal();
             }
         }
 
@@ -360,7 +449,20 @@ const server = http.createServer((req, res) => {
         log('Exiting manager (Full Shutdown)...');
         stopAllServers();
         res.end('ok');
-        setTimeout(() => process.exit(0), 1000); // Give it a sec to kill children
+        // Give children more time to die before manager shuts down
+        setTimeout(() => {
+            log('Manager process exiting now. Goodbye!');
+            process.exit(0);
+        }, 2000); 
+    } else if (method === 'GET' && url === '/favicon.ico') {
+        const icoPath = path.join(__dirname, 'app/public/logo.ico');
+        if (fs.existsSync(icoPath)) {
+            res.writeHead(200, { 'Content-Type': 'image/x-icon' });
+            fs.createReadStream(icoPath).pipe(res);
+        } else {
+            res.writeHead(404);
+            res.end();
+        }
     } else if (method === 'GET' && url === '/open-gui') {
         openAppMode(`http://localhost:${PORT}`);
         res.end('ok');

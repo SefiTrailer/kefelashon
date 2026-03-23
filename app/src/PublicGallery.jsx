@@ -881,7 +881,16 @@ export default function PublicGallery({ images, metadata }) {
                                     </div>
                                 </div>
                                 <p className="text-white/60 italic font-medium px-2 text-center leading-snug" style={{ fontSize: `${sidebarH * 0.018}px`, marginTop: `${sidebarH * 0.005}px` }}>
-                                    אם יש לכם רעיון ליצירה, אל תהססו ליצור בעצמכם!<br />עזרה תמיד תינתן... צרו קשר באישי.
+                                    אם יש לכם רעיון ליצירה, אל תהססו ליצור בעצמכם!<br />
+                                    עזרה תמיד תינתן... צרו קשר באישי 
+                                    <a 
+                                      href="https://wa.me/972527125698" 
+                                      target="_blank" 
+                                      rel="noreferrer"
+                                      className="inline-flex align-middle mr-1.5 text-[#25D366] hover:scale-110 transition-transform"
+                                    >
+                                      <MessageCircle size={Math.max(14, sidebarH * 0.022)} fill="currentColor" stroke="white" strokeWidth={1} />
+                                    </a>
                                 </p>
                             </div>
                         </div>
@@ -943,7 +952,16 @@ export default function PublicGallery({ images, metadata }) {
                                     </div>
                                 </div>
                                 <p className="text-white/60 italic font-medium px-2 text-center leading-snug text-xs mt-1">
-                                    אם יש לכם רעיון ליצירה, אל תהססו ליצור בעצמכם!<br />עזרה תמיד תינתן... צרו קשר באישי.
+                                    אם יש לכם רעיון ליצירה, אל תהססו ליצור בעצמכם!<br />
+                                    עזרה תמיד תינתן... צרו קשר באישי 
+                                    <a 
+                                      href="https://wa.me/972527125698" 
+                                      target="_blank" 
+                                      rel="noreferrer"
+                                      className="inline-flex align-middle mr-1 text-[#25D366] hover:scale-110 transition-transform"
+                                    >
+                                      <MessageCircle size={14} fill="currentColor" stroke="white" strokeWidth={1} />
+                                    </a>
                                 </p>
                             </div>
                         </div>

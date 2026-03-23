@@ -1,5 +1,5 @@
 import { useState, useEffect, useMemo, useRef } from 'react';
-import { ChevronRight, ChevronLeft, Save, MessageCircle, CheckCircle, Trash2, Search, X, Upload, Github, Loader, LayoutGrid, Image as ImageIcon, Copy } from 'lucide-react';
+import { ChevronRight, ChevronLeft, Save, MessageCircle, CheckCircle, Trash2, Search, X, Upload, Github, Loader, LayoutGrid, Image as ImageIcon, Copy, Instagram, Facebook, Twitter, Share2, ExternalLink } from 'lucide-react';
 import PublicGallery from './PublicGallery';
 import DuplicatesReview from './DuplicatesReview';
 
@@ -37,6 +37,9 @@ function App() {
   const [fileSizes, setFileSizes] = useState({});
   const [fileSources, setFileSources] = useState({});
   const [adminViewMode, setAdminViewMode] = useState('edit'); // 'edit' | 'grid' | 'duplicates'
+  const [xConnected, setXConnected] = useState(false);
+  const [metaConnected, setMetaConnected] = useState(false);
+  const [metaError, setMetaError] = useState(null);
 
   // ── Publish state ──
   const [publishState, setPublishState] = useState('idle'); // idle | loading | success | error | skipped
@@ -46,6 +49,14 @@ function App() {
   const [isTopicModalOpen, setIsTopicModalOpen] = useState(false);
   const [topicSearchQuery, setTopicSearchQuery] = useState('');
   const [newTagInput, setNewTagInput] = useState('');
+
+  // ── Social Media state ──
+  const [socialPostState, setSocialPostState] = useState('idle'); // idle | loading | success | error
+  const [socialPlatform, setSocialPlatform] = useState('all'); 
+  const [socialResult, setSocialResult] = useState(null);
+  const [selectionMode, setSelectionMode] = useState(false);
+  const [selectedImages, setSelectedImages] = useState([]);
+  const [bulkProgress, setBulkProgress] = useState(null); // { current, total, countdown, status }
 
   // Detect public mode: either via env var (production build) or if not on localhost
   const isPublicViewer = import.meta.env.VITE_PUBLIC_VIEWER === 'true' || 
@@ -102,11 +113,47 @@ function App() {
     }
   };
 
+  const checkXStatus = async () => {
+    try {
+      const res = await fetch(`${API_BASE}/api/social/x/status`);
+      const data = await res.json();
+      setXConnected(data.connected);
+    } catch (e) {
+      console.error('Failed to check X status', e);
+    }
+  };
+
+  const checkMetaStatus = async () => {
+    try {
+      const res = await fetch(`${API_BASE}/api/social/meta/status`);
+      const data = await res.json();
+      setMetaConnected(data.connected);
+      setMetaError(data.error || null);
+    } catch (e) {
+      console.error('Failed to check Meta status', e);
+    }
+  };
+
   useEffect(() => {
     fetchImages();
+    // Add small delay to ensure backend is fully ready before headless check
+    setTimeout(() => {
+      checkXStatus();
+      checkMetaStatus();
+    }, 2000);
     fetchPublishStatus();
     fetchMasterTags();
   }, []);
+
+  const toggleSelectImage = (img) => {
+    setSelectedImages(prev => {
+      if (prev.includes(img)) {
+        return prev.filter(i => i !== img);
+      } else {
+        return [...prev, img];
+      }
+    });
+  };
 
   useEffect(() => {
     const handleResize = () => {
@@ -312,8 +359,8 @@ function App() {
 
   useEffect(() => {
     if (images.length > 0) {
-      const currentFile = images[currentIndex];
-      const data = metadata[currentFile];
+      const currFile = images[currentIndex];
+      const data = metadata[currFile];
       setTitle(data?.title || '');
       setExplanation(data?.explanation || '');
       setTopic(data?.topic || '');
@@ -328,7 +375,7 @@ function App() {
   const handleSave = async (goToNext = false) => {
     if (images.length === 0) return;
     setIsSaving(true);
-    const currentFile = images[currentIndex];
+    const currFile = images[currentIndex];
 
     try {
       const res = await fetch(`${API_BASE}/api/metadata`, {
@@ -348,10 +395,10 @@ function App() {
       if (!res.ok) throw new Error('Failed to save');
 
       const resData = await res.json();
-      const newFilename = resData.newFilename || currentFile;
+      const newFilename = resData.newFilename || currFile;
 
       // If it was a new image, it moved, so we better refresh images to get updated sources
-      const wasNew = fileSources[currentFile] === 'new';
+      const wasNew = fileSources[currFile] === 'new';
       if (wasNew) {
           await fetchImages();
           setIsSaving(false);
@@ -363,20 +410,20 @@ function App() {
 
       setMetadata(prev => {
         const newData = { ...prev };
-        if (newFilename !== currentFile && newData[currentFile]) {
-          delete newData[currentFile];
+        if (newFilename !== currFile && newData[currFile]) {
+          delete newData[currFile];
         }
         newData[newFilename] = { 
           title, 
           explanation, 
           topic, 
           isApproved, 
-          isAIGenerated: metadata[currentFile]?.isAIGenerated 
+          isAIGenerated: metadata[currFile]?.isAIGenerated 
         };
         return newData;
       });
 
-      if (newFilename !== currentFile) {
+      if (newFilename !== currFile) {
         setImages(prev => {
           const newImages = [...prev];
           newImages[currentIndex] = newFilename;
@@ -384,15 +431,15 @@ function App() {
         });
         setAllImages(prev => {
           const newAll = [...prev];
-          const idx = newAll.indexOf(currentFile);
+          const idx = newAll.indexOf(currFile);
           if (idx !== -1) newAll[idx] = newFilename;
           return newAll;
         });
         setFileSizes(prev => {
           const newSizes = { ...prev };
-          if (newSizes[currentFile] !== undefined) {
-            newSizes[newFilename] = newSizes[currentFile];
-            delete newSizes[currentFile];
+          if (newSizes[currFile] !== undefined) {
+            newSizes[newFilename] = newSizes[currFile];
+            delete newSizes[currFile];
           }
           return newSizes;
         });
@@ -408,14 +455,166 @@ function App() {
     }
   };
 
+  const postSingleImage = async (filename, platforms) => {
+    const footer = `\n\n***\nלינק לאתר: KefeLashon.co.il\n\nלינק להצטרפות לערוץ: https://whatsapp.com/channel/0029VajNwaPL2AU0jdlgxa20\nלינק להצטרפות לקבוצה: https://chat.whatsapp.com/LN6nwJ8cYiLHaj5uhTum9P`;
+    const siteLink = 'KefeLashon.co.il';
+    const results = [];
+    
+    // Get metadata for this specific image
+    const meta = metadata[filename] || {};
+    const imgTitle = meta.title || filename.replace(/\.[^/.]+$/, "");
+
+    for (const p of platforms) {
+      const xFooter = `\n\n***\nלינק לאתר: KefeLashon.co.il`;
+      const finalCaption = p === 'x' 
+        ? `${imgTitle}\n#כפלשון${xFooter}`
+        : `${imgTitle}\n#כפלשון${footer}`;
+
+      const res = await fetch(`${API_BASE}/api/social/post`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          filename,
+          caption: finalCaption,
+          platform: p
+        })
+      });
+      const isJson = res.headers.get('content-type')?.includes('application/json');
+      const data = isJson ? await res.json() : { error: `Server error: ${res.status} ${res.statusText}` };
+      results.push({ platform: p, ok: res.ok, data });
+    }
+    return results;
+  };
+
+  const handleSocialPost = async () => {
+    if (images.length === 0) return;
+    setSocialPostState('loading');
+    setSocialResult(null);
+
+    const currFile = images[currentIndex];
+    const platforms = socialPlatform === 'all' ? ['instagram', 'facebook', 'x'] : [socialPlatform];
+    
+    try {
+      const results = await postSingleImage(currFile, platforms);
+
+      const allOk = results.every(r => r.ok);
+      setSocialPostState(allOk ? 'success' : 'error');
+      
+      if (allOk) {
+        setTimeout(() => setSocialPostState('idle'), 5000);
+      }
+      
+      if (allOk || results.some(r => r.ok)) {
+        fetchImages();
+      }
+      
+      if (results.length === 1) {
+        setSocialResult(results[0].data);
+      } else {
+        const errors = results.filter(r => !r.ok).map(r => `${r.platform}: ${r.data.error || 'שגיאה'}`);
+        if (errors.length > 0) {
+          setSocialResult({ error: errors.join(', ') });
+        } else {
+          setSocialResult({ message: 'פורסם בהצלחה בשניהם!' });
+        }
+      }
+    } catch (e) {
+      setSocialPostState('error');
+      setSocialResult({ error: e.message });
+    }
+  };
+
+  const handleBulkPost = async () => {
+    if (selectedImages.length === 0) return;
+    const platforms = socialPlatform === 'all' ? ['instagram', 'facebook', 'x'] : [socialPlatform];
+    
+    setBulkProgress({ 
+      current: 0, 
+      total: selectedImages.length, 
+      status: 'starting', 
+      countdown: 0 
+    });
+
+    for (let i = 0; i < selectedImages.length; i++) {
+        const img = selectedImages[i];
+        setBulkProgress(prev => ({ ...prev, current: i + 1, status: `מפרסם: ${img}...`, countdown: 0 }));
+        
+        try {
+            const results = await postSingleImage(img, platforms);
+            const anyOk = results.some(r => r.ok);
+            if (!anyOk) {
+                console.error(`Bulk post failed for ${img}`);
+            }
+        } catch (e) {
+            console.error(`Error in bulk post ${img}:`, e);
+        }
+
+        // Wait unless it's the last image
+        if (i < selectedImages.length - 1) {
+            // Random interval between 5-10 minutes (300-600 seconds)
+            // For testing purposes during dev, you might want to shorter it, 
+            // but the user's request is "non-bot-like". 
+            // Let's use 5-10 mins as default.
+            const baseDelay = 300; // 5 mins
+            const randomAdd = Math.floor(Math.random() * 300); // 0-5 mins
+            let countdown = baseDelay + randomAdd;
+
+            setBulkProgress(prev => ({ ...prev, status: 'ממתין לפוסט הבא...', countdown }));
+
+            while (countdown > 0) {
+                await new Promise(r => setTimeout(r, 1000));
+                countdown--;
+                setBulkProgress(prev => {
+                    if (!prev) return null;
+                    return { ...prev, countdown };
+                });
+                // Check if user cancelled (to be implemented)
+            }
+        }
+    }
+
+    setBulkProgress(null);
+    setSelectedImages([]);
+    setSelectionMode(false);
+    fetchImages();
+  };
+
+  const handleXLogin = async () => {
+    try {
+      setSocialPostState('loading');
+      const url = `${API_BASE}/api/social/x/login${xConnected ? '?force=true' : ''}`;
+      const res = await fetch(url, { method: 'POST' });
+      const data = await res.json();
+      if (res.ok) {
+        // No alert! The window opens automatically.
+        // Check status periodically after opening login
+        const interval = setInterval(async () => {
+          const sRes = await fetch(`${API_BASE}/api/social/x/status`);
+          const sData = await sRes.json();
+          if (sData.connected) {
+            setXConnected(true);
+            clearInterval(interval);
+          }
+        }, 5000);
+        setTimeout(() => clearInterval(interval), 60000); // Stop after 1 min
+      } else {
+        throw new Error(data.error || 'Failed to open login window');
+      }
+    } catch (e) {
+      setError(e.message);
+    } finally {
+      setSocialPostState('idle');
+    }
+  };
+
   const handleDelete = async () => {
     if (images.length === 0) return;
 
-    const currentFile = images[currentIndex];
+    const currFile = images[currentIndex];
 
-    if (window.confirm(`האם אתה בטוח שברצונך למחוק לצמיתות את התמונה "${currentFile}"?`)) {
+    if (window.confirm(`האם אתה בטוח שברצונך למחוק לצמיתות את התמונה "${currFile}"?`)) {
       try {
-        const res = await fetch(`${API_BASE}/api/images/${encodeURIComponent(currentFile)}`, {
+        const res = await fetch(`${API_BASE}/api/images/${encodeURIComponent(currFile)}`, {
           method: 'DELETE'
         });
 
@@ -423,10 +622,10 @@ function App() {
 
         // Remove from local state
         setImages(prev => prev.filter((_, idx) => idx !== currentIndex));
-        setAllImages(prev => prev.filter(img => img !== currentFile));
+        setAllImages(prev => prev.filter(img => img !== currFile));
         setMetadata(prev => {
           const newData = { ...prev };
-          delete newData[currentFile];
+          delete newData[currFile];
           return newData;
         });
 
@@ -544,9 +743,21 @@ function App() {
               </div>
 
               <div className="flex bg-slate-100 rounded-lg p-0.5 h-7">
-                <button onClick={() => setAdminViewMode('grid')} className={`px-1.5 rounded-md ${adminViewMode === 'grid' ? 'bg-white text-teal-600 shadow-sm' : 'text-slate-400'}`}><LayoutGrid size={12} /></button>
-                <button onClick={() => setAdminViewMode('edit')} className={`px-1.5 rounded-md ${adminViewMode === 'edit' ? 'bg-white text-teal-600 shadow-sm' : 'text-slate-400'}`}><ImageIcon size={12} /></button>
-                <button onClick={() => setAdminViewMode('duplicates')} className={`px-1.5 rounded-md ${adminViewMode === 'duplicates' ? 'bg-white text-indigo-600 shadow-sm' : 'text-slate-400'}`}><Copy size={12} /></button>
+                <button onClick={() => setAdminViewMode('grid')} className={`px-1.5 rounded-md ${adminViewMode === 'grid' ? 'bg-white text-teal-600 shadow-sm' : 'text-slate-400'}`} title="תצוגת גלריה"><LayoutGrid size={12} /></button>
+                <button onClick={() => setAdminViewMode('edit')} className={`px-1.5 rounded-md ${adminViewMode === 'edit' ? 'bg-white text-teal-600 shadow-sm' : 'text-slate-400'}`} title="תצוגת עריכה"><ImageIcon size={12} /></button>
+                <button onClick={() => setAdminViewMode('duplicates')} className={`px-1.5 rounded-md ${adminViewMode === 'duplicates' ? 'bg-white text-indigo-600 shadow-sm' : 'text-slate-400'}`} title="כפלויות"><Copy size={12} /></button>
+                {adminViewMode === 'grid' && (
+                  <button 
+                    onClick={() => {
+                      setSelectionMode(!selectionMode);
+                      if (selectionMode) setSelectedImages([]);
+                    }} 
+                    className={`px-1.5 rounded-md ml-1 border-r border-slate-200 pl-2 ${selectionMode ? 'bg-amber-100 text-amber-600 shadow-sm' : 'text-slate-400'}`}
+                    title="בחירה מרובה (Bulk)"
+                  >
+                    <CheckCircle size={12} />
+                  </button>
+                )}
               </div>
 
               <div className="hidden md:flex items-center gap-2">
@@ -675,6 +886,167 @@ function App() {
                   </div>
                 </div>
 
+                {/* Social Media Sharing */}
+                <div className="space-y-2 p-3 bg-indigo-50/50 border border-indigo-100 rounded-2xl">
+                  <div className="flex items-center justify-between">
+                    <label className="text-[11px] font-bold text-indigo-700 ml-1">שיתוף ברשתות חברתיות</label>
+                    <div className="flex bg-white rounded-lg p-0.5 border border-indigo-100 shrink-0 gap-1">
+                      <button 
+                        onClick={() => setSocialPlatform('instagram')} 
+                        className={`px-2 py-0.5 rounded-md text-[9px] font-bold transition-all ${
+                          socialPlatform === 'instagram' ? 'bg-indigo-600 text-white shadow-sm' : 'text-indigo-400 hover:text-indigo-600'
+                        } ${metaConnected ? 'shadow-[0_0_8px_rgba(34,197,94,0.6)]' : 'shadow-[0_0_8px_rgba(239,68,68,0.6)]'}`}
+                      >
+                        Instagram
+                      </button>
+                      <button 
+                        onClick={() => setSocialPlatform('facebook')} 
+                        className={`px-2 py-0.5 rounded-md text-[9px] font-bold transition-all ${
+                          socialPlatform === 'facebook' ? 'bg-indigo-600 text-white shadow-sm' : 'text-indigo-400 hover:text-indigo-600'
+                        } ${metaConnected ? 'shadow-[0_0_8px_rgba(34,197,94,0.6)]' : 'shadow-[0_0_8px_rgba(239,68,68,0.6)]'}`}
+                      >
+                        Facebook
+                      </button>
+                      <button 
+                        onClick={() => setSocialPlatform('x')} 
+                        className={`px-2 py-0.5 rounded-md text-[9px] font-bold transition-all ${
+                          socialPlatform === 'x' ? 'bg-indigo-600 text-white shadow-sm' : 'text-indigo-400 hover:text-indigo-600'
+                        } ${xConnected ? 'shadow-[0_0_8px_rgba(34,197,94,0.6)]' : 'shadow-[0_0_8px_rgba(239,68,68,0.6)]'}`}
+                      >
+                        X
+                      </button>
+                      <button 
+                        onClick={() => setSocialPlatform('all')} 
+                        className={`px-2 py-0.5 rounded-md text-[9px] font-bold transition-all ${
+                          socialPlatform === 'all' ? 'bg-indigo-600 text-white shadow-sm' : 'text-indigo-400 hover:text-indigo-600'
+                        }`}
+                      >
+                        כולם
+                      </button>
+                    </div>
+                  </div>
+                  
+                  <button
+                    onClick={handleSocialPost}
+                    disabled={socialPostState === 'loading' || !isApproved}
+                    className={`w-full flex items-center justify-center gap-2 py-2 rounded-xl text-xs font-bold transition-all ${
+                      socialPostState === 'success' ? 'bg-green-100 text-green-700 border border-green-200' :
+                      socialPostState === 'error' ? 'bg-rose-100 text-rose-700 border border-rose-200' :
+                      'bg-indigo-600 text-white hover:bg-indigo-700 shadow-sm'
+                    } disabled:opacity-50`}
+                  >
+                    {socialPostState === 'loading' ? <Loader size={14} className="animate-spin" /> : 
+                      socialPostState === 'success' ? <CheckCircle size={14} /> :
+                      socialPostState === 'error' ? <X size={14} /> : 
+                      socialPlatform === 'instagram' ? <Instagram size={14} /> :
+                      socialPlatform === 'facebook' ? <Facebook size={14} /> :
+                      socialPlatform === 'x' ? <Twitter size={14} /> :
+                      <Share2 size={14} />}
+                    <span>
+                      {socialPostState === 'loading' ? 'מפרסם...' : 
+                       socialPostState === 'success' ? 'פורסם בהצלחה!' :
+                       socialPostState === 'error' ? 'שגיאה בפרסום' : 
+                       `פרסם ב-${
+                         socialPlatform === 'instagram' ? 'אינסטגרם' : 
+                         socialPlatform === 'facebook' ? 'פייסבוק' : 
+                         socialPlatform === 'x' ? 'X (Twitter)' : 'כולם'
+                       }`}
+                    </span>
+                  </button>
+                  {socialPostState === 'error' && socialResult && (
+                    <div className="relative group">
+                      <p className="text-[9px] text-rose-500 font-medium text-center px-4 bg-rose-50 rounded-lg py-1 border border-rose-100 mt-1">
+                        {socialResult.error || 'שגיאה לא ידועה'}
+                      </p>
+                      <button 
+                        onClick={() => { setSocialPostState('idle'); setSocialResult(null); }}
+                        className="absolute -top-1 -right-1 bg-rose-500 text-white rounded-full p-0.5 hover:bg-rose-600 transition-colors shadow-sm"
+                      >
+                        <X size={8} />
+                      </button>
+                    </div>
+                  )}
+
+                  {isApproved && (socialPlatform === 'instagram' || socialPlatform === 'facebook' || socialPlatform === 'all') && (
+                    <div className="mt-1 px-2 py-1 bg-amber-50/50 rounded-lg border border-amber-100">
+                       <p className="text-[8px] text-amber-700 leading-tight text-center">
+                         💡 <b>טיפ:</b> וודא שהתמונה פורסמה לאתר (GitHub Sync) לפני הפרסום ב-Meta.
+                       </p>
+                    </div>
+                  )}
+                  
+                  {!isApproved && (
+                    <p className="text-[9px] text-indigo-400 font-medium text-center">
+                      יש לאשר את התמונה לפני הפרסום
+                    </p>
+                  )}
+
+                  {/* Post History & Warning */}
+                  {isApproved && (
+                    <div className="mt-2 space-y-2">
+                      {metadata[images[currentIndex]]?.social_posts?.length > 0 && (
+                        <div className="bg-white/50 rounded-xl p-2 border border-indigo-100">
+                          <p className="text-[10px] font-bold text-indigo-700 mb-1 border-b border-indigo-50 pb-1">היסטוריית פרסומים:</p>
+                          <div className="space-y-1">
+                            {metadata[images[currentIndex]].social_posts.slice().reverse().map((post, idx) => (
+                              <div key={idx} className="flex items-center justify-between text-[9px] text-slate-600">
+                                <span className="font-bold capitalize">{post.platform === 'x' ? 'X.com' : post.platform}</span>
+                                <span>{new Date(post.date).toLocaleDateString('he-IL')} {new Date(post.date).toLocaleTimeString('he-IL', { hour: '2-digit', minute: '2-digit' })}</span>
+                              </div>
+                            ))}
+                          </div>
+                        </div>
+                      )}
+                      
+                      {socialPlatform !== 'all' && metadata[images[currentIndex]]?.social_posts?.some(p => p.platform === socialPlatform) && (
+                        <div className="flex items-center gap-1.5 px-3 py-1.5 bg-amber-50 border border-amber-200 rounded-xl text-[10px] text-amber-700 font-bold animate-pulse">
+                          <span>⚠️ כבר פורסם ב-{socialPlatform === 'x' ? 'X' : socialPlatform === 'instagram' ? 'אינסטגרם' : 'פייסבוק'}</span>
+                        </div>
+                      )}
+                    </div>
+                  )}
+
+                  {isApproved && (socialPlatform === 'x' || socialPlatform === 'all') && (
+                    <div className="flex flex-col items-center gap-1 mt-1">
+                      <div className="flex items-center gap-1.5 text-[10px] font-bold">
+                        <div className={`w-2 h-2 rounded-full ${xConnected ? 'bg-green-500 shadow-[0_0_5px_rgba(34,197,94,0.6)]' : 'bg-slate-300'}`}></div>
+                        <span className={xConnected ? 'text-green-600' : 'text-slate-500'}>
+                          {xConnected ? 'מחובר ל-X' : 'לא מחובר ל-X'}
+                        </span>
+                      </div>
+                      <button 
+                        onClick={handleXLogin}
+                        className="text-[10px] text-indigo-500 hover:text-indigo-700 font-bold underline flex items-center gap-1"
+                      >
+                        <Twitter size={10} />
+                        התחבר/רענן חיבור
+                      </button>
+                    </div>
+                  )}
+
+                  {isApproved && (socialPlatform === 'instagram' || socialPlatform === 'facebook' || socialPlatform === 'all') && (
+                    <div className="flex flex-col items-center gap-1 mt-1 pt-1 border-t border-indigo-100/50">
+                      <div className="flex items-center gap-1.5 text-[10px] font-bold">
+                        <div className={`w-2 h-2 rounded-full ${metaConnected ? 'bg-green-500 shadow-[0_0_5px_rgba(34,197,94,0.6)]' : 'bg-rose-500 shadow-[0_0_5px_rgba(244,63,94,0.6)]'}`}></div>
+                        <span className={metaConnected ? 'text-green-600' : 'text-rose-600'}>
+                          {metaConnected ? 'מחובר ל-Meta' : 'חיבור ל-Meta פג'}
+                        </span>
+                      </div>
+                      {!metaConnected && (
+                        <a 
+                          href="https://developers.facebook.com/tools/explorer/"
+                          target="_blank"
+                          rel="noreferrer"
+                          className="text-[9px] text-indigo-500 hover:text-indigo-700 font-bold underline flex items-center gap-1"
+                        >
+                          <ExternalLink size={10} />
+                          לחץ כאן לחידוש הטוקן
+                        </a>
+                      )}
+                    </div>
+                  )}
+                </div>
+
                 <div className="flex gap-2 shrink-0">
                   <button
                     onClick={() => handleSave(true)}
@@ -734,12 +1106,29 @@ function App() {
                 return (
                   <div 
                     key={filename} 
-                    className="group relative bg-white border border-slate-200 rounded-xl overflow-hidden shadow-sm hover:shadow-md hover:border-teal-300 transition-all cursor-pointer aspect-square"
                     onClick={() => {
-                      setCurrentIndex(index);
-                      setAdminViewMode('edit');
+                        if (selectionMode) {
+                            toggleSelectImage(filename);
+                        } else {
+                            setCurrentIndex(index);
+                            setAdminViewMode('edit');
+                        }
                     }}
+                    className={`group relative bg-white border rounded-xl overflow-hidden shadow-sm hover:shadow-md transition-all cursor-pointer aspect-square ${
+                        selectionMode && selectedImages.includes(filename) 
+                            ? 'border-indigo-500 ring-2 ring-indigo-200' 
+                            : 'border-slate-200 hover:border-teal-300'
+                    }`}
                   >
+                    {selectionMode && (
+                      <div className={`absolute top-2 right-2 z-10 w-5 h-5 rounded-full border-2 transition-all flex items-center justify-center ${
+                        selectedImages.includes(filename) 
+                            ? 'bg-indigo-500 border-indigo-500 text-white' 
+                            : 'bg-white/80 border-slate-300'
+                      }`}>
+                        {selectedImages.includes(filename) && <CheckCircle size={12} />}
+                      </div>
+                    )}
                     <img 
                       src={`${API_BASE}/images/${encodeURIComponent(filename)}`} 
                       alt={data?.title || filename}
@@ -802,18 +1191,6 @@ function App() {
         )}
       </div>
 
-      {/* WhatsApp Floating CTA (Admin Only) */}
-      {!isPublicViewer && (
-      <a
-        href="https://wa.me/972500000000?text=שלום,%20הגעתי%20ממערכת%20כפל%20לשון"
-        target="_blank"
-        rel="noreferrer"
-        className="fixed bottom-6 left-6 bg-[#25D366] text-white p-4 rounded-full shadow-lg hover:shadow-xl hover:scale-110 transition-all flex items-center justify-center group"
-      >
-        <MessageCircle size={28} />
-        <span className="max-w-0 overflow-hidden whitespace-nowrap group-hover:max-w-xs group-hover:mr-3 transition-all duration-300 font-medium">יצירת קשר</span>
-      </a>
-      )}
 
       {/* Search Modal */}
       {isSearchOpen && (
@@ -925,20 +1302,6 @@ function App() {
         </div>
       )}
 
-      {!isPublicViewer && (
-      <a
-        href="https://wa.me/972500000000?text=שלום,%20הגעתי%20ממערכת%20כפל%20לשון"
-        target="_blank"
-        rel="noreferrer"
-        className="fixed bottom-6 left-6 bg-[#25D366] text-white p-4 rounded-full shadow-lg hover:shadow-xl hover:scale-110 transition-all flex items-center justify-center group"
-        title="צור קשר בווטסאפ"
-      >
-        <MessageCircle size={28} />
-        <span className="max-w-0 overflow-hidden whitespace-nowrap group-hover:max-w-xs group-hover:mr-3 transition-all duration-300 font-medium">
-          יצירת קשר בווסטאפ
-        </span>
-      </a>
-      )}
 
       {/* Topic Browser Modal */}
       {isTopicModalOpen && (
@@ -1014,6 +1377,68 @@ function App() {
                     סה"כ {allTopics.length} נושאים במערכת
                 </p>
             </div>
+          </div>
+        </div>
+      )}
+      {/* Bulk Action Bar */}
+      {selectionMode && selectedImages.length > 0 && adminViewMode === 'grid' && (
+        <div className="fixed bottom-6 left-1/2 -translate-x-1/2 z-40 bg-slate-900/90 backdrop-blur-md text-white px-6 py-4 rounded-2xl shadow-2xl border border-white/10 flex items-center gap-6 transition-all animate-in slide-in-from-bottom-4">
+          <div className="flex flex-col">
+            <span className="text-xs font-bold text-slate-400">נבחרו {selectedImages.length} תמונות</span>
+            <span className="text-[10px] text-slate-500">הפרסום יתבצע במרווחים של 5-10 דקות</span>
+          </div>
+          <div className="flex gap-3">
+            <button 
+              onClick={() => { setSelectedImages([]); setSelectionMode(false); }}
+              className="px-4 py-2 rounded-xl text-xs font-bold border border-white/20 hover:bg-white/10 transition-all"
+            >
+              ביטול
+            </button>
+            <button 
+              onClick={handleBulkPost}
+              className="px-6 py-2 rounded-xl text-xs font-bold bg-indigo-500 hover:bg-indigo-600 shadow-lg shadow-indigo-500/20 flex items-center gap-2 transition-all"
+            >
+              <Share2 size={14} /> פרסם הכל (Bulk)
+            </button>
+          </div>
+        </div>
+      )}
+
+      {/* Bulk Progress Overlay */}
+      {bulkProgress && (
+        <div className="fixed inset-0 z-50 bg-slate-950/80 backdrop-blur-md flex items-center justify-center p-6">
+          <div className="bg-white rounded-3xl p-10 max-w-md w-full shadow-2xl text-center space-y-6 animate-in zoom-in-95">
+            <div className="w-20 h-20 bg-indigo-100 text-indigo-600 rounded-full flex items-center justify-center mx-auto animate-pulse">
+              <Share2 size={32} />
+            </div>
+            
+            <div className="space-y-2">
+              <h3 className="text-2xl font-black text-slate-900">פרסום מתוזמר בתהליך</h3>
+              <p className="text-slate-500 font-bold">{bulkProgress.status}</p>
+            </div>
+
+            <div className="bg-slate-100 h-3 rounded-full overflow-hidden">
+              <div 
+                className="bg-indigo-500 h-full transition-all duration-500" 
+                style={{ width: `${(bulkProgress.current / bulkProgress.total) * 100}%` }}
+              />
+            </div>
+
+            <div className="flex justify-between text-xs font-black text-slate-400 uppercase tracking-wider">
+              <span>תמונה {bulkProgress.current} מתוך {bulkProgress.total}</span>
+              <span>{(bulkProgress.current / bulkProgress.total * 100).toFixed(0)}%</span>
+            </div>
+
+            {bulkProgress.countdown > 0 && (
+              <div className="p-4 bg-indigo-50 rounded-2xl">
+                <p className="text-indigo-900 font-black text-3xl tabular-nums">
+                  {Math.floor(bulkProgress.countdown / 60)}:{(bulkProgress.countdown % 60).toString().padStart(2, '0')}
+                </p>
+                <p className="text-indigo-600 text-[10px] font-bold mt-1">עד הפוסט הבא</p>
+              </div>
+            )}
+            
+            <p className="text-[10px] text-slate-400">אנא אל תסגור את החלון עד לסיום התהליך</p>
           </div>
         </div>
       )}
