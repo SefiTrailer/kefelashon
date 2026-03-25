@@ -97,7 +97,13 @@
     "topic": "פוליטיקה ואקטואליה, איראן, מילים ומשחקי לשון, דגל",
     "isApproved": true,
     "isAIGenerated": false,
-    "createdAt": 1772468311000
+    "createdAt": 1772468311000,
+    "social_posts": [
+      {
+        "platform": "x",
+        "date": "2026-03-23T22:28:04.637Z"
+      }
+    ]
   },
   "חמץ בלוע.webp": {
     "title": "חמץ בלוע",
@@ -3127,6 +3133,14 @@
       {
         "platform": "instagram",
         "date": "2026-03-23T21:13:40.726Z"
+      },
+      {
+        "platform": "facebook",
+        "date": "2026-03-24T09:42:46.927Z"
+      },
+      {
+        "platform": "x",
+        "date": "2026-03-24T09:42:49.356Z"
       }
     ]
   },
@@ -4135,7 +4149,13 @@
     "topic": "צבא וביטחון, אוכל ושתייה, יהדות ומסורת, שבת, נשק, מוזיקה ותרבות, זמרים, משפחה וילדים, ילדים, ביטחון",
     "isApproved": true,
     "isAIGenerated": true,
-    "createdAt": 1772468311000
+    "createdAt": 1772468311000,
+    "social_posts": [
+      {
+        "platform": "x",
+        "date": "2026-03-23T22:10:11.837Z"
+      }
+    ]
   },
   "טלית שַׁכּוּלָה תכלת.webp": {
     "title": "טלית שַׁכּוּלָה תכלת",
@@ -5706,7 +5726,21 @@
     "topic": "חגים ומועדים, פוליטיקה ואקטואליה, פסח, יהדות ומסורת, כשרות, פוליטיקה ישראלית, משפחה וילדים, משפחה",
     "isApproved": false,
     "isAIGenerated": true,
-    "createdAt": 1772468311000
+    "createdAt": 1772468311000,
+    "social_posts": [
+      {
+        "platform": "instagram",
+        "date": "2026-03-24T09:51:07.255Z"
+      },
+      {
+        "platform": "facebook",
+        "date": "2026-03-24T09:51:11.760Z"
+      },
+      {
+        "platform": "x",
+        "date": "2026-03-24T09:51:30.123Z"
+      }
+    ]
   },
   "מחיר פצצה.webp": {
     "title": "מחיר פצצה",
@@ -7563,7 +7597,13 @@
     "topic": "חיות, זוחלים",
     "isApproved": true,
     "isAIGenerated": false,
-    "createdAt": 1773678054000
+    "createdAt": 1773678054000,
+    "social_posts": [
+      {
+        "platform": "x",
+        "date": "2026-03-23T22:20:04.380Z"
+      }
+    ]
   },
   "קיא טיסה.webp": {
     "title": "קיא טיסה",
@@ -7668,7 +7708,13 @@
     "topic": "פוליטיקה ואקטואליה, איראן, צבא וביטחון, ביטחון, פוליטיקה ישראלית",
     "isApproved": true,
     "isAIGenerated": false,
-    "createdAt": 1773678054000
+    "createdAt": 1773678054000,
+    "social_posts": [
+      {
+        "platform": "x",
+        "date": "2026-03-23T22:42:17.070Z"
+      }
+    ]
   },
   "רעיון אי סקי.webp": {
     "title": "רעיון אי סקי",
@@ -10792,7 +10838,21 @@
     "createdAt": 1750417662000,
     "isAIGenerated": true,
     "topic": "פתגמים וביטויים, חיות, כלב, אריה, פוליטיקה ואקטואליה, צבא, בית ויומיום, צה\"ל, כלבים, אריות, חיות בר, זוחלים, צבא וביטחון, פוליטיקה ישראלית, מקצועות ועבודה, נדל\"ן",
-    "isApproved": true
+    "isApproved": true,
+    "social_posts": [
+      {
+        "platform": "instagram",
+        "date": "2026-03-23T21:55:22.625Z"
+      },
+      {
+        "platform": "facebook",
+        "date": "2026-03-23T21:55:28.170Z"
+      },
+      {
+        "platform": "x",
+        "date": "2026-03-23T21:55:51.381Z"
+      }
+    ]
   },
   "לסכן עולם 1.webp": {
     "title": "לסכן עולם",
@@ -10953,7 +11013,13 @@
     "createdAt": 1732711365000,
     "isAIGenerated": true,
     "topic": "פתגמים וביטויים, חיות, פוליטיקה ואקטואליה, איראן, דגים, אוכל ושתייה, בשר ודגים, צבא וביטחון, ביטחון",
-    "isApproved": true
+    "isApproved": true,
+    "social_posts": [
+      {
+        "platform": "x",
+        "date": "2026-03-23T22:36:04.071Z"
+      }
+    ]
   },
   "משוגע עם קבלות 1.webp": {
     "title": "משוגע עם קבלות",
@@ -11171,7 +11237,13 @@
     "isAIGenerated": false,
     "needsAIImprovement": false,
     "aiSuggestion": null,
-    "createdAt": 1774203327498
+    "createdAt": 1774203327498,
+    "social_posts": [
+      {
+        "platform": "instagram",
+        "date": "2026-03-24T11:00:00.508Z"
+      }
+    ]
   },
   "מסתור כביסה.webp": {
     "title": "מסתור כביסה",
