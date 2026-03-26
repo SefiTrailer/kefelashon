@@ -1,5 +1,7 @@
 {
   "files": [
+    "כדור הר געה.webp",
+    "אומצה.webp",
     "ניקוי רחבים.webp",
     "במבה חרטא.webp",
     "אוכף תור.webp",
@@ -2010,6 +2012,17 @@
       "isAIGenerated": false,
       "createdAt": 1772468311000,
       "dateMillis": 1772468311000
+    },
+    "אומצה.webp": {
+      "title": "אומצה",
+      "explanation": "נשמע כמו מישהי שאימצו אותה, רואים את משפחת חזייעוף [נשמע כמו חזי עוף] שאימצו את הדמות של האומצת בשר",
+      "topic": "",
+      "isApproved": false,
+      "isAIGenerated": false,
+      "needsAIImprovement": false,
+      "aiSuggestion": null,
+      "createdAt": 1774545881240,
+      "dateMillis": 1774545881240
     },
     "אופני הרים.webp": {
       "title": "אופני הרים",
@@ -6185,6 +6198,17 @@
       "isAIGenerated": true,
       "createdAt": 1772468311000,
       "dateMillis": 1772468311000
+    },
+    "כדור הר געה.webp": {
+      "title": "כדור הר געה",
+      "explanation": "נשמע כמו כדור הרגעה, רואים הר שהוא גועה בבכי על הכדור שלו.",
+      "topic": "",
+      "isApproved": false,
+      "isAIGenerated": false,
+      "needsAIImprovement": false,
+      "aiSuggestion": null,
+      "createdAt": 1774545903628,
+      "dateMillis": 1774545903628
     },
     "כדור רגל.webp": {
       "title": "כדור רגל",
@@ -14092,6 +14116,7 @@
     "אוכף.webp": 87284,
     "אומד בתור.webp": 167232,
     "אומנות זבל.webp": 269496,
+    "אומצה.webp": 143714,
     "אופני הרים.webp": 106450,
     "אופרת סבון.webp": 88080,
     "אור ברווז.webp": 89648,
@@ -14555,6 +14580,7 @@
     "כבסלמנדרה.webp": 115674,
     "כדאי הוא רש-B.webp": 57308,
     "כדור ההר עץ 1.webp": 62000,
+    "כדור הר געה.webp": 79148,
     "כדור רגל.webp": 61554,
     "כדורים נגד דיכאון.webp": 123694,
     "כדורים פסיכיאטריים.webp": 111376,

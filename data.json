@@ -11330,5 +11330,25 @@
     "needsAIImprovement": false,
     "aiSuggestion": null,
     "createdAt": 1774529586225
+  },
+  "כדור הר געה.webp": {
+    "title": "כדור הר געה",
+    "explanation": "נשמע כמו כדור הרגעה, רואים הר שהוא גועה בבכי על הכדור שלו.",
+    "topic": "",
+    "isApproved": false,
+    "isAIGenerated": false,
+    "needsAIImprovement": false,
+    "aiSuggestion": null,
+    "createdAt": 1774545903628
+  },
+  "אומצה.webp": {
+    "title": "אומצה",
+    "explanation": "נשמע כמו מישהי שאימצו אותה, רואים את משפחת חזייעוף [נשמע כמו חזי עוף] שאימצו את הדמות של האומצת בשר",
+    "topic": "",
+    "isApproved": false,
+    "isAIGenerated": false,
+    "needsAIImprovement": false,
+    "aiSuggestion": null,
+    "createdAt": 1774545881240
   }
 }
