@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { Trash2, CheckCircle, Copy, AlertTriangle, Loader, ChevronRight, ChevronLeft, X, ArrowRightLeft, Edit3, Save, ArrowLeftCircle, ArrowRightCircle } from 'lucide-react';
+import { Trash2, Check, Copy, AlertTriangle, Loader, ChevronRight, ChevronLeft, X, ArrowRightLeft, Edit3, Save, ArrowLeftCircle, ArrowRightCircle } from 'lucide-react';
 
 const API_BASE = 'http://localhost:3088';
 
@@ -112,6 +112,63 @@ export default function DuplicatesReview({ onComplete }) {
         }
     };
 
+    const deleteEntireGroup = async (groupIndex) => {
+        if (!window.confirm('האם אתה בטוח שברצונך למחוק את כל התמונות בקבוצה זו?')) return;
+
+        const group = groups[groupIndex];
+        const resolutions = group.map(img => ({
+            filename: img.filename,
+            action: 'delete'
+        }));
+
+        setResolving(groupIndex);
+        try {
+            const res = await fetch(`${API_BASE}/api/duplicates/resolve`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ resolutions })
+            });
+
+            if (!res.ok) throw new Error('Failed to delete group');
+
+            setGroups(prev => prev.filter((_, i) => i !== groupIndex));
+        } catch (err) {
+            alert('שגיאה במחיקת הקבוצה: ' + err.message);
+        } finally {
+            setResolving(null);
+        }
+    };
+
+    const toggleGroupSelection = (groupIndex, keepAll) => {
+        setGroups(prev => prev.map((g, idx) => {
+            if (idx !== groupIndex) return g;
+            const newGroup = g.map(img => ({ ...img, keep: keepAll }));
+            newGroup.isTitleMatch = g.isTitleMatch;
+            newGroup.isFilenameMatch = g.isFilenameMatch;
+            return newGroup;
+        }));
+    };
+
+    const markAsNotDuplicate = async (groupIndex) => {
+        const filenames = groups[groupIndex].map(img => img.filename);
+        setResolving(groupIndex);
+        try {
+            const res = await fetch(`${API_BASE}/api/duplicates/ignore`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ filenames })
+            });
+
+            if (!res.ok) throw new Error('Failed to mark as not duplicates');
+
+            setGroups(prev => prev.filter((_, i) => i !== groupIndex));
+        } catch (err) {
+            alert('שגיאה בסימון כלא כפולים: ' + err.message);
+        } finally {
+            setResolving(null);
+        }
+    };
+
     if (loading) {
         return (
             <div className="flex flex-col items-center justify-center p-12 bg-white rounded-3xl border border-slate-100 shadow-sm flex-1">
@@ -125,7 +182,7 @@ export default function DuplicatesReview({ onComplete }) {
         return (
             <div className="flex flex-col items-center justify-center p-12 bg-white rounded-3xl border border-slate-100 shadow-sm text-center flex-1">
                 <div className="w-16 h-16 bg-teal-50 text-teal-600 rounded-full flex items-center justify-center mb-4">
-                    <CheckCircle size={32} />
+                    <Check size={32} />
                 </div>
                 <h3 className="text-xl font-bold text-slate-800 mb-2">לא נמצאו כפילויות!</h3>
                 <p className="text-slate-500">המערכת נקייה. כל התמונות ייחודיות.</p>
@@ -167,13 +224,28 @@ export default function DuplicatesReview({ onComplete }) {
                                     <div className="h-6 w-px bg-slate-200"></div>
                                     <span className="text-slate-500 font-bold text-sm tracking-widest uppercase">קבוצה #{gIdx + 1}</span>
                                 </div>
-                                <button 
-                                    onClick={() => setGroups(prev => prev.filter((_, i) => i !== gIdx))}
-                                    className="p-2 text-slate-400 hover:text-slate-600 transition bg-white rounded-full shadow-sm"
-                                    title="התעלם מהתראה זו"
-                                >
-                                    <X size={20} />
-                                </button>
+                                <div className="flex items-center gap-2">
+                                    <button 
+                                        onClick={() => toggleGroupSelection(gIdx, true)}
+                                        className="px-3 py-1.5 bg-white border border-slate-200 text-slate-600 rounded-xl text-[10px] font-black hover:bg-teal-50 hover:text-teal-700 transition"
+                                    >
+                                        בחר הכל
+                                    </button>
+                                    <button 
+                                        onClick={() => toggleGroupSelection(gIdx, false)}
+                                        className="px-3 py-1.5 bg-white border border-slate-200 text-slate-600 rounded-xl text-[10px] font-black hover:bg-rose-50 hover:text-rose-700 transition"
+                                    >
+                                        בטל הכל
+                                    </button>
+                                    <div className="h-6 w-px bg-slate-200 mx-1"></div>
+                                    <button 
+                                        onClick={() => setGroups(prev => prev.filter((_, i) => i !== gIdx))}
+                                        className="p-2 text-slate-400 hover:text-slate-600 transition bg-white rounded-full shadow-sm"
+                                        title="התעלם מהתראה זו"
+                                    >
+                                        <X size={20} />
+                                    </button>
+                                </div>
                             </div>
 
                             <div className="relative grid grid-cols-1 md:grid-cols-2 gap-12 items-start">
@@ -298,7 +370,7 @@ export default function DuplicatesReview({ onComplete }) {
                             </div>
 
                             {/* Group Footer Actions */}
-                            <div className="mt-8 pt-8 border-t-2 border-slate-50 flex flex-col items-center gap-4">
+                            <div className="mt-8 pt-8 border-t-2 border-slate-50 flex flex-col md:flex-row items-center justify-center gap-4">
                                 <button 
                                     onClick={() => resolveGroup(gIdx)}
                                     disabled={resolving === gIdx || group.every(img => !img.keep)}
@@ -306,10 +378,28 @@ export default function DuplicatesReview({ onComplete }) {
                                 >
                                     בצע פעולות לקבוצה #{gIdx + 1}
                                 </button>
-                                {group.every(img => !img.keep) && (
-                                    <p className="text-rose-500 text-sm font-bold animate-pulse">חובה לבחור לפחות תמונה אחת לשמירה (או להתעלם)</p>
-                                )}
+                                
+                                <button 
+                                    onClick={() => deleteEntireGroup(gIdx)}
+                                    disabled={resolving === gIdx}
+                                    className="px-8 py-4 bg-rose-50 text-rose-600 border-2 border-rose-100 rounded-2xl font-black hover:bg-rose-100 transition text-lg tracking-wide disabled:opacity-50 disabled:cursor-not-allowed active:scale-95 flex items-center gap-2"
+                                >
+                                    <Trash2 size={20} />
+                                    מחק הכל
+                                </button>
+
+                                <button 
+                                    onClick={() => markAsNotDuplicate(gIdx)}
+                                    disabled={resolving === gIdx}
+                                    className="px-8 py-4 bg-indigo-50 text-indigo-600 border-2 border-indigo-100 rounded-2xl font-black hover:bg-indigo-100 transition text-lg tracking-wide disabled:opacity-50 disabled:cursor-not-allowed active:scale-95 flex items-center gap-2"
+                                >
+                                    <ArrowRightLeft size={20} />
+                                    זה לא כפול
+                                </button>
                             </div>
+                            {group.every(img => !img.keep) && (
+                                <p className="text-rose-500 text-sm font-bold animate-pulse text-center mt-4">בחר לפחות תמונה אחת לשמירה, או לחץ על "מחק הכל"</p>
+                            )}
                         </div>
                     ))}
                 </div>

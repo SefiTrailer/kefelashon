@@ -1,6 +1,7 @@
 import { useState, useEffect, useMemo, useRef } from 'react';
-import { ChevronRight, ChevronLeft, ArrowLeft, ArrowRight, Save, MessageCircle, Check, Trash2, Search, X, Upload, Github, Loader, LayoutGrid, Image as ImageIcon, Copy, Instagram, Facebook, Twitter, Share2, ExternalLink, PenTool, Minus, Layers, RotateCw, Square } from 'lucide-react';
+import { ChevronRight, ChevronLeft, ArrowLeft, ArrowRight, Save, MessageCircle, Check, Trash2, Search, X, Upload, Github, Loader, LayoutGrid, Image as ImageIcon, Copy, Instagram, Facebook, Twitter, Share2, ExternalLink, PenTool, Minus, Layers, RotateCw, Square, ArrowRightLeft, Sparkles } from 'lucide-react';
 import PublicGallery from './PublicGallery';
+import DuplicatesReview from './DuplicatesReview';
 
 
 const API_BASE = 'http://localhost:3088';
@@ -64,6 +65,7 @@ function App() {
   const [isBulkMinimized, setIsBulkMinimized] = useState(false);
   const [bulkCardPos, setBulkCardPos] = useState({ x: 24, y: 24 }); // Offset from top-right
   const [isDragging, setIsDragging] = useState(false);
+  const [isSuggesting, setIsSuggesting] = useState(false);
   const dragRef = useRef(null);
   const dragStartRef = useRef(null);
 
@@ -142,6 +144,32 @@ function App() {
     }
   };
 
+  const handleAutoSuggest = async () => {
+    if (!images[currentIndex]) return;
+    setIsSuggesting(true);
+    try {
+      const res = await fetch(`${API_BASE}/api/images/suggest`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ filename: images[currentIndex] })
+      });
+      if (res.ok) {
+        const data = await res.json();
+        if (data.title) setTitle(data.title);
+        if (data.explanation) setExplanation(data.explanation);
+        if (data.topic) setTopic(data.topic);
+      } else {
+        const err = await res.json();
+        alert(`שגיאה בהצעה: ${err.error || 'אלמונית'}`);
+      }
+    } catch (e) {
+      console.error('Auto suggest error:', e);
+      alert('שגיאה בחיבור לשרת ה-AI');
+    } finally {
+      setIsSuggesting(false);
+    }
+  };
+
   const checkWaStatus = async () => {
     try {
       const res = await fetch(`${API_BASE}/api/social/whatsapp/status`);
@@ -181,6 +209,39 @@ function App() {
         return [...prev, img];
       }
     });
+  };
+
+  const selectAllFiltered = () => {
+    setSelectedImages(filteredImages);
+  };
+
+  const handleBulkDelete = async () => {
+    if (selectedImages.length === 0) return;
+    if (!window.confirm(`האם אתה בטוח שברצונך למחוק ${selectedImages.length} תמונות? הפעולה אינה ניתנת לביטול.`)) return;
+
+    const resolutions = selectedImages.map(img => ({
+        filename: img,
+        action: 'delete'
+    }));
+
+    setIsSaving(true);
+    try {
+        const res = await fetch(`${API_BASE}/api/duplicates/resolve`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ resolutions })
+        });
+
+        if (!res.ok) throw new Error('Failed to delete images');
+
+        setSelectedImages([]);
+        fetchImages();
+        alert('התמונות נמחקו בהצלחה');
+    } catch (err) {
+        alert('שגיאה במחיקת התמונות: ' + err.message);
+    } finally {
+        setIsSaving(false);
+    }
   };
 
   useEffect(() => {
@@ -262,37 +323,40 @@ function App() {
       const meta = metadata[img] || {};
       
       // 1. Filter Mode
-      if (filterMode === 'all') return true;
-      if (filterMode === 'tagged' && (!meta.title?.trim() || !meta.explanation?.trim() || !meta.topic?.trim())) return false;
-      if (filterMode === 'no-title' && meta.title) return false;
-      if (filterMode === 'no-explanation' && meta.explanation) return false;
-      if (filterMode === 'no-topic' && meta.topic) return false;
-      if (filterMode === 'ai' && meta.isAIGenerated !== true) return false;
-      if (filterMode === 'approved' && meta.isApproved !== true) return false;
-      if (filterMode === 'not-approved' && meta.isApproved === true) return false;
-      if (filterMode === 'new-images' && fileSources[img] !== 'new') return false;
-      if (filterMode === 'ai-improved' && meta.isAIImproved !== true) return false;
-      if (filterMode === 'ai-added' && meta.isAIAdded !== true) return false;
-      if (filterMode === 'needs-ai' && meta.needsAIImprovement !== true) return false;
-      if (filterMode === 'ai-suggestions' && (!meta.aiSuggestion || meta.aiSuggestion.trim() === '')) return false;
-      if (filterMode === 'generic-ai') {
+      let passesFilter = true;
+      if (filterMode === 'all') passesFilter = true;
+      else if (filterMode === 'tagged' && (!meta.title?.trim() || !meta.explanation?.trim() || !meta.topic?.trim())) passesFilter = false;
+      else if (filterMode === 'no-title' && meta.title) passesFilter = false;
+      else if (filterMode === 'no-explanation' && meta.explanation) passesFilter = false;
+      else if (filterMode === 'no-topic' && meta.topic) passesFilter = false;
+      else if (filterMode === 'ai' && meta.isAIGenerated !== true) passesFilter = false;
+      else if (filterMode === 'approved' && meta.isApproved !== true) passesFilter = false;
+      else if (filterMode === 'not-approved' && meta.isApproved === true) passesFilter = false;
+      else if (filterMode === 'new-images' && fileSources[img] !== 'new') passesFilter = false;
+      else if (filterMode === 'ai-improved' && meta.isAIImproved !== true) passesFilter = false;
+      else if (filterMode === 'ai-added' && meta.isAIAdded !== true) passesFilter = false;
+      else if (filterMode === 'needs-ai' && meta.needsAIImprovement !== true) passesFilter = false;
+      else if (filterMode === 'ai-suggestions' && (!meta.aiSuggestion || meta.aiSuggestion.trim() === '')) passesFilter = false;
+      else if (filterMode === 'generic-ai') {
         const isGeneric = meta.explanation?.includes('התמונה ממחישה את הכפל המשמעות הטמון בביטוי');
-        if (!isGeneric) return false;
+        if (!isGeneric) passesFilter = false;
       }
-      if (filterMode === 'published-any' && (!meta.social_posts || meta.social_posts.length === 0)) return false;
-      if (filterMode === 'not-published' && meta.social_posts?.length > 0) return false;
-      if (filterMode === 'published-instagram' && !meta.social_posts?.some(p => p.platform === 'instagram')) return false;
-      if (filterMode === 'published-facebook' && !meta.social_posts?.some(p => p.platform === 'facebook')) return false;
-      if (filterMode === 'published-x' && !meta.social_posts?.some(p => p.platform === 'x')) return false;
+      else if (filterMode === 'published-any' && (!meta.social_posts || meta.social_posts.length === 0)) passesFilter = false;
+      else if (filterMode === 'not-published' && meta.social_posts?.length > 0) passesFilter = false;
+      else if (filterMode === 'published-instagram' && !meta.social_posts?.some(p => p.platform === 'instagram')) passesFilter = false;
+      else if (filterMode === 'published-facebook' && !meta.social_posts?.some(p => p.platform === 'facebook')) passesFilter = false;
+      else if (filterMode === 'published-x' && !meta.social_posts?.some(p => p.platform === 'x')) passesFilter = false;
       
       // Social "Need" Filters
-      if (filterMode === 'need-any' && meta.social_posts?.length >= 3) return false;
-      if (filterMode === 'need-instagram' && meta.social_posts?.some(p => p.platform === 'instagram')) return false;
-      if (filterMode === 'need-facebook' && meta.social_posts?.some(p => p.platform === 'facebook')) return false;
-      if (filterMode === 'need-x' && meta.social_posts?.some(p => p.platform === 'x')) return false;
-      if (filterMode === 'untitled') {
-        if (!img.includes('עיצוב ללא שם')) return false;
+      else if (filterMode === 'need-any' && meta.social_posts?.length >= 3) passesFilter = false;
+      else if (filterMode === 'need-instagram' && meta.social_posts?.some(p => p.platform === 'instagram')) passesFilter = false;
+      else if (filterMode === 'need-facebook' && meta.social_posts?.some(p => p.platform === 'facebook')) passesFilter = false;
+      else if (filterMode === 'need-x' && meta.social_posts?.some(p => p.platform === 'x')) passesFilter = false;
+      else if (filterMode === 'untitled') {
+        if (!img.includes('עיצוב ללא שם')) passesFilter = false;
       }
+
+      if (!passesFilter) return false;
 
       // 2. Topic Filter
       if (selectedTopic && (!meta.topic || !meta.topic.includes(selectedTopic))) return false;
@@ -793,6 +857,16 @@ function App() {
                 <Share2 size={14} />
                 שיתוף
               </button>
+              <button
+                onClick={() => setAdminViewMode('duplicates')}
+                className={`px-4 py-1.5 rounded-lg text-xs font-bold transition-all flex items-center gap-2 ${
+                  adminViewMode === 'duplicates' ? 'bg-white text-teal-600 shadow-sm' : 'text-slate-500 hover:text-slate-700'
+                }`}
+                title="ניהול כפילויות"
+              >
+                <ArrowRightLeft size={14} />
+                כפילויות
+              </button>
             </nav>
           </div>
           <div className="flex items-center gap-2">
@@ -979,7 +1053,9 @@ function App() {
         )}
 
         {/* Edit Mode View */}
-        {adminViewMode === 'edit' ? (
+        {adminViewMode === 'duplicates' ? (
+          <DuplicatesReview onComplete={() => setAdminViewMode('edit')} />
+        ) : adminViewMode === 'edit' ? (
           <div className="flex-1 flex flex-col lg:flex-row gap-6 min-h-0 overflow-hidden">
             {/* Metadata Editor Panel */}
             <div className="w-full lg:w-[450px] flex flex-col gap-4 order-2 lg:order-1 overflow-y-auto pr-1 custom-scrollbar">
@@ -1009,9 +1085,22 @@ function App() {
                     <div>
                       <div className="flex items-center justify-between mb-2">
                         <label className="text-[11px] font-black text-slate-400 uppercase tracking-widest">כותרת הביטוי</label>
-                        <button onClick={() => navigator.clipboard.writeText(title)} className="text-teal-600 hover:text-teal-700">
-                          <Copy size={12} />
-                        </button>
+                        <div className="flex items-center gap-2">
+                          <button 
+                            onClick={handleAutoSuggest}
+                            disabled={isSuggesting}
+                            className={`flex items-center gap-1.5 px-3 py-1 rounded-lg text-[10px] font-black transition-all ${
+                              isSuggesting ? 'bg-slate-100 text-slate-400' : 'bg-teal-50 text-teal-600 hover:bg-teal-100'
+                            }`}
+                            title="קבל הצעה אוטומטית מה-AI"
+                          >
+                            {isSuggesting ? <Loader size={12} className="animate-spin" /> : <Sparkles size={12} />}
+                            {isSuggesting ? 'מעבד...' : 'הצעה אוטומטית'}
+                          </button>
+                          <button onClick={() => navigator.clipboard.writeText(title)} className="text-teal-600 hover:text-teal-700">
+                            <Copy size={12} />
+                          </button>
+                        </div>
                       </div>
                       <input
                         type="text"
@@ -1418,6 +1507,16 @@ function App() {
                         {selectionMode ? 'בטל בחירה' : 'בחירה מרובה'}
                     </button>
 
+                    {selectionMode && (
+                        <button
+                            onClick={selectAllFiltered}
+                            className="flex items-center gap-2 px-4 py-2 rounded-2xl text-xs font-bold bg-white border border-slate-200 text-slate-600 hover:border-teal-200 hover:bg-teal-50 transition-all"
+                        >
+                            <Check size={14} />
+                            בחר הכל
+                        </button>
+                    )}
+
                     {selectionMode && selectedImages.length > 0 && (
                         <div className="flex items-center gap-2 animate-in slide-in-from-right-2 duration-300">
                             <div className="bg-indigo-50 text-indigo-600 px-3 py-2 rounded-xl text-xs font-black border border-indigo-100">
@@ -1429,6 +1528,13 @@ function App() {
                             >
                                 <Share2 size={14} />
                                 פרסם נבחרות ({selectedImages.length})
+                            </button>
+                            <button
+                                onClick={handleBulkDelete}
+                                className="bg-rose-50 text-rose-600 px-4 py-2 rounded-xl text-xs font-black border border-rose-100 hover:bg-rose-100 transition-all flex items-center gap-2"
+                            >
+                                <Trash2 size={14} />
+                                מחק ({selectedImages.length})
                             </button>
                         </div>
                     )}

@@ -9,8 +9,15 @@ import sharp from 'sharp';
 import { generateAHash, getHammingDistance } from './utils/image-hash.js';
 import dotenv from 'dotenv';
 import { TwitterApi } from 'twitter-api-v2';
+import pkg from 'whatsapp-web.js';
+const { Client, LocalAuth, MessageMedia } = pkg;
+import qrcode from 'qrcode';
+import { GoogleGenAI } from "@google/genai";
 
 dotenv.config();
+
+const genAI = new GoogleGenAI({ apiKey: process.env.GEMINI_API_KEY });
+const geminiModel = "gemini-flash-latest";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -429,8 +436,12 @@ app.get('/api/duplicates', async (req, res) => {
                 const titleJ = allFiles[j].metadata?.title?.trim();
                 const titleMatch = titleI && titleJ && titleI === titleJ;
                 const filenameMatch = baseI === allFiles[j].basename;
+                
+                // NEW: Skip if explicitly marked as not duplicates
+                const isIgnored = allFiles[i].metadata?.not_duplicate_with?.includes(allFiles[j].filename) || 
+                                 allFiles[j].metadata?.not_duplicate_with?.includes(allFiles[i].filename);
 
-                if (hashMatch || titleMatch || filenameMatch) {
+                if ((hashMatch || titleMatch || filenameMatch) && !isIgnored) {
                     group.push(allFiles[j]);
                     processed.add(j);
                 }
@@ -496,6 +507,39 @@ app.post('/api/duplicates/resolve', async (req, res) => {
         res.json({ success: true });
     } catch (e) {
         console.error('Deduplication Error:', e);
+        res.status(500).json({ error: e.message });
+    }
+});
+
+app.post('/api/duplicates/ignore', async (req, res) => {
+    try {
+        const { filenames } = req.body;
+        if (!filenames || filenames.length < 2) {
+            return res.status(400).json({ error: 'Need at least two filenames to ignore.' });
+        }
+
+        let data = {};
+        if (fs.existsSync(DATA_FILE)) {
+            data = JSON.parse(fs.readFileSync(DATA_FILE, 'utf-8'));
+        }
+
+        // Cross-mark all as "not duplicates" of each other
+        for (const f of filenames) {
+            if (!data[f]) data[f] = {};
+            if (!data[f].not_duplicate_with) data[f].not_duplicate_with = [];
+            
+            for (const other of filenames) {
+                if (f === other) continue;
+                if (!data[f].not_duplicate_with.includes(other)) {
+                    data[f].not_duplicate_with.push(other);
+                }
+            }
+        }
+
+        fs.writeFileSync(DATA_FILE, JSON.stringify(data, null, 2));
+        res.json({ success: true });
+    } catch (e) {
+        console.error('Ignore Duplicates Error:', e);
         res.status(500).json({ error: e.message });
     }
 });
@@ -596,7 +640,65 @@ app.post('/api/publish', async (req, res) => {
     }
 });
 
-// ── Social Media Posting (Meta Graph API) ──────────────────────────────────
+// ── WhatsApp Client Setup ──────────────────────────────────────────────────
+let whatsappQR = null;
+let whatsappStatus = 'DISCONNECTED'; // DISCONNECTED | SCAN_QR | CONNECTED | INITIALIZING | LOADING
+
+const whatsappClient = new Client({
+    authStrategy: new LocalAuth({
+        dataPath: path.resolve(__dirname, '../.wwebjs_auth')
+    }),
+    puppeteer: {
+        headless: true,
+        args: [
+            '--no-sandbox', 
+            '--disable-setuid-sandbox',
+            '--disable-dev-shm-usage',
+            '--disable-accelerated-2d-canvas',
+            '--no-first-run',
+            '--no-zygote',
+            '--disable-gpu'
+        ]
+    }
+});
+
+whatsappClient.on('qr', (qr) => {
+    console.log('[WhatsApp] QR Received');
+    qrcode.toDataURL(qr, (err, url) => {
+        whatsappQR = url;
+        whatsappStatus = 'SCAN_QR';
+    });
+});
+
+whatsappClient.on('ready', () => {
+    console.log('[WhatsApp] Client is ready!');
+    whatsappStatus = 'CONNECTED';
+    whatsappQR = null;
+});
+
+whatsappClient.on('authenticated', () => {
+    console.log('[WhatsApp] Authenticated');
+    whatsappStatus = 'LOADING';
+});
+
+whatsappClient.on('auth_failure', (msg) => {
+    console.error('[WhatsApp] Auth failure:', msg);
+    whatsappStatus = 'DISCONNECTED';
+    whatsappQR = null;
+});
+
+whatsappClient.on('disconnected', (reason) => {
+    console.log('[WhatsApp] Disconnected:', reason);
+    whatsappStatus = 'DISCONNECTED';
+    whatsappQR = null;
+});
+
+// Start initialization
+whatsappClient.initialize().catch(err => {
+    console.error('[WhatsApp] Initialization error:', err);
+});
+
+// ── Social Media Posting (Meta Graph API & WhatsApp) ───────────────────────
 
 // Helper to record social media posts in metadata
 function recordSocialPost(filename, platform) {
@@ -619,6 +721,167 @@ function recordSocialPost(filename, platform) {
     }
 }
 
+// --- Background Bulk Task Management ---
+let bulkTask = {
+  isActive: false,
+  queue: [],
+  currentIndex: 0,
+  platforms: [],
+  status: 'Idle',
+  nextPostTime: 0,
+  results: [],
+  timer: null
+};
+
+async function postSingleImageForBulk(filename, platforms, shareToFacebook = false) {
+    const accessToken = process.env.META_ACCESS_TOKEN;
+    const fbPageId = process.env.FB_PAGE_ID;
+    const igUserId = process.env.IG_USER_ID;
+    const imageUrl = `https://kefelashon.co.il/images/${encodeURIComponent(filename)}`;
+    
+    const results = [];
+    for (const platform of platforms) {
+        try {
+            if (platform === 'instagram' && igUserId && accessToken) {
+                const containerRes = await fetch(`https://graph.facebook.com/v21.0/${igUserId}/media`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ 
+                        image_url: imageUrl, 
+                        share_to_facebook: shareToFacebook,
+                        access_token: accessToken 
+                    })
+                });
+                const containerData = await containerRes.json();
+                if (containerRes.ok) {
+                    await new Promise(r => setTimeout(r, 10000)); // 10s wait for processing
+                    const pRes = await fetch(`https://graph.facebook.com/v21.0/${igUserId}/media_publish`, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ creation_id: containerData.id, access_token: accessToken })
+                    });
+                    if (pRes.ok) {
+                        recordSocialPost(filename, 'instagram');
+                        results.push({ platform: 'instagram', ok: true });
+                    } else results.push({ platform: 'instagram', ok: false, error: 'Publish failed' });
+                } else results.push({ platform: 'instagram', ok: false, error: 'Container failed' });
+            }
+            if (platform === 'facebook' && fbPageId && accessToken) {
+                const fbRes = await fetch(`https://graph.facebook.com/v21.0/${fbPageId}/photos`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ url: imageUrl, access_token: accessToken })
+                });
+                if (fbRes.ok) {
+                    recordSocialPost(filename, 'facebook');
+                    results.push({ platform: 'facebook', ok: true });
+                } else results.push({ platform: 'facebook', ok: false, error: 'FB failed' });
+            }
+            if (platform === 'whatsapp' && whatsappStatus === 'CONNECTED') {
+                try {
+                    const filePath = path.join(IMAGES_DIR, filename);
+                    const media = MessageMedia.fromFilePath(filePath);
+                    
+                    // Priority: ENV vars, then fallbacks
+                    const targetId = process.env.WA_TARGET_ID; 
+                    if (targetId) {
+                        await whatsappClient.sendMessage(targetId, media);
+                        recordSocialPost(filename, 'whatsapp');
+                        results.push({ platform: 'whatsapp', ok: true });
+                    } else {
+                        results.push({ platform: 'whatsapp', ok: false, error: 'WA_TARGET_ID not set' });
+                    }
+                } catch (e) {
+                    results.push({ platform: 'whatsapp', ok: false, error: e.message });
+                }
+            }
+        } catch (e) {
+            results.push({ platform, ok: false, error: e.message });
+        }
+    }
+    return results;
+}
+
+async function runBulkTick() {
+    if (!bulkTask.isActive || bulkTask.currentIndex >= bulkTask.queue.length) {
+        bulkTask.isActive = false;
+        bulkTask.status = 'Completed';
+        return;
+    }
+
+    const currentFilename = bulkTask.queue[bulkTask.currentIndex];
+    bulkTask.status = `מפרסם: ${currentFilename}...`;
+    
+    // Actually post
+    await postSingleImageForBulk(currentFilename, bulkTask.platforms, bulkTask.shareToFacebook);
+    
+    bulkTask.currentIndex++;
+    
+    if (bulkTask.currentIndex < bulkTask.queue.length) {
+        const delay = 300 + Math.floor(Math.random() * 300); // 5-10 mins
+        bulkTask.nextPostTime = Date.now() + (delay * 1000);
+        bulkTask.status = 'ממתין לפוסט הבא...';
+        bulkTask.timer = setTimeout(runBulkTick, delay * 1000);
+    } else {
+        bulkTask.isActive = false;
+        bulkTask.status = 'Completed';
+        bulkTask.nextPostTime = 0;
+    }
+}
+
+app.post('/api/social/bulk', (req, res) => {
+    const { filenames, platforms, shareToFacebook } = req.body;
+    if (bulkTask.isActive) return res.status(400).json({ error: 'Bulk task already running' });
+    if (!filenames?.length || !platforms?.length) return res.status(400).json({ error: 'Missing filenames or platforms' });
+
+    bulkTask = {
+        isActive: true,
+        queue: filenames,
+        currentIndex: 0,
+        platforms: platforms,
+        status: 'Starting...',
+        nextPostTime: Date.now(),
+        shareToFacebook: shareToFacebook === true,
+        results: [],
+        timer: null
+    };
+
+    runBulkTick();
+    res.json({ ok: true });
+});
+
+app.get('/api/social/bulk/status', (req, res) => {
+    res.json({
+        isActive: bulkTask.isActive,
+        current: bulkTask.currentIndex,
+        total: bulkTask.queue.length,
+        status: bulkTask.status,
+        countdown: bulkTask.nextPostTime > Date.now() ? Math.ceil((bulkTask.nextPostTime - Date.now()) / 1000) : 0
+    });
+});
+
+app.post('/api/social/bulk/cancel', (req, res) => {
+    if (bulkTask.timer) clearTimeout(bulkTask.timer);
+    bulkTask.isActive = false;
+    bulkTask.status = 'Cancelled';
+    res.json({ ok: true });
+});
+
+app.post('/api/social/manual', (req, res) => {
+    try {
+        const { filename, platform } = req.body;
+        console.log(`[Social] Manual request received: ${platform} for ${filename}`);
+        if (!filename || !platform) {
+            return res.status(400).json({ error: 'Missing filename or platform' });
+        }
+        recordSocialPost(filename, platform);
+        res.json({ ok: true });
+    } catch (e) {
+        console.error('[Social] Manual request error:', e);
+        res.status(500).json({ ok: false, error: e.message });
+    }
+});
+
 app.get('/api/social/meta/status', async (req, res) => {
     const accessToken = process.env.META_ACCESS_TOKEN;
     if (!accessToken) return res.json({ connected: false, error: 'Token missing in .env' });
@@ -636,9 +899,24 @@ app.get('/api/social/meta/status', async (req, res) => {
     }
 });
 
+app.get('/api/social/whatsapp/status', (req, res) => {
+    res.json({ status: whatsappStatus, qr: whatsappQR });
+});
+
+app.post('/api/social/whatsapp/logout', async (req, res) => {
+    try {
+        await whatsappClient.logout();
+        whatsappStatus = 'DISCONNECTED';
+        whatsappQR = null;
+        res.json({ ok: true });
+    } catch (e) {
+        res.status(500).json({ error: e.message });
+    }
+});
+
 app.post('/api/social/post', async (req, res) => {
     try {
-        const { filename, caption, platform } = req.body;
+        const { filename, caption, platform, shareToFacebook } = req.body;
 
         const accessToken = process.env.META_ACCESS_TOKEN;
         const fbPageId = process.env.FB_PAGE_ID;
@@ -661,6 +939,7 @@ app.post('/api/social/post', async (req, res) => {
                 body: JSON.stringify({
                     image_url: imageUrl,
                     caption: caption,
+                    share_to_facebook: shareToFacebook === true,
                     access_token: accessToken
                 })
             });
@@ -764,37 +1043,43 @@ app.post('/api/social/post', async (req, res) => {
         if (platform === 'facebook') {
             if (!fbPageId) return res.status(400).json({ error: 'FB_PAGE_ID is not configured' });
 
-            // 1. Exchange User Token for Page Access Token (Crucial for Page posting)
-            console.log(`[Social] Fetching accounts to find Page ${fbPageId}...`);
-            const accountsRes = await fetch(`https://graph.facebook.com/v21.0/me/accounts?access_token=${accessToken}`);
-            const accountsData = await accountsRes.json();
-
-            if (!accountsRes.ok) {
-                const msg = accountsData.error?.message || 'Failed to fetch accounts';
-                throw new Error(`Facebook (Accounts): ${msg}`);
-            }
-
-            const page = accountsData.data?.find(p => p.id === fbPageId);
-            if (!page) {
-                const available = accountsData.data?.map(p => `${p.name} (ID: ${p.id})`).join(', ') || 'none';
-                throw new Error(`Facebook (Token): Page ID ${fbPageId} not found in this token. Available: ${available}. Did you select the page in the login popup?`);
-            }
-            const pageAccessToken = page.access_token;
-            console.log(`[Social] Using Page Token for: ${page.name}`);
-
-            // 2. Post Photo with Page Token
             const fbRes = await fetch(`https://graph.facebook.com/v21.0/${fbPageId}/photos`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({
                     url: imageUrl,
                     caption: caption,
-                    access_token: pageAccessToken
+                    access_token: accessToken
                 })
             });
             const fbData = await fbRes.json();
-            recordSocialPost(filename, 'facebook');
-            return res.json({ success: true, platform: 'facebook', data: fbData });
+            if (fbRes.ok) {
+                recordSocialPost(filename, 'facebook');
+                return res.json({ ok: true, id: fbData.id });
+            } else {
+                return res.status(fbRes.status).json({ error: fbData.error?.message || 'Facebook upload failed' });
+            }
+        }
+
+        if (platform === 'whatsapp') {
+            if (whatsappStatus !== 'CONNECTED') {
+                return res.status(400).json({ error: 'WhatsApp is not connected' });
+            }
+            try {
+                const filePath = path.join(IMAGES_DIR, filename);
+                const media = MessageMedia.fromFilePath(filePath);
+                const targetId = req.body.targetId || process.env.WA_TARGET_ID;
+                
+                if (!targetId) {
+                    return res.status(400).json({ error: 'WA_TARGET_ID is not configured' });
+                }
+
+                await whatsappClient.sendMessage(targetId, media, { caption: caption || '' });
+                recordSocialPost(filename, 'whatsapp');
+                return res.json({ ok: true });
+            } catch (e) {
+                return res.status(500).json({ error: e.message });
+            }
         }
 
         res.status(400).json({ error: 'Invalid platform specified' });
@@ -893,6 +1178,86 @@ app.get('/api/social/x/status', (req, res) => {
     } catch (err) {
         console.error('[X-Status Error]', err);
         res.status(500).json({ error: err.message, connected: false });
+    }
+});
+
+// ─────────────────────────────────────────────────────────────────────────────
+// AI Image Assistant
+// ─────────────────────────────────────────────────────────────────────────────
+
+app.post('/api/images/suggest', async (req, res) => {
+    try {
+        const { filename } = req.body;
+        if (!filename) return res.status(400).json({ error: 'Filename is required' });
+
+        let imagePath = path.join(IMAGES_DIR, filename);
+        if (!fs.existsSync(imagePath)) {
+            imagePath = path.join(NEW_IMAGES_DIR, filename);
+        }
+        
+        if (!fs.existsSync(imagePath)) {
+            return res.status(404).json({ error: 'Image file not found' });
+        }
+
+        // Read image as base64
+        const ext = path.extname(imagePath).slice(1) || 'webp';
+        const imageBuffer = fs.readFileSync(imagePath);
+        const base64Data = imageBuffer.toString('base64');
+
+        // Read data.json for current metadata
+        let currentMetadata = {};
+        if (fs.existsSync(DATA_FILE)) {
+            const fullData = JSON.parse(fs.readFileSync(DATA_FILE, 'utf-8'));
+            currentMetadata = fullData[filename] || {};
+        }
+
+        // Read tags_master.json for context
+        let tagsList = "";
+        if (fs.existsSync(path.join(__dirname, '../tags_master.json'))) {
+            const tagsData = JSON.parse(fs.readFileSync(path.join(__dirname, '../tags_master.json'), 'utf-8'));
+            if (tagsData.categories) {
+                tagsList = tagsData.categories.join(', ');
+            }
+        }
+
+        const prompt = `You are a specialist in Hebrew puns (Kefel Lashon). 
+Analyze the provided image and generate metadata for a gallery of puns.
+
+IMAGE FILENAME: ${filename}
+CURRENT TITLE: ${currentMetadata.title || 'None'}
+CURRENT EXPLANATION: ${currentMetadata.explanation || 'None'}
+
+CONSTRAINTS:
+1. Provide a "title" (a brief, catchy name for the pun, usually in Hebrew).
+2. Provide an "explanation" in Hebrew (2-3 sentences max) that clearly explains the wordplay or pun.
+3. Suggest up to 5 "tags" (topic) from this specific list: [${tagsList}]. 
+   You can also suggest 1-2 new relevant tags if absolutely necessary, but prioritize the list.
+4. Output MUST be ONLY a JSON object with these keys: "title", "explanation", "topic" (comma separated string).
+
+Hebrew output only for title and explanation.`;
+
+        const result = await genAI.models.generateContent({
+            model: geminiModel,
+            contents: [{
+                role: "user",
+                parts: [
+                    { text: prompt },
+                    { inlineData: { mimeType: `image/${ext}`, data: base64Data } }
+                ]
+            }]
+        });
+
+        const responseText = result.candidates[0].content.parts[0].text;
+        // Extract JSON from response (Gemini sometimes wraps in markdown blocks)
+        const jsonMatch = responseText.match(/\{[\s\S]*\}/);
+        if (!jsonMatch) throw new Error('Failed to parse AI response as JSON');
+
+        const suggestion = JSON.parse(jsonMatch[0]);
+        res.json(suggestion);
+
+    } catch (err) {
+        console.error('[AI-Suggest Error]', err);
+        res.status(500).json({ error: err.message });
     }
 });
 
