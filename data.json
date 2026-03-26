@@ -51,7 +51,10 @@
     "topic": "מילים ומשחקי לשון, מפתח, אוכל ושתייה, סגולה",
     "isApproved": true,
     "isAIGenerated": false,
-    "createdAt": 1772468311000
+    "createdAt": 1772468311000,
+    "not_duplicate_with": [
+      "חלט מפתח 1.webp"
+    ]
   },
   "חליטת רכוש.webp": {
     "title": "חליטת רכוש",
@@ -452,7 +455,10 @@
     "topic": "אוכל ושתייה, יין, יין וענבים, מוזיקה ותרבות, זמרים, טכנולוגיה ומדע, חשמל, משפחה וילדים, ילדים, משפחה, מקצועות ועבודה, עסקים",
     "isApproved": true,
     "isAIGenerated": true,
-    "createdAt": 1772468311000
+    "createdAt": 1772468311000,
+    "not_duplicate_with": [
+      "לומד לסחוט 2.webp"
+    ]
   },
   "אסיפת תורים.webp": {
     "title": "אסיפת תורים",
@@ -1743,7 +1749,10 @@
     "topic": "משפחה וילדים, משפחה",
     "isApproved": true,
     "isAIGenerated": false,
-    "createdAt": 1772468311000
+    "createdAt": 1772468311000,
+    "not_duplicate_with": [
+      "בונה אטארים 1.webp"
+    ]
   },
   "בוס טון.webp": {
     "title": "בוס טון",
@@ -4016,7 +4025,10 @@
     "isApproved": false,
     "isAIGenerated": true,
     "isAIImproved": true,
-    "createdAt": 1772468311000
+    "createdAt": 1772468311000,
+    "not_duplicate_with": [
+      "מזל דגים 1.webp"
+    ]
   },
   "ללקק את העץ באות.webp": {
     "title": "ללקק את העץ באות",
@@ -4817,7 +4829,10 @@
     "isApproved": false,
     "isAIGenerated": true,
     "isAIImproved": true,
-    "createdAt": 1772468311000
+    "createdAt": 1772468311000,
+    "not_duplicate_with": [
+      "מעמר כפייתי 2.webp"
+    ]
   },
   "מעשיר אורניום.webp": {
     "title": "מעשיר אורניום",
@@ -10332,7 +10347,10 @@
     "topic": "חיות",
     "isApproved": true,
     "isAIGenerated": false,
-    "createdAt": 1772468311000
+    "createdAt": 1772468311000,
+    "not_duplicate_with": [
+      "בונה אטארים.webp"
+    ]
   },
   "גל שקט 1.webp": {
     "title": "גל שקט",
@@ -10355,7 +10373,10 @@
     "topic": "חיות, גדי, צאן",
     "isApproved": true,
     "isAIGenerated": false,
-    "createdAt": 1772468311000
+    "createdAt": 1772468311000,
+    "not_duplicate_with": [
+      "חד גדיא.webp"
+    ]
   },
   "חלט מפתח 1.webp": {
     "title": "חלט מפתח",
@@ -10363,7 +10384,10 @@
     "topic": "סגולות, מפתח, אוכל ושתייה, לחם ומאפים, משקאות, מקצועות ועבודה, תחבורה",
     "isApproved": true,
     "isAIGenerated": false,
-    "createdAt": 1772468311000
+    "createdAt": 1772468311000,
+    "not_duplicate_with": [
+      "חלט מפתח.webp"
+    ]
   },
   "זה קולה העניין... 1.webp": {
     "title": "זה קולה העניין...",
@@ -10625,7 +10649,10 @@
     "topic": "חיות, דגים, אוכל ושתייה, בשר ודגים",
     "isApproved": true,
     "isAIGenerated": true,
-    "createdAt": 1772468311000
+    "createdAt": 1772468311000,
+    "not_duplicate_with": [
+      "מזל דגים.webp"
+    ]
   },
   "מחרוזת שירי חתונה 1.webp": {
     "title": "מחרוזת שירי חתונה",
@@ -11155,7 +11182,10 @@
     "topic": "חיות, גדי, צאן, חגים ומועדים, מוזיקה ותרבות, הומור ופנאי",
     "isApproved": true,
     "isAIGenerated": false,
-    "createdAt": 1772468311000
+    "createdAt": 1772468311000,
+    "not_duplicate_with": [
+      "חד גדיא 1.webp"
+    ]
   },
   "מאפיית מצות.webp": {
     "title": "מאפיית מצות",
@@ -11179,7 +11209,10 @@
     "topic": "אוכל ושתייה, פירות, מוזיקה ותרבות, זמרים, טכנולוגיה ומדע, חשמל, משפחה וילדים, ילדים, משפחה, מקצועות ועבודה, עסקים",
     "isApproved": true,
     "isAIGenerated": true,
-    "createdAt": 1773685106000
+    "createdAt": 1773685106000,
+    "not_duplicate_with": [
+      "לומד לסחוט.webp"
+    ]
   },
   "מעמר כפייתי 2.webp": {
     "title": "מעמר כפייתי",
@@ -11187,7 +11220,10 @@
     "topic": "פתגמים וביטויים",
     "isApproved": true,
     "isAIGenerated": true,
-    "createdAt": 1773686166000
+    "createdAt": 1773686166000,
+    "not_duplicate_with": [
+      "מעמר כפייתי.webp"
+    ]
   },
   "ביאור חמץ.webp": {
     "title": "ביאור חמץ",
@@ -11264,5 +11300,35 @@
     "needsAIImprovement": false,
     "aiSuggestion": null,
     "createdAt": 1774279255402
+  },
+  "במבה חרטא.webp": {
+    "title": "במבה חרטא",
+    "explanation": "נשמע כמו 'בם בחרת', מהפסוק 'זרע יעקב אשר בם בחרת'.\nדווקא 'בם בחרת' רק מבלבל אותו יותר",
+    "topic": "אוכל, אוכל ושתייה, סופרמרקט, יהדות, יהדות ומסורת",
+    "isApproved": false,
+    "isAIGenerated": false,
+    "needsAIImprovement": false,
+    "aiSuggestion": null,
+    "createdAt": 1774529586225
+  },
+  "ניקוי רחבים.webp": {
+    "title": "ניקוי רחבים",
+    "explanation": "נשמע כמו 'ניקוי רכבים', רואים אנשים בריונים רחבים מאוד שהם מנקים רכבים במבצע לפני פסח. התור שלהם עמוס מאוד - צר לי.",
+    "topic": "",
+    "isApproved": false,
+    "isAIGenerated": false,
+    "needsAIImprovement": false,
+    "aiSuggestion": null,
+    "createdAt": 1774529586225
+  },
+  "אוכף תור.webp": {
+    "title": "אוכף תור",
+    "explanation": "נשמע כמו 'עוקף בתור', רואים מישהו בערב חג אוכף את הסוס שלו ללא היסוס.",
+    "topic": "הומור ופנאי, חיות, סוס",
+    "isApproved": false,
+    "isAIGenerated": false,
+    "needsAIImprovement": false,
+    "aiSuggestion": null,
+    "createdAt": 1774529586225
   }
 }
