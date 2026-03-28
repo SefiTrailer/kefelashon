@@ -11367,16 +11367,6 @@
     "aiSuggestion": null,
     "createdAt": 1774529586225
   },
-  "אוכף תור.webp": {
-    "title": "אוכף תור",
-    "explanation": "נשמע כמו 'עוקף בתור', רואים מישהו בערב חג אוכף את הסוס שלו ללא היסוס.",
-    "topic": "הומור ופנאי, חיות, סוס",
-    "isApproved": false,
-    "isAIGenerated": false,
-    "needsAIImprovement": false,
-    "aiSuggestion": null,
-    "createdAt": 1774529586225
-  },
   "כדור הר געה.webp": {
     "title": "כדור הר געה",
     "explanation": "נשמע כמו כדור הרגעה, רואים הר שהוא גועה בבכי על הכדור שלו.",
@@ -11426,5 +11416,15 @@
     "needsAIImprovement": false,
     "aiSuggestion": null,
     "createdAt": 1774740417130
+  },
+  "אוכף בתור.webp": {
+    "title": "אוכף בתור",
+    "explanation": "נשמע כמו 'עוקף בתור', רואים מישהו בערב חג אוכף את הסוס שלו ללא היסוס.",
+    "topic": "הומור ופנאי, חיות, סוס",
+    "isApproved": false,
+    "isAIGenerated": false,
+    "needsAIImprovement": false,
+    "aiSuggestion": null,
+    "createdAt": 1774529586225
   }
 }
