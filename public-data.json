@@ -1,5 +1,8 @@
 {
   "files": [
+    "פתי בר.webp",
+    "החוליה המקשרת.webp",
+    "בתי זיקוק.webp",
     "שורשים חסידיים.webp",
     "קבר אחים.webp",
     "מכת בכור רוט.webp",
@@ -1979,6 +1982,12 @@
       "isApproved": true,
       "isAIGenerated": false,
       "createdAt": 1772468311000,
+      "social_posts": [
+        {
+          "platform": "instagram",
+          "date": "2026-03-29T00:02:55.498Z"
+        }
+      ],
       "dateMillis": 1772468311000
     },
     "אהלן ניסים.webp": {
@@ -1997,6 +2006,12 @@
       "isApproved": true,
       "isAIGenerated": false,
       "createdAt": 1772468311000,
+      "social_posts": [
+        {
+          "platform": "instagram",
+          "date": "2026-03-28T23:48:23.261Z"
+        }
+      ],
       "dateMillis": 1772468311000
     },
     "אוגר כוחות.webp": {
@@ -2051,6 +2066,12 @@
       "isApproved": true,
       "isAIGenerated": false,
       "createdAt": 1773675585000,
+      "social_posts": [
+        {
+          "platform": "instagram",
+          "date": "2026-03-28T23:54:29.059Z"
+        }
+      ],
       "dateMillis": 1773675585000
     },
     "אומנות זבל.webp": {
@@ -3382,6 +3403,17 @@
       "createdAt": 1772468311000,
       "dateMillis": 1772468311000
     },
+    "בתי זיקוק.webp": {
+      "title": "בתי זיקוק",
+      "explanation": "נשמע כמו ה'בתי זיקוק' שבהם מזקקים דלקים מנפט, רואים זיקוקים מסוגים שונים שמהם מורכבת הצורות של בית",
+      "topic": "בית, בית ויומיום, יום העצמאות",
+      "isApproved": false,
+      "isAIGenerated": false,
+      "needsAIImprovement": false,
+      "aiSuggestion": null,
+      "createdAt": 1774820219806,
+      "dateMillis": 1774820219806
+    },
     "ג'ירפלמינגו.webp": {
       "title": "ג'ירפלמינגו",
       "explanation": "יצור היברידי משונה המשלב את הגובה של הג'ירפה עם העדינות הוורודה של הפלמינגו. התמונה מציגה ג'ירפה בעלת צוואר ארוך ורגליים דקיקות, כשכל גופה מכוסה בנוצות ורודות וראשה מעוצב כראש פלמינגו.",
@@ -4045,6 +4077,17 @@
       "isAIGenerated": true,
       "createdAt": 1772468311000,
       "dateMillis": 1772468311000
+    },
+    "החוליה המקשרת.webp": {
+      "title": "החוליה המקשרת",
+      "explanation": "המושג הוא חוליה שתפקידה לקשר בין שני חלקים, פה רואים חוליה רוחנית כמו 'מתקשרת' בין העולמות... האמת שהיא שרלטנית",
+      "topic": "רוחני",
+      "isApproved": false,
+      "isAIGenerated": false,
+      "needsAIImprovement": false,
+      "aiSuggestion": null,
+      "createdAt": 1774820257646,
+      "dateMillis": 1774820257646
     },
     "החטף שיק.webp": {
       "title": "החטף שיק",
@@ -8252,6 +8295,16 @@
       "needsAIImprovement": false,
       "aiSuggestion": null,
       "createdAt": 1774740349226,
+      "social_posts": [
+        {
+          "platform": "instagram",
+          "date": "2026-03-28T23:43:08.553Z"
+        },
+        {
+          "platform": "x",
+          "date": "2026-03-28T23:43:32.159Z"
+        }
+      ],
       "dateMillis": 1774740349226
     },
     "מל חיצים.webp": {
@@ -11505,6 +11558,17 @@
       "createdAt": 1773675585000,
       "dateMillis": 1773675585000
     },
+    "פתי בר.webp": {
+      "title": "פתי בר",
+      "explanation": "זהו פתיבר לא מבויית, ממש 'בר', והוא גם נראה ממש פתי",
+      "topic": "אוכל, אוכל ושתייה, טבע, טבע וצומח, תכונה, רגשות ותכונות",
+      "isApproved": false,
+      "isAIGenerated": false,
+      "needsAIImprovement": false,
+      "aiSuggestion": null,
+      "createdAt": 1774820287765,
+      "dateMillis": 1774820287765
+    },
     "פתי מאמין ל'חול' דוור 1.webp": {
       "title": "פתי מאמין ל'חול' דוור",
       "explanation": "נשמע כמו הביטוי 'פתי מאמין לכל דבר', רואים דמות של פתיבר [בסקוויט] דתי, עם אופי תמים, שהוא מאמין לכל מה שהדוור שעשוי מ'חול' אומר לו.",
@@ -11863,6 +11927,16 @@
       "needsAIImprovement": false,
       "aiSuggestion": null,
       "createdAt": 1774740378417,
+      "social_posts": [
+        {
+          "platform": "instagram",
+          "date": "2026-03-28T23:44:41.826Z"
+        },
+        {
+          "platform": "x",
+          "date": "2026-03-28T23:45:04.158Z"
+        }
+      ],
       "dateMillis": 1774740378417
     },
     "קוֹפָה-אִין.webp": {
@@ -13066,6 +13140,16 @@
       "needsAIImprovement": false,
       "aiSuggestion": null,
       "createdAt": 1774740417130,
+      "social_posts": [
+        {
+          "platform": "instagram",
+          "date": "2026-03-28T23:43:59.638Z"
+        },
+        {
+          "platform": "x",
+          "date": "2026-03-28T23:44:25.240Z"
+        }
+      ],
       "dateMillis": 1774740417130
     },
     "שושן הבירה.webp": {
@@ -14346,6 +14430,7 @@
     "בשר בא קר.webp": 111218,
     "בשר חלק.webp": 106388,
     "בשר משומר.webp": 247980,
+    "בתי זיקוק.webp": 173932,
     "ג'ירפלמינגו.webp": 111144,
     "ג'רי כאן.webp": 35356,
     "גאנה בהאים.webp": 278118,
@@ -14421,6 +14506,7 @@
     "הומר אצילי.webp": 74504,
     "הומר ביץ.webp": 123178,
     "הוצאה לעור.webp": 120666,
+    "החוליה המקשרת.webp": 111790,
     "החטף שיק.webp": 112716,
     "החלקה על הכביש.webp": 197986,
     "החמיץ את האוטובוס.webp": 115238,
@@ -15220,6 +15306,7 @@
     "פרע אדומה 1.webp": 134988,
     "פרצוף כרית.webp": 197668,
     "פרשן כלכלי.webp": 97816,
+    "פתי בר.webp": 203962,
     "פתי מאמין ל'חול' דוור 1.webp": 85118,
     "פתיתי שלג.webp": 96430,
     "פתיתים בודדים.webp": 217170,
