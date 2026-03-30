@@ -11504,5 +11504,35 @@
     "needsAIImprovement": false,
     "aiSuggestion": null,
     "createdAt": 1774820287765
+  },
+  "טלפון שבור.webp": {
+    "title": "טלפון שבור",
+    "explanation": "רפרנס למשחק הילדים טלפון שבור, רואים טלפון 'שלם', רק שהוא שבור-לב, כי כבר לא משחקים בו",
+    "topic": "משחקי ילדים, טלפון",
+    "isApproved": false,
+    "isAIGenerated": false,
+    "needsAIImprovement": false,
+    "aiSuggestion": null,
+    "createdAt": 1774867353066
+  },
+  "סיכור אוהד.webp": {
+    "title": "סיכור אוהד",
+    "explanation": "נשמע כמו 'סיקור אוהד', רואים ילדים שממלאים את אבא שלהם ב'סוכר'",
+    "topic": "כדורגל, ספורט, סיקור אוהד, פוליטיקה, פוליטיקה ואקטואליה, תקשורת",
+    "isApproved": false,
+    "isAIGenerated": false,
+    "needsAIImprovement": false,
+    "aiSuggestion": null,
+    "createdAt": 1774867383611
+  },
+  "אוהד מושבע.webp": {
+    "title": "אוהד מושבע",
+    "explanation": "רואים אוהד אמיתי, שהוא ממש מושבע על תנ\"ך.",
+    "topic": "כדורגל, ספורט",
+    "isApproved": false,
+    "isAIGenerated": false,
+    "needsAIImprovement": false,
+    "aiSuggestion": null,
+    "createdAt": 1774867320607
   }
 }
