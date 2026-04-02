@@ -11534,5 +11534,35 @@
     "needsAIImprovement": false,
     "aiSuggestion": null,
     "createdAt": 1774867320607
+  },
+  "תופרים תיק.webp": {
+    "title": "תופרים תיק",
+    "explanation": "רואים את רומן זדורוב [שתפרו לו תיק במערכת המשפט] כשהוא עומד ליד איש מקצוע שממש תופר לו תיק.",
+    "topic": "מומחיות, בית משפט, תיק",
+    "isApproved": false,
+    "isAIGenerated": false,
+    "needsAIImprovement": false,
+    "aiSuggestion": null,
+    "createdAt": 1775166431508
+  },
+  "מוציא מצה.webp": {
+    "title": "מוציא מצה",
+    "explanation": "מסימני ליל הסדר, רואים מורה שמוציא מצה מהכיתה, המצה הוא היפראקטיבי.",
+    "topic": "פסח, חגים ומועדים, בית ספר, משפחה וילדים",
+    "isApproved": false,
+    "isAIGenerated": false,
+    "needsAIImprovement": false,
+    "aiSuggestion": null,
+    "createdAt": 1775166395780
+  },
+  "היפו טטית.webp": {
+    "title": "היפו טטית",
+    "explanation": "נשמע כמו 'היפותטית', רואים דמות של היפופוטם [היפו] שהיא לומדת בכתה ט', עם כל מיני חלומות היפותטיים.",
+    "topic": "חיות, בית ספר, משפחה וילדים",
+    "isApproved": false,
+    "isAIGenerated": false,
+    "needsAIImprovement": false,
+    "aiSuggestion": null,
+    "createdAt": 1775166361201
   }
 }
