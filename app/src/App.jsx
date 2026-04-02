@@ -66,6 +66,8 @@ function App() {
   const [bulkCardPos, setBulkCardPos] = useState({ x: 24, y: 24 }); // Offset from top-right
   const [isDragging, setIsDragging] = useState(false);
   const [isSuggesting, setIsSuggesting] = useState(false);
+  const [isBulkModalOpen, setIsBulkModalOpen] = useState(false);
+  const [bulkSelectedPlatforms, setBulkSelectedPlatforms] = useState(['instagram', 'facebook', 'x', 'whatsapp']);
   const dragRef = useRef(null);
   const dragStartRef = useRef(null);
 
@@ -182,6 +184,7 @@ function App() {
 
   useEffect(() => {
     fetchImages();
+    if (isPublicViewer) return; // Do not check backend statuses in public mode
     // Add small delay to ensure backend is fully ready before headless check
     setTimeout(() => {
       checkXStatus();
@@ -194,6 +197,7 @@ function App() {
 
   // Poll for WhatsApp status if scanning QR
   useEffect(() => {
+    if (isPublicViewer) return; // No WA polling in public mode
     let interval;
     if (waStatus.status === 'SCAN_QR' || waStatus.status === 'LOADING' || waStatus.status === 'INITIALIZING') {
       interval = setInterval(checkWaStatus, 3000);
@@ -654,7 +658,7 @@ function App() {
           filename,
           caption: finalCaption,
           platform: p,
-          shareToFacebook: p === 'instagram' ? shareToFacebook : false,
+          shareToFacebook: shareToFacebook,
           targetId: p === 'whatsapp' ? waTargetId : undefined
         })
       });
@@ -693,7 +697,8 @@ function App() {
         const errors = results.filter(r => !r.ok).map(r => `${r.platform}: ${r.data.error || 'שגיאה'}`);
         if (errors.length > 0) {
           setSocialResult({ error: errors.join(', ') });
-          setSocialResult({ success: true });
+        } else {
+          setSocialResult({ message: 'כל הפלטפורמות פורסמו בהצלחה' });
         }
       }
     } catch (err) {
@@ -713,19 +718,23 @@ function App() {
     }
   };
 
-  const handleBulkPost = async () => {
+  const handleBulkPost = () => {
     if (selectedImages.length === 0) return;
+    setIsBulkModalOpen(true);
+  };
+
+  const confirmBulkPost = async () => {
+    if (selectedImages.length === 0 || bulkSelectedPlatforms.length === 0) return;
     
-    // Switch to non-grid mode to show progress if needed, but the popup is global now
-    // setAdminViewMode('edit'); 
+    setIsBulkModalOpen(false);
     
     try {
-        const res = await fetch(`${API_BASE}/api/social/bulk/post`, {
+        const res = await fetch(`${API_BASE}/api/social/bulk`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({
                 filenames: selectedImages,
-                platforms: ['instagram', 'facebook', 'x', 'whatsapp'],
+                platforms: bulkSelectedPlatforms,
                 shareToFacebook: shareToFacebook
             })
         });
@@ -1232,55 +1241,99 @@ function App() {
                       )}
                     </div>
 
-                    <div className="bg-slate-50 rounded-2xl p-4 border border-slate-100">
-                      <label className="text-[11px] font-black text-slate-400 uppercase tracking-widest mb-3 block">בחר פלטפורמה</label>
-                    <div className="grid grid-cols-2 gap-2">
-                      {[
-                        { id: 'all', label: 'הכל', icon: Share2 },
-                        { id: 'instagram', label: 'Instagram', icon: Instagram },
-                        { id: 'facebook', label: 'Facebook', icon: Facebook },
-                        { id: 'x', label: 'X.com', icon: Twitter },
-                        { id: 'whatsapp', label: 'WhatsApp', icon: MessageCircle }
-                      ].map(p => (
-                        <button
-                          key={p.id}
-                          onClick={() => setSocialPlatform(p.id)}
-                          className={`flex items-center gap-2 p-3 rounded-xl text-xs font-bold border transition-all ${
-                            socialPlatform === p.id 
-                              ? 'bg-white border-teal-500 text-teal-600 shadow-md ring-2 ring-teal-500/10' 
-                              : 'bg-white border-slate-100 text-slate-400 hover:border-slate-200'
-                          }`}
+                    <div className="bg-slate-50 rounded-2xl p-4 border border-slate-100 transition-all">
+                      <div className="flex items-center justify-between mb-3">
+                        <label className="text-[11px] font-black text-slate-400 uppercase tracking-widest block">בחר פלטפורמה</label>
+                        <button 
+                          onClick={() => {
+                            checkMetaStatus();
+                            checkXStatus();
+                            checkWaStatus();
+                          }}
+                          className="p-1 px-2 rounded-lg bg-white border border-slate-200 text-slate-400 hover:text-indigo-600 hover:border-indigo-200 transition-all flex items-center gap-1.5"
+                          title="רענן מצב חיבורים"
                         >
-                          <p.icon size={14} className={socialPlatform === p.id ? 'text-teal-600' : ''} />
-                          {p.label}
+                          <RotateCw size={12} className={socialPostState === 'loading' ? 'animate-spin' : ''} />
+                          <span className="text-[9px] font-bold">רענן חיבורים</span>
                         </button>
-                      ))}
-                    </div>
-
-                    {(socialPlatform === 'instagram' || socialPlatform === 'all') && (
-                      <div className="mt-4 pt-4 border-t border-slate-100 animate-in slide-in-from-top-2 duration-300">
-                        <button
-                          onClick={() => setShareToFacebook(!shareToFacebook)}
-                          className={`w-full flex items-center justify-between p-3 rounded-xl border transition-all ${
-                            shareToFacebook 
-                              ? 'bg-blue-50 border-blue-200 text-blue-700 shadow-sm' 
-                              : 'bg-white border-slate-100 text-slate-400 hover:border-slate-200'
-                          }`}
-                        >
-                          <div className="flex items-center gap-2">
-                            <Facebook size={14} className={shareToFacebook ? 'text-blue-600' : ''} />
-                            <span className="text-[11px] font-bold">פרסם גם בפייסבוק (Crosspost)</span>
-                          </div>
-                          <div className={`w-8 h-4 rounded-full relative transition-colors ${shareToFacebook ? 'bg-blue-500' : 'bg-slate-200'}`}>
-                            <div className={`absolute top-1 w-2 h-2 bg-white rounded-full transition-all ${shareToFacebook ? 'left-5' : 'left-1'}`} />
-                          </div>
-                        </button>
-                        <p className="text-[9px] text-slate-400 font-medium mt-2 leading-tight">
-                          * מבוסס על הגדרות הקישור בין אינסטגרם לפייסבוק ב-Accounts Center.
-                        </p>
                       </div>
-                    )}
-                  </div>
+                      
+                      <div className="grid grid-cols-2 gap-2">
+                        {[
+                          { id: 'all', label: 'הכל', icon: Share2 },
+                          { id: 'instagram', label: 'Instagram', icon: Instagram },
+                          { id: 'facebook', label: 'Facebook', icon: Facebook },
+                          { id: 'x', label: 'X.com', icon: Twitter },
+                          { id: 'whatsapp', label: 'WhatsApp', icon: MessageCircle }
+                        ].map(p => {
+                          const isSelected = socialPlatform === p.id;
+                          let statusColor = '';
+                          let statusText = '';
+                          
+                          if (p.id === 'instagram' || p.id === 'facebook') {
+                            statusColor = metaConnected ? 'border-green-400 ring-green-500/10' : 'border-rose-400 ring-rose-500/10';
+                            statusText = metaConnected ? 'מחובר' : 'מנותק';
+                          } else if (p.id === 'x') {
+                            statusColor = xConnected ? 'border-green-400 ring-green-500/10' : 'border-rose-400 ring-rose-500/10';
+                            statusText = xConnected ? 'מחובר' : 'מנותק';
+                          } else if (p.id === 'whatsapp') {
+                            statusColor = waStatus.status === 'CONNECTED' ? 'border-green-400 ring-green-500/10' : 'border-rose-400 ring-rose-500/10';
+                            statusText = waStatus.status === 'CONNECTED' ? 'מחובר' : 'מנותק';
+                          }
+
+                          return (
+                            <button
+                              key={p.id}
+                              onClick={() => setSocialPlatform(p.id)}
+                              className={`flex items-center gap-2 p-3 rounded-xl text-xs font-bold border transition-all relative ${
+                                isSelected 
+                                  ? 'bg-white border-indigo-600 text-indigo-600 shadow-md ring-2 ring-indigo-600/10 z-10' 
+                                  : `bg-white text-slate-600 hover:border-slate-300 ${statusColor} ${statusColor ? 'border-2' : 'border-slate-100'}`
+                              }`}
+                            >
+                              <p.icon size={14} className={isSelected ? 'text-indigo-600' : 'text-slate-400'} />
+                              <div className="flex flex-col items-start leading-tight">
+                                <span>{p.label}</span>
+                                {statusText && (
+                                  <span className={`text-[8px] font-black uppercase ${statusText === 'מחובר' ? 'text-green-500' : 'text-rose-500'}`}>
+                                    {statusText}
+                                  </span>
+                                )}
+                              </div>
+                              {statusText && (
+                                <div className={`absolute top-1.5 left-1.5 w-1.5 h-1.5 rounded-full ${statusText === 'מחובר' ? 'bg-green-500 shadow-[0_0_5px_rgba(34,197,94,0.5)]' : 'bg-rose-500 shadow-[0_0_5px_rgba(244,63,94,0.5)]'}`} />
+                              )}
+                            </button>
+                          );
+                        })}
+                      </div>
+
+                      {(socialPlatform === 'instagram' || socialPlatform === 'all') && (
+                        <div className="mt-4 pt-4 border-t border-slate-100 animate-in slide-in-from-top-2 duration-300">
+                          <button
+                            onClick={() => setShareToFacebook(!shareToFacebook)}
+                            className={`w-full flex items-center justify-between p-3 rounded-xl border transition-all ${
+                              shareToFacebook 
+                                ? 'bg-blue-50 border-blue-200 text-blue-700 shadow-sm' 
+                                : 'bg-white border-slate-100 text-slate-400 hover:border-slate-200'
+                            } ${metaConnected ? 'border-green-200' : 'border-rose-100'}`}
+                          >
+                            <div className="flex items-center gap-2">
+                              <Facebook size={14} className={shareToFacebook ? 'text-blue-600' : ''} />
+                              <div className="flex flex-col items-start leading-tight">
+                                <span className="text-[11px] font-bold">פרסם גם בפייסבוק (Crosspost)</span>
+                                <span className={`text-[8px] font-black uppercase ${metaConnected ? 'text-green-500' : 'text-rose-500'}`}>
+                                  {metaConnected ? 'קישור תקין' : 'בעיית חיבור'}
+                                </span>
+                              </div>
+                            </div>
+                            <div className={`w-8 h-4 rounded-full relative transition-all ${shareToFacebook ? 'bg-blue-500' : 'bg-slate-200'}`}>
+                              <div className={`absolute top-1 w-2 h-2 bg-white rounded-full transition-all ${shareToFacebook ? 'left-5' : 'left-1'}`} />
+                            </div>
+                          </button>
+                        </div>
+                      )}
+                    </div>
 
                     <div className="flex flex-col gap-3">
                       <button
@@ -1650,6 +1703,82 @@ function App() {
                     </div>
                   );
                 })}
+              </div>
+            </div>
+          </div>
+        )}
+
+        {/* Bulk Selection Modal */}
+        {isBulkModalOpen && (
+          <div className="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 flex items-center justify-center p-4 animate-in fade-in duration-300">
+            <div className="bg-white w-full max-w-lg rounded-[40px] shadow-2xl overflow-hidden animate-in zoom-in-95 duration-300">
+              <div className="p-8 border-b border-slate-100 flex items-center justify-between">
+                <div>
+                  <h2 className="text-2xl font-black text-slate-900 leading-tight">פרסום קבוצתי</h2>
+                  <p className="text-slate-400 text-xs font-bold mt-1 uppercase tracking-widest">בחר רשתות חברתיות לפרסום {selectedImages.length} תמונות</p>
+                </div>
+                <button 
+                  onClick={() => setIsBulkModalOpen(false)}
+                  className="p-3 bg-slate-100 text-slate-400 rounded-2xl hover:bg-slate-200 hover:text-slate-600 transition-all"
+                >
+                  <X size={24} />
+                </button>
+              </div>
+              
+              <div className="p-8 space-y-4">
+                <div className="grid grid-cols-1 gap-3">
+                  {[
+                    { id: 'instagram', label: 'Instagram', icon: Instagram, color: 'rose' },
+                    { id: 'facebook', label: 'Facebook', icon: Facebook, color: 'blue' },
+                    { id: 'x', label: 'X.com', icon: Twitter, color: 'slate' },
+                    { id: 'whatsapp', label: 'WhatsApp', icon: MessageCircle, color: 'green' }
+                  ].map(p => {
+                    const isSelected = bulkSelectedPlatforms.includes(p.id);
+                    return (
+                      <button
+                        key={p.id}
+                        onClick={() => {
+                          setBulkSelectedPlatforms(prev => 
+                            prev.includes(p.id) ? prev.filter(i => i !== p.id) : [...prev, p.id]
+                          );
+                        }}
+                        className={`group flex items-center justify-between p-5 rounded-3xl border-2 transition-all ${
+                          isSelected 
+                            ? `bg-${p.color}-50 border-${p.color}-500 text-${p.color}-700 shadow-md ring-4 ring-${p.color}-500/5` 
+                            : 'bg-white border-slate-100 text-slate-400 hover:border-slate-200'
+                        }`}
+                      >
+                        <div className="flex items-center gap-4">
+                          <div className={`p-3 rounded-2xl transition-colors ${isSelected ? `bg-${p.color}-500 text-white` : 'bg-slate-50 text-slate-300'}`}>
+                            <p.icon size={20} />
+                          </div>
+                          <span className="font-black text-sm uppercase tracking-wider">{p.label}</span>
+                        </div>
+                        <div className={`w-6 h-6 rounded-full border-2 transition-all flex items-center justify-center ${
+                          isSelected ? `bg-${p.color}-500 border-${p.color}-500 text-white` : 'border-slate-200'
+                        }`}>
+                          {isSelected && <Check size={14} />}
+                        </div>
+                      </button>
+                    );
+                  })}
+                </div>
+              </div>
+              
+              <div className="p-8 bg-slate-50 border-t border-slate-100 flex gap-4">
+                <button 
+                  onClick={() => setIsBulkModalOpen(false)}
+                  className="flex-1 py-4 rounded-2xl text-slate-500 font-black text-sm hover:bg-slate-100 transition-all"
+                >
+                  ביטול
+                </button>
+                <button 
+                  onClick={confirmBulkPost}
+                  disabled={bulkSelectedPlatforms.length === 0}
+                  className="flex-[2] bg-indigo-600 text-white py-4 rounded-2xl font-black text-sm shadow-xl shadow-indigo-100 hover:bg-indigo-700 transition-all active:scale-95 disabled:opacity-50"
+                >
+                  התחל פרסום ({selectedImages.length} תמונות)
+                </button>
               </div>
             </div>
           </div>

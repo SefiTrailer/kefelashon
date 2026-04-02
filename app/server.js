@@ -767,15 +767,21 @@ async function postSingleImageForBulk(filename, platforms, shareToFacebook = fal
                 } else results.push({ platform: 'instagram', ok: false, error: 'Container failed' });
             }
             if (platform === 'facebook' && fbPageId && accessToken) {
+                console.log(`[Social] Posting to Facebook Page: ${fbPageId}`);
                 const fbRes = await fetch(`https://graph.facebook.com/v21.0/${fbPageId}/photos`, {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({ url: imageUrl, access_token: accessToken })
                 });
+                const fbData = await fbRes.json();
                 if (fbRes.ok) {
                     recordSocialPost(filename, 'facebook');
                     results.push({ platform: 'facebook', ok: true });
-                } else results.push({ platform: 'facebook', ok: false, error: 'FB failed' });
+                } else {
+                    console.error('[Social] Facebook Error Details:', JSON.stringify(fbData, null, 2));
+                    const errorMsg = fbData.error?.message || 'FB failed';
+                    results.push({ platform: 'facebook', ok: false, error: errorMsg });
+                }
             }
             if (platform === 'whatsapp' && whatsappStatus === 'CONNECTED') {
                 try {
@@ -988,6 +994,7 @@ app.post('/api/social/post', async (req, res) => {
             });
             const publishData = await publishRes.json();
             if (!publishRes.ok) {
+                console.error('[Social] Instagram Publish Error:', JSON.stringify(publishData, null, 2));
                 const msg = publishData.error?.message || 'Failed to publish to Instagram';
                 throw new Error(`Instagram (Step 2): ${msg}`);
             }
@@ -1043,6 +1050,7 @@ app.post('/api/social/post', async (req, res) => {
         if (platform === 'facebook') {
             if (!fbPageId) return res.status(400).json({ error: 'FB_PAGE_ID is not configured' });
 
+            console.log(`[Social] Posting to Facebook Page: ${fbPageId} (shareToFacebook: ${shareToFacebook})`);
             const fbRes = await fetch(`https://graph.facebook.com/v21.0/${fbPageId}/photos`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
@@ -1057,7 +1065,9 @@ app.post('/api/social/post', async (req, res) => {
                 recordSocialPost(filename, 'facebook');
                 return res.json({ ok: true, id: fbData.id });
             } else {
-                return res.status(fbRes.status).json({ error: fbData.error?.message || 'Facebook upload failed' });
+                console.error('[Social] Facebook Direct Post Error:', JSON.stringify(fbData, null, 2));
+                const errorMsg = fbData.error?.message || 'Facebook upload failed';
+                return res.status(fbRes.status).json({ error: errorMsg });
             }
         }
 
