@@ -258,6 +258,7 @@ function App() {
 
   // Poll for background bulk status
   useEffect(() => {
+    if (isPublicViewer) return; // Do not poll for bulk status in public mode
     let interval;
     const checkStatus = async () => {
       try {
