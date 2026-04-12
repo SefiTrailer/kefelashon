@@ -13,7 +13,17 @@
     "topic": "מילים ומשחקי לשון, פתגמים וביטויים, בורות, אדמה",
     "isApproved": true,
     "isAIGenerated": false,
-    "createdAt": 1772468311000
+    "createdAt": 1772468311000,
+    "social_posts": [
+      {
+        "platform": "instagram",
+        "date": "2026-04-02T21:49:33.155Z"
+      },
+      {
+        "platform": "x",
+        "date": "2026-04-02T21:49:53.837Z"
+      }
+    ]
   },
   "אומנות זבל.webp": {
     "title": "אומנות זבל",
@@ -11564,5 +11574,65 @@
     "needsAIImprovement": false,
     "aiSuggestion": null,
     "createdAt": 1775166361201
+  },
+  "חמש.webp": {
+    "title": "חמש",
+    "explanation": "היום חמש לעומר, רואים את עומר אדם צועק 'חמש' ומורה על השעון שהשעה חמש, והתותחן מחמש את התותח",
+    "topic": "צבא, צבא וביטחון, זמרים, ספירת העומר",
+    "isApproved": false,
+    "isAIGenerated": false,
+    "needsAIImprovement": false,
+    "aiSuggestion": null,
+    "createdAt": 1776020105760
+  },
+  "הכלות בבחינות הבגרות.webp": {
+    "title": "הכלות בבחינות הבגרות",
+    "explanation": "נשמע כמו 'הקלות בבחינות הבגרות', לרגל המצב של המלחמה, כנראה הן תעשנה את בחינות הבגרות כשהן כלות",
+    "topic": "שמחה, כלה, בגרות, בית ספר, משפחה וילדים",
+    "isApproved": false,
+    "isAIGenerated": false,
+    "needsAIImprovement": false,
+    "aiSuggestion": null,
+    "createdAt": 1776020064682
+  },
+  "גט טקסי.webp": {
+    "title": "גט טקסי",
+    "explanation": "חברת המוניות GET TAXI, רואים אישה שיוצאת מבית הדין הרבני עם שטר גט",
+    "topic": "רבנות, יהדות, יהדות ומסורת, מוניות",
+    "isApproved": false,
+    "isAIGenerated": false,
+    "needsAIImprovement": false,
+    "aiSuggestion": null,
+    "createdAt": 1776020020525
+  },
+  "גרמא הולוגרמה.webp": {
+    "title": "גרמא הולוגרמה",
+    "explanation": "הולוגרמה נשמע כמו 'או לא גרמא'",
+    "topic": "שבת, יהדות ומסורת, רבנים",
+    "isApproved": false,
+    "isAIGenerated": false,
+    "needsAIImprovement": false,
+    "aiSuggestion": null,
+    "createdAt": 1776019986551
+  },
+  "כפיתליסט.webp": {
+    "title": "כפיתליסט",
+    "explanation": "נשמע כמו 'קפיטליסט', אפילו שבדעותיו הוא כמעט קומוניסט, עדיין הוא המומחה מספר אחד לכפיות!",
+    "topic": "פוליטיקה, פוליטיקה ואקטואליה, קפיטליזם, סוציאליזם, אוסף",
+    "isApproved": false,
+    "isAIGenerated": false,
+    "needsAIImprovement": false,
+    "aiSuggestion": null,
+    "createdAt": 1776020141978
+  },
+  "משיא משואה.webp": {
+    "title": "משיא משואה",
+    "explanation": "הרב אברהם זרביב נבחר להשיא משואה ביום העצמאות, רואים אותו כ'רב' מחתן ומשיא משואה בחתונתה",
+    "topic": "רבנים, יהדות ומסורת, ישראלים, זרביב",
+    "isApproved": false,
+    "isAIGenerated": false,
+    "needsAIImprovement": false,
+    "aiSuggestion": null,
+    "createdAt": 1776020175279
   }
 }
