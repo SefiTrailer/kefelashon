@@ -570,14 +570,6 @@
     "isAIGenerated": false,
     "createdAt": 1772468311000
   },
-  "חמש לעומר.webp": {
-    "title": "חמש לעומר",
-    "explanation": "משחק מילים כפול! 'חמש לעומר' נשמע בדיוק כמו 'חמ\"ש לעומר' (נשק חמ\"ש = Charter M16). \nבתמונה: עומר אדם, הדמות, סופר ספירת העומר בקול — 'אחת, שתיים... חמש!' — בעוד תותחן ליד מצהיר 'אני מחמש את התחמושת!'. \nשתי מילותיו של עומר — ספירה וחמ\"ש — מצטלבות בצחוק אחד.",
-    "topic": "חגים ומועדים, יהדות ומסורת, מצה, ספירת העומר, פסח, צבא וביטחון, נשק, מוזיקה ותרבות, זמרים, משפחה וילדים, ילדים",
-    "isApproved": true,
-    "isAIGenerated": false,
-    "createdAt": 1772468311000
-  },
   "מעלה אחת.webp": {
     "title": "מעלה אחת",
     "explanation": "רואים אישה מעלה במדרות יצירה מאוד כבדה, שיש בה את המספר 1, אז היא מעלה את 1",
@@ -5413,14 +5405,6 @@
     "isApproved": false,
     "isAIGenerated": true,
     "isAIImproved": true,
-    "createdAt": 1772468311000
-  },
-  "12 לעומר.webp": {
-    "title": "12 לעומר",
-    "explanation": "רפרנס לחדשות 12, רואים את דני קושמרו סופר את ספירת העומר",
-    "topic": "יהדות ומסורת, ספירת העומר, מוזיקה ותרבות, טלוויזיה",
-    "isApproved": true,
-    "isAIGenerated": true,
     "createdAt": 1772468311000
   },
   "סיירת מט קל.webp": {
@@ -11503,7 +11487,13 @@
     "isAIGenerated": false,
     "needsAIImprovement": false,
     "aiSuggestion": null,
-    "createdAt": 1774820219806
+    "createdAt": 1774820219806,
+    "social_posts": [
+      {
+        "platform": "instagram",
+        "date": "2026-04-12T20:31:02.633Z"
+      }
+    ]
   },
   "פתי בר.webp": {
     "title": "פתי בר",
@@ -11513,7 +11503,13 @@
     "isAIGenerated": false,
     "needsAIImprovement": false,
     "aiSuggestion": null,
-    "createdAt": 1774820287765
+    "createdAt": 1774820287765,
+    "social_posts": [
+      {
+        "platform": "instagram",
+        "date": "2026-04-12T20:24:30.787Z"
+      }
+    ]
   },
   "טלפון שבור.webp": {
     "title": "טלפון שבור",
@@ -11523,7 +11519,13 @@
     "isAIGenerated": false,
     "needsAIImprovement": false,
     "aiSuggestion": null,
-    "createdAt": 1774867353066
+    "createdAt": 1774867353066,
+    "social_posts": [
+      {
+        "platform": "instagram",
+        "date": "2026-04-12T20:16:37.110Z"
+      }
+    ]
   },
   "סיכור אוהד.webp": {
     "title": "סיכור אוהד",
@@ -11533,7 +11535,13 @@
     "isAIGenerated": false,
     "needsAIImprovement": false,
     "aiSuggestion": null,
-    "createdAt": 1774867383611
+    "createdAt": 1774867383611,
+    "social_posts": [
+      {
+        "platform": "instagram",
+        "date": "2026-04-12T20:03:25.626Z"
+      }
+    ]
   },
   "אוהד מושבע.webp": {
     "title": "אוהד מושבע",
@@ -11543,7 +11551,13 @@
     "isAIGenerated": false,
     "needsAIImprovement": false,
     "aiSuggestion": null,
-    "createdAt": 1774867320607
+    "createdAt": 1774867320607,
+    "social_posts": [
+      {
+        "platform": "instagram",
+        "date": "2026-04-12T20:10:07.205Z"
+      }
+    ]
   },
   "תופרים תיק.webp": {
     "title": "תופרים תיק",
@@ -11553,7 +11567,13 @@
     "isAIGenerated": false,
     "needsAIImprovement": false,
     "aiSuggestion": null,
-    "createdAt": 1775166431508
+    "createdAt": 1775166431508,
+    "social_posts": [
+      {
+        "platform": "instagram",
+        "date": "2026-04-12T19:54:52.814Z"
+      }
+    ]
   },
   "מוציא מצה.webp": {
     "title": "מוציא מצה",
@@ -11573,17 +11593,29 @@
     "isAIGenerated": false,
     "needsAIImprovement": false,
     "aiSuggestion": null,
-    "createdAt": 1775166361201
+    "createdAt": 1775166361201,
+    "social_posts": [
+      {
+        "platform": "instagram",
+        "date": "2026-04-12T19:45:48.214Z"
+      }
+    ]
   },
   "חמש.webp": {
-    "title": "חמש",
-    "explanation": "היום חמש לעומר, רואים את עומר אדם צועק 'חמש' ומורה על השעון שהשעה חמש, והתותחן מחמש את התותח",
-    "topic": "צבא, צבא וביטחון, זמרים, ספירת העומר",
-    "isApproved": false,
+    "title": "חמש לעומר",
+    "explanation": "משחק מילים כפול! 'חמש לעומר' נשמע בדיוק כמו 'חמ\"ש לעומר' (נשק חמ\"ש = Charter M16). \nבתמונה: עומר אדם, הדמות, סופר ספירת העומר בקול — 'אחת, שתיים... חמש!' — בעוד תותחן ליד מצהיר 'אני מחמש את התחמושת!'. \nשתי מילותיו של עומר — ספירה וחמ\"ש — מצטלבות בצחוק אחד.",
+    "topic": "חגים ומועדים, יהדות ומסורת, מצה, ספירת העומר, פסח, צבא וביטחון, נשק, מוזיקה ותרבות, זמרים, משפחה וילדים, ילדים",
+    "isApproved": true,
     "isAIGenerated": false,
     "needsAIImprovement": false,
     "aiSuggestion": null,
-    "createdAt": 1776020105760
+    "createdAt": 1776020105760,
+    "social_posts": [
+      {
+        "platform": "instagram",
+        "date": "2026-04-12T19:36:05.526Z"
+      }
+    ]
   },
   "הכלות בבחינות הבגרות.webp": {
     "title": "הכלות בבחינות הבגרות",
@@ -11593,7 +11625,13 @@
     "isAIGenerated": false,
     "needsAIImprovement": false,
     "aiSuggestion": null,
-    "createdAt": 1776020064682
+    "createdAt": 1776020064682,
+    "social_posts": [
+      {
+        "platform": "instagram",
+        "date": "2026-04-12T19:29:08.242Z"
+      }
+    ]
   },
   "גט טקסי.webp": {
     "title": "גט טקסי",
@@ -11603,7 +11641,13 @@
     "isAIGenerated": false,
     "needsAIImprovement": false,
     "aiSuggestion": null,
-    "createdAt": 1776020020525
+    "createdAt": 1776020020525,
+    "social_posts": [
+      {
+        "platform": "instagram",
+        "date": "2026-04-12T19:22:40.432Z"
+      }
+    ]
   },
   "גרמא הולוגרמה.webp": {
     "title": "גרמא הולוגרמה",
@@ -11613,7 +11657,13 @@
     "isAIGenerated": false,
     "needsAIImprovement": false,
     "aiSuggestion": null,
-    "createdAt": 1776019986551
+    "createdAt": 1776019986551,
+    "social_posts": [
+      {
+        "platform": "instagram",
+        "date": "2026-04-12T19:16:26.263Z"
+      }
+    ]
   },
   "כפיתליסט.webp": {
     "title": "כפיתליסט",
@@ -11623,7 +11673,13 @@
     "isAIGenerated": false,
     "needsAIImprovement": false,
     "aiSuggestion": null,
-    "createdAt": 1776020141978
+    "createdAt": 1776020141978,
+    "social_posts": [
+      {
+        "platform": "instagram",
+        "date": "2026-04-12T19:08:49.635Z"
+      }
+    ]
   },
   "משיא משואה.webp": {
     "title": "משיא משואה",
@@ -11633,6 +11689,48 @@
     "isAIGenerated": false,
     "needsAIImprovement": false,
     "aiSuggestion": null,
-    "createdAt": 1776020175279
+    "createdAt": 1776020175279,
+    "social_posts": [
+      {
+        "platform": "instagram",
+        "date": "2026-04-12T19:01:57.725Z"
+      }
+    ]
+  },
+  "12 לעומר.webp": {
+    "title": "12 לעומר",
+    "explanation": "רפרנס לחדשות 12, רואים את דני קושמרו סופר את ספירת העומר",
+    "topic": "יהדות ומסורת, ספירת העומר, מוזיקה ותרבות, טלוויזיה",
+    "isApproved": true
+  },
+  "בצק טופח.webp": {
+    "title": "בצק טופח",
+    "explanation": "נשמע כמו 'בצק תופח', רואים דמות של בצק תופח שטופח על גב חבירו ה'בצק עלים'.",
+    "topic": "חברות, אוכל, אוכל ושתייה, בצק",
+    "isApproved": false,
+    "isAIGenerated": false,
+    "needsAIImprovement": false,
+    "aiSuggestion": null,
+    "createdAt": 1776275289631
+  },
+  "חייט מחמד.webp": {
+    "title": "חייט מחמד",
+    "explanation": "נשמע כמו 'חיית מחמד', כי 'מחמד' החייט הוא מומחה בתפירה של בובות וחיות מחמד",
+    "topic": "תחביב, חיות",
+    "isApproved": false,
+    "isAIGenerated": false,
+    "needsAIImprovement": false,
+    "aiSuggestion": null,
+    "createdAt": 1776275317225
+  },
+  "מנטה-ליסט.webp": {
+    "title": "מנטה-ליסט",
+    "explanation": "נשמע כמו 'מנטליסט', רואים את ליאור סושרד עם אוסף המנטה שלו, כי חריפות זה ליאור!",
+    "topic": "",
+    "isApproved": false,
+    "isAIGenerated": false,
+    "needsAIImprovement": false,
+    "aiSuggestion": null,
+    "createdAt": 1776275344665
   }
 }
