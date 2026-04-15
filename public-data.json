@@ -1,5 +1,9 @@
 {
   "files": [
+    "12 לעומר.webp",
+    "מנטה-ליסט.webp",
+    "חייט מחמד.webp",
+    "בצק טופח.webp",
     "משיא משואה.webp",
     "כפיתליסט.webp",
     "חמש.webp",
@@ -954,7 +958,6 @@
     "חסילון.webp",
     "חסידים הדוקים.webp",
     "חסוי.webp",
-    "חמש לעומר.webp",
     "חמץ מכור.webp",
     "חמץ גמור.webp",
     "חמץ בלוע.webp",
@@ -1305,7 +1308,6 @@
     "15 דקות של תהילה.webp",
     "14 להומר.webp",
     "13 להומר.webp",
-    "12 לעומר.webp",
     "11 לעומר - יום השואה.webp",
     "1 חכם, 1 רשע....webp",
     "'קיא לך היום עף לך הלילה'.webp",
@@ -1508,9 +1510,7 @@
       "explanation": "רפרנס לחדשות 12, רואים את דני קושמרו סופר את ספירת העומר",
       "topic": "יהדות ומסורת, ספירת העומר, מוזיקה ותרבות, טלוויזיה",
       "isApproved": true,
-      "isAIGenerated": true,
-      "createdAt": 1772468311000,
-      "dateMillis": 1772468311000
+      "dateMillis": 1776275348423
     },
     "13 להומר.webp": {
       "title": "13 להומר",
@@ -2054,6 +2054,12 @@
       "needsAIImprovement": false,
       "aiSuggestion": null,
       "createdAt": 1774867320607,
+      "social_posts": [
+        {
+          "platform": "instagram",
+          "date": "2026-04-12T20:10:07.205Z"
+        }
+      ],
       "dateMillis": 1774867320607
     },
     "אוהדים שרופים.webp": {
@@ -3323,6 +3329,17 @@
       "createdAt": 1772468311000,
       "dateMillis": 1772468311000
     },
+    "בצק טופח.webp": {
+      "title": "בצק טופח",
+      "explanation": "נשמע כמו 'בצק תופח', רואים דמות של בצק תופח שטופח על גב חבירו ה'בצק עלים'.",
+      "topic": "חברות, אוכל, אוכל ושתייה, בצק",
+      "isApproved": false,
+      "isAIGenerated": false,
+      "needsAIImprovement": false,
+      "aiSuggestion": null,
+      "createdAt": 1776275289631,
+      "dateMillis": 1776275289631
+    },
     "בקבוק חם.webp": {
       "title": "בקבוק חם",
       "explanation": "רואים דמות של 'בקבוק חם' כשהוא מחתן את הבת שלו שהיא שילוב של הגנים שלו ושל אשתו הבקבוק מים, ואז הוא הולך להיות אבי הכלה כלומר 'חם'",
@@ -3445,6 +3462,12 @@
       "needsAIImprovement": false,
       "aiSuggestion": null,
       "createdAt": 1774820219806,
+      "social_posts": [
+        {
+          "platform": "instagram",
+          "date": "2026-04-12T20:31:02.633Z"
+        }
+      ],
       "dateMillis": 1774820219806
     },
     "ג'ירפלמינגו.webp": {
@@ -3574,6 +3597,12 @@
       "needsAIImprovement": false,
       "aiSuggestion": null,
       "createdAt": 1776020020525,
+      "social_posts": [
+        {
+          "platform": "instagram",
+          "date": "2026-04-12T19:22:40.432Z"
+        }
+      ],
       "dateMillis": 1776020020525
     },
     "גיבוש חברתי.webp": {
@@ -3689,6 +3718,12 @@
       "needsAIImprovement": false,
       "aiSuggestion": null,
       "createdAt": 1776019986551,
+      "social_posts": [
+        {
+          "platform": "instagram",
+          "date": "2026-04-12T19:16:26.263Z"
+        }
+      ],
       "dateMillis": 1776019986551
     },
     "גרעין תורני.webp": {
@@ -4258,6 +4293,12 @@
       "needsAIImprovement": false,
       "aiSuggestion": null,
       "createdAt": 1775166361201,
+      "social_posts": [
+        {
+          "platform": "instagram",
+          "date": "2026-04-12T19:45:48.214Z"
+        }
+      ],
       "dateMillis": 1775166361201
     },
     "היפופו...תם.webp": {
@@ -4303,6 +4344,12 @@
       "needsAIImprovement": false,
       "aiSuggestion": null,
       "createdAt": 1776020064682,
+      "social_posts": [
+        {
+          "platform": "instagram",
+          "date": "2026-04-12T19:29:08.242Z"
+        }
+      ],
       "dateMillis": 1776020064682
     },
     "הכניסה לזרים אסור.webp": {
@@ -5492,6 +5539,17 @@
       "createdAt": 1772468311000,
       "dateMillis": 1772468311000
     },
+    "חייט מחמד.webp": {
+      "title": "חייט מחמד",
+      "explanation": "נשמע כמו 'חיית מחמד', כי 'מחמד' החייט הוא מומחה בתפירה של בובות וחיות מחמד",
+      "topic": "תחביב, חיות",
+      "isApproved": false,
+      "isAIGenerated": false,
+      "needsAIImprovement": false,
+      "aiSuggestion": null,
+      "createdAt": 1776275317225,
+      "dateMillis": 1776275317225
+    },
     "חיל רגלים.webp": {
       "title": "חיל רגלים",
       "explanation": "נשמע חי\"ר בצבא, רואים חיל רגלים שעשויים רק מרגליים בלי פלג גוף עליון",
@@ -5723,24 +5781,21 @@
       ],
       "dateMillis": 1772468311000
     },
-    "חמש לעומר.webp": {
+    "חמש.webp": {
       "title": "חמש לעומר",
       "explanation": "משחק מילים כפול! 'חמש לעומר' נשמע בדיוק כמו 'חמ\"ש לעומר' (נשק חמ\"ש = Charter M16). \nבתמונה: עומר אדם, הדמות, סופר ספירת העומר בקול — 'אחת, שתיים... חמש!' — בעוד תותחן ליד מצהיר 'אני מחמש את התחמושת!'. \nשתי מילותיו של עומר — ספירה וחמ\"ש — מצטלבות בצחוק אחד.",
       "topic": "חגים ומועדים, יהדות ומסורת, מצה, ספירת העומר, פסח, צבא וביטחון, נשק, מוזיקה ותרבות, זמרים, משפחה וילדים, ילדים",
       "isApproved": true,
       "isAIGenerated": false,
-      "createdAt": 1772468311000,
-      "dateMillis": 1772468311000
-    },
-    "חמש.webp": {
-      "title": "חמש",
-      "explanation": "היום חמש לעומר, רואים את עומר אדם צועק 'חמש' ומורה על השעון שהשעה חמש, והתותחן מחמש את התותח",
-      "topic": "צבא, צבא וביטחון, זמרים, ספירת העומר",
-      "isApproved": false,
-      "isAIGenerated": false,
       "needsAIImprovement": false,
       "aiSuggestion": null,
       "createdAt": 1776020105760,
+      "social_posts": [
+        {
+          "platform": "instagram",
+          "date": "2026-04-12T19:36:05.526Z"
+        }
+      ],
       "dateMillis": 1776020105760
     },
     "חנוט תכשיטים 1.webp": {
@@ -6058,6 +6113,12 @@
       "needsAIImprovement": false,
       "aiSuggestion": null,
       "createdAt": 1774867353066,
+      "social_posts": [
+        {
+          "platform": "instagram",
+          "date": "2026-04-12T20:16:37.110Z"
+        }
+      ],
       "dateMillis": 1774867353066
     },
     "טמונה משפחתית.webp": {
@@ -6686,6 +6747,12 @@
       "needsAIImprovement": false,
       "aiSuggestion": null,
       "createdAt": 1776020141978,
+      "social_posts": [
+        {
+          "platform": "instagram",
+          "date": "2026-04-12T19:08:49.635Z"
+        }
+      ],
       "dateMillis": 1776020141978
     },
     "כפל לשון.webp": {
@@ -8557,6 +8624,17 @@
       "createdAt": 1772468311000,
       "dateMillis": 1772468311000
     },
+    "מנטה-ליסט.webp": {
+      "title": "מנטה-ליסט",
+      "explanation": "נשמע כמו 'מנטליסט', רואים את ליאור סושרד עם אוסף המנטה שלו, כי חריפות זה ליאור!",
+      "topic": "",
+      "isApproved": false,
+      "isAIGenerated": false,
+      "needsAIImprovement": false,
+      "aiSuggestion": null,
+      "createdAt": 1776275344665,
+      "dateMillis": 1776275344665
+    },
     "מנמיכים ציפיות.webp": {
       "title": "מנמיכים ציפיות",
       "explanation": "פרשנות חזותית מילולית לביטוי המתאר הנמכת רף הציפייה. התמונה מציגה אנשים המורידים פיזית ציפיות (כיסויים) של כריות מהמדפים הגבוהים ביותר בארון למטה.",
@@ -9559,6 +9637,12 @@
       "needsAIImprovement": false,
       "aiSuggestion": null,
       "createdAt": 1776020175279,
+      "social_posts": [
+        {
+          "platform": "instagram",
+          "date": "2026-04-12T19:01:57.725Z"
+        }
+      ],
       "dateMillis": 1776020175279
     },
     "משירת העשבים.webp": {
@@ -10444,6 +10528,12 @@
       "needsAIImprovement": false,
       "aiSuggestion": null,
       "createdAt": 1774867383611,
+      "social_posts": [
+        {
+          "platform": "instagram",
+          "date": "2026-04-12T20:03:25.626Z"
+        }
+      ],
       "dateMillis": 1774867383611
     },
     "סיכת חתך.webp": {
@@ -11710,6 +11800,12 @@
       "needsAIImprovement": false,
       "aiSuggestion": null,
       "createdAt": 1774820287765,
+      "social_posts": [
+        {
+          "platform": "instagram",
+          "date": "2026-04-12T20:24:30.787Z"
+        }
+      ],
       "dateMillis": 1774820287765
     },
     "פתי מאמין ל'חול' דוור 1.webp": {
@@ -13989,6 +14085,12 @@
       "needsAIImprovement": false,
       "aiSuggestion": null,
       "createdAt": 1775166431508,
+      "social_posts": [
+        {
+          "platform": "instagram",
+          "date": "2026-04-12T19:54:52.814Z"
+        }
+      ],
       "dateMillis": 1775166431508
     },
     "תוקע בשופר.webp": {
@@ -14372,7 +14474,7 @@
     "'קיא לך היום עף לך הלילה'.webp": 88840,
     "1 חכם, 1 רשע....webp": 84256,
     "11 לעומר - יום השואה.webp": 60094,
-    "12 לעומר.webp": 52384,
+    "12 לעומר.webp": 55982,
     "13 להומר.webp": 158290,
     "14 להומר.webp": 83394,
     "15 דקות של תהילה.webp": 108544,
@@ -14572,6 +14674,7 @@
     "בעל לחוץ.webp": 106340,
     "בעל קורא.webp": 70416,
     "בצל סגול.webp": 93448,
+    "בצק טופח.webp": 121046,
     "בקבוק חם.webp": 103248,
     "בר יוחאי - נים, שאכטה, אשריך!.webp": 149672,
     "בר יוחאי.webp": 100262,
@@ -14815,6 +14918,7 @@
     "חייט השדה.webp": 259910,
     "חייט טרף.webp": 240128,
     "חייט כביש.webp": 212748,
+    "חייט מחמד.webp": 126010,
     "חיל רגלים.webp": 225768,
     "חילוץ הצמות.webp": 84984,
     "חימת בוטנים.webp": 82318,
@@ -14837,7 +14941,6 @@
     "חמץ בלוע.webp": 57478,
     "חמץ גמור.webp": 140852,
     "חמץ מכור.webp": 139530,
-    "חמש לעומר.webp": 112284,
     "חמש.webp": 95852,
     "חנוט תכשיטים 1.webp": 259342,
     "חניכי הישיבות.webp": 87178,
@@ -15136,6 +15239,7 @@
     "מנוע מלדבר.webp": 157566,
     "מנוף לחץ.webp": 133450,
     "מנחת מסוקים.webp": 151736,
+    "מנטה-ליסט.webp": 140974,
     "מנמיכים ציפיות.webp": 132166,
     "מנע חמה.webp": 124012,
     "מנקר רכבים.webp": 112092,
