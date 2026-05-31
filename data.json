@@ -9848,14 +9848,6 @@
     "isAIAdded": true,
     "createdAt": 1773686166000
   },
-  "סופו של דוור.webp": {
-    "title": "סופו של דוור",
-    "explanation": "נשמע כמו 'סופו של כל דבר', רואים את סופוקליס שחורציאניטיס כדוור",
-    "topic": "פתגמים וביטויים",
-    "isApproved": true,
-    "isAIGenerated": true,
-    "createdAt": 1773686166000
-  },
   "סחיטה רגשית.webp": {
     "title": "סחיטה רגשית",
     "explanation": "פרשנות חזותית מילולית לביטוי המתאר מניפולציה. התמונה מציגה דמות המבצעת פעולה פיזית של סחיטה (כמו סחיטת לימון או סמרטוט) על דמות אחרת שנראית מלאה ברגשות גועשים.",
@@ -11732,5 +11724,375 @@
     "needsAIImprovement": false,
     "aiSuggestion": null,
     "createdAt": 1776275344665
+  },
+  "אוכל מתוכים.webp": {
+    "title": "אוכל מתוכים",
+    "explanation": "נשמע כמו 'אוכל מתוקים', הוא בהחלט אוכל סוכריות וג'לים מתוקים מתוכים",
+    "topic": "אולכ, חיות",
+    "isApproved": false,
+    "isAIGenerated": false,
+    "needsAIImprovement": false,
+    "aiSuggestion": null,
+    "createdAt": 1780228135843
+  },
+  "בכייה לדורות.webp": {
+    "title": "בכייה לדורות",
+    "explanation": "כמו הביטוי של בכייה לדורות, רואים ילדים בגן שבוכים לבובות של דורה",
+    "topic": "בובה, פתגם, פתגמים וביטויים",
+    "isApproved": false,
+    "isAIGenerated": false,
+    "needsAIImprovement": false,
+    "aiSuggestion": null,
+    "createdAt": 1780228225567
+  },
+  "אי נעימות.webp": {
+    "title": "אי נעימות",
+    "explanation": "נשמע כמו 'אי נעימות', רק שב'אי' הזה יש רק 'נעימות'",
+    "topic": "כיף, חופש",
+    "isApproved": false,
+    "isAIGenerated": false,
+    "needsAIImprovement": false,
+    "aiSuggestion": null,
+    "createdAt": 1780228161648
+  },
+  "בר בי רב, או בר בי קיו.webp": {
+    "title": "בר בי רב, או בר בי קיו",
+    "explanation": "ביום העצמאות יש את ההתלבטות האם ללכת לשיעורי תורה בר בי רב, או לאכול על האש בר בי קיו",
+    "topic": "אוכל, אוכל ושתייה, תורני, יום העצמאות",
+    "isApproved": false,
+    "isAIGenerated": false,
+    "needsAIImprovement": false,
+    "aiSuggestion": null,
+    "createdAt": 1780228263268
+  },
+  "דב עלה.webp": {
+    "title": "דב עלה",
+    "explanation": "נשמע כמו 'דובל'ה', רואים את דובלה גליקמן מחזיק עלה בצורה של דב",
+    "topic": "צומח, טבע וצומח, מפורסמים",
+    "isApproved": false,
+    "isAIGenerated": false,
+    "needsAIImprovement": false,
+    "aiSuggestion": null,
+    "createdAt": 1780228325351
+  },
+  "אין BA.webp": {
+    "title": "אין BA",
+    "explanation": "דווקא ללברון ג'יימס יש הרבה תארים, 4 אליפיות ומלא MVP, אז מה אם 'אין BA'",
+    "topic": "",
+    "isApproved": false,
+    "isAIGenerated": false,
+    "needsAIImprovement": false,
+    "aiSuggestion": null,
+    "createdAt": 1780228199490
+  },
+  "דמי חסות.webp": {
+    "title": "דמי חסות",
+    "explanation": "נשמע כמו 'דמי חסות' שגובים עבריינים, רואים שתי דמויות של 'חסה' שגובים תא הדמי 'חסות'",
+    "topic": "ירקות, אוכל ושתייה, צומח, טבע וצומח, עבריינים",
+    "isApproved": false,
+    "isAIGenerated": false,
+    "needsAIImprovement": false,
+    "aiSuggestion": null,
+    "createdAt": 1780228355397
+  },
+  "בריתה.webp": {
+    "title": "בריתה",
+    "explanation": "נשמע כמו 'בריטה' מותג סינון המים, רואים שמסנני המים חוגגים בריתה לבת שלהם",
+    "topic": "משפחה, משפחה וילדים, סינון מים",
+    "isApproved": false,
+    "isAIGenerated": false,
+    "needsAIImprovement": false,
+    "aiSuggestion": null,
+    "createdAt": 1780228292151
+  },
+  "דקה מורטת ה'צבים'.webp": {
+    "title": "דקה מורטת ה'צבים'",
+    "explanation": "נשמע כמו 'דקה מורטת עצבים', רואים קוסמטיקאית דקה שמורטת ל'צבים' את השיערות שלהם ",
+    "topic": "פתגם, פתגמים וביטויים, חיות, זמן, קוסמטיקה",
+    "isApproved": false,
+    "isAIGenerated": false,
+    "needsAIImprovement": false,
+    "aiSuggestion": null,
+    "createdAt": 1780228401022
+  },
+  "הר תיק קרח.webp": {
+    "title": "הר תיק קרח",
+    "explanation": " נשמע כמו 'ארטיק קרח', רואים שלגון שעשוי מהר תיק וקרח",
+    "topic": "אוכל, אוכל ושתייה, קיץ",
+    "isApproved": false,
+    "isAIGenerated": false,
+    "needsAIImprovement": false,
+    "aiSuggestion": null,
+    "createdAt": 1780228461936
+  },
+  "ה-VAR עבירה.webp": {
+    "title": "ה-VAR עבירה",
+    "explanation": "נשמע כמו 'עבר עבירה', רואים שופט פוסק על פאול כי הVAR אמר לו שיש עבירה",
+    "topic": "ספורט",
+    "isApproved": false,
+    "isAIGenerated": false,
+    "needsAIImprovement": false,
+    "aiSuggestion": null,
+    "createdAt": 1780228430329
+  },
+  "ירידה במשקל.webp": {
+    "title": "ירידה במשקל",
+    "explanation": "רואים איש שמן שמודד עם הפלס את המשקל ורואים שיש בו שיפוע, כלומר הוא רואה 'ירידה במשקל'... מצד שני אם הוא היה מסתכל הפוך הוא גם היה רואה שזה בעצם 'עלייה במשקל'",
+    "topic": "דיאטה, בריאות, מכשירי בניין",
+    "isApproved": false,
+    "isAIGenerated": false,
+    "needsAIImprovement": false,
+    "aiSuggestion": null,
+    "createdAt": 1780228547153
+  },
+  "מוריד דתל.webp": {
+    "title": "מוריד דת\"ל",
+    "explanation": "נשמע כמו 'מוריד הטל', רואים בחור חרדי מוריד בחור דתי לאומי [דת\"ל] בהורדת ידיים",
+    "topic": "יהדות, יהדות ומסורת, תחרות, ספורט",
+    "isApproved": false,
+    "isAIGenerated": false,
+    "needsAIImprovement": false,
+    "aiSuggestion": null,
+    "createdAt": 1780228574464
+  },
+  "מלאכת מהמר.webp": {
+    "title": "מלאכת מהמר",
+    "explanation": "נשמע כמו 'מלאכת מעמר' מהמלאכות האסורות בשבת, רואים תלמיד שמדמיין את השיעור של המורה כ'מלאכת מהמר'.",
+    "topic": "תורני, הימורים, שיעור",
+    "isApproved": false,
+    "isAIGenerated": false,
+    "needsAIImprovement": false,
+    "aiSuggestion": null,
+    "createdAt": 1780228632283
+  },
+  "מקבל מרוט.webp": {
+    "title": "מקבל מרוט",
+    "explanation": "נשמע כמו 'מקבל מרות', רואים ילד ש'לא מקבל מרות', כי הוא מתעקש לקבל עוף ללא נוצות 'מרוט' לגמרי.",
+    "topic": "ילדים, משפחה וילדים, חיות, בית ספר",
+    "isApproved": false,
+    "isAIGenerated": false,
+    "needsAIImprovement": false,
+    "aiSuggestion": null,
+    "createdAt": 1780228668565
+  },
+  "מכתים כרטיס.webp": {
+    "title": "מכתים כרטיס",
+    "explanation": "נשמע כמו 'מחתים כרטיס', רואים מישהו שעושה כתמים על כרטיסים",
+    "topic": "עבודה, מקצועות ועבודה, לכלוך, כרטיס",
+    "isApproved": false,
+    "isAIGenerated": false,
+    "needsAIImprovement": false,
+    "aiSuggestion": null,
+    "createdAt": 1780228597140
+  },
+  "משוויץ.webp": {
+    "title": "משוויץ",
+    "explanation": "יכול להישמע כמו בא מארץ שוויץ, וגם מישהו שהוא שוויצר, רואים נער שמשוויץ בזה שהוא עם דרכון שווייצרי",
+    "topic": "חו\"ל, תכונה, רגשות ותכונות, אופי, שוייצר",
+    "isApproved": false,
+    "isAIGenerated": false,
+    "needsAIImprovement": false,
+    "aiSuggestion": null,
+    "createdAt": 1780228948918
+  },
+  "משפטי פתיחה.webp": {
+    "title": "משפטי פתיחה",
+    "explanation": "נשמע כמו הרצאה על 'איך להרצות' ולפתוח הרצאה, מצד שני הוא מלמד אותם על משפטי פתיחה קסומים כמו אהלוהומורה מהארי פוטר, וסומסום היפתח",
+    "topic": "",
+    "isApproved": false,
+    "isAIGenerated": false,
+    "needsAIImprovement": false,
+    "aiSuggestion": null,
+    "createdAt": 1780228992813
+  },
+  "מתן תורה.webp": {
+    "title": "מתן תורה",
+    "explanation": "חג השבועות נקרא חג מתן תורה, רואים נשים ששמחות שהן מקבלות את ה'תור' שלהם, היא מקבלת את 'תורה'",
+    "topic": "תור, יהדות, יהדות ומסורת, חגים, חגים ומועדים",
+    "isApproved": false,
+    "isAIGenerated": false,
+    "needsAIImprovement": false,
+    "aiSuggestion": null,
+    "createdAt": 1780228499369
+  },
+  "ניחוש מוס קל.webp": {
+    "title": "ניחוש מוס קל",
+    "explanation": "נשמע כמו 'ניחוש מושכל', רואים משיהו שעושה טעימה עיוורת ל'מוס', והוא מנחש בניחוש מושכל שזהו 'מוס'.",
+    "topic": "אוכל, אוכל ושתייה, תחרות",
+    "isApproved": false,
+    "isAIGenerated": false,
+    "needsAIImprovement": false,
+    "aiSuggestion": null,
+    "createdAt": 1780229133280
+  },
+  "נועל נעליים.webp": {
+    "title": "נועל נעליים",
+    "explanation": "רואים מישהו 'שנועל' במנעולים את הנעליים היקרות, לא פלא שהוא עובד ב-FOOTLOCKER",
+    "topic": "ביגוד, בית ויומיום",
+    "isApproved": false,
+    "isAIGenerated": false,
+    "needsAIImprovement": false,
+    "aiSuggestion": null,
+    "createdAt": 1780229052645
+  },
+  "נועל את הדלת.webp": {
+    "title": "נועל את הדלת",
+    "explanation": "נשמע כמו לנעול את הדלת במנעול, מצד שני זה נשמע כמו מישהו שנועל נעליים שהם דלתות",
+    "topic": "בית, בית ויומיום, ביגוד",
+    "isApproved": false,
+    "isAIGenerated": false,
+    "needsAIImprovement": false,
+    "aiSuggestion": null,
+    "createdAt": 1780229016993
+  },
+  "סופו של דוור.webp": {
+    "title": "סופו של דוור",
+    "explanation": "נשמע כמו 'סופו של כל דבר', רואים את סופוקליס שחורציאניטיס כדוור",
+    "topic": "פתגמים וביטויים",
+    "isApproved": true,
+    "isAIGenerated": false,
+    "needsAIImprovement": false,
+    "aiSuggestion": null,
+    "createdAt": 1780229179033
+  },
+  "מרים משקולות.webp": {
+    "title": "מרים משקולות",
+    "explanation": "הפועל 'מרים' יכול להשמע כמו 'לגנוב', רואים מישהו שגונב משקולות מחדר הכושר",
+    "topic": "ספורט, גניבה",
+    "isApproved": false,
+    "isAIGenerated": false,
+    "needsAIImprovement": false,
+    "aiSuggestion": null,
+    "createdAt": 1780228854119
+  },
+  "עוס PEACE.webp": {
+    "title": "עו\"ס PEACE",
+    "explanation": "נשמע כמו 'הוספיס', רואים את העובדת סוציאלית של ההוספיס, כשהיא עו\"ס-PEACE",
+    "topic": "רפואי, מקצוע, שלווה",
+    "isApproved": false,
+    "isAIGenerated": false,
+    "needsAIImprovement": false,
+    "aiSuggestion": null,
+    "createdAt": 1780229247199
+  },
+  "עלם תר BOOT.webp": {
+    "title": "עלם תר BOOT",
+    "explanation": "נשמע כמו 'הלם תרבות', כל הקהל בהלם תרבות מההצגה על העלם שמחפש [תר] את המגף שלו [BOOT]",
+    "topic": "פתגם, פתגמים וביטויים, הצגה, תיאטרון, ביגוד, בית ויומיום",
+    "isApproved": false,
+    "isAIGenerated": false,
+    "needsAIImprovement": false,
+    "aiSuggestion": null,
+    "createdAt": 1780229292885
+  },
+  "סערות קדאיף.webp": {
+    "title": "סערות קדאיף",
+    "explanation": "נשמע כמו 'שערות קדאיף', רואים סערות בתוך קערה עם שערות קדאיף",
+    "topic": "אוכל, אוכל ושתייה, מזג אוויר",
+    "isApproved": false,
+    "isAIGenerated": false,
+    "needsAIImprovement": false,
+    "aiSuggestion": null,
+    "createdAt": 1780229207559
+  },
+  "רוצח המונים.webp": {
+    "title": "רוצח המונים",
+    "explanation": "נשמע כמו מישהו שרוצח המון בני אדם, מצד שני רואים שהוא סך הכל מתוסכל על החשבונות שהוא קיבל, והוא שובר ורוצח את כל סוגי המונים",
+    "topic": "עבירה, פתגם, פתגמים וביטויים",
+    "isApproved": false,
+    "isAIGenerated": false,
+    "needsAIImprovement": false,
+    "aiSuggestion": null,
+    "createdAt": 1780229464328
+  },
+  "שחקן ספסל.webp": {
+    "title": "שחקן ספסל",
+    "explanation": "נשמע כמו שחקן שלא שחקן פותח במשחק, כי הוא יושב על ספסל המחליפים 'שחקן ספסל', מצד שני השחקן הזה הוא פותח בכל המשחקים, אבל הוא בהחלט גם שחקן ספסל",
+    "topic": "ספורט, רהיט",
+    "isApproved": false,
+    "isAIGenerated": false,
+    "needsAIImprovement": false,
+    "aiSuggestion": null,
+    "createdAt": 1780229514267
+  },
+  "צריחים להגן.webp": {
+    "title": "צריחים להגן",
+    "explanation": "נשמע כמו 'צריכים להגן', מה שנכון כי ה'צריחים' במשחק השחמט צריכים להגן על המלך",
+    "topic": "משחק, תפקיד, הגנה",
+    "isApproved": false,
+    "isAIGenerated": false,
+    "needsAIImprovement": false,
+    "aiSuggestion": null,
+    "createdAt": 1780229366598
+  },
+  "קבן-עוס.webp": {
+    "title": "קב\"ן-עו\"ס",
+    "explanation": "נשמע כמו נקניקיית קבנוס, רואים דמות של נקניקיה כשהוא בתפקיד צבאי כ'קב\"ן', והוא גם עובד סוציאלי 'עו\"ס', כלומר קב\"ן-עו\"ס",
+    "topic": "צבא, צבא וביטחון, רפואה, אוכל, אוכל ושתייה, נקניקיה",
+    "isApproved": false,
+    "isAIGenerated": false,
+    "needsAIImprovement": false,
+    "aiSuggestion": null,
+    "createdAt": 1780229420478
+  },
+  "פורץ לתודעה.webp": {
+    "title": "פורץ לתודעה",
+    "explanation": "רואים את אילון מאסק עם חברת ניארולינק שלו, כשהוא סופסוף מצליח להתממשק למוח של מישהו ולפורץ לו לתודעה",
+    "topic": "רפואי, טכנולוגיה, טכנולוגיה ומדע, מאסק",
+    "isApproved": false,
+    "isAIGenerated": false,
+    "needsAIImprovement": false,
+    "aiSuggestion": null,
+    "createdAt": 1780229331378
+  },
+  "שקוע בלי מוד.webp": {
+    "title": "שקוע בלי מוד",
+    "explanation": "נשמע כמו 'שקוע בלימוד', רואים בחור ממש מדוכא ובלי MOOD [מצב רוח] כשהוא שקוע בתוך החול וקורא ספר",
+    "topic": "אופי, רגשות ותכונות, לימוד",
+    "isApproved": false,
+    "isAIGenerated": false,
+    "needsAIImprovement": false,
+    "aiSuggestion": null,
+    "createdAt": 1780229656672
+  },
+  "שם-חוט.webp": {
+    "title": "שם-חוט",
+    "explanation": "נשמע כמו 'סמכות', הוא לא מרשה לאף אחד לגעת ולשים את החוט בעיר, כי האו האחראי זוהי הסמכות הבלעדית שלו",
+    "topic": "תפקיד, אופי, רגשות ותכונות",
+    "isApproved": false,
+    "isAIGenerated": false,
+    "needsAIImprovement": false,
+    "aiSuggestion": null,
+    "createdAt": 1780229613987
+  },
+  "שיני חלב.webp": {
+    "title": "שיני חלב",
+    "explanation": "כמו שיש שיניים חלביות לתינוקים, רואים גבינות ומוצרי חלב בצורה של שיניים",
+    "topic": "אוכל, אוכל ושתייה, גוף האדם, שיניים",
+    "isApproved": false,
+    "isAIGenerated": false,
+    "needsAIImprovement": false,
+    "aiSuggestion": null,
+    "createdAt": 1780229546224
+  },
+  "שרה טבעות.webp": {
+    "title": "שרה טבעות",
+    "explanation": "נשמע כמו 'שר הטבעות', רואים את שרה נתניהו כשהיא עם כל הטבעות על הידיים שלה",
+    "topic": "סרט, ספר, פוליטיקה, פוליטיקה ואקטואליה",
+    "isApproved": false,
+    "isAIGenerated": false,
+    "needsAIImprovement": false,
+    "aiSuggestion": null,
+    "createdAt": 1780229683234
+  },
+  "שיניים בשריות.webp": {
+    "title": "שיניים בשריות",
+    "explanation": "כמו שיש לבני האדם שיניים קבועות שנקראות שיניים בשריות. רואים בתמונה מנות בשר בצורה של שיניים",
+    "topic": "אוכל, אוכל ושתייה, גוף האדם",
+    "isApproved": false,
+    "isAIGenerated": false,
+    "needsAIImprovement": false,
+    "aiSuggestion": null,
+    "createdAt": 1780229577669
   }
 }
