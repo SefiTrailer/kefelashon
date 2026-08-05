@@ -12094,5 +12094,655 @@
     "needsAIImprovement": false,
     "aiSuggestion": null,
     "createdAt": 1780229577669
+  },
+  "צדיק גוזר.png": {
+    "title": "צדיק גוזר",
+    "explanation": "כמו הביטוי שצדיק גוזר גזירות והקב\"ה שומע בקולו, רואים איש צדיק כשהוא 'גוזר' פונקציות מתמטיות במעמד נשגב",
+    "topic": "מתמטיקה, יהדות, יהדות ומסורת, רב, צדיק",
+    "isApproved": true,
+    "isAIGenerated": false,
+    "needsAIImprovement": false,
+    "aiSuggestion": null,
+    "createdAt": 1785929811254
+  },
+  "ייאוש מוחלט.png": {
+    "title": "ייאוש מוחלט",
+    "explanation": "רואים מורה בכיתה, שהוא כותב על הלוח את המילה 'ייאוש' בתוך ערך מוחלט",
+    "topic": "ביטוי, לימודים, משפחה וילדים, מתמטיקה",
+    "isApproved": true,
+    "isAIGenerated": false,
+    "needsAIImprovement": false,
+    "aiSuggestion": null,
+    "createdAt": 1785930960163
+  },
+  "אופנוע כבד.webp": {
+    "title": "אופנוע כבד",
+    "explanation": "נשמע כמו אופנוע גדול וכבד, מצד שני רואים מנה של 'כבד' בצורה של אופנוע טוסטוס קליל",
+    "topic": "אופנוע, תחבורה, אוכל, אוכל ושתייה, כבד, מסעדה",
+    "isApproved": true,
+    "isAIGenerated": false,
+    "needsAIImprovement": false,
+    "aiSuggestion": null,
+    "createdAt": 1785931511296
+  },
+  "אוטו דידקט.webp": {
+    "title": "אוטו דידקט",
+    "explanation": "ביטוי למישהו שלומד מעצמו דברים, בתמונה רואים אוטו שלומד בכיתה רגילה",
+    "topic": "בית ספר, משפחה וילדים, מכונית",
+    "isApproved": true,
+    "isAIGenerated": false,
+    "needsAIImprovement": false,
+    "aiSuggestion": null,
+    "createdAt": 1785928747574
+  },
+  "SIM שלום.webp": {
+    "title": "SIM שלום",
+    "explanation": "נשמע כמו החלק מתפילת שמונה עשרה 'שים שלום', רואים חזן בתפילה שהוא נפרד מה'סים' בברכת שלום",
+    "topic": "תפילה, יהדות ומסורת, בית כנסת, סלולרי, סים",
+    "isApproved": true,
+    "isAIGenerated": false,
+    "needsAIImprovement": false,
+    "aiSuggestion": null,
+    "createdAt": 1785929768449
+  },
+  "E מלא.webp": {
+    "title": "E מלא",
+    "explanation": "נשמע כמו 'אמאלה'.\nרואים 'אי' בים 'מלא' בילדים, כאשר יש מופע של דמות של האות 'E' כשהוא מחזיק 'עלה' ביד, וכל הילדים צועקים 'אמאלה'",
+    "topic": "ילדים, משפחה וילדים, הצגה, אמא, אי",
+    "isApproved": true,
+    "isAIGenerated": false,
+    "needsAIImprovement": false,
+    "aiSuggestion": null,
+    "createdAt": 1785931476590
+  },
+  "אחים לצרה.webp": {
+    "title": "אחים לצרה",
+    "explanation": "רואים כלה שתמתחתנת ולידה האחים שלה, והיא מאוד 'צרה'",
+    "topic": "חתונה, משפחה, משפחה וילדים",
+    "isApproved": true,
+    "isAIGenerated": false,
+    "needsAIImprovement": false,
+    "aiSuggestion": null,
+    "createdAt": 1785928782845
+  },
+  "אסיר תודה.webp": {
+    "title": "אסיר תודה",
+    "explanation": "ביטוי למישהו שהוא אסיר תודה, רואים אסיר בבית סוהר, מסיר מהקיר את הכיתוב 'תודה', והסוהר אומר לו שהוא אסיר תודה. האסיר אומר לו נכון אני אסיר.",
+    "topic": "בית כלא, ביטוי, תודה",
+    "isApproved": true,
+    "isAIGenerated": false,
+    "needsAIImprovement": false,
+    "aiSuggestion": null,
+    "createdAt": 1785928849460
+  },
+  "בדיקת M עראי.webp": {
+    "title": "בדיקת M עראי",
+    "explanation": " נשמע כמו 'בדיקת MRI', רואים מישהו ליד מתקן MRI, שהוא בודק מיצג עראי של האות M",
+    "topic": "רפואה, פועלים, בנייה",
+    "isApproved": true,
+    "isAIGenerated": false,
+    "needsAIImprovement": false,
+    "aiSuggestion": null,
+    "createdAt": 1785930121444
+  },
+  "באבא כמה.webp": {
+    "title": "באבא כמה?",
+    "explanation": "נשמע כמו שם המסכת 'בבא קמא', מאידך המקובל הבאבא לומד מסכת בבא מציעא",
+    "topic": "תלמוד, יהדות, יהדות ומסורת, רבנים",
+    "isApproved": true,
+    "isAIGenerated": false,
+    "needsAIImprovement": false,
+    "aiSuggestion": null,
+    "createdAt": 1785931406584
+  },
+  "בודי רוגע.webp": {
+    "title": "בודי רוגע",
+    "explanation": "נשמע כמו 'דיאן בודירוגה' שחקן הכדורסל המוכר מסרביה, רואים אותו במרכז יוגה לגוף",
+    "topic": "כדורסל, בריאות, יוגה",
+    "isApproved": true,
+    "isAIGenerated": false,
+    "needsAIImprovement": false,
+    "aiSuggestion": null,
+    "createdAt": 1785928898441
+  },
+  "בעגלה ובזמן קריב.webp": {
+    "title": "בעגלה ובזמן קריב",
+    "explanation": "כמו התפילה ב'קדיש', רואים רב מברך אשה שהיא בחודש התשיעי מצד אחד, ומצד שני היא עם תינוק בן שנה בעגלה.",
+    "topic": "תפילה, יהדות ומסורת, ברכה",
+    "isApproved": true,
+    "isAIGenerated": false,
+    "needsAIImprovement": false,
+    "aiSuggestion": null,
+    "createdAt": 1785928936621
+  },
+  "בקבוק לחיץ.webp": {
+    "title": "בקבוק לחיץ",
+    "explanation": "כמו הביטוי בקבוק לחיץ מפלסטיק, רק שכאן רואים בקבוק מזכוכית שלוחצים עליו לרכוש מוצרים שהוא לא צריך, כי הוא לחיץ",
+    "topic": "אופי, רגשות ותכונות, קניון, קנייה",
+    "isApproved": true,
+    "isAIGenerated": false,
+    "needsAIImprovement": false,
+    "aiSuggestion": null,
+    "createdAt": 1785931340158
+  },
+  "בוחרת צד.webp": {
+    "title": "בוחרת צד",
+    "explanation": "רואים תוכנית ריאליטי, שהאישה צריכה לבחור איזה 'צד' [צייד] היא רוצה להמשיך איתו",
+    "topic": "ריאליטי, החלטה, צייד",
+    "isApproved": true,
+    "isAIGenerated": false,
+    "needsAIImprovement": false,
+    "aiSuggestion": null,
+    "createdAt": 1785931372610
+  },
+  "בר מיץ ווה.webp": {
+    "title": "בר מיץ ווה",
+    "explanation": "נשמע כמו 'בר מצווה', רואים נערי בר מצווה, כשהם מכינים מיצים ושייקים, בבר שלהם, שמוזג מיץ ווה-VA",
+    "topic": "אוכל, אוכל ושתייה, בר מצווה, יהדות, יהדות ומסורת",
+    "isApproved": true,
+    "isAIGenerated": false,
+    "needsAIImprovement": false,
+    "aiSuggestion": null,
+    "createdAt": 1785928973526
+  },
+  "דג בחריין.webp": {
+    "title": "דג בחריין",
+    "explanation": "נשמע כמו שאוכלים גיפלטעפיש עם חריין, רואים מסעדה כזו במדינת בחריין",
+    "topic": "דגים, חיות, אוכל, אוכל ושתייה, בחריין, מדינת ערב",
+    "isApproved": true,
+    "isAIGenerated": false,
+    "needsAIImprovement": false,
+    "aiSuggestion": null,
+    "createdAt": 1785931298733
+  },
+  "האסירון העליון.webp": {
+    "title": "האסירון העליון",
+    "explanation": "נשמע כמו 'העשירון העליון' [הביטוי לאנשים עשירים מאוד, בשונה מה'עשירון התחתון' שהם האנשים העניים ביותר]\nרואים בתמונה שני אסירון אחד למעלה ואחד למטה, מצד שני העליון הוא נראה כמו ילד [אסירון] שמגיע משכונת מצוקה, כלומר שהוא שייך לעשירון התחתון, מאידך למטה יש איש צווארון לבן, ששייך לעשירון העליון והוא נמוך [אסירון] ויושב למטה",
+    "topic": "כספים, מקצועות ועבודה, חברה, בית כלא",
+    "isApproved": true,
+    "isAIGenerated": false,
+    "needsAIImprovement": false,
+    "aiSuggestion": null,
+    "createdAt": 1785929078923
+  },
+  "ה'טונה'.webp": {
+    "title": "ה'טונה'",
+    "explanation": "נשמע כמו 'אתונה', רואים מסעדת דגים ירושלמית, שבפנים הכל מעוצב כמו 'אתונה' העיר היוונית.",
+    "topic": "יוון, דגים, חיות, חו\"ל, אוכל, אוכל ושתייה, מסעדה",
+    "isApproved": false,
+    "isAIGenerated": false,
+    "needsAIImprovement": false,
+    "aiSuggestion": null,
+    "createdAt": 1785931225736
+  },
+  "המוציא מחבירו.webp": {
+    "title": "המוציא מחבירו",
+    "explanation": "רואים אחד שאוכל לחם של חבירו, והוא מברך 'המוציא', ובחור שלישי שואל 'זה שלך?' כביכול - תוכיח!, שהרי הכלל ההלכתי הוא 'המוציא מחבירו עליו הראיה'",
+    "topic": "אוכל, אוכל ושתייה, ביטוי למדני, לחם",
+    "isApproved": true,
+    "isAIGenerated": false,
+    "needsAIImprovement": false,
+    "aiSuggestion": null,
+    "createdAt": 1785929210251
+  },
+  "הוכחה באינדוקציה.webp": {
+    "title": "הוכחה באינדוקציה",
+    "explanation": "'אינדוקציה' דרך מתמטית להוכחה, רואים את ד\"ר צנזור מהטכניון [חפשו ביוטיוב הרצאות שלו] שהוא מוכיח דרך הכיריים",
+    "topic": "מתמטיקה, הוכחה, אוכל, אוכל ושתייה, מטבח",
+    "isApproved": true,
+    "isAIGenerated": false,
+    "needsAIImprovement": false,
+    "aiSuggestion": null,
+    "createdAt": 1785929139075
+  },
+  "הבה טיח.webp": {
+    "title": "הבה טיח",
+    "explanation": "נשמע כמו 'אבטיח', רואים מישהו רעב בסיום הצום והוא רוצה לאכול אבטיח, ואחיו מתחכם ומביא לו טי",
+    "topic": "אבטיח, אוכל, אוכל ושתייה, טיח, שיפוצים",
+    "isApproved": true,
+    "isAIGenerated": false,
+    "needsAIImprovement": false,
+    "aiSuggestion": null,
+    "createdAt": 1785931260294
+  },
+  "המחירים בריצפה.webp": {
+    "title": "המחירים בריצפה",
+    "explanation": "רואים שהמחירים לא כל כך זולים ובכלל לא ברצפה, אבל מצד שני כל המחירים כתובים על הרצפה ממש",
+    "topic": "חנות, סופרמרקט, זול",
+    "isApproved": true,
+    "isAIGenerated": false,
+    "needsAIImprovement": false,
+    "aiSuggestion": null,
+    "createdAt": 1785931175923
+  },
+  "הסף הרופא.webp": {
+    "title": "הסף הרופא",
+    "explanation": "נשמע כמו 'אסף הרופא' בית החולים במרכז, רואים סף דלת שהוא רופא",
+    "topic": "בית חולים, דלת",
+    "isApproved": true,
+    "isAIGenerated": false,
+    "needsAIImprovement": false,
+    "aiSuggestion": null,
+    "createdAt": 1785929275044
+  },
+  "הנאת כדור.webp": {
+    "title": "הנאת כדור",
+    "explanation": "רואים את ליונל מסי נהנה מאוד מהכדור רגל שלו, והוא מצביע על כדורי ציפרלקס שגורמים ל'הנאה' בצורה כלשהו",
+    "topic": "תרופה, כדורגל, ספורט, מסי",
+    "isApproved": true,
+    "isAIGenerated": false,
+    "needsAIImprovement": false,
+    "aiSuggestion": null,
+    "createdAt": 1785929251449
+  },
+  "הסבת אקדמאים.webp": {
+    "title": "הסבת אקדמאים",
+    "explanation": "נשמע כמו כשאקדמאים מסיבים את תחום העבודה שלהם, מאידך בתמונה רואים אקדמאים בחדר המנוחה שלהם, כשהם רק נחים ומסיבים על הכורסאות שלהם.",
+    "topic": "אקדמיה, אוניברסיטה",
+    "isApproved": true,
+    "isAIGenerated": false,
+    "needsAIImprovement": false,
+    "aiSuggestion": null,
+    "createdAt": 1785931141359
+  },
+  "זכויות הדם.webp": {
+    "title": "זכויות הדם",
+    "explanation": "נשמע כמו 'זכויות אדם', רואים שקיות דם שמוחים ומפגשנים על הזכויות שלהם",
+    "topic": "הפגנה, זכויות אדם",
+    "isApproved": true,
+    "isAIGenerated": false,
+    "needsAIImprovement": false,
+    "aiSuggestion": null,
+    "createdAt": 1785931080538
+  },
+  "חייל בחיר.webp": {
+    "title": "חייל בחי\"ר",
+    "explanation": "נשמע כמו 'חייל בכיר', רואים חייל טוראי שהוא משובץ לחי\"ר, והוא חושב שהוא בכיר כי אמרו לו שהוא 'חייל בחי\"ר'",
+    "topic": "צבא, צבא וביטחון, חייל",
+    "isApproved": true,
+    "isAIGenerated": false,
+    "needsAIImprovement": false,
+    "aiSuggestion": null,
+    "createdAt": 1785931052622
+  },
+  "טיהור מלולי.webp": {
+    "title": "טיהור מלולי",
+    "explanation": "נשמע כמו 'תיאור מילולי', רואים את הדמות מסרטי הפעוטות 'לולי', כשהוא עושה טיהור מקום מסוכן",
+    "topic": "ילדים, משפחה וילדים, סרטי ילדים, לולי, טיהור, רעל",
+    "isApproved": true,
+    "isAIGenerated": false,
+    "needsAIImprovement": false,
+    "aiSuggestion": null,
+    "createdAt": 1785931003998
+  },
+  "חזה רע גנרלית.webp": {
+    "title": "חזה רע גנרלית",
+    "explanation": "נשמע כמו חזרה גנרלית, רואים מישהו שנמצא בחזרה הגנרלית של ההצגה, כאשר הוא רואה את הדמות שהל גנרלית שהיא רעה.",
+    "topic": "הצגה, צבא, צבא וביטחון, חזרה",
+    "isApproved": true,
+    "isAIGenerated": false,
+    "needsAIImprovement": false,
+    "aiSuggestion": null,
+    "createdAt": 1785929320773
+  },
+  "חלבה.webp": {
+    "title": "חלבה",
+    "explanation": "המאכל חלבה נשמע כמו הפעולה של החליבה בעבר האישה 'חלבה', רואים אישה שחלבה בטעמים",
+    "topic": "אוכל, אוכל ושתייה, חלב, חלבה, פרות",
+    "isApproved": true,
+    "isAIGenerated": false,
+    "needsAIImprovement": false,
+    "aiSuggestion": null,
+    "createdAt": 1785929361265
+  },
+  "כדור פורח.webp": {
+    "title": "כדור פורח",
+    "explanation": "רואים כדורגל שהוא מלא פריחה על העור שלו, אפילו שהוא בכלל לא כדור פורח באוויר",
+    "topic": "כדורגל, ספורט, כדור פורח, רפואה",
+    "isApproved": true,
+    "isAIGenerated": false,
+    "needsAIImprovement": false,
+    "aiSuggestion": null,
+    "createdAt": 1785930935211
+  },
+  "ילד עלים.webp": {
+    "title": "ילד עלים",
+    "explanation": "נשמע כמו 'ילד אלים', רואים ילד שהוא בכלל לא אלים, רק הוא ילד עלים",
+    "topic": "בית ספר, משפחה וילדים, עלים, צומח, טבע וצומח",
+    "isApproved": true,
+    "isAIGenerated": false,
+    "needsAIImprovement": false,
+    "aiSuggestion": null,
+    "createdAt": 1785929404353
+  },
+  "טעם נרכש.webp": {
+    "title": "טעם נרכש",
+    "explanation": "כפשוטו אפשר לרכוש את הטעמים בחנות",
+    "topic": "אוכל, אוכל ושתייה, טעם",
+    "isApproved": true,
+    "isAIGenerated": false,
+    "needsAIImprovement": false,
+    "aiSuggestion": null,
+    "createdAt": 1785929380646
+  },
+  "לוז מסודר.webp": {
+    "title": "לוז מסודר",
+    "explanation": "נשמע כמו 'לו\"ז מסודר', רואים דמות של אגוז לוז כשהוא מאוד פדנט ומסודר, הוא ממלא את הלו\"ז שלו",
+    "topic": "תכנון, לו\"ז, מאכל, אוכל ושתייה, אגוז",
+    "isApproved": true,
+    "isAIGenerated": false,
+    "needsAIImprovement": false,
+    "aiSuggestion": null,
+    "createdAt": 1785930813805
+  },
+  "כיפה אדומה.webp": {
+    "title": "כיפה אדומה",
+    "explanation": "רואים את הילד 'זאב' שמקבל כיפה אדומה. [נשמע כמו הסיפור כיפה אדומה, רק שכאן לזאב עצמו יש כיפה אדומה]",
+    "topic": "סיפורי ילדים, כיפה, לבוש",
+    "isApproved": true,
+    "isAIGenerated": false,
+    "needsAIImprovement": false,
+    "aiSuggestion": null,
+    "createdAt": 1785929446899
+  },
+  "לבני הנעורים.webp": {
+    "title": "לבני הנעורים",
+    "explanation": "כמו הביטוי של ספרים שמיועדים 'לבני הנעורים', רואים בספר 'לבנים' שמהם בונים את המילה 'נעורים', מצד שני הוא אומר שהתפקיד שלו זה 'לבנות - הנעורים'",
+    "topic": "ספרים, מוזיקה ותרבות, נוער, בנייה",
+    "isApproved": true,
+    "isAIGenerated": false,
+    "needsAIImprovement": false,
+    "aiSuggestion": null,
+    "createdAt": 1785930904740
+  },
+  "להציל את טוראי ראיין.webp": {
+    "title": "להציל את טוראי ראיין",
+    "explanation": "להציל נשמע כמו 'לעשות צל', רואים את טום הנקס כדמות של המפקד עושה צל לדמות של טוראי ראיין",
+    "topic": "מלחמה, צבא וביטחון, קולנוע, מוזיקה ותרבות",
+    "isApproved": true,
+    "isAIGenerated": false,
+    "needsAIImprovement": false,
+    "aiSuggestion": null,
+    "createdAt": 1785929482816
+  },
+  "מטעין סול ללה.webp": {
+    "title": "מטעין סול ללה",
+    "explanation": "נשמע כמו מטעין סוללה, רואים את התו סול שהוא מטעין את התו לה",
+    "topic": "מוזיקה, מוזיקה ותרבות, בטריה",
+    "isApproved": true,
+    "isAIGenerated": false,
+    "needsAIImprovement": false,
+    "aiSuggestion": null,
+    "createdAt": 1785930777055
+  },
+  "מ'טילים' אימה.webp": {
+    "title": "מ'טילים' אימה",
+    "explanation": "רואים דמויות של טילים אירניים שהם מטילים אימה על כל מדינות המפרץ",
+    "topic": "מלחמה, צבא וביטחון, איראן",
+    "isApproved": true,
+    "isAIGenerated": false,
+    "needsAIImprovement": false,
+    "aiSuggestion": null,
+    "createdAt": 1785929512291
+  },
+  "מיזוג אוויר.webp": {
+    "title": "מיזוג אוויר",
+    "explanation": "כמו מזגן, רק רואים עו\"ד שתפקידו לחתום על הסכם מיזוג שבין דמויות של אוויר",
+    "topic": "עורך דין, משפט, מיזוג",
+    "isApproved": true,
+    "isAIGenerated": false,
+    "needsAIImprovement": false,
+    "aiSuggestion": null,
+    "createdAt": 1785929548892
+  },
+  "מעודד אגירה.webp": {
+    "title": "מעודד אגירה",
+    "explanation": "נשמע כמו 'מעודד הגירה' [להגר מארץ לארץ], רואים פרסום בעיתון ואגרן נמצא בבית שלו כשרואים שהכל מלא חפצים שהוא אגר",
+    "topic": "עיתון, אגירה, הגירה",
+    "isApproved": true,
+    "isAIGenerated": false,
+    "needsAIImprovement": false,
+    "aiSuggestion": null,
+    "createdAt": 1785930741946
+  },
+  "נאמת לי מאוד.webp": {
+    "title": "נאמת לי מאוד",
+    "explanation": "נשמע כמו 'נעמת לי מאוד', רואים מישהו שמרצה ולא מסיים, ולכולם ממש לא נעים, המנחה אומר לו 'נאמת לי מאוד'",
+    "topic": "ביטוי, מרצה, נואם",
+    "isApproved": true,
+    "isAIGenerated": false,
+    "needsAIImprovement": false,
+    "aiSuggestion": null,
+    "createdAt": 1785930664413
+  },
+  "משבית שמחות.webp": {
+    "title": "משבית שמחות",
+    "explanation": "רואים מישהו שמשמח על ידי שהוא כביכול עושה 'שביתה' בשמחה של החתונה",
+    "topic": "שמחה, חתונה",
+    "isApproved": true,
+    "isAIGenerated": false,
+    "needsAIImprovement": false,
+    "aiSuggestion": null,
+    "createdAt": 1785930696531
+  },
+  "מרכז הרעלות.webp": {
+    "title": "מרכז הרעלות",
+    "explanation": "מרכז הרעלות בחיפה, אחראי לדאוג למי ששתה בטעות רעלים, בתמונה רואים חנות שמוכרת רעלות בחיפה",
+    "topic": "ביגוד, בית ויומיום, רעל, בית חולים, ערבי",
+    "isApproved": true,
+    "isAIGenerated": false,
+    "needsAIImprovement": false,
+    "aiSuggestion": null,
+    "createdAt": 1785929587600
+  },
+  "משוגעים לדוור.webp": {
+    "title": "משוגעים לדוור",
+    "explanation": "נשמע כמו 'משוגעים לדבר', רואים את כל הרחוב ממש משוגעים על הדוור שלהם",
+    "topic": "דואר, ביטוי",
+    "isApproved": true,
+    "isAIGenerated": false,
+    "needsAIImprovement": false,
+    "aiSuggestion": null,
+    "createdAt": 1785929612896
+  },
+  "נהג מרוצים.webp": {
+    "title": "נהג מרוצים",
+    "explanation": "רואים את מייקל שומכאר [שהיה נהג מרוצים מפורסם] שהוא נוהג לאנשים במכונית פרייבט, והם מאוד מרוצים ממנו",
+    "topic": "מכוניות, ספורט",
+    "isApproved": true,
+    "isAIGenerated": false,
+    "needsAIImprovement": false,
+    "aiSuggestion": null,
+    "createdAt": 1785929647681
+  },
+  "נוסע בזמן.webp": {
+    "title": "נוסע בזמן",
+    "explanation": "רואים נהג אוטובוס מהעולם הישן שהוא אומר שהוא 'נוסע בזמן' בדיוק בזמן, ואכן יש לו שעון חכם, ומעיל עדכני שלא מתאים לתקופה כלומר זה 'נסיעה בזמן'",
+    "topic": "מדע בדיוני, נסיעה בזמן",
+    "isApproved": true,
+    "isAIGenerated": false,
+    "needsAIImprovement": false,
+    "aiSuggestion": null,
+    "createdAt": 1785930623998
+  },
+  "נושא- כלים.webp": {
+    "title": "נושא- כלים",
+    "explanation": "נשמע כמו הביטוי של מישהו שהוא 'נושא כלים' של בעל מקצוע, רואים מורה שמלמד בשיעור על ה'נושא' -כלים.\nובתמונה על הלוח רואים מישהו ש'נושא'- מתחתן עם הכלי עבודה שלו.",
+    "topic": "שיעור, עבודה, מקצועות ועבודה, פועל",
+    "isApproved": true,
+    "isAIGenerated": false,
+    "needsAIImprovement": false,
+    "aiSuggestion": null,
+    "createdAt": 1785929695272
+  },
+  "ניקוי שליש.webp": {
+    "title": "ניקוי שליש",
+    "explanation": "נשמע כמו 'ניכוי שליש', שמקצרים לאסירים את זמן המאסר שלהם בבית הכלא, רואים שני אסירים, האחד מנקה את הפסל של שליש - 1/3. ומצד שני האסיר השני ניקה בדיוק שליש מהמגש",
+    "topic": "בית סוהר, שליש, ניקוי",
+    "isApproved": true,
+    "isAIGenerated": false,
+    "needsAIImprovement": false,
+    "aiSuggestion": null,
+    "createdAt": 1785930574797
+  },
+  "סרט בורקס.webp": {
+    "title": "סרט בורקס",
+    "explanation": "כמו הביטוי של הסרטים הישראליים של שנות ה70 [יהודה ברקן], רואים ילדה שמה סרט לשיער שעשוי מבורקס",
+    "topic": "קולנוע, מוזיקה ותרבות, ישראלי, אביזרים לשיער, אופנה",
+    "isApproved": true,
+    "isAIGenerated": false,
+    "needsAIImprovement": false,
+    "aiSuggestion": null,
+    "createdAt": 1785930454359
+  },
+  "נקודה למחשבה.webp": {
+    "title": "נקודה למחשבה",
+    "explanation": "רואים מיצג באוניברסיטה בצורה של 'נקודה', שכולם מסתכלים עליה וחושבים",
+    "topic": "ביטוי, אוניברסיטה, חשביה",
+    "isApproved": true,
+    "isAIGenerated": false,
+    "needsAIImprovement": false,
+    "aiSuggestion": null,
+    "createdAt": 1785929727860
+  },
+  "סוללות כביש.webp": {
+    "title": "סוללות כביש",
+    "explanation": "רואים דמויות של נשים שהם 'סוללות כביש', אבל זהו כביש ייחודי בו מתקינים סוללות שנטענות על ידי נסיעה בכביש",
+    "topic": "תחבורה, עבודה, מקצועות ועבודה, סוללה, כביש",
+    "isApproved": true,
+    "isAIGenerated": false,
+    "needsAIImprovement": false,
+    "aiSuggestion": null,
+    "createdAt": 1785930502499
+  },
+  "קולות מוזרים.webp": {
+    "title": "קולות מוזרים",
+    "explanation": "נשמע כמו 'קול' מוזר, רואים דמויות של המיונים כשהם כמו פחיות קולה, כלומר 'קולות', והם מאוד מוזרים כידוע, וגם עושים קולות מוזרים",
+    "topic": "מיניונים, קולות, משקה קולה",
+    "isApproved": true,
+    "isAIGenerated": false,
+    "needsAIImprovement": false,
+    "aiSuggestion": null,
+    "createdAt": 1785930415887
+  },
+  "קורס צלי-לה.webp": {
+    "title": "קורס צלי-לה",
+    "explanation": "נשמע כמו 'קורס צלילה', רק שפה רואים שזה קורס שהרב מלמד את התלמידים איך צולים בשר בשביל האישה",
+    "topic": "מטבח, צלייה, ספורט",
+    "isApproved": true,
+    "isAIGenerated": false,
+    "needsAIImprovement": false,
+    "aiSuggestion": null,
+    "createdAt": 1785929841386
+  },
+  "קיש-ארון.webp": {
+    "title": "קיש-ארון",
+    "explanation": "נשמע כמו 'כישרון', רואים את השר יואב קיש כשהוא מכין מאפה 'קיש' בצורה של ארון",
+    "topic": "מאפה, פוליטיקה, פוליטיקה ואקטואליה, אוכל, אוכל ושתייה",
+    "isApproved": true,
+    "isAIGenerated": false,
+    "needsAIImprovement": false,
+    "aiSuggestion": null,
+    "createdAt": 1785930366652
+  },
+  "רועה בכוכבים.webp": {
+    "title": "רועה בכוכבים",
+    "explanation": "רואים אסטרונאוט על כוכב, שתפקידו להיות 'רועה צאן' והוא רועה את הצאן על הכוכבים.",
+    "topic": "חלל, משק, צאן, בהמות, רועה צאן, אסטרונאוט",
+    "isApproved": true,
+    "isAIGenerated": false,
+    "needsAIImprovement": false,
+    "aiSuggestion": null,
+    "createdAt": 1785929898714
+  },
+  "שלגיה ושבעת הגמדים.webp": {
+    "title": "שלגיה ושבעת הגמדים",
+    "explanation": "רואים את שלגיה עם הגמדים, כאשר הגמדים יושבים 'שבעה' על אחד שנפטר להם",
+    "topic": "יהדות, יהדות ומסורת, מת, סיפורי ילדים, דיסני",
+    "isApproved": true,
+    "isAIGenerated": false,
+    "needsAIImprovement": false,
+    "aiSuggestion": null,
+    "createdAt": 1785929934637
+  },
+  "שליטא מרחוק.webp": {
+    "title": "שליט\"א מרחוק",
+    "explanation": "נשמע כמו 'שליטה מרחוק', רואים בחורים בכינוס של רבנים, ומישהו מצלם עם רחפן צילום בשליטה מרחוק, אבל זה גם שליט\"א מרחוק, כי רואים את הרבנים שליט\"א ממרחק.",
+    "topic": "רבנים, יהדות ומסורת, רחפן, צילום",
+    "isApproved": true,
+    "isAIGenerated": false,
+    "needsAIImprovement": false,
+    "aiSuggestion": null,
+    "createdAt": 1785930310333
+  },
+  "שמיכה לרב עיר.webp": {
+    "title": "שמיכה לרב עיר",
+    "explanation": "נשמע כמו 'סמיכה לרב עיר', כאשר רב נהיה כשיר להיות רב עיר על ידי שסומכים אותו להיות כזה, רואים רב עיר שמקבל מבני העיר שלו 'שמיכה'",
+    "topic": "רבנות, רב עיר, כלי מיטה",
+    "isApproved": true,
+    "isAIGenerated": false,
+    "needsAIImprovement": false,
+    "aiSuggestion": null,
+    "createdAt": 1785929978900
+  },
+  "שיח רגשי.webp": {
+    "title": "שיח רגשי",
+    "explanation": "רואים דמות של שיח שהוא מאוד מאוד רגשי ובוכה ומתרגש",
+    "topic": "ביטוי, צומח, טבע וצומח, רגש, רגשות ותכונות",
+    "isApproved": true,
+    "isAIGenerated": false,
+    "needsAIImprovement": false,
+    "aiSuggestion": null,
+    "createdAt": 1785930335347
+  },
+  "שרט האוצר.webp": {
+    "title": "שרט האוצר",
+    "explanation": "נשמע כמו 'שרת האוצר', מצד שני יש לנו 'שר האוצר' - גבר, לכן רואים את בצלאל סמוטריץ' שר האוצר כשהוא שורט את האוצר שמצאו.",
+    "topic": "פוליטיקה, פוליטיקה ואקטואליה, אוצר",
+    "isApproved": true,
+    "isAIGenerated": false,
+    "needsAIImprovement": false,
+    "aiSuggestion": null,
+    "createdAt": 1785930023804
+  },
+  "שר החכ להוט.webp": {
+    "title": "שר הח\"כ להוט",
+    "explanation": "נשמע כמו 'שר החקלאות', מצד שני רואים את איתמר בן גביר שהוא בכל השר לביטחון פנים, כשהוא להוט מאוד בעבודה שלו כרגיל",
+    "topic": "פוליטיקה, פוליטיקה ואקטואליה, חקלאות, בן גביר",
+    "isApproved": true,
+    "isAIGenerated": false,
+    "needsAIImprovement": false,
+    "aiSuggestion": null,
+    "createdAt": 1785930246334
+  },
+  "תחושת ניקור.webp": {
+    "title": "תחושת ניקור",
+    "explanation": "נשמע כמו 'תחושת ניכור', רואים מישהו שמטופל עם ניקור עדין של תוכים",
+    "topic": "רפואה, בעלי חיים, חיות, תוכי",
+    "isApproved": true,
+    "isAIGenerated": false,
+    "needsAIImprovement": false,
+    "aiSuggestion": null,
+    "createdAt": 1785930198505
+  },
+  "תן וכך.webp": {
+    "title": "תן וכך",
+    "explanation": "נשמע כמ והביטוי 'תן וקח', רואים תחנת דלק TEN, כשיש שם 'תן', וגרפיטי של תנועת 'כך' של מאיר כהנא",
+    "topic": "פוליטיקה, פוליטיקה ואקטואליה, ביטויים, בעלי חיים, חיות, דלק",
+    "isApproved": true,
+    "isAIGenerated": false,
+    "needsAIImprovement": false,
+    "aiSuggestion": null,
+    "createdAt": 1785930066232
+  },
+  "תשעת ה'ימים'.webp": {
+    "title": "תשעת ה'ימים'",
+    "explanation": "נשמע כמו הזמן שמראש חודש אב ועד תשעה באב - תשעת הימים, רואים שורה של רבנים עם החתן, כאשר לכל אחד מהם שרים 'ימים... על ימי מלך תוסיף'",
+    "topic": "חתונה, ימים, עצב",
+    "isApproved": true,
+    "isAIGenerated": false,
+    "needsAIImprovement": false,
+    "aiSuggestion": null,
+    "createdAt": 1785930168523
   }
 }
