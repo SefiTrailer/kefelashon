@@ -771,7 +771,7 @@ export default function PublicGallery({ images, metadata }) {
                 )}
 
                 {/* ── Left/Main: Search + Image Frame ── */}
-                <div className={`${!isMobile && viewMode === 'single' ? 'w-fit flex-none' : 'w-full flex-1'} max-w-2xl md:max-w-4xl flex-col items-center relative shrink-0 mx-auto min-h-0 ${isMobile && activeMobileTab === 'info' ? 'hidden' : 'flex'}`}>
+                <div className={`${!isMobile && viewMode === 'single' ? 'w-fit flex-none' : 'w-full flex-1'} flex-col items-center relative shrink-0 mx-auto min-h-0 ${isMobile && activeMobileTab === 'info' ? 'hidden' : 'flex'}`}>
                     {displayImages.length === 0 ? (
                         <div className="text-center bg-white/10 backdrop-blur-lg p-12 rounded-3xl border border-white/20">
                             <span className="text-6xl mb-4 block">😢</span>
@@ -1067,7 +1067,7 @@ export default function PublicGallery({ images, metadata }) {
                     </div>
 
                 {!isMobile && (
-                    <div ref={sidebarRef} className={`w-full lg:w-[380px] xl:w-[440px] shrink-0 mt-0 lg:mt-0 flex flex-col bg-slate-900/60 backdrop-blur-xl border border-white/10 rounded-[2.5rem] shadow-2xl relative min-h-0 lg:self-stretch`}>
+                    <div ref={sidebarRef} className={`w-full lg:w-[340px] xl:w-[420px] shrink-0 mt-0 lg:mt-0 flex flex-col bg-slate-900/60 backdrop-blur-xl border border-white/10 rounded-[2.5rem] shadow-2xl relative min-h-0 lg:self-stretch`}>
                         <div className="absolute inset-0 bg-gradient-to-br from-white/5 to-transparent pointer-events-none rounded-[2.5rem]" />
 
                         {/* Desktop Floating Explanation View */}
