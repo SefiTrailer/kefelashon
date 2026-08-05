@@ -1,5 +1,5 @@
 import { useState, useEffect, useMemo, useRef, useCallback } from 'react';
-import { ChevronRight, ChevronLeft, Search, X, MessageCircle, Info, Palette, Linkedin, Share2 } from 'lucide-react';
+import { ChevronRight, ChevronLeft, Search, X, MessageCircle, Info, Palette, Linkedin, Share2, HelpCircle } from 'lucide-react';
 
 // ── Themes ────────────────────────────────────────────────────────────────────
 const THEMES = [
@@ -97,6 +97,229 @@ const THEMES = [
 
 
 // ── Sub-Components ───────────────────────────────────────────────────────────
+const TOUR_STEPS = [
+    {
+        id: 'welcome',
+        title: "ברוכים הבאים ל'כפל לשון'! 🎨",
+        description: "שמחים לראות אתכם! רוצים סיור קצר של 30 שניות להכיר את כל הכלים והפונקציות באתר?",
+        target: null,
+    },
+    {
+        id: 'search',
+        title: 'חיפוש וסינון 🔍',
+        description: 'תוכלו לחפש תמונות לפי מילים, משחקי מילים, תרמוניקה או תגיות לפי נושאים.',
+        target: 'search',
+    },
+    {
+        id: 'sort',
+        title: 'מיון הגלריה 🔃',
+        description: 'סדרו את הגלריה בסדר כרונולוגי (מהחדש לישן) או בתצוגה אקראית לחוויה מפתיעה.',
+        target: 'sort',
+    },
+    {
+        id: 'view-modes',
+        title: 'מצבי תצוגה 🖼️',
+        description: 'עברו בין תצוגת תמונה יחידה לבין תצוגת רשת (גריד 2x3 או 3x4) לצפייה מרוכזת.',
+        target: 'view-modes',
+    },
+    {
+        id: 'single-image',
+        title: 'צפייה מורחבת וניתוח 🔍',
+        description: 'בלחיצה על תמונה תפתחו מצב צפייה מלא - עם הסבר מפורט על משחק המילים, שיתוף והורדה!',
+        target: 'single-image',
+    },
+];
+
+const SiteTour = ({ isActive, step, setStep, onClose, theme }) => {
+    const [targetRect, setTargetRect] = useState(null);
+
+    const currentStepConfig = TOUR_STEPS[step] || TOUR_STEPS[0];
+
+    useEffect(() => {
+        if (!isActive || step === 0 || !currentStepConfig.target) {
+            setTargetRect(null);
+            return;
+        }
+
+        const updateRect = () => {
+            const els = document.querySelectorAll(`[data-tour="${currentStepConfig.target}"]`);
+            let foundEl = null;
+            for (let el of els) {
+                const rect = el.getBoundingClientRect();
+                if (rect.width > 0 && rect.height > 0) {
+                    foundEl = el;
+                    break;
+                }
+            }
+
+            if (foundEl) {
+                const rect = foundEl.getBoundingClientRect();
+                setTargetRect({
+                    top: rect.top,
+                    left: rect.left,
+                    width: rect.width,
+                    height: rect.height,
+                });
+            } else {
+                setTargetRect(null);
+            }
+        };
+
+        updateRect();
+        const timer = setTimeout(updateRect, 100);
+        window.addEventListener('resize', updateRect);
+        window.addEventListener('scroll', updateRect, true);
+
+        return () => {
+            clearTimeout(timer);
+            window.removeEventListener('resize', updateRect);
+            window.removeEventListener('scroll', updateRect, true);
+        };
+    }, [isActive, step, currentStepConfig]);
+
+    if (!isActive) return null;
+
+    if (step === 0) {
+        return (
+            <div className="fixed inset-0 z-[200] flex items-center justify-center p-4 bg-black/80 backdrop-blur-md animate-in fade-in duration-300">
+                <div className="relative w-full max-w-md bg-slate-900 border border-white/20 rounded-3xl p-6 sm:p-8 shadow-[0_20px_60px_rgba(0,0,0,0.8)] text-right dir-rtl flex flex-col gap-6 animate-in zoom-in-95 duration-300">
+                    <button
+                        onClick={onClose}
+                        className="absolute top-4 left-4 p-2 rounded-full text-white/50 hover:text-white hover:bg-white/10 transition-colors"
+                        title="סגור"
+                    >
+                        <X size={20} />
+                    </button>
+
+                    <div className="flex flex-col items-center text-center gap-3">
+                        <div className={`w-16 h-16 rounded-2xl bg-gradient-to-br ${theme.frameGrad} p-0.5 flex items-center justify-center shadow-lg`}>
+                            <div className={`w-full h-full ${theme.innerBg} rounded-[0.9rem] flex items-center justify-center text-3xl`}>
+                                💡
+                            </div>
+                        </div>
+                        <h2 className={`text-2xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r ${theme.titleGrad}`}>
+                            {TOUR_STEPS[0].title}
+                        </h2>
+                        <p className="text-slate-300 text-sm sm:text-base leading-relaxed font-medium">
+                            {TOUR_STEPS[0].description}
+                        </p>
+                    </div>
+
+                    <div className="flex flex-col sm:flex-row gap-3 mt-2">
+                        <button
+                            onClick={() => setStep(1)}
+                            className={`flex-1 py-3 px-6 rounded-2xl bg-gradient-to-r ${theme.frameGrad} text-white font-bold shadow-lg transition-all hover:scale-[1.02] active:scale-95 text-center text-sm sm:text-base`}
+                        >
+                            בואו נתחיל! 🚀
+                        </button>
+                        <button
+                            onClick={onClose}
+                            className="py-3 px-5 rounded-2xl bg-white/10 hover:bg-white/15 text-slate-300 font-bold transition-all text-center text-sm sm:text-base"
+                        >
+                            דלג על הסיור
+                        </button>
+                    </div>
+                </div>
+            </div>
+        );
+    }
+
+    const padding = 8;
+    const isStepLast = step === TOUR_STEPS.length - 1;
+
+    return (
+        <div className="fixed inset-0 z-[200] pointer-events-auto">
+            {targetRect ? (
+                <div
+                    className="fixed rounded-2xl transition-all duration-300 pointer-events-none"
+                    style={{
+                        top: Math.max(0, targetRect.top - padding),
+                        left: Math.max(0, targetRect.left - padding),
+                        width: targetRect.width + padding * 2,
+                        height: targetRect.height + padding * 2,
+                        boxShadow: '0 0 0 9999px rgba(0, 0, 0, 0.75), 0 0 25px rgba(255, 255, 255, 0.4)',
+                        border: '2px solid rgba(255, 255, 255, 0.6)',
+                    }}
+                />
+            ) : (
+                <div className="fixed inset-0 bg-black/75 backdrop-blur-sm" />
+            )}
+
+            <div className="fixed inset-0 z-0" onClick={(e) => e.stopPropagation()} />
+
+            <div
+                className="fixed z-10 w-[90vw] max-w-sm bg-slate-900 border border-white/20 rounded-2xl p-5 shadow-[0_20px_50px_rgba(0,0,0,0.9)] text-right dir-rtl animate-in fade-in zoom-in-95 duration-200"
+                style={
+                    targetRect
+                        ? {
+                              top: targetRect.top + targetRect.height + 20 + 300 < window.innerHeight
+                                  ? Math.min(window.innerHeight - 320, targetRect.top + targetRect.height + 16)
+                                  : Math.max(16, targetRect.top - 290),
+                              right: Math.max(16, Math.min(window.innerWidth - 380, window.innerWidth - targetRect.left - targetRect.width)),
+                          }
+                        : {
+                              top: '50%',
+                              left: '50%',
+                              transform: 'translate(-50%, -50%)',
+                          }
+                }
+            >
+                <div className="flex items-center justify-between border-b border-white/10 pb-3 mb-3">
+                    <span className="text-xs font-bold text-cyan-400 bg-cyan-500/10 border border-cyan-500/30 px-2.5 py-1 rounded-full">
+                        צעד {step} מתוך {TOUR_STEPS.length - 1}
+                    </span>
+                    <button
+                        onClick={onClose}
+                        className="text-white/40 hover:text-white transition-colors p-1 rounded-lg"
+                        title="סגור סיור"
+                    >
+                        <X size={18} />
+                    </button>
+                </div>
+
+                <h3 className={`text-lg font-bold text-transparent bg-clip-text bg-gradient-to-r ${theme.titleGrad} mb-1`}>
+                    {currentStepConfig.title}
+                </h3>
+                <p className="text-slate-200 text-xs sm:text-sm leading-relaxed font-medium mb-4">
+                    {currentStepConfig.description}
+                </p>
+
+                <div className="flex items-center justify-between gap-2 pt-2 border-t border-white/10">
+                    <button
+                        onClick={onClose}
+                        className="text-xs text-slate-400 hover:text-white transition-colors font-medium px-2 py-1"
+                    >
+                        דלג
+                    </button>
+
+                    <div className="flex items-center gap-2">
+                        {step > 1 && (
+                            <button
+                                onClick={() => setStep(step - 1)}
+                                className="px-3 py-1.5 rounded-xl bg-white/10 hover:bg-white/20 text-white font-bold text-xs transition-all"
+                            >
+                                הקודם
+                            </button>
+                        )}
+                        <button
+                            onClick={() => {
+                                if (isStepLast) {
+                                    onClose();
+                                } else {
+                                    setStep(step + 1);
+                                }
+                            }}
+                            className={`px-4 py-1.5 rounded-xl bg-gradient-to-r ${theme.frameGrad} text-white font-bold text-xs shadow-md transition-all hover:scale-105 active:scale-95`}
+                        >
+                            {isStepLast ? 'סיום 🚀' : 'הבא'}
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    );
+};
+
 const SingleViewHeader = ({ 
     currentIndex, displayImages, 
     viewMode, setViewMode, theme, setIsSearchOpen, isMobile
@@ -113,7 +336,7 @@ const SingleViewHeader = ({
 
             {/* Middle: Grid/Single Toggles (Hidden on Mobile) */}
             {!isMobile && (
-                <div className="flex items-center gap-1 sm:gap-2">
+                <div className="flex items-center gap-1 sm:gap-2" data-tour="view-modes">
                     <button 
                         onClick={() => setViewMode('grid-3x4')}
                         className={`p-1.5 sm:p-2 rounded-lg transition-all ${viewMode === 'grid-3x4' ? `bg-gradient-to-br ${theme.frameGrad} text-white shadow-lg` : 'hover:bg-white/5 text-white/40'}`}
@@ -145,6 +368,7 @@ const SingleViewHeader = ({
             {/* Left: Search Trigger */}
             <button 
                 onClick={() => setIsSearchOpen(true)}
+                data-tour="search"
                 className={`p-2 rounded-full transition-all hover:scale-110 active:scale-95 ${theme.headerBtnSearchCls} sm:bg-white/5 sm:hover:bg-white/10`}
                 title="חפש ביצירות"
             >
@@ -163,8 +387,21 @@ export default function PublicGallery({ images, metadata }) {
     const [showExplanation, setShowExplanation] = useState(false);
     const [hasSeenTooltip, setHasSeenTooltip] = useState(() => localStorage.getItem('kefel-tooltip') === 'true');
     const [showTooltip, setShowTooltip] = useState(false);
-    const [showFullscreenInfo, setShowFullscreenInfo] = useState(true);
-    const [sortOrder, setSortOrder] = useState('newest'); // 'newest', 'oldest' or 'random'
+    const [sortOrder, setSortOrder] = useState(() => {
+        try {
+            const saved = localStorage.getItem('kefel-sort-order');
+            if (saved && ['newest', 'oldest', 'random'].includes(saved)) {
+                return saved;
+            }
+        } catch {}
+        return 'newest';
+    });
+
+    useEffect(() => {
+        try {
+            localStorage.setItem('kefel-sort-order', sortOrder);
+        } catch {}
+    }, [sortOrder]);
     const [viewMode, setViewMode] = useState('single'); // 'single', 'grid-2x3', 'grid-3x4'
     const [activeMobileTab, setActiveMobileTab] = useState('info');
     const [themeIndex, setThemeIndex] = useState(() => {
@@ -177,6 +414,22 @@ export default function PublicGallery({ images, metadata }) {
     const [isThemeMenuOpen, setIsThemeMenuOpen] = useState(false);
     const [isSortOpen, setIsSortOpen] = useState(false);
     const [isFullscreen, setIsFullscreen] = useState(false);
+
+    // Site Tour State
+    const [hasSeenTour, setHasSeenTour] = useState(() => {
+        try { return localStorage.getItem('kefel-tour-seen') === 'true'; } catch { return false; }
+    });
+    const [isTourActive, setIsTourActive] = useState(() => !hasSeenTour);
+    const [tourStep, setTourStep] = useState(0);
+
+    const finishTour = useCallback(() => {
+        setIsTourActive(false);
+        setTourStep(0);
+        try {
+            localStorage.setItem('kefel-tour-seen', 'true');
+            setHasSeenTour(true);
+        } catch {}
+    }, []);
 
     // Sidebar dynamic height measurement
     const sidebarRef = useRef(null);
@@ -489,6 +742,7 @@ export default function PublicGallery({ images, metadata }) {
                                 <div className="relative flex flex-col items-start gap-2">
                                     <button 
                                         onClick={(e) => { e.stopPropagation(); setIsSortOpen(!isSortOpen); }}
+                                        data-tour="sort"
                                         className={`${theme.headerBtnSearchCls} w-[100px] h-[38px] rounded-full backdrop-blur-md border border-white/20 shadow-2xl transition-all hover:scale-105 active:scale-95 flex items-center justify-center text-sm font-bold pointer-events-auto`}
                                     >
                                         מיון: {sortOrder === 'newest' ? 'חדש' : (sortOrder === 'oldest' ? 'ישן' : 'אקראי')}
@@ -550,6 +804,7 @@ export default function PublicGallery({ images, metadata }) {
                                                 <div className="relative z-10 flex-shrink-0 flex items-center justify-start w-24 sm:w-28">
                                                     <button
                                                         onClick={() => setIsSearchOpen(true)}
+                                                        data-tour="search"
                                                         className={`w-10 h-10 lg:w-11 lg:h-11 rounded-full backdrop-blur-md flex items-center justify-center ${theme.headerBtnSearchCls} animate-in fade-in duration-300 ml-auto`}
                                                         title="חיפוש"
                                                     >
@@ -623,7 +878,7 @@ export default function PublicGallery({ images, metadata }) {
                                             )}
 
                                             {/* Image Area */}
-                                            <div className="relative w-full flex-1 flex flex-col min-h-0" onTouchStart={onTouchStart} onTouchMove={onTouchMove} onTouchEnd={onTouchEnd}>
+                                            <div className="relative w-full flex-1 flex flex-col min-h-0" onTouchStart={onTouchStart} onTouchMove={onTouchMove} onTouchEnd={onTouchEnd} data-tour="single-image">
                                                 <div 
                                                     ref={galleryRef}
                                                     className={`relative flex-1 flex flex-col items-center justify-center bg-white/5 backdrop-blur-[2px] w-full h-full ${viewMode === 'single' ? 'aspect-square' : ''} max-h-full max-w-full overflow-hidden cursor-zoom-in min-h-0 mx-auto animate-pulse-slow`} 
@@ -734,6 +989,7 @@ export default function PublicGallery({ images, metadata }) {
                                                 {viewMode !== 'single' && (
                                                     <button
                                                         onClick={() => setIsSearchOpen(true)}
+                                                        data-tour="search"
                                                         className={`p-1.5 bg-white/10 hover:bg-white/20 rounded-lg text-white transition-colors duration-300 mr-2`}
                                                         title="חיפוש"
                                                     >
@@ -741,7 +997,7 @@ export default function PublicGallery({ images, metadata }) {
                                                     </button>
                                                 )}
 
-                                                <div className="flex items-center gap-1 border-l border-white/20 pl-3">
+                                                <div className="flex items-center gap-1 border-l border-white/20 pl-3" data-tour="view-modes">
                                                     <button onClick={() => setViewMode('single')} className={`p-1 rounded transition-colors ${viewMode === 'single' ? 'bg-white/20 text-white' : 'text-white/50 hover:text-white'}`} title="תמונה אחת">
                                                         <div className="w-5 h-5 border-[2px] border-current rounded-sm"></div>
                                                     </button>
@@ -767,6 +1023,7 @@ export default function PublicGallery({ images, metadata }) {
 
                                                 <div
                                                     className="flex items-center gap-2 relative cursor-pointer"
+                                                    data-tour="sort"
                                                     onWheel={(e) => {
                                                         e.preventDefault();
                                                         if (e.deltaY > 0) setSortOrder('random');
@@ -976,13 +1233,25 @@ export default function PublicGallery({ images, metadata }) {
                 )}
             </div>
 
-            {/* Theme Toggle */}
-            <div className="fixed bottom-6 left-6 z-50">
+            {/* Theme Toggle & Tour Re-trigger */}
+            <div className="fixed bottom-6 left-6 z-50 flex items-center gap-2">
                 <button 
                     onClick={() => setIsThemeMenuOpen(!isThemeMenuOpen)} 
                     className={`${theme.themeBtnCls} ${isMobile ? 'p-2.5' : 'p-3'} rounded-full shadow-2xl transition-transform hover:scale-110 border-2`}
+                    title="ערכת נושא"
                 >
                     <Palette size={isMobile ? 20 : 24} />
+                </button>
+                <button
+                    onClick={() => {
+                        setTourStep(0);
+                        setIsTourActive(true);
+                    }}
+                    className={`${theme.themeBtnCls} ${isMobile ? 'p-2.5' : 'px-3 py-2.5'} rounded-full shadow-2xl transition-transform hover:scale-110 border-2 flex items-center gap-1.5 font-bold text-xs`}
+                    title="הדרכה על האתר"
+                >
+                    <HelpCircle size={isMobile ? 20 : 22} />
+                    {!isMobile && <span>סיור באתר</span>}
                 </button>
                 {isThemeMenuOpen && (
                     <div className="absolute bottom-full left-0 mb-4 bg-slate-900/90 backdrop-blur-xl border border-white/20 rounded-2xl p-2 w-36 shadow-2xl flex flex-col gap-1 animate-in slide-in-from-bottom-2">
@@ -1035,6 +1304,14 @@ export default function PublicGallery({ images, metadata }) {
                     </div>
                 </div>
             )}
+            {/* Guided Tour Component */}
+            <SiteTour
+                isActive={isTourActive}
+                step={tourStep}
+                setStep={setTourStep}
+                onClose={finishTour}
+                theme={theme}
+            />
         </div>
     );
 }
