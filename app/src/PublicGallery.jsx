@@ -635,6 +635,7 @@ export default function PublicGallery({ images, metadata }) {
                                                             key={currentFile} 
                                                             src={`./images/${encodeURIComponent(currentFile.replace(/\.(jpg|jpeg|png)$/i, '.webp'))}?v=${fileMetadata?.dateMillis || ''}`} 
                                                             alt={fileMetadata?.title || 'תמונה'} 
+                                                            decoding="async"
                                                             className="w-full h-full object-contain filter drop-shadow-2xl relative z-10 animate-in zoom-in-95 duration-500" 
                                                             onError={(ev) => { ev.currentTarget.src = `./images/${encodeURIComponent(currentFile)}`; }}
                                                         />
@@ -644,15 +645,21 @@ export default function PublicGallery({ images, metadata }) {
                                                                 ? (galleryAspectRatio < 1.35 ? 'grid-cols-3 grid-rows-3' : 'grid-cols-4 grid-rows-3') 
                                                                 : (galleryAspectRatio < 1.35 ? 'grid-cols-2 grid-rows-2' : 'grid-cols-3 grid-rows-2')
                                                         }`}>
-                                                            {displayImages.slice(currentIndex, currentIndex + getGridSize()).map((file, idx) => (
-                                                                <div key={file} className="relative aspect-square w-full h-full flex items-center justify-center cursor-zoom-in group" onClick={(e) => { e.stopPropagation(); setCurrentIndex(currentIndex + idx); setViewMode('single'); openFullscreen(); }}>
-                                                                    <img 
-                                                                        src={`./images/${encodeURIComponent(file.replace(/\.(jpg|jpeg|png)$/i, '.webp'))}?v=${metadata[file]?.dateMillis || ''}`} 
-                                                                        className="w-full h-full object-contain filter drop-shadow-md rounded-xl transition-transform group-hover:scale-105" 
-                                                                        onError={(ev) => { ev.currentTarget.src = `./images/${encodeURIComponent(file)}`; }}
-                                                                    />
-                                                                </div>
-                                                            ))}
+                                                            {displayImages.slice(currentIndex, currentIndex + getGridSize()).map((file, idx) => {
+                                                                const webpFile = file.replace(/\.(jpg|jpeg|png)$/i, '.webp');
+                                                                return (
+                                                                    <div key={file} className="relative aspect-square w-full h-full flex items-center justify-center cursor-zoom-in group" onClick={(e) => { e.stopPropagation(); setCurrentIndex(currentIndex + idx); setViewMode('single'); openFullscreen(); }}>
+                                                                        <img 
+                                                                            src={`./thumbnails/${encodeURIComponent(webpFile)}?v=${metadata[file]?.dateMillis || ''}`} 
+                                                                            alt={metadata[file]?.title || ''}
+                                                                            loading="lazy"
+                                                                            decoding="async"
+                                                                            className="w-full h-full object-contain filter drop-shadow-md rounded-xl transition-transform group-hover:scale-105" 
+                                                                            onError={(ev) => { ev.currentTarget.src = `./images/${encodeURIComponent(webpFile)}`; }}
+                                                                        />
+                                                                    </div>
+                                                                );
+                                                            })}
                                                         </div>
                                                     )}
                                                 </div>
@@ -1008,12 +1015,22 @@ export default function PublicGallery({ images, metadata }) {
                             <input type="text" autoFocus placeholder="חפש..." value={searchQuery} onChange={(e) => setSearchQuery(e.target.value)} className="bg-transparent text-white w-full outline-none text-right font-bold" dir="rtl" />
                         </div>
                         <div className="mt-4 flex-1 overflow-y-auto space-y-2 no-scrollbar">
-                            {filteredImages.length > 0 ? filteredImages.map(file => (
-                                <button key={file} onClick={() => { isSelectingResult.current = true; setCurrentIndex(shuffledImages.indexOf(file)); setIsSearchOpen(false); setSearchQuery(''); }} className="flex items-center gap-3 w-full p-2 hover:bg-white/5 rounded-xl transition-all border border-transparent hover:border-white/5">
-                                    <div className="flex-1 text-right"><div className="text-white font-bold text-sm truncate">{metadata[file]?.title || file}</div></div>
-                                    <img src={`./images/${encodeURIComponent(file)}`} className="w-12 h-12 rounded-lg object-cover" />
-                                </button>
-                            )) : searchQuery && <div className="text-center py-10 opacity-50">לא נמצאו תוצאות</div>}
+                            {filteredImages.length > 0 ? filteredImages.slice(0, 40).map(file => {
+                                const webpFile = file.replace(/\.(jpg|jpeg|png)$/i, '.webp');
+                                return (
+                                    <button key={file} onClick={() => { isSelectingResult.current = true; setCurrentIndex(shuffledImages.indexOf(file)); setIsSearchOpen(false); setSearchQuery(''); }} className="flex items-center gap-3 w-full p-2 hover:bg-white/5 rounded-xl transition-all border border-transparent hover:border-white/5">
+                                        <div className="flex-1 text-right"><div className="text-white font-bold text-sm truncate">{metadata[file]?.title || file}</div></div>
+                                        <img 
+                                            src={`./thumbnails/${encodeURIComponent(webpFile)}`} 
+                                            alt={metadata[file]?.title || ''}
+                                            loading="lazy"
+                                            decoding="async"
+                                            className="w-12 h-12 rounded-lg object-cover bg-white/5" 
+                                            onError={(ev) => { ev.currentTarget.src = `./images/${encodeURIComponent(webpFile)}`; }}
+                                        />
+                                    </button>
+                                );
+                            }) : searchQuery && <div className="text-center py-10 opacity-50">לא נמצאו תוצאות</div>}
                         </div>
                     </div>
                 </div>

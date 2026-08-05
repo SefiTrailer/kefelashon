@@ -12,6 +12,7 @@ const SOURCE_REPOS = [
 const DATA_FILE = path.resolve(__dirname, '../../data.json');
 const PUBLIC_DIR = path.resolve(__dirname, '../public');
 const PUBLIC_IMAGES_DIR = path.join(PUBLIC_DIR, 'images');
+const PUBLIC_THUMBNAILS_DIR = path.join(PUBLIC_DIR, 'thumbnails');
 const PUBLIC_DATA_FILE = path.join(PUBLIC_DIR, 'public-data.json');
 
 console.log('Preparing public assets (v2 - Extension Blind & Newest First)...');
@@ -22,6 +23,9 @@ if (!fs.existsSync(PUBLIC_DIR)) {
 }
 if (!fs.existsSync(PUBLIC_IMAGES_DIR)) {
     fs.mkdirSync(PUBLIC_IMAGES_DIR, { recursive: true });
+}
+if (!fs.existsSync(PUBLIC_THUMBNAILS_DIR)) {
+    fs.mkdirSync(PUBLIC_THUMBNAILS_DIR, { recursive: true });
 }
 
 // Read the main data
@@ -88,12 +92,36 @@ async function buildPublicGallery() {
                 } else {
                     await sharp(sourcePath)
                         .resize({ width: 1280, withoutEnlargement: true })
-                        .webp({ quality: 82 })
-                        .toFile(destPath);
                 }
             } catch (err) {
                 console.error(`Failed to process ${filename}:`, err);
                 continue;
+            }
+        }
+
+        // Thumbnail destination
+        const destThumbPath = path.join(PUBLIC_THUMBNAILS_DIR, newFilename);
+        let shouldProcessThumb = !fs.existsSync(destThumbPath);
+        if (!shouldProcessThumb) {
+            try {
+                const sourceStat = fs.statSync(sourcePath);
+                const thumbStat = fs.statSync(destThumbPath);
+                if (sourceStat.mtimeMs > thumbStat.mtimeMs) {
+                    shouldProcessThumb = true;
+                }
+            } catch {
+                shouldProcessThumb = true;
+            }
+        }
+
+        if (shouldProcessThumb) {
+            try {
+                await sharp(sourcePath)
+                    .resize({ width: 250, withoutEnlargement: true })
+                    .webp({ quality: 60 })
+                    .toFile(destThumbPath);
+            } catch (err) {
+                console.error(`Failed to process thumbnail for ${filename}:`, err);
             }
         }
 

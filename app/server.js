@@ -36,12 +36,14 @@ app.use((req, res, next) => {
 });
 
 const IMAGES_DIR = path.resolve(__dirname, '../app/public/images');
+const THUMBNAILS_DIR = path.resolve(__dirname, '../app/public/thumbnails');
 const NEW_IMAGES_DIR = path.resolve(__dirname, '../תמונות חדשות');
 const DATA_FILE = path.resolve(__dirname, '../data.json');
 const HASHES_FILE = path.resolve(__dirname, '../hashes.json');
 const SOURCE_BACKUP_DIR = path.resolve(__dirname, '../app/תמונות מקור'); // Keep for legacy if needed
 
 console.log('IMAGES_DIR:', IMAGES_DIR);
+console.log('THUMBNAILS_DIR:', THUMBNAILS_DIR);
 console.log('NEW_IMAGES_DIR:', NEW_IMAGES_DIR);
 console.log('DATA_FILE:', DATA_FILE);
 
@@ -63,6 +65,7 @@ const upload = multer({ storage: storage });
 
 app.use('/images', express.static(IMAGES_DIR));
 app.use('/images', express.static(NEW_IMAGES_DIR));
+app.use('/thumbnails', express.static(THUMBNAILS_DIR));
 
 app.get('/favicon.ico', (req, res) => {
     const icoPath = path.resolve(__dirname, 'public/logo.ico');
@@ -114,17 +117,20 @@ app.get('/api/images', (req, res) => {
         });
 
         const fileStats = {};
+        const fileCreationTimes = {};
         files.forEach(file => {
             try {
                 const dir = fileSources[file] === 'new' ? NEW_IMAGES_DIR : IMAGES_DIR;
                 const stat = fs.statSync(path.join(dir, file));
                 fileStats[file] = stat.size;
+                fileCreationTimes[file] = stat.birthtimeMs || stat.mtimeMs;
             } catch (err) {
                 fileStats[file] = 0;
+                fileCreationTimes[file] = 0;
             }
         });
 
-        res.json({ files, data, fileStats, fileSources });
+        res.json({ files, data, fileStats, fileCreationTimes, fileSources });
     } catch (e) {
         res.status(500).json({ error: e.message });
     }
@@ -922,7 +928,7 @@ app.post('/api/social/whatsapp/logout', async (req, res) => {
 
 app.post('/api/social/post', async (req, res) => {
     try {
-        const { filename, caption, platform, shareToFacebook } = req.body;
+        const { filename, caption, platform, shareToFacebook, shareToPersonalProfile } = req.body;
 
         const accessToken = process.env.META_ACCESS_TOKEN;
         const fbPageId = process.env.FB_PAGE_ID;
@@ -1050,7 +1056,10 @@ app.post('/api/social/post', async (req, res) => {
         if (platform === 'facebook') {
             if (!fbPageId) return res.status(400).json({ error: 'FB_PAGE_ID is not configured' });
 
-            console.log(`[Social] Posting to Facebook Page: ${fbPageId} (shareToFacebook: ${shareToFacebook})`);
+            const results = [];
+            
+            // 1. Post to Page
+            console.log(`[Social] Posting to Facebook Page: ${fbPageId}`);
             const fbRes = await fetch(`https://graph.facebook.com/v21.0/${fbPageId}/photos`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
@@ -1063,12 +1072,42 @@ app.post('/api/social/post', async (req, res) => {
             const fbData = await fbRes.json();
             if (fbRes.ok) {
                 recordSocialPost(filename, 'facebook');
-                return res.json({ ok: true, id: fbData.id });
+                results.push({ platform: 'facebook-page', ok: true, id: fbData.id });
             } else {
-                console.error('[Social] Facebook Direct Post Error:', JSON.stringify(fbData, null, 2));
-                const errorMsg = fbData.error?.message || 'Facebook upload failed';
-                return res.status(fbRes.status).json({ error: errorMsg });
+                console.error('[Social] Facebook Page Error:', JSON.stringify(fbData, null, 2));
+                results.push({ platform: 'facebook-page', ok: false, error: fbData.error?.message || 'Page post failed' });
             }
+
+            // 2. Optional Repost to Personal Profile (SefiTrailer AI)
+            if (shareToPersonalProfile) {
+                console.log(`[Social] Attempting repost to Personal Profile...`);
+                const meRes = await fetch(`https://graph.facebook.com/v21.0/me/photos`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        url: imageUrl,
+                        caption: caption,
+                        access_token: accessToken
+                    })
+                });
+                const meData = await meRes.json();
+                if (meRes.ok) {
+                    results.push({ platform: 'facebook-personal', ok: true, id: meData.id });
+                } else {
+                    console.error('[Social] Facebook Personal Error:', JSON.stringify(meData, null, 2));
+                    results.push({ platform: 'facebook-personal', ok: false, error: meData.error?.message || 'Personal post failed' });
+                }
+            }
+
+            const allOk = results.every(r => r.ok);
+            if (allOk) return res.json({ success: true, results });
+            
+            // If some failed, return aggregate error msg but also successes
+            const errors = results.filter(r => !r.ok).map(r => `${r.platform}: ${r.error}`).join(', ');
+            return res.status(results.some(r => r.ok) ? 207 : 400).json({ 
+                error: `Some posts failed: ${errors}`,
+                results 
+            });
         }
 
         if (platform === 'whatsapp') {
