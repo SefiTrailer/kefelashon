@@ -1,5 +1,68 @@
 {
   "files": [
+    "אופנוע כבד.webp",
+    "E מלא.webp",
+    "באבא כמה.webp",
+    "בוחרת צד.webp",
+    "בקבוק לחיץ.webp",
+    "דג בחריין.webp",
+    "הבה טיח.webp",
+    "ה'טונה'.webp",
+    "המחירים בריצפה.webp",
+    "הסבת אקדמאים.webp",
+    "זכויות הדם.webp",
+    "חייל בחיר.webp",
+    "טיהור מלולי.webp",
+    "כדור פורח.webp",
+    "לבני הנעורים.webp",
+    "לוז מסודר.webp",
+    "מטעין סול ללה.webp",
+    "מעודד אגירה.webp",
+    "משבית שמחות.webp",
+    "נאמת לי מאוד.webp",
+    "נוסע בזמן.webp",
+    "ניקוי שליש.webp",
+    "סוללות כביש.webp",
+    "סרט בורקס.webp",
+    "קולות מוזרים.webp",
+    "קיש-ארון.webp",
+    "שיח רגשי.webp",
+    "שליטא מרחוק.webp",
+    "שר החכ להוט.webp",
+    "תחושת ניקור.webp",
+    "תשעת ה'ימים'.webp",
+    "בדיקת M עראי.webp",
+    "תן וכך.webp",
+    "שרט האוצר.webp",
+    "שמיכה לרב עיר.webp",
+    "שלגיה ושבעת הגמדים.webp",
+    "רועה בכוכבים.webp",
+    "קורס צלי-לה.webp",
+    "SIM שלום.webp",
+    "נקודה למחשבה.webp",
+    "נושא- כלים.webp",
+    "נהג מרוצים.webp",
+    "משוגעים לדוור.webp",
+    "מרכז הרעלות.webp",
+    "מיזוג אוויר.webp",
+    "מ'טילים' אימה.webp",
+    "להציל את טוראי ראיין.webp",
+    "כיפה אדומה.webp",
+    "ילד עלים.webp",
+    "טעם נרכש.webp",
+    "חלבה.webp",
+    "חזה רע גנרלית.webp",
+    "הסף הרופא.webp",
+    "הנאת כדור.webp",
+    "המוציא מחבירו.webp",
+    "הוכחה באינדוקציה.webp",
+    "האסירון העליון.webp",
+    "בר מיץ ווה.webp",
+    "בעגלה ובזמן קריב.webp",
+    "בודי רוגע.webp",
+    "אסיר תודה.webp",
+    "אחים לצרה.webp",
+    "אוטו דידקט.webp",
     "שרה טבעות.webp",
     "שקוע בלי מוד.webp",
     "שם-חוט.webp",
@@ -1740,6 +1803,17 @@
       "createdAt": 1772468311000,
       "dateMillis": 1772468311000
     },
+    "E מלא.webp": {
+      "title": "E מלא",
+      "explanation": "נשמע כמו 'אמאלה'.\nרואים 'אי' בים 'מלא' בילדים, כאשר יש מופע של דמות של האות 'E' כשהוא מחזיק 'עלה' ביד, וכל הילדים צועקים 'אמאלה'",
+      "topic": "ילדים, משפחה וילדים, הצגה, אמא, אי",
+      "isApproved": true,
+      "isAIGenerated": false,
+      "needsAIImprovement": false,
+      "aiSuggestion": null,
+      "createdAt": 1785931476590,
+      "dateMillis": 1785931476590
+    },
     "ED אמין.webp": {
       "title": "ED אמין",
       "explanation": "רפרנס לדמות של הדיקטטור אידי אמין, רואים דמות שמורכבת מהאותיות ED והוא סוחר בבסטה, והוא נראה אמין מאוד",
@@ -1829,6 +1903,17 @@
       "isAIGenerated": true,
       "createdAt": 1772468311000,
       "dateMillis": 1772468311000
+    },
+    "SIM שלום.webp": {
+      "title": "SIM שלום",
+      "explanation": "נשמע כמו החלק מתפילת שמונה עשרה 'שים שלום', רואים חזן בתפילה שהוא נפרד מה'סים' בברכת שלום",
+      "topic": "תפילה, יהדות ומסורת, בית כנסת, סלולרי, סים",
+      "isApproved": true,
+      "isAIGenerated": false,
+      "needsAIImprovement": false,
+      "aiSuggestion": null,
+      "createdAt": 1785929768449,
+      "dateMillis": 1785929768449
     },
     "TEA....SHAAA.webp": {
       "title": "TEA?....SHAAA",
@@ -2105,6 +2190,17 @@
       "createdAt": 1772468311000,
       "dateMillis": 1772468311000
     },
+    "אוטו דידקט.webp": {
+      "title": "אוטו דידקט",
+      "explanation": "ביטוי למישהו שלומד מעצמו דברים, בתמונה רואים אוטו שלומד בכיתה רגילה",
+      "topic": "בית ספר, משפחה וילדים, מכונית",
+      "isApproved": true,
+      "isAIGenerated": false,
+      "needsAIImprovement": false,
+      "aiSuggestion": null,
+      "createdAt": 1785928747574,
+      "dateMillis": 1785928747574
+    },
     "אוכל ברוש.webp": {
       "title": "אוכל ברוש",
       "explanation": "משחק מילים שמיעתי על ביטוי הסלנג 'אוכל ת'ראש' (חופר ומדבר יותר מדי). הבחור בתמונה לא מספיק לדבר ונראה שהוא 'אוכל ת'ראש' לחבר שלו, אלא שהוא פשוטו כמשמעו אוכל ענף של עץ ברוש - כלומר הוא 'אוכל ברוש'.",
@@ -2179,6 +2275,17 @@
       "aiSuggestion": null,
       "createdAt": 1774545881240,
       "dateMillis": 1774545881240
+    },
+    "אופנוע כבד.webp": {
+      "title": "אופנוע כבד",
+      "explanation": "נשמע כמו אופנוע גדול וכבד, מצד שני רואים מנה של 'כבד' בצורה של אופנוע טוסטוס קליל",
+      "topic": "אופנוע, תחבורה, אוכל, אוכל ושתייה, כבד, מסעדה",
+      "isApproved": true,
+      "isAIGenerated": false,
+      "needsAIImprovement": false,
+      "aiSuggestion": null,
+      "createdAt": 1785931511296,
+      "dateMillis": 1785931511296
     },
     "אופני הרים.webp": {
       "title": "אופני הרים",
@@ -2318,6 +2425,17 @@
       "isAIGenerated": false,
       "createdAt": 1772468311000,
       "dateMillis": 1772468311000
+    },
+    "אחים לצרה.webp": {
+      "title": "אחים לצרה",
+      "explanation": "רואים כלה שתמתחתנת ולידה האחים שלה, והיא מאוד 'צרה'",
+      "topic": "חתונה, משפחה, משפחה וילדים",
+      "isApproved": true,
+      "isAIGenerated": false,
+      "needsAIImprovement": false,
+      "aiSuggestion": null,
+      "createdAt": 1785928782845,
+      "dateMillis": 1785928782845
     },
     "אחלמה מעירה.webp": {
       "title": "אחלמה מעירה",
@@ -2708,6 +2826,17 @@
       "createdAt": 1772468311000,
       "dateMillis": 1772468311000
     },
+    "אסיר תודה.webp": {
+      "title": "אסיר תודה",
+      "explanation": "ביטוי למישהו שהוא אסיר תודה, רואים אסיר בבית סוהר, מסיר מהקיר את הכיתוב 'תודה', והסוהר אומר לו שהוא אסיר תודה. האסיר אומר לו נכון אני אסיר.",
+      "topic": "בית כלא, ביטוי, תודה",
+      "isApproved": true,
+      "isAIGenerated": false,
+      "needsAIImprovement": false,
+      "aiSuggestion": null,
+      "createdAt": 1785928849460,
+      "dateMillis": 1785928849460
+    },
     "אסלן.webp": {
       "title": "אסלן",
       "explanation": "הדמות של האריה מנרניה 'אסלן', בתור אסלה מעוצבת ייחודית בשירותים",
@@ -2876,6 +3005,17 @@
       "createdAt": 1772468311000,
       "dateMillis": 1772468311000
     },
+    "באבא כמה.webp": {
+      "title": "באבא כמה?",
+      "explanation": "נשמע כמו שם המסכת 'בבא קמא', מאידך המקובל הבאבא לומד מסכת בבא מציעא",
+      "topic": "תלמוד, יהדות, יהדות ומסורת, רבנים",
+      "isApproved": true,
+      "isAIGenerated": false,
+      "needsAIImprovement": false,
+      "aiSuggestion": null,
+      "createdAt": 1785931406584,
+      "dateMillis": 1785931406584
+    },
     "באלות הברית.webp": {
       "title": "באלות הברית",
       "explanation": " נשמע כמו 'בעלות הברית' ממלחמת העולם השניה, רואים את מנהיגי בעלות הברית מחזיקים ב'אלות' עם הדגל שלהם",
@@ -2948,6 +3088,17 @@
       "createdAt": 1772468311000,
       "dateMillis": 1772468311000
     },
+    "בדיקת M עראי.webp": {
+      "title": "בדיקת M עראי",
+      "explanation": " נשמע כמו 'בדיקת MRI', רואים מישהו ליד מתקן MRI, שהוא בודק מיצג עראי של האות M",
+      "topic": "רפואה, פועלים, בנייה",
+      "isApproved": true,
+      "isAIGenerated": false,
+      "needsAIImprovement": false,
+      "aiSuggestion": null,
+      "createdAt": 1785930121444,
+      "dateMillis": 1785930121444
+    },
     "בדיקת דרקונים.webp": {
       "title": "בדיקת דרקונים",
       "explanation": "נשמע כמו 'בדיקת דרכונים', רואים דרקונים בשדה התעופה בבדיקת דרכונים, אז זה גם בדיקת דרקונים, מה שגם שהבודקים עצמם הם דרקונים.",
@@ -2991,6 +3142,17 @@
       "createdAt": 1772468311000,
       "dateMillis": 1772468311000
     },
+    "בודי רוגע.webp": {
+      "title": "בודי רוגע",
+      "explanation": "נשמע כמו 'דיאן בודירוגה' שחקן הכדורסל המוכר מסרביה, רואים אותו במרכז יוגה לגוף",
+      "topic": "כדורסל, בריאות, יוגה",
+      "isApproved": true,
+      "isAIGenerated": false,
+      "needsAIImprovement": false,
+      "aiSuggestion": null,
+      "createdAt": 1785928898441,
+      "dateMillis": 1785928898441
+    },
     "בודק דופק.webp": {
       "title": "בודק דופק",
       "explanation": "רואים פרמדיק שבודק את ה'דופק' של הדלת, במה שדופקים על הדלת איזה צליל זה משמיע",
@@ -3006,6 +3168,17 @@
       "topic": "חגים ומועדים, ראש השנה, חיות, פילים, משפחה וילדים, ילדים, חינוך",
       "createdAt": 1772468311000,
       "dateMillis": 1772468311000
+    },
+    "בוחרת צד.webp": {
+      "title": "בוחרת צד",
+      "explanation": "רואים תוכנית ריאליטי, שהאישה צריכה לבחור איזה 'צד' [צייד] היא רוצה להמשיך איתו",
+      "topic": "ריאליטי, החלטה, צייד",
+      "isApproved": true,
+      "isAIGenerated": false,
+      "needsAIImprovement": false,
+      "aiSuggestion": null,
+      "createdAt": 1785931372610,
+      "dateMillis": 1785931372610
     },
     "בול באמצע.webp": {
       "title": "בול באמצע",
@@ -3365,6 +3538,17 @@
       "createdAt": 1773675585000,
       "dateMillis": 1773675585000
     },
+    "בעגלה ובזמן קריב.webp": {
+      "title": "בעגלה ובזמן קריב",
+      "explanation": "כמו התפילה ב'קדיש', רואים רב מברך אשה שהיא בחודש התשיעי מצד אחד, ומצד שני היא עם תינוק בן שנה בעגלה.",
+      "topic": "תפילה, יהדות ומסורת, ברכה",
+      "isApproved": true,
+      "isAIGenerated": false,
+      "needsAIImprovement": false,
+      "aiSuggestion": null,
+      "createdAt": 1785928936621,
+      "dateMillis": 1785928936621
+    },
     "בעיטה אחי שינה.webp": {
       "title": "בעיטה אחי שינה",
       "explanation": "נשמע כמו 'בעיתה אחישנה' שהגאולה באה בלי לשים לב, רואים ילד שבועט באח שלו תוך כדי שינה...",
@@ -3427,6 +3611,17 @@
       "createdAt": 1772468311000,
       "dateMillis": 1772468311000
     },
+    "בקבוק לחיץ.webp": {
+      "title": "בקבוק לחיץ",
+      "explanation": "כמו הביטוי בקבוק לחיץ מפלסטיק, רק שכאן רואים בקבוק מזכוכית שלוחצים עליו לרכוש מוצרים שהוא לא צריך, כי הוא לחיץ",
+      "topic": "אופי, רגשות ותכונות, קניון, קנייה",
+      "isApproved": true,
+      "isAIGenerated": false,
+      "needsAIImprovement": false,
+      "aiSuggestion": null,
+      "createdAt": 1785931340158,
+      "dateMillis": 1785931340158
+    },
     "בר בי רב, או בר בי קיו.webp": {
       "title": "בר בי רב, או בר בי קיו",
       "explanation": "ביום העצמאות יש את ההתלבטות האם ללכת לשיעורי תורה בר בי רב, או לאכול על האש בר בי קיו",
@@ -3455,6 +3650,17 @@
       "isAIGenerated": false,
       "createdAt": 1772468311000,
       "dateMillis": 1772468311000
+    },
+    "בר מיץ ווה.webp": {
+      "title": "בר מיץ ווה",
+      "explanation": "נשמע כמו 'בר מצווה', רואים נערי בר מצווה, כשהם מכינים מיצים ושייקים, בבר שלהם, שמוזג מיץ ווה-VA",
+      "topic": "אוכל, אוכל ושתייה, בר מצווה, יהדות, יהדות ומסורת",
+      "isApproved": true,
+      "isAIGenerated": false,
+      "needsAIImprovement": false,
+      "aiSuggestion": null,
+      "createdAt": 1785928973526,
+      "dateMillis": 1785928973526
     },
     "ברביקיו או ברבי רב.webp": {
       "title": "ברביקיו או ברבי רב",
@@ -3873,6 +4079,17 @@
       "createdAt": 1780228325351,
       "dateMillis": 1780228325351
     },
+    "דג בחריין.webp": {
+      "title": "דג בחריין",
+      "explanation": "נשמע כמו שאוכלים גיפלטעפיש עם חריין, רואים מסעדה כזו במדינת בחריין",
+      "topic": "דגים, חיות, אוכל, אוכל ושתייה, בחריין, מדינת ערב",
+      "isApproved": true,
+      "isAIGenerated": false,
+      "needsAIImprovement": false,
+      "aiSuggestion": null,
+      "createdAt": 1785931298733,
+      "dateMillis": 1785931298733
+    },
     "דג כסף.webp": {
       "title": "דג כסף",
       "explanation": "רואים דמות של החרק 'דג כסף' כשהוא יושב על גדת הנהר, עם חכה, והוא דג מטבעות של כסף",
@@ -4127,6 +4344,17 @@
       "createdAt": 1772468311000,
       "dateMillis": 1772468311000
     },
+    "ה'טונה'.webp": {
+      "title": "ה'טונה'",
+      "explanation": "נשמע כמו 'אתונה', רואים מסעדת דגים ירושלמית, שבפנים הכל מעוצב כמו 'אתונה' העיר היוונית.",
+      "topic": "יוון, דגים, חיות, חו\"ל, אוכל, אוכל ושתייה, מסעדה",
+      "isApproved": false,
+      "isAIGenerated": false,
+      "needsAIImprovement": false,
+      "aiSuggestion": null,
+      "createdAt": 1785931225736,
+      "dateMillis": 1785931225736
+    },
     "ה'רדם'.webp": {
       "title": "ה'רדם'",
       "explanation": "נשמע כמו 'הר אדם', רואים אדם שהוא ענק ממש 'הר אדם' שהוא מספר סיפור ילדים לפני השינה וככה מרדים את הילדים את הוא 'רדם'",
@@ -4172,6 +4400,17 @@
       "createdAt": 1772468311000,
       "dateMillis": 1772468311000
     },
+    "האסירון העליון.webp": {
+      "title": "האסירון העליון",
+      "explanation": "נשמע כמו 'העשירון העליון' [הביטוי לאנשים עשירים מאוד, בשונה מה'עשירון התחתון' שהם האנשים העניים ביותר]\nרואים בתמונה שני אסירון אחד למעלה ואחד למטה, מצד שני העליון הוא נראה כמו ילד [אסירון] שמגיע משכונת מצוקה, כלומר שהוא שייך לעשירון התחתון, מאידך למטה יש איש צווארון לבן, ששייך לעשירון העליון והוא נמוך [אסירון] ויושב למטה",
+      "topic": "כספים, מקצועות ועבודה, חברה, בית כלא",
+      "isApproved": true,
+      "isAIGenerated": false,
+      "needsAIImprovement": false,
+      "aiSuggestion": null,
+      "createdAt": 1785929078923,
+      "dateMillis": 1785929078923
+    },
     "האסקיפוד.webp": {
       "title": "האסקיפוד",
       "explanation": "הכלאה דמיונית בין כלב מסוג האסקי לבין קיפוד. היצור משלב את הפנים והפרווה של ההאסקי עם הקוצים המגינים של הקיפוד על גבו.",
@@ -4206,6 +4445,17 @@
       "topic": "חיות, כלב, כלבים, משפחה וילדים, משפחה",
       "createdAt": 1772468311000,
       "dateMillis": 1772468311000
+    },
+    "הבה טיח.webp": {
+      "title": "הבה טיח",
+      "explanation": "נשמע כמו 'אבטיח', רואים מישהו רעב בסיום הצום והוא רוצה לאכול אבטיח, ואחיו מתחכם ומביא לו טי",
+      "topic": "אבטיח, אוכל, אוכל ושתייה, טיח, שיפוצים",
+      "isApproved": true,
+      "isAIGenerated": false,
+      "needsAIImprovement": false,
+      "aiSuggestion": null,
+      "createdAt": 1785931260294,
+      "dateMillis": 1785931260294
     },
     "הבשל שבת.webp": {
       "title": "הבשל שבת",
@@ -4267,6 +4517,17 @@
       "isAIGenerated": false,
       "createdAt": 1773675585000,
       "dateMillis": 1773675585000
+    },
+    "הוכחה באינדוקציה.webp": {
+      "title": "הוכחה באינדוקציה",
+      "explanation": "'אינדוקציה' דרך מתמטית להוכחה, רואים את ד\"ר צנזור מהטכניון [חפשו ביוטיוב הרצאות שלו] שהוא מוכיח דרך הכיריים",
+      "topic": "מתמטיקה, הוכחה, אוכל, אוכל ושתייה, מטבח",
+      "isApproved": true,
+      "isAIGenerated": false,
+      "needsAIImprovement": false,
+      "aiSuggestion": null,
+      "createdAt": 1785929139075,
+      "dateMillis": 1785929139075
     },
     "הולך בתל.webp": {
       "title": "הולך בתל",
@@ -4586,6 +4847,17 @@
       "createdAt": 1773678054000,
       "dateMillis": 1773678054000
     },
+    "המוציא מחבירו.webp": {
+      "title": "המוציא מחבירו",
+      "explanation": "רואים אחד שאוכל לחם של חבירו, והוא מברך 'המוציא', ובחור שלישי שואל 'זה שלך?' כביכול - תוכיח!, שהרי הכלל ההלכתי הוא 'המוציא מחבירו עליו הראיה'",
+      "topic": "אוכל, אוכל ושתייה, ביטוי למדני, לחם",
+      "isApproved": true,
+      "isAIGenerated": false,
+      "needsAIImprovement": false,
+      "aiSuggestion": null,
+      "createdAt": 1785929210251,
+      "dateMillis": 1785929210251
+    },
     "המחיר נמוך מידי.webp": {
       "title": "המחיר נמוך מידי",
       "explanation": "רפרנס הומוריסטי לפרסומת הידועה. התמונה ממחישה מצב שבו המחיר כל כך נמוך, שהוא פשוט נמצא פיזית מתחת למפלס הרצפה.",
@@ -4595,6 +4867,17 @@
       "isAIImproved": true,
       "createdAt": 1772468311000,
       "dateMillis": 1772468311000
+    },
+    "המחירים בריצפה.webp": {
+      "title": "המחירים בריצפה",
+      "explanation": "רואים שהמחירים לא כל כך זולים ובכלל לא ברצפה, אבל מצד שני כל המחירים כתובים על הרצפה ממש",
+      "topic": "חנות, סופרמרקט, זול",
+      "isApproved": true,
+      "isAIGenerated": false,
+      "needsAIImprovement": false,
+      "aiSuggestion": null,
+      "createdAt": 1785931175923,
+      "dateMillis": 1785931175923
     },
     "המילה האחרונה.webp": {
       "title": "המילה האחרונה",
@@ -4666,6 +4949,17 @@
       "createdAt": 1773685106000,
       "dateMillis": 1773685106000
     },
+    "הנאת כדור.webp": {
+      "title": "הנאת כדור",
+      "explanation": "רואים את ליונל מסי נהנה מאוד מהכדור רגל שלו, והוא מצביע על כדורי ציפרלקס שגורמים ל'הנאה' בצורה כלשהו",
+      "topic": "תרופה, כדורגל, ספורט, מסי",
+      "isApproved": true,
+      "isAIGenerated": false,
+      "needsAIImprovement": false,
+      "aiSuggestion": null,
+      "createdAt": 1785929251449,
+      "dateMillis": 1785929251449
+    },
     "הנוסע המתמיד.webp": {
       "title": "הנוסע המתמיד",
       "explanation": "נשמע כמו המבצע של חברת התעופה אל על, רואים איש לומד בהתמדה תוך כדי טיסה, רפרנס גם לסרט 'הנוסע השמיני'",
@@ -4711,6 +5005,17 @@
       "createdAt": 1773675585000,
       "dateMillis": 1773675585000
     },
+    "הסבת אקדמאים.webp": {
+      "title": "הסבת אקדמאים",
+      "explanation": "נשמע כמו כשאקדמאים מסיבים את תחום העבודה שלהם, מאידך בתמונה רואים אקדמאים בחדר המנוחה שלהם, כשהם רק נחים ומסיבים על הכורסאות שלהם.",
+      "topic": "אקדמיה, אוניברסיטה",
+      "isApproved": true,
+      "isAIGenerated": false,
+      "needsAIImprovement": false,
+      "aiSuggestion": null,
+      "createdAt": 1785931141359,
+      "dateMillis": 1785931141359
+    },
     "הסה ל'חרב' 1.webp": {
       "title": "הסה ל'חרב'",
       "topic": "מוזיקה ותרבות, סלנג, אפוקליפסה, יהדות ומסורת, פתגמים וביטויים, רבנים, קולנוע, משפחה וילדים, ילדים, משפחה, מקצועות ועבודה, כלכלה וכספים",
@@ -4726,6 +5031,17 @@
       "topic": "בית ויומיום, כלי מטבח",
       "createdAt": 1772468311000,
       "dateMillis": 1772468311000
+    },
+    "הסף הרופא.webp": {
+      "title": "הסף הרופא",
+      "explanation": "נשמע כמו 'אסף הרופא' בית החולים במרכז, רואים סף דלת שהוא רופא",
+      "topic": "בית חולים, דלת",
+      "isApproved": true,
+      "isAIGenerated": false,
+      "needsAIImprovement": false,
+      "aiSuggestion": null,
+      "createdAt": 1785929275044,
+      "dateMillis": 1785929275044
     },
     "הסרט 'בני המן'.webp": {
       "title": "הסרט 'בני המן'",
@@ -5306,6 +5622,17 @@
       "createdAt": 1772468311000,
       "dateMillis": 1772468311000
     },
+    "זכויות הדם.webp": {
+      "title": "זכויות הדם",
+      "explanation": "נשמע כמו 'זכויות אדם', רואים שקיות דם שמוחים ומפגשנים על הזכויות שלהם",
+      "topic": "הפגנה, זכויות אדם",
+      "isApproved": true,
+      "isAIGenerated": false,
+      "needsAIImprovement": false,
+      "aiSuggestion": null,
+      "createdAt": 1785931080538,
+      "dateMillis": 1785931080538
+    },
     "זכוכית שבורה.webp": {
       "title": "זכוכית שבורה",
       "explanation": "רואים כוס זכוכית שלמה, רק שהיא שבורת לב, כי החבר שלה עזב אותה",
@@ -5599,6 +5926,17 @@
       "createdAt": 1772468311000,
       "dateMillis": 1772468311000
     },
+    "חזה רע גנרלית.webp": {
+      "title": "חזה רע גנרלית",
+      "explanation": "נשמע כמו חזרה גנרלית, רואים מישהו שנמצא בחזרה הגנרלית של ההצגה, כאשר הוא רואה את הדמות שהל גנרלית שהיא רעה.",
+      "topic": "הצגה, צבא, צבא וביטחון, חזרה",
+      "isApproved": true,
+      "isAIGenerated": false,
+      "needsAIImprovement": false,
+      "aiSuggestion": null,
+      "createdAt": 1785929320773,
+      "dateMillis": 1785929320773
+    },
     "חטונה.webp": {
       "title": "חטונה",
       "explanation": "משחק מילים על המילה \"חתונה\". התמונה מציגה אירוע חתונה חגיגי ומרגש שבו החתן והכלה הם דגי טונה הלבושים בבגדי חתונה מסורתיים.",
@@ -5707,6 +6045,17 @@
       "createdAt": 1776275317225,
       "dateMillis": 1776275317225
     },
+    "חייל בחיר.webp": {
+      "title": "חייל בחי\"ר",
+      "explanation": "נשמע כמו 'חייל בכיר', רואים חייל טוראי שהוא משובץ לחי\"ר, והוא חושב שהוא בכיר כי אמרו לו שהוא 'חייל בחי\"ר'",
+      "topic": "צבא, צבא וביטחון, חייל",
+      "isApproved": true,
+      "isAIGenerated": false,
+      "needsAIImprovement": false,
+      "aiSuggestion": null,
+      "createdAt": 1785931052622,
+      "dateMillis": 1785931052622
+    },
     "חיל רגלים.webp": {
       "title": "חיל רגלים",
       "explanation": "נשמע חי\"ר בצבא, רואים חיל רגלים שעשויים רק מרגליים בלי פלג גוף עליון",
@@ -5785,6 +6134,17 @@
       "isAIGenerated": false,
       "createdAt": 1772468311000,
       "dateMillis": 1772468311000
+    },
+    "חלבה.webp": {
+      "title": "חלבה",
+      "explanation": "המאכל חלבה נשמע כמו הפעולה של החליבה בעבר האישה 'חלבה', רואים אישה שחלבה בטעמים",
+      "topic": "אוכל, אוכל ושתייה, חלב, חלבה, פרות",
+      "isApproved": true,
+      "isAIGenerated": false,
+      "needsAIImprovement": false,
+      "aiSuggestion": null,
+      "createdAt": 1785929361265,
+      "dateMillis": 1785929361265
     },
     "חלום בלע-אות.webp": {
       "title": "חלום בלע-אות",
@@ -6163,6 +6523,17 @@
       "isAIGenerated": true,
       "dateMillis": 1723590110000
     },
+    "טיהור מלולי.webp": {
+      "title": "טיהור מלולי",
+      "explanation": "נשמע כמו 'תיאור מילולי', רואים את הדמות מסרטי הפעוטות 'לולי', כשהוא עושה טיהור מקום מסוכן",
+      "topic": "ילדים, משפחה וילדים, סרטי ילדים, לולי, טיהור, רעל",
+      "isApproved": true,
+      "isAIGenerated": false,
+      "needsAIImprovement": false,
+      "aiSuggestion": null,
+      "createdAt": 1785931003998,
+      "dateMillis": 1785931003998
+    },
     "טיול אופניים.webp": {
       "title": "טיול אופניים",
       "explanation": "פרשנות חזותית מילולית למושג. במקום שאנשים ירכבו על אופניים, התמונה מציגה זוג אופניים שיצאו לטיול נינוח בטבע, כשהם \"הולכים\" להנאתם על השבילים.",
@@ -6314,6 +6685,17 @@
       "createdAt": 1772468311000,
       "dateMillis": 1772468311000
     },
+    "טעם נרכש.webp": {
+      "title": "טעם נרכש",
+      "explanation": "כפשוטו אפשר לרכוש את הטעמים בחנות",
+      "topic": "אוכל, אוכל ושתייה, טעם",
+      "isApproved": true,
+      "isAIGenerated": false,
+      "needsAIImprovement": false,
+      "aiSuggestion": null,
+      "createdAt": 1785929380646,
+      "dateMillis": 1785929380646
+    },
     "טקס הדלקת המסוע.webp": {
       "title": "טקס הדלקת המסוע",
       "explanation": "משחק מילים כפול על 'טקס הדלקת המשואות'. השרה (מירי רגב, שאחראית על הטקס) מצולמת בנתב\"ג מדליקה ומפעילה את מסוע המזוודות ('המסוע') בהרמת יד.",
@@ -6448,6 +6830,17 @@
       "isAIGenerated": true,
       "createdAt": 1772468311000,
       "dateMillis": 1772468311000
+    },
+    "ילד עלים.webp": {
+      "title": "ילד עלים",
+      "explanation": "נשמע כמו 'ילד אלים', רואים ילד שהוא בכלל לא אלים, רק הוא ילד עלים",
+      "topic": "בית ספר, משפחה וילדים, עלים, צומח, טבע וצומח",
+      "isApproved": true,
+      "isAIGenerated": false,
+      "needsAIImprovement": false,
+      "aiSuggestion": null,
+      "createdAt": 1785929404353,
+      "dateMillis": 1785929404353
     },
     "ילדי שמנת.webp": {
       "title": "ילדי שמנת",
@@ -6630,6 +7023,17 @@
       "createdAt": 1774545903628,
       "dateMillis": 1774545903628
     },
+    "כדור פורח.webp": {
+      "title": "כדור פורח",
+      "explanation": "רואים כדורגל שהוא מלא פריחה על העור שלו, אפילו שהוא בכלל לא כדור פורח באוויר",
+      "topic": "כדורגל, ספורט, כדור פורח, רפואה",
+      "isApproved": true,
+      "isAIGenerated": false,
+      "needsAIImprovement": false,
+      "aiSuggestion": null,
+      "createdAt": 1785930935211,
+      "dateMillis": 1785930935211
+    },
     "כדור רגל.webp": {
       "title": "כדור רגל",
       "explanation": "משחק מילים חזותי על המילה \"כדורגל\". בתמונה נראה כדור פורח גדול המעוצב בצורה של כף רגל אנושית, כשבתוכו יושבים שחקני כדור רגל.",
@@ -6780,6 +7184,17 @@
       "isAIImproved": true,
       "createdAt": 1772468311000,
       "dateMillis": 1772468311000
+    },
+    "כיפה אדומה.webp": {
+      "title": "כיפה אדומה",
+      "explanation": "רואים את הילד 'זאב' שמקבל כיפה אדומה. [נשמע כמו הסיפור כיפה אדומה, רק שכאן לזאב עצמו יש כיפה אדומה]",
+      "topic": "סיפורי ילדים, כיפה, לבוש",
+      "isApproved": true,
+      "isAIGenerated": false,
+      "needsAIImprovement": false,
+      "aiSuggestion": null,
+      "createdAt": 1785929446899,
+      "dateMillis": 1785929446899
     },
     "כיראוגירף.webp": {
       "title": "כיראוגירף",
@@ -7063,6 +7478,17 @@
       "createdAt": 1773678054000,
       "dateMillis": 1773678054000
     },
+    "לבני הנעורים.webp": {
+      "title": "לבני הנעורים",
+      "explanation": "כמו הביטוי של ספרים שמיועדים 'לבני הנעורים', רואים בספר 'לבנים' שמהם בונים את המילה 'נעורים', מצד שני הוא אומר שהתפקיד שלו זה 'לבנות - הנעורים'",
+      "topic": "ספרים, מוזיקה ותרבות, נוער, בנייה",
+      "isApproved": true,
+      "isAIGenerated": false,
+      "needsAIImprovement": false,
+      "aiSuggestion": null,
+      "createdAt": 1785930904740,
+      "dateMillis": 1785930904740
+    },
     "לד להומר.webp": {
       "title": "לד להומר",
       "explanation": "משחק מילים על \"‫לד להומר‬\". נשמע כמו 'לד' 34 לעומר.",
@@ -7100,6 +7526,28 @@
       "isAIAdded": true,
       "createdAt": 1772468311000,
       "dateMillis": 1772468311000
+    },
+    "להציל את טוראי ראיין.webp": {
+      "title": "להציל את טוראי ראיין",
+      "explanation": "להציל נשמע כמו 'לעשות צל', רואים את טום הנקס כדמות של המפקד עושה צל לדמות של טוראי ראיין",
+      "topic": "מלחמה, צבא וביטחון, קולנוע, מוזיקה ותרבות",
+      "isApproved": true,
+      "isAIGenerated": false,
+      "needsAIImprovement": false,
+      "aiSuggestion": null,
+      "createdAt": 1785929482816,
+      "dateMillis": 1785929482816
+    },
+    "לוז מסודר.webp": {
+      "title": "לוז מסודר",
+      "explanation": "נשמע כמו 'לו\"ז מסודר', רואים דמות של אגוז לוז כשהוא מאוד פדנט ומסודר, הוא ממלא את הלו\"ז שלו",
+      "topic": "תכנון, לו\"ז, מאכל, אוכל ושתייה, אגוז",
+      "isApproved": true,
+      "isAIGenerated": false,
+      "needsAIImprovement": false,
+      "aiSuggestion": null,
+      "createdAt": 1785930813805,
+      "dateMillis": 1785930813805
     },
     "לוז קשה.webp": {
       "title": "לו\"ז קשה",
@@ -7349,6 +7797,17 @@
       "isAIImproved": true,
       "createdAt": 1772468311000,
       "dateMillis": 1772468311000
+    },
+    "מ'טילים' אימה.webp": {
+      "title": "מ'טילים' אימה",
+      "explanation": "רואים דמויות של טילים אירניים שהם מטילים אימה על כל מדינות המפרץ",
+      "topic": "מלחמה, צבא וביטחון, איראן",
+      "isApproved": true,
+      "isAIGenerated": false,
+      "needsAIImprovement": false,
+      "aiSuggestion": null,
+      "createdAt": 1785929512291,
+      "dateMillis": 1785929512291
     },
     "מְאַפֶּרֶת.webp": {
       "title": "מְאַפֶּרֶת",
@@ -8319,6 +8778,17 @@
       "createdAt": 1773686166000,
       "dateMillis": 1773686166000
     },
+    "מטעין סול ללה.webp": {
+      "title": "מטעין סול ללה",
+      "explanation": "נשמע כמו מטעין סוללה, רואים את התו סול שהוא מטעין את התו לה",
+      "topic": "מוזיקה, מוזיקה ותרבות, בטריה",
+      "isApproved": true,
+      "isAIGenerated": false,
+      "needsAIImprovement": false,
+      "aiSuggestion": null,
+      "createdAt": 1785930777055,
+      "dateMillis": 1785930777055
+    },
     "מטען מהיר.webp": {
       "title": "מטען מהיר",
       "explanation": "משחק מילים חזותי על אביזר הטעינה. התמונה מציגה מטען חשמלי לטלפון המצויד ברגליים, כשהוא רץ במהירות אדירה על הכביש.",
@@ -8422,6 +8892,17 @@
       "isAIImproved": true,
       "createdAt": 1772468311000,
       "dateMillis": 1772468311000
+    },
+    "מיזוג אוויר.webp": {
+      "title": "מיזוג אוויר",
+      "explanation": "כמו מזגן, רק רואים עו\"ד שתפקידו לחתום על הסכם מיזוג שבין דמויות של אוויר",
+      "topic": "עורך דין, משפט, מיזוג",
+      "isApproved": true,
+      "isAIGenerated": false,
+      "needsAIImprovement": false,
+      "aiSuggestion": null,
+      "createdAt": 1785929548892,
+      "dateMillis": 1785929548892
     },
     "מיחזור משכנתא.webp": {
       "title": "מיחזור משכנתא",
@@ -9056,6 +9537,17 @@
       "createdAt": 1773675585000,
       "dateMillis": 1773675585000
     },
+    "מעודד אגירה.webp": {
+      "title": "מעודד אגירה",
+      "explanation": "נשמע כמו 'מעודד הגירה' [להגר מארץ לארץ], רואים פרסום בעיתון ואגרן נמצא בבית שלו כשרואים שהכל מלא חפצים שהוא אגר",
+      "topic": "עיתון, אגירה, הגירה",
+      "isApproved": true,
+      "isAIGenerated": false,
+      "needsAIImprovement": false,
+      "aiSuggestion": null,
+      "createdAt": 1785930741946,
+      "dateMillis": 1785930741946
+    },
     "מעורר כינה.webp": {
       "title": "מעורר כינה",
       "explanation": "משחק מילים שמיעתי על הביטוי \"מעורר קנאה\". בתמונה נראית דמות הגורמת להתעוררות של כינה קטנה על ראשה, כפרשנות מבדחת ודוחה מעט למושג.",
@@ -9665,6 +10157,17 @@
       "createdAt": 1772468311000,
       "dateMillis": 1772468311000
     },
+    "מרכז הרעלות.webp": {
+      "title": "מרכז הרעלות",
+      "explanation": "מרכז הרעלות בחיפה, אחראי לדאוג למי ששתה בטעות רעלים, בתמונה רואים חנות שמוכרת רעלות בחיפה",
+      "topic": "ביגוד, בית ויומיום, רעל, בית חולים, ערבי",
+      "isApproved": true,
+      "isAIGenerated": false,
+      "needsAIImprovement": false,
+      "aiSuggestion": null,
+      "createdAt": 1785929587600,
+      "dateMillis": 1785929587600
+    },
     "מרענן את הדף.webp": {
       "title": "מרענן את הדף",
       "explanation": "הוא נותן לו מים והוא מרענן את הדף, הדמות שמרעננת זה מטוס F5, כמו שלחיצה על הלחצן במקלדת F5 מרענן את הדף",
@@ -9728,6 +10231,17 @@
       "createdAt": 1772468311000,
       "dateMillis": 1772468311000
     },
+    "משבית שמחות.webp": {
+      "title": "משבית שמחות",
+      "explanation": "רואים מישהו שמשמח על ידי שהוא כביכול עושה 'שביתה' בשמחה של החתונה",
+      "topic": "שמחה, חתונה",
+      "isApproved": true,
+      "isAIGenerated": false,
+      "needsAIImprovement": false,
+      "aiSuggestion": null,
+      "createdAt": 1785930696531,
+      "dateMillis": 1785930696531
+    },
     "משבר כספים.webp": {
       "title": "משבר כספים",
       "explanation": "משחק מילים אירוני על 'משבר כספים' (משבר כלכלי). המשבר הוא לא של בני האדם אלא של הכספים עצמם - השטרות והמטבעות בתמונה נמצאים במשבר נפשי ובוכים מרה.",
@@ -9785,6 +10299,17 @@
       "isAIImproved": true,
       "createdAt": 1772468311000,
       "dateMillis": 1772468311000
+    },
+    "משוגעים לדוור.webp": {
+      "title": "משוגעים לדוור",
+      "explanation": "נשמע כמו 'משוגעים לדבר', רואים את כל הרחוב ממש משוגעים על הדוור שלהם",
+      "topic": "דואר, ביטוי",
+      "isApproved": true,
+      "isAIGenerated": false,
+      "needsAIImprovement": false,
+      "aiSuggestion": null,
+      "createdAt": 1785929612896,
+      "dateMillis": 1785929612896
     },
     "משוויץ.webp": {
       "title": "משוויץ",
@@ -10126,6 +10651,17 @@
       "createdAt": 1772468311000,
       "dateMillis": 1772468311000
     },
+    "נאמת לי מאוד.webp": {
+      "title": "נאמת לי מאוד",
+      "explanation": "נשמע כמו 'נעמת לי מאוד', רואים מישהו שמרצה ולא מסיים, ולכולם ממש לא נעים, המנחה אומר לו 'נאמת לי מאוד'",
+      "topic": "ביטוי, מרצה, נואם",
+      "isApproved": true,
+      "isAIGenerated": false,
+      "needsAIImprovement": false,
+      "aiSuggestion": null,
+      "createdAt": 1785930664413,
+      "dateMillis": 1785930664413
+    },
     "נאסא נס לשושנים.webp": {
       "title": "נאס\"א נס לשושנים",
       "explanation": "רואים את שחר חסון מכין כוס קפה בכוסות של נאס\"א, לדמויות של שושנים [רפרנס למה שהוא מחכה את אבא שלו שקורא לאמא שלו בקול 'שושי']",
@@ -10153,6 +10689,17 @@
       "isAIGenerated": false,
       "createdAt": 1773675585000,
       "dateMillis": 1773675585000
+    },
+    "נהג מרוצים.webp": {
+      "title": "נהג מרוצים",
+      "explanation": "רואים את מייקל שומכאר [שהיה נהג מרוצים מפורסם] שהוא נוהג לאנשים במכונית פרייבט, והם מאוד מרוצים ממנו",
+      "topic": "מכוניות, ספורט",
+      "isApproved": true,
+      "isAIGenerated": false,
+      "needsAIImprovement": false,
+      "aiSuggestion": null,
+      "createdAt": 1785929647681,
+      "dateMillis": 1785929647681
     },
     "נהגבניה.webp": {
       "title": "נהגבניה",
@@ -10207,6 +10754,17 @@
       "createdAt": 1772468311000,
       "dateMillis": 1772468311000
     },
+    "נוסע בזמן.webp": {
+      "title": "נוסע בזמן",
+      "explanation": "רואים נהג אוטובוס מהעולם הישן שהוא אומר שהוא 'נוסע בזמן' בדיוק בזמן, ואכן יש לו שעון חכם, ומעיל עדכני שלא מתאים לתקופה כלומר זה 'נסיעה בזמן'",
+      "topic": "מדע בדיוני, נסיעה בזמן",
+      "isApproved": true,
+      "isAIGenerated": false,
+      "needsAIImprovement": false,
+      "aiSuggestion": null,
+      "createdAt": 1785930623998,
+      "dateMillis": 1785930623998
+    },
     "נועל את הדלת.webp": {
       "title": "נועל את הדלת",
       "explanation": "נשמע כמו לנעול את הדלת במנעול, מצד שני זה נשמע כמו מישהו שנועל נעליים שהם דלתות",
@@ -10237,6 +10795,17 @@
       "isAIGenerated": true,
       "createdAt": 1772468311000,
       "dateMillis": 1772468311000
+    },
+    "נושא- כלים.webp": {
+      "title": "נושא- כלים",
+      "explanation": "נשמע כמו הביטוי של מישהו שהוא 'נושא כלים' של בעל מקצוע, רואים מורה שמלמד בשיעור על ה'נושא' -כלים.\nובתמונה על הלוח רואים מישהו ש'נושא'- מתחתן עם הכלי עבודה שלו.",
+      "topic": "שיעור, עבודה, מקצועות ועבודה, פועל",
+      "isApproved": true,
+      "isAIGenerated": false,
+      "needsAIImprovement": false,
+      "aiSuggestion": null,
+      "createdAt": 1785929695272,
+      "dateMillis": 1785929695272
     },
     "נושאת מטוסים.webp": {
       "title": "נושאת מטוסים",
@@ -10448,6 +11017,17 @@
       "createdAt": 1774529586225,
       "dateMillis": 1774529586225
     },
+    "ניקוי שליש.webp": {
+      "title": "ניקוי שליש",
+      "explanation": "נשמע כמו 'ניכוי שליש', שמקצרים לאסירים את זמן המאסר שלהם בבית הכלא, רואים שני אסירים, האחד מנקה את הפסל של שליש - 1/3. ומצד שני האסיר השני ניקה בדיוק שליש מהמגש",
+      "topic": "בית סוהר, שליש, ניקוי",
+      "isApproved": true,
+      "isAIGenerated": false,
+      "needsAIImprovement": false,
+      "aiSuggestion": null,
+      "createdAt": 1785930574797,
+      "dateMillis": 1785930574797
+    },
     "ניתוח שקדים.webp": {
       "title": "ניתוח שקדים",
       "explanation": "פרשנות חזותית מילולית להליך הרפואי. בחדר ניתוח סטרילי נראים רופאים ומנתחים העוסקים בביצוע ניתוח כירורגי עדין בתוך גלעיני שקדים קטנים המונחים על השולחן.",
@@ -10576,6 +11156,17 @@
       "isAIGenerated": false,
       "createdAt": 1772468311000,
       "dateMillis": 1772468311000
+    },
+    "נקודה למחשבה.webp": {
+      "title": "נקודה למחשבה",
+      "explanation": "רואים מיצג באוניברסיטה בצורה של 'נקודה', שכולם מסתכלים עליה וחושבים",
+      "topic": "ביטוי, אוניברסיטה, חשביה",
+      "isApproved": true,
+      "isAIGenerated": false,
+      "needsAIImprovement": false,
+      "aiSuggestion": null,
+      "createdAt": 1785929727860,
+      "dateMillis": 1785929727860
     },
     "נראה איך יפול דוור.webp": {
       "title": "נראה איך יפול דוור",
@@ -10717,6 +11308,17 @@
       "isAIAdded": true,
       "createdAt": 1773686166000,
       "dateMillis": 1773686166000
+    },
+    "סוללות כביש.webp": {
+      "title": "סוללות כביש",
+      "explanation": "רואים דמויות של נשים שהם 'סוללות כביש', אבל זהו כביש ייחודי בו מתקינים סוללות שנטענות על ידי נסיעה בכביש",
+      "topic": "תחבורה, עבודה, מקצועות ועבודה, סוללה, כביש",
+      "isApproved": true,
+      "isAIGenerated": false,
+      "needsAIImprovement": false,
+      "aiSuggestion": null,
+      "createdAt": 1785930502499,
+      "dateMillis": 1785930502499
     },
     "סוללת עורכי דין.webp": {
       "title": "סוללת עורכי דין",
@@ -10995,6 +11597,17 @@
       "isAIImproved": true,
       "createdAt": 1772468311000,
       "dateMillis": 1772468311000
+    },
+    "סרט בורקס.webp": {
+      "title": "סרט בורקס",
+      "explanation": "כמו הביטוי של הסרטים הישראליים של שנות ה70 [יהודה ברקן], רואים ילדה שמה סרט לשיער שעשוי מבורקס",
+      "topic": "קולנוע, מוזיקה ותרבות, ישראלי, אביזרים לשיער, אופנה",
+      "isApproved": true,
+      "isAIGenerated": false,
+      "needsAIImprovement": false,
+      "aiSuggestion": null,
+      "createdAt": 1785930454359,
+      "dateMillis": 1785930454359
     },
     "סרט לשיער.webp": {
       "title": "סרט לשיער",
@@ -12573,6 +13186,17 @@
       "createdAt": 1772468311000,
       "dateMillis": 1772468311000
     },
+    "קולות מוזרים.webp": {
+      "title": "קולות מוזרים",
+      "explanation": "נשמע כמו 'קול' מוזר, רואים דמויות של המיונים כשהם כמו פחיות קולה, כלומר 'קולות', והם מאוד מוזרים כידוע, וגם עושים קולות מוזרים",
+      "topic": "מיניונים, קולות, משקה קולה",
+      "isApproved": true,
+      "isAIGenerated": false,
+      "needsAIImprovement": false,
+      "aiSuggestion": null,
+      "createdAt": 1785930415887,
+      "dateMillis": 1785930415887
+    },
     "קולט אדים 1.webp": {
       "title": "קולט אדים",
       "explanation": "נשמע כמו הכלי החשמלי במטבח שקולט אדים, רק שפה זה אקדח מסוג 'קולט' שהוא עשוי מ'אדים'",
@@ -12692,6 +13316,17 @@
       "createdAt": 1772468311000,
       "dateMillis": 1772468311000
     },
+    "קורס צלי-לה.webp": {
+      "title": "קורס צלי-לה",
+      "explanation": "נשמע כמו 'קורס צלילה', רק שפה רואים שזה קורס שהרב מלמד את התלמידים איך צולים בשר בשביל האישה",
+      "topic": "מטבח, צלייה, ספורט",
+      "isApproved": true,
+      "isAIGenerated": false,
+      "needsAIImprovement": false,
+      "aiSuggestion": null,
+      "createdAt": 1785929841386,
+      "dateMillis": 1785929841386
+    },
     "קורת רוח.webp": {
       "title": "קורת רוח",
       "explanation": "רואים דמות של רוח שיש לה קורה משלה, ולשניהם יש הרבה 'קורת רוח' מהמצב.",
@@ -12783,6 +13418,17 @@
       "isAIAdded": true,
       "createdAt": 1773686166000,
       "dateMillis": 1773686166000
+    },
+    "קיש-ארון.webp": {
+      "title": "קיש-ארון",
+      "explanation": "נשמע כמו 'כישרון', רואים את השר יואב קיש כשהוא מכין מאפה 'קיש' בצורה של ארון",
+      "topic": "מאפה, פוליטיקה, פוליטיקה ואקטואליה, אוכל, אוכל ושתייה",
+      "isApproved": true,
+      "isAIGenerated": false,
+      "needsAIImprovement": false,
+      "aiSuggestion": null,
+      "createdAt": 1785930366652,
+      "dateMillis": 1785930366652
     },
     "קלילת יופי.webp": {
       "title": "קלילת יופי",
@@ -13261,6 +13907,17 @@
       "isAIGenerated": true,
       "createdAt": 1772468311000,
       "dateMillis": 1772468311000
+    },
+    "רועה בכוכבים.webp": {
+      "title": "רועה בכוכבים",
+      "explanation": "רואים אסטרונאוט על כוכב, שתפקידו להיות 'רועה צאן' והוא רועה את הצאן על הכוכבים.",
+      "topic": "חלל, משק, צאן, בהמות, רועה צאן, אסטרונאוט",
+      "isApproved": true,
+      "isAIGenerated": false,
+      "needsAIImprovement": false,
+      "aiSuggestion": null,
+      "createdAt": 1785929898714,
+      "dateMillis": 1785929898714
     },
     "רופאי שיניים.webp": {
       "title": "רופאי שיניים",
@@ -13935,6 +14592,17 @@
       "createdAt": 1772468311000,
       "dateMillis": 1772468311000
     },
+    "שיח רגשי.webp": {
+      "title": "שיח רגשי",
+      "explanation": "רואים דמות של שיח שהוא מאוד מאוד רגשי ובוכה ומתרגש",
+      "topic": "ביטוי, צומח, טבע וצומח, רגש, רגשות ותכונות",
+      "isApproved": true,
+      "isAIGenerated": false,
+      "needsAIImprovement": false,
+      "aiSuggestion": null,
+      "createdAt": 1785930335347,
+      "dateMillis": 1785930335347
+    },
     "שיחה שלא נהנתה.webp": {
       "title": "שיחה שלא נהנתה",
       "explanation": "נשמע כמו שיחה שלא נענתה, רואים ילדה שמתקשרת לאבא שלה להתלונן שהיא לא נהנתה בכלל",
@@ -14161,6 +14829,17 @@
       "createdAt": 1773675585000,
       "dateMillis": 1773675585000
     },
+    "שלגיה ושבעת הגמדים.webp": {
+      "title": "שלגיה ושבעת הגמדים",
+      "explanation": "רואים את שלגיה עם הגמדים, כאשר הגמדים יושבים 'שבעה' על אחד שנפטר להם",
+      "topic": "יהדות, יהדות ומסורת, מת, סיפורי ילדים, דיסני",
+      "isApproved": true,
+      "isAIGenerated": false,
+      "needsAIImprovement": false,
+      "aiSuggestion": null,
+      "createdAt": 1785929934637,
+      "dateMillis": 1785929934637
+    },
     "שלדג.webp": {
       "title": "שלדג",
       "explanation": "כמו היחידה הצבאי 'שלדג', רואים ציפור שלדג לוחמת מיוחדת",
@@ -14178,6 +14857,17 @@
       "isAIGenerated": false,
       "createdAt": 1772468311000,
       "dateMillis": 1772468311000
+    },
+    "שליטא מרחוק.webp": {
+      "title": "שליט\"א מרחוק",
+      "explanation": "נשמע כמו 'שליטה מרחוק', רואים בחורים בכינוס של רבנים, ומישהו מצלם עם רחפן צילום בשליטה מרחוק, אבל זה גם שליט\"א מרחוק, כי רואים את הרבנים שליט\"א ממרחק.",
+      "topic": "רבנים, יהדות ומסורת, רחפן, צילום",
+      "isApproved": true,
+      "isAIGenerated": false,
+      "needsAIImprovement": false,
+      "aiSuggestion": null,
+      "createdAt": 1785930310333,
+      "dateMillis": 1785930310333
     },
     "שליש.webp": {
       "title": "שליש",
@@ -14217,6 +14907,17 @@
       "isAIGenerated": true,
       "createdAt": 1772468311000,
       "dateMillis": 1772468311000
+    },
+    "שמיכה לרב עיר.webp": {
+      "title": "שמיכה לרב עיר",
+      "explanation": "נשמע כמו 'סמיכה לרב עיר', כאשר רב נהיה כשיר להיות רב עיר על ידי שסומכים אותו להיות כזה, רואים רב עיר שמקבל מבני העיר שלו 'שמיכה'",
+      "topic": "רבנות, רב עיר, כלי מיטה",
+      "isApproved": true,
+      "isAIGenerated": false,
+      "needsAIImprovement": false,
+      "aiSuggestion": null,
+      "createdAt": 1785929978900,
+      "dateMillis": 1785929978900
     },
     "שמירת העיניים.webp": {
       "title": "שמירת העיניים",
@@ -14312,6 +15013,17 @@
       "createdAt": 1772468311000,
       "dateMillis": 1772468311000
     },
+    "שר החכ להוט.webp": {
+      "title": "שר הח\"כ להוט",
+      "explanation": "נשמע כמו 'שר החקלאות', מצד שני רואים את איתמר בן גביר שהוא בכל השר לביטחון פנים, כשהוא להוט מאוד בעבודה שלו כרגיל",
+      "topic": "פוליטיקה, פוליטיקה ואקטואליה, חקלאות, בן גביר",
+      "isApproved": true,
+      "isAIGenerated": false,
+      "needsAIImprovement": false,
+      "aiSuggestion": null,
+      "createdAt": 1785930246334,
+      "dateMillis": 1785930246334
+    },
     "שר כאן.webp": {
       "title": "שר כאן",
       "explanation": "רואים שרקן שהוא שר בפסטיבל שנמצא בעיר 'קאן', וזה משודר בכאן 11 אז הוא ממש שר כאן, וגם שר קאן",
@@ -14349,6 +15061,17 @@
       "aiSuggestion": null,
       "createdAt": 1780229683234,
       "dateMillis": 1780229683234
+    },
+    "שרט האוצר.webp": {
+      "title": "שרט האוצר",
+      "explanation": "נשמע כמו 'שרת האוצר', מצד שני יש לנו 'שר האוצר' - גבר, לכן רואים את בצלאל סמוטריץ' שר האוצר כשהוא שורט את האוצר שמצאו.",
+      "topic": "פוליטיקה, פוליטיקה ואקטואליה, אוצר",
+      "isApproved": true,
+      "isAIGenerated": false,
+      "needsAIImprovement": false,
+      "aiSuggestion": null,
+      "createdAt": 1785930023804,
+      "dateMillis": 1785930023804
     },
     "שרנו ביטלס בקולות....webp": {
       "title": "שרנו ביטלס בקולות...",
@@ -14554,6 +15277,17 @@
       "createdAt": 1772468311000,
       "dateMillis": 1772468311000
     },
+    "תחושת ניקור.webp": {
+      "title": "תחושת ניקור",
+      "explanation": "נשמע כמו 'תחושת ניכור', רואים מישהו שמטופל עם ניקור עדין של תוכים",
+      "topic": "רפואה, בעלי חיים, חיות, תוכי",
+      "isApproved": true,
+      "isAIGenerated": false,
+      "needsAIImprovement": false,
+      "aiSuggestion": null,
+      "createdAt": 1785930198505,
+      "dateMillis": 1785930198505
+    },
     "תטו אוזן פליז.webp": {
       "title": "תטו אוזן פליז",
       "explanation": "נשמע כמו tatto אוזן פליז, או להטות אוזן [להקשיב] בבקשה, רואים מישהו אמריקאי שביקש שיעשו לו קעקוע באופן ולא דווקא קעקוע בצורה של אוזן, רק צריך להקשיב טוב לבקשה שלו",
@@ -14746,6 +15480,17 @@
       "createdAt": 1773675585000,
       "dateMillis": 1773675585000
     },
+    "תן וכך.webp": {
+      "title": "תן וכך",
+      "explanation": "נשמע כמ והביטוי 'תן וקח', רואים תחנת דלק TEN, כשיש שם 'תן', וגרפיטי של תנועת 'כך' של מאיר כהנא",
+      "topic": "פוליטיקה, פוליטיקה ואקטואליה, ביטויים, בעלי חיים, חיות, דלק",
+      "isApproved": true,
+      "isAIGenerated": false,
+      "needsAIImprovement": false,
+      "aiSuggestion": null,
+      "createdAt": 1785930066232,
+      "dateMillis": 1785930066232
+    },
     "תספורת עופנתית.webp": {
       "title": "תספורת עופנתית",
       "explanation": "נשמע כמו 'תספורת אופנתית', רואים ספר שמספר את האיש כמו עוף",
@@ -14901,6 +15646,17 @@
       "isAIImproved": true,
       "createdAt": 1772468311000,
       "dateMillis": 1772468311000
+    },
+    "תשעת ה'ימים'.webp": {
+      "title": "תשעת ה'ימים'",
+      "explanation": "נשמע כמו הזמן שמראש חודש אב ועד תשעה באב - תשעת הימים, רואים שורה של רבנים עם החתן, כאשר לכל אחד מהם שרים 'ימים... על ימי מלך תוסיף'",
+      "topic": "חתונה, ימים, עצב",
+      "isApproved": true,
+      "isAIGenerated": false,
+      "needsAIImprovement": false,
+      "aiSuggestion": null,
+      "createdAt": 1785930168523,
+      "dateMillis": 1785930168523
     }
   },
   "fileStats": {
@@ -14930,6 +15686,7 @@
     "dog walker.webp": 98190,
     "DUDE שמש.webp": 93366,
     "E היתה יפה קצת משונה.webp": 75064,
+    "E מלא.webp": 228036,
     "ED אמין.webp": 91394,
     "EF שר.webp": 89306,
     "K סם אוזניים.webp": 79466,
@@ -14940,6 +15697,7 @@
     "MEET לבגדים.webp": 124022,
     "meet קשים.webp": 152862,
     "Pro Feel.webp": 108808,
+    "SIM שלום.webp": 142156,
     "TEA....SHAAA.webp": 121998,
     "too bish watt.webp": 217628,
     "TOYS הרס.webp": 90538,
@@ -14968,6 +15726,7 @@
     "אוגר כוחות.webp": 103090,
     "אוהד מושבע.webp": 172164,
     "אוהדים שרופים.webp": 108114,
+    "אוטו דידקט.webp": 153746,
     "אוכל ברוש.webp": 107672,
     "אוכל מתוכים.webp": 138712,
     "אוכף בתור.webp": 315662,
@@ -14975,6 +15734,7 @@
     "אומד בתור.webp": 167232,
     "אומנות זבל.webp": 269496,
     "אומצה.webp": 143714,
+    "אופנוע כבד.webp": 157138,
     "אופני הרים.webp": 106450,
     "אופרת סבון.webp": 88080,
     "אור ברווז.webp": 89648,
@@ -14991,6 +15751,7 @@
     "אחבר (אח + עכבר).webp": 123678,
     "אחד אחד.webp": 93294,
     "אחותי מלא ענן הזה שעל פנייך.webp": 39070,
+    "אחים לצרה.webp": 122556,
     "אחלמה מעירה.webp": 129202,
     "אחת... אחת ואחת... אחת ושתיים....webp": 165826,
     "אי D על E.webp": 114308,
@@ -15034,6 +15795,7 @@
     "אס לן.webp": 54872,
     "אס מחתה.webp": 81712,
     "אסיפת תורים.webp": 114492,
+    "אסיר תודה.webp": 197490,
     "אסלן.webp": 77072,
     "אסף גרניט.webp": 159158,
     "אסף סוף.webp": 179456,
@@ -15053,6 +15815,7 @@
     "אתרוג צהוב.webp": 67730,
     "אתרוגים פסולים.webp": 115402,
     "בא-סניה!.webp": 177708,
+    "באבא כמה.webp": 140976,
     "באלות הברית.webp": 118380,
     "באמצע היום הצבע האדום.webp": 203838,
     "באפלובוסטר.webp": 115212,
@@ -15061,13 +15824,16 @@
     "בד נמתח.webp": 150104,
     "בדיחה ממוחזרת.webp": 139090,
     "בדיל ויעבוד....webp": 164832,
+    "בדיקת M עראי.webp": 151332,
     "בדיקת דרקונים.webp": 139138,
     "בדיקת תולעים.webp": 110002,
     "בדמעתי ארסי אמסה.webp": 135186,
     "בדרן.webp": 138246,
     "בוב מר לי.webp": 138454,
+    "בודי רוגע.webp": 144630,
     "בודק דופק.webp": 199780,
     "בוחן לבבות.webp": 84262,
+    "בוחרת צד.webp": 160464,
     "בול באמצע.webp": 148256,
     "בולדגמן.webp": 196148,
     "בונה אטארים 1.webp": 185970,
@@ -15107,6 +15873,7 @@
     "בני ברבי.webp": 59966,
     "בניחוח מאסק.webp": 108286,
     "בנק עושק.webp": 160354,
+    "בעגלה ובזמן קריב.webp": 211674,
     "בעיטה אחי שינה.webp": 71620,
     "בעיית האקלים.webp": 61498,
     "בעל לחוץ.webp": 106340,
@@ -15114,9 +15881,11 @@
     "בצל סגול.webp": 93448,
     "בצק טופח.webp": 121046,
     "בקבוק חם.webp": 103248,
+    "בקבוק לחיץ.webp": 208938,
     "בר בי רב, או בר בי קיו.webp": 195364,
     "בר יוחאי - נים, שאכטה, אשריך!.webp": 149672,
     "בר יוחאי.webp": 100262,
+    "בר מיץ ווה.webp": 170938,
     "ברביקיו או ברבי רב.webp": 94960,
     "ברד כבד.webp": 200202,
     "ברדעלף.webp": 60780,
@@ -15161,6 +15930,7 @@
     "דאנקי שן.webp": 183274,
     "דב כותב.webp": 100616,
     "דב עלה.webp": 68582,
+    "דג בחריין.webp": 164458,
     "דג כסף.webp": 70700,
     "דג מושט.webp": 119770,
     "דג מרוקאי.webp": 181400,
@@ -15189,15 +15959,18 @@
     "דרך מעירה.webp": 205490,
     "ה'אי קר' חסר מן הספר.webp": 129200,
     "ה'דון' הסליחות.webp": 81264,
+    "ה'טונה'.webp": 216372,
     "ה'רדם'.webp": 88270,
     "ה-VAR עבירה.webp": 205650,
     "האביב הערבי.webp": 71174,
     "האגודל למען החייל.webp": 89428,
     "האח הגדול.webp": 80118,
+    "האסירון העליון.webp": 173982,
     "האסקיפוד.webp": 155948,
     "הארי פותר.webp": 123868,
     "האשפה פ'יז.webp": 117982,
     "הב חורג.webp": 189650,
+    "הבה טיח.webp": 144956,
     "הבשל שבת.webp": 90328,
     "הגלגלים מסובבים את כולם.webp": 120388,
     "הדובי מומלץ בחום.webp": 103510,
@@ -15205,6 +15978,7 @@
     "הדם הראשון.webp": 82802,
     "הוו מיי דיר.webp": 151604,
     "הווו גוצ'אבס.webp": 87434,
+    "הוכחה באינדוקציה.webp": 115308,
     "הולך בתל.webp": 213208,
     "הומר אדם.webp": 64746,
     "הומר אצילי.webp": 74504,
@@ -15239,7 +16013,9 @@
     "המאניש.webp": 75016,
     "המודח הראשון.webp": 185152,
     "המוציא לחם מן הארץ.webp": 174268,
+    "המוציא מחבירו.webp": 74886,
     "המחיר נמוך מידי.webp": 84244,
+    "המחירים בריצפה.webp": 285690,
     "המילה האחרונה.webp": 83116,
     "המין-יונים.webp": 71738,
     "המיר קטר.webp": 105290,
@@ -15248,13 +16024,16 @@
     "המצב בכי רע.webp": 180054,
     "המקור.webp": 47554,
     "המראות.webp": 241958,
+    "הנאת כדור.webp": 218456,
     "הנוסע המתמיד.webp": 117812,
     "הנחה עושה מצווה.webp": 128748,
     "הנחיות פיקוד העורף.webp": 30100,
     "הנחת סלב.webp": 123768,
     "הנעל 'השאלה'.webp": 105738,
+    "הסבת אקדמאים.webp": 182172,
     "הסה ל'חרב' 1.webp": 98286,
     "הסיר עולם.webp": 148650,
+    "הסף הרופא.webp": 106780,
     "הסרט 'בני המן'.webp": 203410,
     "הסרט 'המכות'.webp": 132352,
     "הסרט הדיברות.webp": 99174,
@@ -15319,6 +16098,7 @@
     "זהירות מן הרה לפניך.webp": 80194,
     "זו אמת!.webp": 139230,
     "זיכרון רם.webp": 151166,
+    "זכויות הדם.webp": 146990,
     "זכוכית שבורה.webp": 83664,
     "זכר על 'פה'.webp": 76890,
     "זעקות שבר.webp": 108076,
@@ -15352,6 +16132,7 @@
     "חורץ גורלות.webp": 99434,
     "חורש את החומר.webp": 153810,
     "חותם אב תלה.webp": 72380,
+    "חזה רע גנרלית.webp": 139282,
     "חטונה.webp": 198482,
     "חטיבת אמן.webp": 200664,
     "חטיבת כפיר.webp": 153254,
@@ -15364,6 +16145,7 @@
     "חייט טרף.webp": 240128,
     "חייט כביש.webp": 212748,
     "חייט מחמד.webp": 126010,
+    "חייל בחיר.webp": 136674,
     "חיל רגלים.webp": 225768,
     "חילוץ הצמות.webp": 84984,
     "חימת בוטנים.webp": 82318,
@@ -15373,6 +16155,7 @@
     "חכם הרזים.webp": 110612,
     "חכמת העם עונים.webp": 179398,
     "חלב אמיד.webp": 75174,
+    "חלבה.webp": 152322,
     "חלום בלע-אות.webp": 47788,
     "חלום על לחם.webp": 63294,
     "חלות קידושין.webp": 110680,
@@ -15410,6 +16193,7 @@
     "טוראי.webp": 114992,
     "טי-רוף.webp": 133600,
     "טיגריס.webp": 228202,
+    "טיהור מלולי.webp": 119860,
     "טיול אופניים.webp": 96946,
     "טיול ג'יפים.webp": 219872,
     "טיול שנתי.webp": 280776,
@@ -15425,6 +16209,7 @@
     "טעה מולה 1.webp": 109914,
     "טעונת דרכים.webp": 83452,
     "טעות סופר.webp": 98742,
+    "טעם נרכש.webp": 219510,
     "טקס הדלקת המסוע.webp": 64056,
     "יא עיוניק.webp": 117418,
     "יאיר שרקי.webp": 54598,
@@ -15438,8 +16223,9 @@
     "יחידה מיוחדת.webp": 102856,
     "יחידת דיור.webp": 117036,
     "יט' לעומר.webp": 71288,
-    "ייאוש מוחלט.webp": 185032,
+    "ייאוש מוחלט.webp": 101828,
     "ייפוי כוח.webp": 94358,
+    "ילד עלים.webp": 160104,
     "ילדי שמנת.webp": 124240,
     "ילודה גבוהה.webp": 143594,
     "יעני.webp": 88538,
@@ -15459,6 +16245,7 @@
     "כדאי הוא רש-B.webp": 57308,
     "כדור ההר עץ 1.webp": 62000,
     "כדור הר געה.webp": 79148,
+    "כדור פורח.webp": 153102,
     "כדור רגל.webp": 61554,
     "כדורים נגד דיכאון.webp": 123694,
     "כדורים פסיכיאטריים.webp": 111376,
@@ -15475,6 +16262,7 @@
     "כח לעומר.webp": 148762,
     "כי קר לחם.webp": 180622,
     "כיור-טוש.webp": 112094,
+    "כיפה אדומה.webp": 95204,
     "כיראוגירף.webp": 145926,
     "כיתת יורים.webp": 71204,
     "כל המתפלל על חבירו.webp": 71366,
@@ -15504,10 +16292,13 @@
     "לא תיטור.webp": 61554,
     "לא!.webp": 121784,
     "לבטים לבדים.webp": 141416,
+    "לבני הנעורים.webp": 181374,
     "לד להומר.webp": 78410,
     "לדבר בבטחה 1.webp": 120608,
     "לה לה לה לה.....webp": 117506,
     "להיכנס לפאניקה!.webp": 115936,
+    "להציל את טוראי ראיין.webp": 183796,
+    "לוז מסודר.webp": 110804,
     "לוז קשה.webp": 66440,
     "לוחם קלייה.webp": 129628,
     "לוחמי גרילה.webp": 117858,
@@ -15534,6 +16325,7 @@
     "לרננג'ה ביטר.webp": 167368,
     "לשבת על כוס קפה.webp": 78830,
     "לשון חדה.webp": 100022,
+    "מ'טילים' אימה.webp": 161054,
     "מְאַפֶּרֶת.webp": 98686,
     "מְיַשֵּׁר עֲדוּרִים.webp": 211596,
     "מְצַפֶּה לְבֶּן.webp": 70226,
@@ -15635,6 +16427,7 @@
     "מטוס קל.webp": 96460,
     "מטיל היי מה.webp": 202350,
     "מטיל עוגן.webp": 239862,
+    "מטעין סול ללה.webp": 137954,
     "מטען מהיר.webp": 180780,
     "מטפחת ציפיות 1.webp": 79252,
     "מטפל זר.webp": 170144,
@@ -15646,6 +16439,7 @@
     "מי למעלה.webp": 123686,
     "מיג דל דוד.webp": 109450,
     "מיון בועות.webp": 93474,
+    "מיזוג אוויר.webp": 142418,
     "מיחזור משכנתא.webp": 175846,
     "מיט-קפה.webp": 154410,
     "מיטה משונה.webp": 73120,
@@ -15712,6 +16506,7 @@
     "מעבירה קורות חיים.webp": 101022,
     "מעבירים מצד לצד.webp": 186746,
     "מעגל פינות.webp": 88432,
+    "מעודד אגירה.webp": 183850,
     "מעורר כינה.webp": 76980,
     "מעורר שערה.webp": 200986,
     "מעידה חד פעמית.webp": 67252,
@@ -15776,6 +16571,7 @@
     "מרים משקולות.webp": 618100,
     "מרימה שבת בצ'יק צ'ק.webp": 233492,
     "מריץ קוד.webp": 137358,
+    "מרכז הרעלות.webp": 206876,
     "מרענן את הדף.webp": 92568,
     "מרצד S בנץ.webp": 180116,
     "מרק אטום 1.webp": 151728,
@@ -15783,12 +16579,14 @@
     "מרת שערות.webp": 160588,
     "משא שורשים.webp": 164650,
     "משאית בטון.webp": 113054,
+    "משבית שמחות.webp": 169264,
     "משבר כספים.webp": 186114,
     "משגע פילים.webp": 76300,
     "משוגע עם קבלות 1.webp": 140704,
     "משוגע עם תהודות.webp": 109630,
     "משוגע עם תעודות.webp": 119830,
     "משוגע קולני קלאסי.webp": 158456,
+    "משוגעים לדוור.webp": 260804,
     "משוויץ.webp": 119406,
     "משולש ברמודה 1.webp": 80810,
     "משולשים חופפים.webp": 93898,
@@ -15824,18 +16622,22 @@
     "נא נח.webp": 164896,
     "נאמוד בתור מלפנים ומאחור.webp": 111436,
     "נאמן למקור.webp": 98858,
+    "נאמת לי מאוד.webp": 114064,
     "נאסא נס לשושנים.webp": 115146,
     "נביא שהדיח.webp": 201604,
     "נביא שקר.webp": 137400,
+    "נהג מרוצים.webp": 130810,
     "נהגבניה.webp": 114470,
     "נהלי בית.webp": 133998,
     "נוהג לצחוק.webp": 179162,
     "נוהל 'סיר לחץ'.webp": 176348,
     "נוהם לאומה.webp": 141014,
     "נווט ביתי.webp": 87978,
+    "נוסע בזמן.webp": 123544,
     "נועל את הדלת.webp": 178618,
     "נועל נעליים.webp": 189696,
     "נופש הכל כלול.webp": 220070,
+    "נושא- כלים.webp": 140702,
     "נושאת מטוסים.webp": 99214,
     "נח על הירקון.webp": 180492,
     "נח על עמוד.webp": 130922,
@@ -15858,6 +16660,7 @@
     "ניקוי 'רה' אלים 1.webp": 115480,
     "ניקוי מס במקור.webp": 91946,
     "ניקוי רחבים.webp": 312372,
+    "ניקוי שליש.webp": 182158,
     "ניתוח שקדים.webp": 113488,
     "נמלמה.webp": 144206,
     "נמר.webp": 83512,
@@ -15872,6 +16675,7 @@
     "נפסל.webp": 160912,
     "נצרה חומץ לפתיחה.webp": 79060,
     "נקודה חמה.webp": 72506,
+    "נקודה למחשבה.webp": 221562,
     "נראה איך יפול דוור.webp": 185832,
     "נשבה לשוא.webp": 163684,
     "נשרקן.webp": 155894,
@@ -15888,6 +16692,7 @@
     "סוכה בנויה על טילה.webp": 169280,
     "סוכה.webp": 109726,
     "סוכריהמלחייה.webp": 93782,
+    "סוללות כביש.webp": 250464,
     "סוללת עורכי דין.webp": 64644,
     "סוס צוהל.webp": 144766,
     "סוס רץ.webp": 72698,
@@ -15917,6 +16722,7 @@
     "ספר עב כרס.webp": 80744,
     "ספר צמרת.webp": 231152,
     "ספרסוס.webp": 138792,
+    "סרט בורקס.webp": 126892,
     "סרט לשיער.webp": 80686,
     "סרט מתח.webp": 116572,
     "עָטַרַתְּ נדרים.webp": 185682,
@@ -16054,7 +16860,7 @@
     "צבע.webp": 105598,
     "צבר בקבוק.webp": 123910,
     "צבר.webp": 162408,
-    "צדיק גוזר.webp": 89198,
+    "צדיק גוזר.webp": 141994,
     "צוות טקילה.webp": 173986,
     "צוחק בלי מעצורים.webp": 126854,
     "צחוק הגורל 1.webp": 95256,
@@ -16081,6 +16887,7 @@
     "קוח סוס.webp": 96506,
     "קול קורא.webp": 124552,
     "קול-עבים.webp": 234802,
+    "קולות מוזרים.webp": 156156,
     "קולט אדים 1.webp": 48104,
     "קולי קולות.webp": 126646,
     "קולע מהחצי.webp": 121160,
@@ -16094,6 +16901,7 @@
     "קורא כרטיסים.webp": 97650,
     "קורן מאושר 1.webp": 115482,
     "קורנ-פלקס.webp": 124526,
+    "קורס צלי-לה.webp": 176000,
     "קורת רוח.webp": 96390,
     "קושר נעליים.webp": 183056,
     "קט-בם 1.webp": 47816,
@@ -16104,6 +16912,7 @@
     "קיפופותן.webp": 147672,
     "קיש אלון חרוץ.webp": 85190,
     "קיש-אלון.webp": 227876,
+    "קיש-ארון.webp": 115550,
     "קלילת יופי.webp": 107684,
     "קלף חזק.webp": 66750,
     "קלף מנצח.webp": 97864,
@@ -16155,6 +16964,7 @@
     "רוחות מטורפות.webp": 68288,
     "רום סרוויס.webp": 121932,
     "רומן TEA.webp": 66040,
+    "רועה בכוכבים.webp": 222770,
     "רופאי שיניים.webp": 107116,
     "רוצח המונים.webp": 140832,
     "רוקטמן.webp": 200386,
@@ -16224,6 +17034,7 @@
     "שיח משותף.webp": 154408,
     "שיח עלים ברשת.webp": 83898,
     "שיח רב משתתפים.webp": 141014,
+    "שיח רגשי.webp": 174176,
     "שיחה שלא נהנתה.webp": 74020,
     "שיכור כלוט.webp": 139226,
     "שילוח הכן.webp": 110078,
@@ -16248,12 +17059,15 @@
     "שכח משנתו.webp": 133090,
     "שכירת חרב.webp": 80970,
     "שלא תעלה כינת אדם... ולא כינתי.webp": 85324,
+    "שלגיה ושבעת הגמדים.webp": 94724,
     "שלדג.webp": 197572,
     "שלום אח-שב.webp": 134492,
+    "שליטא מרחוק.webp": 134816,
     "שליש.webp": 53596,
     "שם-חוט.webp": 170246,
     "שם... פה....webp": 152630,
     "שמחת תורה.webp": 114840,
+    "שמיכה לרב עיר.webp": 172522,
     "שמירת העיניים.webp": 249850,
     "שמש חזקה.webp": 103358,
     "שן-ביצ.webp": 83962,
@@ -16264,10 +17078,12 @@
     "שקוע בלי מוד.webp": 124330,
     "שר בזיופים.webp": 143084,
     "שר בטון חזק.webp": 190166,
+    "שר החכ להוט.webp": 256158,
     "שר כאן.webp": 107388,
     "שר לי הבדו.webp": 104768,
     "שר לתן.webp": 119810,
     "שרה טבעות.webp": 169198,
+    "שרט האוצר.webp": 153782,
     "שרנו ביטלס בקולות....webp": 200252,
     "שרשרת המזון.webp": 69458,
     "שתיקת הכבסים.webp": 179902,
@@ -16289,6 +17105,7 @@
     "תוקע בשופר.webp": 119714,
     "תוקף בנשק קר.webp": 204342,
     "תורת הניסטר.webp": 125996,
+    "תחושת ניקור.webp": 141868,
     "תטו אוזן פליז.webp": 124974,
     "תטורף את הקלפים.webp": 98360,
     "תיאום ציפיות.webp": 167370,
@@ -16310,6 +17127,7 @@
     "תמיד תינתן עזרה.webp": 158722,
     "תמסחיין.webp": 172816,
     "תן ביס.webp": 73220,
+    "תן וכך.webp": 248792,
     "תספורת עופנתית.webp": 89504,
     "תעודה משעממת.webp": 75518,
     "תעודת סל.webp": 74736,
@@ -16326,6 +17144,7 @@
     "תקשורת ביינישית.webp": 95186,
     "תר מילים.webp": 115778,
     "תשובה מאהבה.webp": 151694,
-    "תשובת המשקל.webp": 136288
+    "תשובת המשקל.webp": 136288,
+    "תשעת ה'ימים'.webp": 92020
   }
 }
