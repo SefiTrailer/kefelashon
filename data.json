@@ -12744,5 +12744,185 @@
     "needsAIImprovement": false,
     "aiSuggestion": null,
     "createdAt": 1785930168523
+  },
+  "'ב' חלומותי.webp": {
+    "title": "'ב' חלומותי",
+    "explanation": "נשמע כמו 'בית חלומותי', רואים מישהו שחולם על האות ב', והיא בעצם בית בצורה של האות",
+    "topic": "בית, בית ויומיום, חלום, אותיות",
+    "isApproved": true,
+    "isAIGenerated": false,
+    "needsAIImprovement": false,
+    "aiSuggestion": null,
+    "createdAt": 1791289480080
+  },
+  "אתרוג מרוקאי.webp": {
+    "title": "אתרוג מרוקאי",
+    "explanation": "מחג הסוכות, רואים דמות של אתרוג כשהוא ממוצא מרוקאי",
+    "topic": "סוכות, פירות, אתרוג",
+    "isApproved": true,
+    "isAIGenerated": false,
+    "needsAIImprovement": false,
+    "aiSuggestion": null,
+    "createdAt": 1791289442115
+  },
+  "אבק פורח.webp": {
+    "title": "אבק פורח",
+    "explanation": "מהתפילה בימים נוראים, רואים אבק כשהוא ממש פורח כמו פרחים",
+    "topic": "ימים נוראים, אבק, פרח",
+    "isApproved": true,
+    "isAIGenerated": false,
+    "needsAIImprovement": false,
+    "aiSuggestion": null,
+    "createdAt": 1791289417438
+  },
+  "אי לוף.webp": {
+    "title": "אי לוף",
+    "explanation": "נשמע כמו 'אילוף', רואים אי שיש בו רק לוף [הצמח, ובשר משומר לוף מהצבא], והאי הוא ייעודי לאילוף כלפי צבא",
+    "topic": "צבא, צבא וביטחון, בשר משומר, לוף, כלב, אילוף",
+    "isApproved": true,
+    "isAIGenerated": false,
+    "needsAIImprovement": false,
+    "aiSuggestion": null,
+    "createdAt": 1791290098996
+  },
+  "גילוי עראייס.webp": {
+    "title": "גילוי עראייס",
+    "explanation": "נשמע כמו 'גילוי עריות' בעגה ליטאית.",
+    "topic": "ליטאים, ישיבתי",
+    "isApproved": true,
+    "isAIGenerated": false,
+    "needsAIImprovement": false,
+    "aiSuggestion": null,
+    "createdAt": 1791290168707
+  },
+  "המלך בשדה.webp": {
+    "title": "המלך בשדה",
+    "explanation": "הביטוי על חודש אלול שבו המלך [השם] מסתובב בעולם [בשדה], רואים את המלך זוהר ארגוב בשדה התעופה בן גוריון",
+    "topic": "אלול, מוזיקה, מוזיקה ותרבות, זוהר ארגוב",
+    "isApproved": true,
+    "isAIGenerated": false,
+    "needsAIImprovement": false,
+    "aiSuggestion": null,
+    "createdAt": 1791289519649
+  },
+  "בזבוז קולות.webp": {
+    "title": "בזבוז קולות",
+    "explanation": "רואים כנס של הליכוד, שבו שופכים קולות על הריצפה, וזה ממש בזבוז קולות",
+    "topic": "בחירות, פוליטיקה, פוליטיקה ואקטואליה, קולה, קולות",
+    "isApproved": true,
+    "isAIGenerated": false,
+    "needsAIImprovement": false,
+    "aiSuggestion": null,
+    "createdAt": 1791290135948
+  },
+  "הנני מוכן ומזומן.webp": {
+    "title": "הנני מוכן ומזומן",
+    "explanation": "מתוך ברכת הזימון, רואים את ההרכב של זושא ששרים את השיר המפורסם 'הנני מוכן ומזומן', כשהם עושים זימון בישיבה, ואחד מהם מחזיק שטרות מזומן",
+    "topic": "תפילה, יהדות ומסורת, זושא, שיר, מוזיקה, מוזיקה ותרבות, זימון, אוכל, אוכל ושתייה",
+    "isApproved": true,
+    "isAIGenerated": false,
+    "needsAIImprovement": false,
+    "aiSuggestion": null,
+    "createdAt": 1791289638110
+  },
+  "חתימה טובה.webp": {
+    "title": "חתימה טובה",
+    "explanation": "רואים מישהי שחותמת את השם שלה על מסמך, בשם 'טובה'",
+    "topic": "אלול, ראש השנה, כתיבה",
+    "isApproved": true,
+    "isAIGenerated": false,
+    "needsAIImprovement": false,
+    "aiSuggestion": null,
+    "createdAt": 1791289550028
+  },
+  "כענן כלה.webp": {
+    "title": "כענן כלה",
+    "explanation": "מתפילת ונתנה תוקף 'וכענן כלה', רואים דמות של כלה שהיא בענן",
+    "topic": "ימים נוראים, תפילה, יהדות ומסורת, כלה, חתונה",
+    "isApproved": true,
+    "isAIGenerated": false,
+    "needsAIImprovement": false,
+    "aiSuggestion": null,
+    "createdAt": 1791289587060
+  },
+  "לייס יחודה בעילאה.webp": {
+    "title": "לייס יחודה בעילאה",
+    "explanation": "לקוח מהשיר של להקת זושא 'הנני מוכן ומזומן', רואים את חברי הלהקה מצביעים על פאת לייס, שהיחודיות שלה היא בעילאה [בלמעלה של הפאה]",
+    "topic": "זושא, פאה, שירים, מוזיקה ותרבות, מוזיקה, שיער",
+    "isApproved": true,
+    "isAIGenerated": false,
+    "needsAIImprovement": false,
+    "aiSuggestion": null,
+    "createdAt": 1791289983051
+  },
+  "זוכה בחמישה קולות.webp": {
+    "title": "זוכה בחמישה קולות",
+    "explanation": "הביטוי התלמודי שכל המשמח חתן וכלה זוכה בחמישה קולות, רואים מישהו שמשמח וזוכה ביותר מ5 פחיות קוקה קולה",
+    "topic": "קולה, שתיה, אוכל ושתייה, חתונה, חתן, כלה, שמחה",
+    "isApproved": true,
+    "isAIGenerated": false,
+    "needsAIImprovement": false,
+    "aiSuggestion": null,
+    "createdAt": 1791290048001
+  },
+  "סדר א.webp": {
+    "title": "סדר א",
+    "explanation": "המושג סדר א' זהו הסדר לימוד הראשון ביום בישיבה, רואים בחור בישיבה, שמסדר את האות א' לפי הסדר",
+    "topic": "ישיבה, סדר, לימוד",
+    "isApproved": true,
+    "isAIGenerated": false,
+    "needsAIImprovement": false,
+    "aiSuggestion": null,
+    "createdAt": 1791289892949
+  },
+  "מחנה יודה.webp": {
+    "title": "מחנה יודה",
+    "explanation": "נשמע כמו 'מחנה יהודה', רואים עובד בשוק מחנה יהודה, שהוא מחנה את הרכב שלהם שבדמות של 'יודה'",
+    "topic": "שוק, מחנה יהודה, יודה, סרטים, מוזיקה ותרבות",
+    "isApproved": true,
+    "isAIGenerated": false,
+    "needsAIImprovement": false,
+    "aiSuggestion": null,
+    "createdAt": 1791289924262
+  },
+  "עין לי שמץ ועין לי מושג.webp": {
+    "title": "עין לי שמץ ועין לי מושג",
+    "explanation": "נשמע כמו 'אין לי שמץ' ו'עין לי מושד', רואים נערים שרוצים ללכת לטיול בחופש עם אבא שלהם, והוא אומר שהולכים ל'עין לי שמץ' שנשמע כמו של מקום לטיול [על משקל 'עין מבוע' וכדומה]",
+    "topic": "טיול, חופש, ילדים, משפחה וילדים",
+    "isApproved": true,
+    "isAIGenerated": false,
+    "needsAIImprovement": false,
+    "aiSuggestion": null,
+    "createdAt": 1791289753457
+  },
+  "משוריינים בליכוד.webp": {
+    "title": "משוריינים בליכוד",
+    "explanation": "הביטוי על אנשים ששמרו להם את המקום ברשימת הליכוד, רואים כינוס של מפלגת הליכוד, כאשר יש בו משוריינים - מכוניות עם שריון נגד כדורים",
+    "topic": "פוליטיקה, פוליטיקה ואקטואליה, שריון, בחירות, ביטוי",
+    "isApproved": true,
+    "isAIGenerated": false,
+    "needsAIImprovement": false,
+    "aiSuggestion": null,
+    "createdAt": 1791289687624
+  },
+  "תקיעת כף.webp": {
+    "title": "תקיעת כף",
+    "explanation": "הביטוי על הבטחה, אבל רואים דמות של כף שהיא תוקעת בשופר, וגם רואים דמות של כף שתקעו אותה ברצפה",
+    "topic": "ימים נוראים, שופר, סכו\"ם, כף, הבטחה",
+    "isApproved": true,
+    "isAIGenerated": false,
+    "needsAIImprovement": false,
+    "aiSuggestion": null,
+    "createdAt": 1791289793656
+  },
+  "פטור מתור.webp": {
+    "title": "פטור מתור",
+    "explanation": "על המושג שיש אנשים עם מסמך שפוטר אותם מלעמוד בתור, רואים דמות של 'תור' שנותן פטורים לתור של יונים [תורים] שעומדים ומקבלים ממנו את הפטור מלמעוד בתור. אבל תכל'ס הם עומדים בתור",
+    "topic": "תור, פטור, בעל חיים, יונים",
+    "isApproved": true,
+    "isAIGenerated": false,
+    "needsAIImprovement": false,
+    "aiSuggestion": null,
+    "createdAt": 1791289852335
   }
 }
