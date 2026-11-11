@@ -955,7 +955,21 @@
     "topic": "טכנולוגיה ומדע, מחשב, מחשבים, משפחה וילדים, ילדים, משפחה",
     "isApproved": true,
     "isAIGenerated": false,
-    "createdAt": 1772468311000
+    "createdAt": 1772468311000,
+    "social_posts": [
+      {
+        "platform": "instagram",
+        "date": "2026-10-07T13:06:16.191Z"
+      },
+      {
+        "platform": "facebook",
+        "date": "2026-10-07T13:06:25.772Z"
+      },
+      {
+        "platform": "x",
+        "date": "2026-10-07T13:06:40.151Z"
+      }
+    ]
   },
   "אב קרס.webp": {
     "title": "אב קרס",
@@ -963,7 +977,21 @@
     "topic": "חנוכה, חגים ומועדים, מוזיקה ותרבות, ספרות, משפחה וילדים, ילדים, משפחה",
     "isApproved": true,
     "isAIGenerated": false,
-    "createdAt": 1772468311000
+    "createdAt": 1772468311000,
+    "social_posts": [
+      {
+        "platform": "instagram",
+        "date": "2026-10-07T13:16:46.074Z"
+      },
+      {
+        "platform": "facebook",
+        "date": "2026-10-07T13:16:52.128Z"
+      },
+      {
+        "platform": "x",
+        "date": "2026-10-07T13:17:04.127Z"
+      }
+    ]
   },
   "ירושה ליים.webp": {
     "title": "ירושה ליים",
@@ -8415,7 +8443,21 @@
     "topic": "פוליטיקה ואקטואליה, אוכל ושתייה, משקאות, יהדות ומסורת, כשרות, פוליטיקה ישראלית, משפחה וילדים, ילדים, משפחה",
     "isApproved": true,
     "isAIGenerated": false,
-    "createdAt": 1773675585000
+    "createdAt": 1773675585000,
+    "social_posts": [
+      {
+        "platform": "instagram",
+        "date": "2026-10-07T13:08:39.773Z"
+      },
+      {
+        "platform": "facebook",
+        "date": "2026-10-07T13:08:47.648Z"
+      },
+      {
+        "platform": "x",
+        "date": "2026-10-07T13:09:01.323Z"
+      }
+    ]
   },
   "דו שיח של חרשים.webp": {
     "title": "דו שיח של חרשים",
@@ -12753,7 +12795,17 @@
     "isAIGenerated": false,
     "needsAIImprovement": false,
     "aiSuggestion": null,
-    "createdAt": 1791289480080
+    "createdAt": 1791289480080,
+    "social_posts": [
+      {
+        "platform": "instagram",
+        "date": "2026-10-06T14:18:40.838Z"
+      },
+      {
+        "platform": "facebook",
+        "date": "2026-10-06T14:18:45.794Z"
+      }
+    ]
   },
   "אתרוג מרוקאי.webp": {
     "title": "אתרוג מרוקאי",
@@ -12924,5 +12976,23 @@
     "needsAIImprovement": false,
     "aiSuggestion": null,
     "createdAt": 1791289852335
+  },
+  "היכל התה הילה.webp": {
+    "title": "היכל התה הילה",
+    "explanation": "הפונד משחק על הביטוי המוכר 'היכל התהילה' (Hall of Fame) והופך אותו ל'היכל התה הילה'. זאת בעקבות העיצוב של המקום כבית תה, והצגת אישה בשם הילה כאחראית עליו.",
+    "topic": "מילים ומשחקי לשון, אוכל ושתייה, אישים ומפורסמים, הומור ופנאי, ספורט",
+    "isApproved": true,
+    "isAIGenerated": true,
+    "createdAt": 1794317936132,
+    "social_posts": [
+      {
+        "platform": "facebook",
+        "date": "2026-11-10T13:44:11.078Z"
+      },
+      {
+        "platform": "facebook-personal",
+        "date": "2026-11-10T13:44:53.061Z"
+      }
+    ]
   }
 }

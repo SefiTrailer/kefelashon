@@ -1,5 +1,6 @@
 {
   "files": [
+    "היכל התה הילה.webp",
     "גילוי עראייס.webp",
     "בזבוז קולות.webp",
     "אי לוף.webp",
@@ -1572,6 +1573,16 @@
       "needsAIImprovement": false,
       "aiSuggestion": null,
       "createdAt": 1791289480080,
+      "social_posts": [
+        {
+          "platform": "instagram",
+          "date": "2026-10-06T14:18:40.838Z"
+        },
+        {
+          "platform": "facebook",
+          "date": "2026-10-06T14:18:45.794Z"
+        }
+      ],
       "dateMillis": 1791289480080
     },
     "'קיא לך היום עף לך הלילה'.webp": {
@@ -2023,6 +2034,20 @@
       "isApproved": true,
       "isAIGenerated": false,
       "createdAt": 1772468311000,
+      "social_posts": [
+        {
+          "platform": "instagram",
+          "date": "2026-10-07T13:06:16.191Z"
+        },
+        {
+          "platform": "facebook",
+          "date": "2026-10-07T13:06:25.772Z"
+        },
+        {
+          "platform": "x",
+          "date": "2026-10-07T13:06:40.151Z"
+        }
+      ],
       "dateMillis": 1772468311000
     },
     "אב מתהלל.webp": {
@@ -2032,6 +2057,20 @@
       "isApproved": true,
       "isAIGenerated": false,
       "createdAt": 1773675585000,
+      "social_posts": [
+        {
+          "platform": "instagram",
+          "date": "2026-10-07T13:08:39.773Z"
+        },
+        {
+          "platform": "facebook",
+          "date": "2026-10-07T13:08:47.648Z"
+        },
+        {
+          "platform": "x",
+          "date": "2026-10-07T13:09:01.323Z"
+        }
+      ],
       "dateMillis": 1773675585000
     },
     "אב קרס.webp": {
@@ -2041,6 +2080,20 @@
       "isApproved": true,
       "isAIGenerated": false,
       "createdAt": 1772468311000,
+      "social_posts": [
+        {
+          "platform": "instagram",
+          "date": "2026-10-07T13:16:46.074Z"
+        },
+        {
+          "platform": "facebook",
+          "date": "2026-10-07T13:16:52.128Z"
+        },
+        {
+          "platform": "x",
+          "date": "2026-10-07T13:17:04.127Z"
+        }
+      ],
       "dateMillis": 1772468311000
     },
     "אבא בתור.webp": {
@@ -4738,6 +4791,25 @@
       "isAIGenerated": false,
       "createdAt": 1772468311000,
       "dateMillis": 1772468311000
+    },
+    "היכל התה הילה.webp": {
+      "title": "היכל התה הילה",
+      "explanation": "הפונד משחק על הביטוי המוכר 'היכל התהילה' (Hall of Fame) והופך אותו ל'היכל התה הילה'. זאת בעקבות העיצוב של המקום כבית תה, והצגת אישה בשם הילה כאחראית עליו.",
+      "topic": "מילים ומשחקי לשון, אוכל ושתייה, אישים ומפורסמים, הומור ופנאי, ספורט",
+      "isApproved": true,
+      "isAIGenerated": true,
+      "createdAt": 1794317936132,
+      "social_posts": [
+        {
+          "platform": "facebook",
+          "date": "2026-11-10T13:44:11.078Z"
+        },
+        {
+          "platform": "facebook-personal",
+          "date": "2026-11-10T13:44:53.061Z"
+        }
+      ],
+      "dateMillis": 1794317936132
     },
     "הילד איננו ואני אנה עניבה.webp": {
       "title": "הילד איננו ואני אנה עניבה",
@@ -16215,6 +16287,7 @@
     "היום שישה.webp": 76846,
     "היום שלשה לעומר.webp": 95398,
     "היי תנים.webp": 191324,
+    "היכל התה הילה.webp": 1056986,
     "הילד איננו ואני אנה עניבה.webp": 171370,
     "הילד שניצל.webp": 48738,
     "היסוי שוודי.webp": 181100,
