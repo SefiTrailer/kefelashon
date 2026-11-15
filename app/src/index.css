@@ -92,9 +92,28 @@ body {
   --glow-color: rgba(251, 191, 36, 0.4);
 }
 
-/* Smooth theme transitions */
-* {
-  transition-property: background-color, border-color, color, box-shadow;
-  transition-duration: 400ms;
+/* Modern Web Guidance: Native Dialog & Backdrop Baseline */
+dialog:modal {
+  overscroll-behavior: contain;
+  margin: auto;
+  border: none;
+  padding: 0;
+  background: transparent;
+  color: inherit;
+  outline: none;
+}
+
+dialog::backdrop {
+  overflow: hidden;
+  overscroll-behavior: contain;
+  background: rgba(0, 0, 0, 0.8);
+  backdrop-filter: blur(8px);
+}
+
+/* Targeted Theme Surface Transitions (avoiding universal '*' selector for INP/paint performance) */
+body,
+.theme-surface {
+  transition-property: background-color, border-color, color;
+  transition-duration: 300ms;
   transition-timing-function: ease;
 }

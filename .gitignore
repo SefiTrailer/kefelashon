@@ -9,3 +9,32 @@ app/deleted_candidates/
 # Original heavy images before WebP conversion (kept locally, not deployed to GitHub)
 app/public/images_originals/
 .DS_Store
+
+# Automation and local temp files
+.x-session/
+app/.x-session/
+.fb-session/
+app/.fb-session/
+.gemini-session/
+app/.gemini-session/
+.ig-session/
+app/.ig-session/
+.wwebjs_auth/
+app/.wwebjs_auth/
+*.log
+__pycache__/
+app/scripts/task_*.json
+app/scripts/fb_task_*.json
+app/scripts/gem_login_*.json
+app/scripts/gem_task_*.json
+gemini-error.png
+fb-error.png
+fb-dryrun.png
+fb-story-dryrun.png
+x-error.png
+x-dryrun.png
+x-login-check.png
+ig-error.png
+logs/
+app/src/*.txt
+app/*.txt

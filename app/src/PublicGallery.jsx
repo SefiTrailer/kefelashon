@@ -414,6 +414,38 @@ export default function PublicGallery({ images, metadata }) {
     const [isThemeMenuOpen, setIsThemeMenuOpen] = useState(false);
     const [isSortOpen, setIsSortOpen] = useState(false);
     const [isFullscreen, setIsFullscreen] = useState(false);
+    const fullscreenDialogRef = useRef(null);
+    const searchDialogRef = useRef(null);
+
+    // Modern Web Guidance: View Transitions API helper for smooth zero-cost animations
+    const transitionState = useCallback((callback) => {
+        if (typeof document !== 'undefined' && 'startViewTransition' in document) {
+            document.startViewTransition(callback);
+        } else {
+            callback();
+        }
+    }, []);
+
+    // Modern Web Guidance: Native <dialog> lifecycle synchronization
+    useEffect(() => {
+        const dialog = fullscreenDialogRef.current;
+        if (!dialog) return;
+        if (isFullscreen) {
+            if (!dialog.open) dialog.showModal();
+        } else {
+            if (dialog.open) dialog.close();
+        }
+    }, [isFullscreen]);
+
+    useEffect(() => {
+        const dialog = searchDialogRef.current;
+        if (!dialog) return;
+        if (isSearchOpen) {
+            if (!dialog.open) dialog.showModal();
+        } else {
+            if (dialog.open) dialog.close();
+        }
+    }, [isSearchOpen]);
 
     // Site Tour State
     const [hasSeenTour, setHasSeenTour] = useState(() => {
@@ -472,9 +504,11 @@ export default function PublicGallery({ images, metadata }) {
     const theme = THEMES[themeIndex];
 
     const setTheme = (idx) => {
-        setThemeIndex(idx);
-        setIsThemeMenuOpen(false);
-        try { localStorage.setItem('kefel-theme', THEMES[idx].id); } catch { }
+        transitionState(() => {
+            setThemeIndex(idx);
+            setIsThemeMenuOpen(false);
+            try { localStorage.setItem('kefel-theme', THEMES[idx].id); } catch { }
+        });
     };
 
     useEffect(() => {
@@ -562,25 +596,29 @@ export default function PublicGallery({ images, metadata }) {
 
     const nextImage = () => {
         const step = getGridSize();
-        if (currentIndex + step < displayImages.length) {
-            setCurrentIndex(p => p + step);
-            setShowExplanation(false);
-        } else if (currentIndex < displayImages.length - 1) {
-            setCurrentIndex(displayImages.length - 1);
-            setShowExplanation(false);
-        }
+        transitionState(() => {
+            if (currentIndex + step < displayImages.length) {
+                setCurrentIndex(p => p + step);
+                setShowExplanation(false);
+            } else if (currentIndex < displayImages.length - 1) {
+                setCurrentIndex(displayImages.length - 1);
+                setShowExplanation(false);
+            }
+        });
     };
 
     const prevImage = () => {
         const step = getGridSize();
-        if (currentIndex - step >= 0) {
-            setCurrentIndex(p => p - step);
-            setShowExplanation(false);
-        } else if (currentIndex > 0) {
-            setCurrentIndex(0);
-            setIsFullscreen(false);
-            setShowExplanation(false);
-        }
+        transitionState(() => {
+            if (currentIndex - step >= 0) {
+                setCurrentIndex(p => p - step);
+                setShowExplanation(false);
+            } else if (currentIndex > 0) {
+                setCurrentIndex(0);
+                setIsFullscreen(false);
+                setShowExplanation(false);
+            }
+        });
     };
 
     const handleQRCodeClick = useCallback(async (e) => {
@@ -889,7 +927,8 @@ export default function PublicGallery({ images, metadata }) {
                                                         <img 
                                                             key={currentFile} 
                                                             src={`./images/${encodeURIComponent(currentFile.replace(/\.(jpg|jpeg|png)$/i, '.webp'))}?v=${fileMetadata?.dateMillis || ''}`} 
-                                                            alt={fileMetadata?.title || 'תמונה'} 
+                                                            alt={fileMetadata?.title || 'תמונה ראשית'} 
+                                                            fetchpriority="high"
                                                             decoding="async"
                                                             className="w-full h-full object-contain filter drop-shadow-2xl relative z-10 animate-in zoom-in-95 duration-500" 
                                                             onError={(ev) => { ev.currentTarget.src = `./images/${encodeURIComponent(currentFile)}`; }}
@@ -1262,32 +1301,105 @@ export default function PublicGallery({ images, metadata }) {
                 )}
             </div>
 
-            {/* Fullscreen Modal */}
-            {isFullscreen && (
-                <div className="fixed inset-0 z-[100] bg-black/95 flex items-center justify-center" onClick={() => setIsFullscreen(false)} onTouchStart={onTouchStart} onTouchMove={onTouchMove} onTouchEnd={onTouchEnd}>
-                    <button className="absolute top-4 right-4 p-2 bg-white/10 rounded-full text-white z-[110]"><X size={28} /></button>
-                    <div className="relative w-full h-full flex items-center justify-center p-4">
-                        <img src={`./images/${encodeURIComponent(currentFile.replace(/\.(jpg|jpeg|png)$/i, '.webp'))}`} className="max-h-full max-w-full object-contain shadow-2xl rounded-lg" onError={(ev) => { ev.currentTarget.src = `./images/${encodeURIComponent(currentFile)}`; }} />
-                        <button onClick={(e) => { e.stopPropagation(); nextImage(); }} className="absolute right-4 top-1/2 -translate-y-1/2 p-2 bg-white/10 rounded-full text-white hidden lg:block"><ChevronRight size={40} /></button>
-                        <button onClick={(e) => { e.stopPropagation(); prevImage(); }} className="absolute left-4 top-1/2 -translate-y-1/2 p-2 bg-white/10 rounded-full text-white hidden lg:block"><ChevronLeft size={40} /></button>
+            {/* Fullscreen Modal (Native <dialog>) */}
+            <dialog
+                ref={fullscreenDialogRef}
+                onCancel={(e) => {
+                    e.preventDefault();
+                    setIsFullscreen(false);
+                }}
+                onClick={(e) => {
+                    if (e.target === e.currentTarget) setIsFullscreen(false);
+                }}
+                onTouchStart={onTouchStart}
+                onTouchMove={onTouchMove}
+                onTouchEnd={onTouchEnd}
+                className="fixed inset-0 w-full h-full max-w-none max-h-none p-0 m-0 bg-transparent border-none outline-none flex items-center justify-center backdrop:bg-black/95 backdrop:backdrop-blur-md z-[100]"
+            >
+                {isFullscreen && (
+                    <div className="relative w-full h-full flex items-center justify-center p-4" onClick={() => setIsFullscreen(false)}>
+                        <button
+                            type="button"
+                            aria-label="סגור תצוגת מסך מלא"
+                            onClick={() => setIsFullscreen(false)}
+                            className="absolute top-4 right-4 p-2 bg-white/10 rounded-full text-white z-[110] hover:bg-white/20 transition-colors"
+                        >
+                            <X size={28} />
+                        </button>
+                        <img
+                            src={`./images/${encodeURIComponent(currentFile.replace(/\.(jpg|jpeg|png)$/i, '.webp'))}`}
+                            alt={metadata[currentFile]?.title || 'תמונה בהגדלה מלאה'}
+                            fetchpriority="high"
+                            decoding="async"
+                            className="max-h-full max-w-full object-contain shadow-2xl rounded-lg cursor-default"
+                            onClick={(e) => e.stopPropagation()}
+                            onError={(ev) => { ev.currentTarget.src = `./images/${encodeURIComponent(currentFile)}`; }}
+                        />
+                        <button
+                            type="button"
+                            aria-label="תמונה הבאה"
+                            onClick={(e) => { e.stopPropagation(); nextImage(); }}
+                            className="absolute right-4 top-1/2 -translate-y-1/2 p-2 bg-white/10 rounded-full text-white hidden lg:block hover:bg-white/20 transition-colors"
+                        >
+                            <ChevronRight size={40} />
+                        </button>
+                        <button
+                            type="button"
+                            aria-label="תמונה קודמת"
+                            onClick={(e) => { e.stopPropagation(); prevImage(); }}
+                            className="absolute left-4 top-1/2 -translate-y-1/2 p-2 bg-white/10 rounded-full text-white hidden lg:block hover:bg-white/20 transition-colors"
+                        >
+                            <ChevronLeft size={40} />
+                        </button>
                     </div>
-                </div>
-            )}
+                )}
+            </dialog>
 
-            {/* Search Modal */}
-            {isSearchOpen && (
-                <div className="fixed inset-0 z-[100] flex items-start justify-center p-4 pt-20">
-                    <div className="absolute inset-0 bg-black/80 backdrop-blur-sm" onClick={() => { setIsSearchOpen(false); setSearchQuery(''); }} />
-                    <div className="relative w-full max-w-xl bg-slate-900 border border-white/10 rounded-3xl p-4 shadow-2xl animate-in fade-in slide-in-from-top-4 flex flex-col max-h-[70vh]">
+            {/* Search Modal (Native <dialog>) */}
+            <dialog
+                ref={searchDialogRef}
+                onCancel={(e) => {
+                    e.preventDefault();
+                    setIsSearchOpen(false);
+                    setSearchQuery('');
+                }}
+                onClick={(e) => {
+                    if (e.target === e.currentTarget) {
+                        setIsSearchOpen(false);
+                        setSearchQuery('');
+                    }
+                }}
+                className="fixed inset-0 w-full h-full max-w-none max-h-none p-4 pt-20 m-0 bg-transparent border-none outline-none flex items-start justify-center backdrop:bg-black/80 backdrop:backdrop-blur-sm z-[100]"
+            >
+                {isSearchOpen && (
+                    <div className="relative w-full max-w-xl bg-slate-900 border border-white/10 rounded-3xl p-4 shadow-2xl animate-in fade-in slide-in-from-top-4 flex flex-col max-h-[70vh]" onClick={(e) => e.stopPropagation()}>
                         <div className="flex items-center gap-3 bg-slate-800 rounded-2xl px-4 py-3">
                             <Search size={22} className="text-slate-400" />
-                            <input type="text" autoFocus placeholder="חפש..." value={searchQuery} onChange={(e) => setSearchQuery(e.target.value)} className="bg-transparent text-white w-full outline-none text-right font-bold" dir="rtl" />
+                            <input
+                                type="text"
+                                autoFocus
+                                placeholder="חפש..."
+                                value={searchQuery}
+                                onChange={(e) => setSearchQuery(e.target.value)}
+                                className="bg-transparent text-white w-full outline-none text-right font-bold"
+                                dir="rtl"
+                            />
                         </div>
                         <div className="mt-4 flex-1 overflow-y-auto space-y-2 no-scrollbar">
                             {filteredImages.length > 0 ? filteredImages.slice(0, 40).map(file => {
                                 const webpFile = file.replace(/\.(jpg|jpeg|png)$/i, '.webp');
                                 return (
-                                    <button key={file} onClick={() => { isSelectingResult.current = true; setCurrentIndex(shuffledImages.indexOf(file)); setIsSearchOpen(false); setSearchQuery(''); }} className="flex items-center gap-3 w-full p-2 hover:bg-white/5 rounded-xl transition-all border border-transparent hover:border-white/5">
+                                    <button
+                                        key={file}
+                                        type="button"
+                                        onClick={() => {
+                                            isSelectingResult.current = true;
+                                            transitionState(() => setCurrentIndex(shuffledImages.indexOf(file)));
+                                            setIsSearchOpen(false);
+                                            setSearchQuery('');
+                                        }}
+                                        className="flex items-center gap-3 w-full p-2 hover:bg-white/5 rounded-xl transition-all border border-transparent hover:border-white/5"
+                                    >
                                         <div className="flex-1 text-right"><div className="text-white font-bold text-sm truncate">{metadata[file]?.title || file}</div></div>
                                         <img 
                                             src={`./thumbnails/${encodeURIComponent(webpFile)}`} 
@@ -1302,8 +1414,8 @@ export default function PublicGallery({ images, metadata }) {
                             }) : searchQuery && <div className="text-center py-10 opacity-50">לא נמצאו תוצאות</div>}
                         </div>
                     </div>
-                </div>
-            )}
+                )}
+            </dialog>
             {/* Guided Tour Component */}
             <SiteTour
                 isActive={isTourActive}

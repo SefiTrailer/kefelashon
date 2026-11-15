@@ -39,8 +39,11 @@ function App() {
   const [fileSources, setFileSources] = useState({});
   const [adminViewMode, setAdminViewMode] = useState('edit'); // 'edit' | 'grid' | 'duplicates'
   const [xConnected, setXConnected] = useState(false);
+  const [igConnected, setIgConnected] = useState(false);
   const [metaConnected, setMetaConnected] = useState(false);
   const [metaError, setMetaError] = useState(null);
+  const [fileCreationTimes, setFileCreationTimes] = useState({});
+  const [sortOrder, setSortOrder] = useState('default'); // 'default' (backend alphanumeric) | 'newest'
 
   // ── Publish state ──
   const [publishState, setPublishState] = useState('idle'); // idle | loading | success | error | skipped
@@ -55,8 +58,11 @@ function App() {
   const [socialPostState, setSocialPostState] = useState('idle'); // idle | loading | success | error
   const [socialPlatform, setSocialPlatform] = useState('all'); 
   const [socialResult, setSocialResult] = useState(null);
+  const [platformStatuses, setPlatformStatuses] = useState({}); // { [platform]: { status: 'pending'|'loading'|'success'|'error', message: string, shareUrl?: string } }
   const [editModeTab, setEditModeTab] = useState('details'); // 'details' | 'social'
   const [shareToFacebook, setShareToFacebook] = useState(false);
+  const [shareToPersonalProfile, setShareToPersonalProfile] = useState(true);
+  const [fbPersonalConnected, setFbPersonalConnected] = useState(false);
   const [selectionMode, setSelectionMode] = useState(false);
   const [selectedImages, setSelectedImages] = useState([]);
   const [bulkProgress, setBulkProgress] = useState(null); // { current, total, countdown, status }
@@ -70,6 +76,28 @@ function App() {
   const [bulkSelectedPlatforms, setBulkSelectedPlatforms] = useState(['instagram', 'facebook', 'x', 'whatsapp']);
   const dragRef = useRef(null);
   const dragStartRef = useRef(null);
+  const bulkModalRef = useRef(null);
+  const topicModalRef = useRef(null);
+
+  useEffect(() => {
+    const dialog = bulkModalRef.current;
+    if (!dialog) return;
+    if (isBulkModalOpen) {
+      if (!dialog.open) dialog.showModal();
+    } else {
+      if (dialog.open) dialog.close();
+    }
+  }, [isBulkModalOpen]);
+
+  useEffect(() => {
+    const dialog = topicModalRef.current;
+    if (!dialog) return;
+    if (isTopicModalOpen) {
+      if (!dialog.open) dialog.showModal();
+    } else {
+      if (dialog.open) dialog.close();
+    }
+  }, [isTopicModalOpen]);
 
   // Detect public mode: either via env var (production build) or if not on localhost
   const isPublicViewer = import.meta.env.VITE_PUBLIC_VIEWER === 'true' || 
@@ -90,6 +118,7 @@ function App() {
       setImages(data.files || []);
       setMetadata(data.data || {});
       setFileSizes(data.fileStats || {});
+      setFileCreationTimes(data.fileCreationTimes || {});
       setFileSources(data.fileSources || {});
     } catch (e) {
       console.error('Error fetching images:', e);
@@ -135,6 +164,33 @@ function App() {
     }
   };
 
+  const checkFbPersonalStatus = async () => {
+    try {
+      const res = await fetch(`${API_BASE}/api/social/facebook-personal/status`);
+      const data = await res.json();
+      setFbPersonalConnected(!!data.connected);
+    } catch (e) {
+      console.error('Failed to check FB personal status', e);
+    }
+  };
+
+  const checkIgStatus = async () => {
+    try {
+      const res = await fetch(`${API_BASE}/api/social/instagram/status`);
+      const data = await res.json();
+      setIgConnected(!!data.connected);
+    } catch (e) {
+      console.error('Failed to check Instagram status', e);
+    }
+  };
+
+  const [newMetaToken, setNewMetaToken] = useState('');
+  const [metaAppSecret, setMetaAppSecret] = useState('');
+  const [metaTokenSavedMsg, setMetaTokenSavedMsg] = useState(null);
+  const [isUpdatingMetaToken, setIsUpdatingMetaToken] = useState(false);
+  const [isCheckingDiagnostics, setIsCheckingDiagnostics] = useState(false);
+  const [showTokenPanel, setShowTokenPanel] = useState(false);
+
   const checkMetaStatus = async () => {
     try {
       const res = await fetch(`${API_BASE}/api/social/meta/status`);
@@ -143,6 +199,107 @@ function App() {
       setMetaError(data.error || null);
     } catch (e) {
       console.error('Failed to check Meta status', e);
+    }
+  };
+
+  const handleUpdateMetaToken = async () => {
+    if (!newMetaToken.trim()) return;
+    setIsUpdatingMetaToken(true);
+    setMetaTokenSavedMsg(null);
+    try {
+      const res = await fetch(`${API_BASE}/api/social/meta/token`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          token: newMetaToken.trim(),
+          appSecret: metaAppSecret.trim() || undefined
+        })
+      });
+      const data = await res.json();
+      if (res.ok && data.connected) {
+        setNewMetaToken('');
+        if (data.tokenTypeMsg) setMetaTokenSavedMsg(data.tokenTypeMsg);
+        await checkMetaStatus();
+        await runSocialDiagnostics();
+      } else {
+        setMetaError(data.error || 'הטוקן שהוזן אינו תקין');
+      }
+    } catch (e) {
+      setMetaError(`שגיאה בעדכון הטוקן: ${e.message}`);
+    } finally {
+      setIsUpdatingMetaToken(false);
+    }
+  };
+
+  const handleFbPersonalLogin = async () => {
+    try {
+      const res = await fetch(`${API_BASE}/api/social/facebook-personal/login`, { method: 'POST' });
+      const data = await res.json();
+      if (res.ok) {
+        alert('נפתח חלון דפדפן להתחברות חד-פעמית לפייסבוק האישי שלך.\nהתחבר לחשבון בפופ-אפ שנפתח — ברגע שהפיד ייטען החלון ייסגר אוטומטית והסשן יישמר!');
+        setTimeout(checkFbPersonalStatus, 5000);
+        setTimeout(checkFbPersonalStatus, 15000);
+        setTimeout(checkFbPersonalStatus, 30000);
+      } else {
+        alert('שגיאה בפתיחת חלון התחברות לפייסבוק: ' + (data.error || 'שגיאה'));
+      }
+    } catch (e) {
+      alert('שגיאת תקשורת עם השרת: ' + e.message);
+    }
+  };
+
+  const handleInstagramLogin = async () => {
+    try {
+      const res = await fetch(`${API_BASE}/api/social/instagram/login`, { method: 'POST' });
+      const data = await res.json();
+      if (res.ok) {
+        alert('נפתח חלון דפדפן להתחברות חד-פעמית לאינסטגרם שלך.\nהתחבר לחשבון בחלון שנפתח — ברגע שהפיד ייטען החלון ייסגר אוטומטית והסשן יישמר!');
+        setTimeout(checkIgStatus, 5000);
+        setTimeout(checkIgStatus, 15000);
+        setTimeout(checkIgStatus, 30000);
+      } else {
+        alert('שגיאה בפתיחת חלון התחברות לאינסטגרם: ' + (data.error || 'שגיאה'));
+      }
+    } catch (e) {
+      alert('שגיאת תקשורת עם השרת: ' + e.message);
+    }
+  };
+
+  const runSocialDiagnostics = async () => {
+    setIsCheckingDiagnostics(true);
+    setPlatformStatuses({
+      instagram: { status: 'loading', message: 'בודק סשן אינסטגרם המקומי וקובץ...' },
+      facebook: { status: 'loading', message: 'בודק Page Access Token...' },
+      'facebook-personal': { status: 'loading', message: 'בודק חיבור לפרופיל האישי...' },
+      x: { status: 'loading', message: 'בודק סשן X.com וקובץ מקומי...' },
+      whatsapp: { status: 'loading', message: 'בודק חיבור WhatsApp ויעד...' }
+    });
+    try {
+      const currFile = images[currentIndex] || null;
+      const res = await fetch(`${API_BASE}/api/social/diagnostics`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          filename: currFile,
+          shareToPersonalProfile,
+          waTargetId: waTargetId || undefined
+        })
+      });
+      const data = await res.json();
+      if (data.ok && data.diagnostics) {
+        setPlatformStatuses(data.diagnostics);
+      }
+      checkMetaStatus();
+      checkXStatus();
+      checkIgStatus();
+      checkFbPersonalStatus();
+      checkWaStatus();
+    } catch (e) {
+      setPlatformStatuses({
+        system: { status: 'error', message: `שגיאה בתקשורת עם השרת: ${e.message}` }
+      });
+    } finally {
+      setIsCheckingDiagnostics(false);
     }
   };
 
@@ -188,7 +345,9 @@ function App() {
     // Add small delay to ensure backend is fully ready before headless check
     setTimeout(() => {
       checkXStatus();
+      checkIgStatus();
       checkMetaStatus();
+      checkFbPersonalStatus();
       checkWaStatus();
     }, 2000);
     fetchPublishStatus();
@@ -280,40 +439,6 @@ function App() {
 
     return () => clearInterval(interval);
   }, [bulkProgress]);
-  // Handle Dragging
-  useEffect(() => {
-    const handleMouseMove = (e) => {
-      if (!dragStartRef.current) return;
-      const dx = e.clientX - dragStartRef.current.mouseX;
-      const dy = e.clientY - dragStartRef.current.mouseY;
-      setBulkCardPos({
-        x: dragStartRef.current.cardX - dx,
-        y: dragStartRef.current.cardY + dy
-      });
-    };
-
-    const handleMouseUp = () => {
-      dragStartRef.current = null;
-    };
-
-    if (bulkProgress) {
-        window.addEventListener('mousemove', handleMouseMove);
-        window.addEventListener('mouseup', handleMouseUp);
-    }
-    return () => {
-      window.removeEventListener('mousemove', handleMouseMove);
-      window.removeEventListener('mouseup', handleMouseUp);
-    };
-  }, [bulkProgress]);
-
-  const onDragStart = (e) => {
-    dragStartRef.current = {
-      mouseX: e.clientX,
-      mouseY: e.clientY,
-      cardX: bulkCardPos.x,
-      cardY: bulkCardPos.y
-    };
-  };
 
   // Debounce search query to prevent lag on every keystroke
   useEffect(() => {
@@ -324,7 +449,7 @@ function App() {
   }, [searchQuery]);
 
   const filteredImages = useMemo(() => {
-    const result = (allImages || []).filter(img => {
+    let result = (allImages || []).filter(img => {
       const meta = metadata[img] || {};
       
       // 1. Filter Mode
@@ -381,8 +506,17 @@ function App() {
       return true;
     });
 
+    // 4. Global Sorting
+    if (sortOrder === 'newest') {
+        result = [...result].sort((a, b) => {
+            const timeA = fileCreationTimes[a] || 0;
+            const timeB = fileCreationTimes[b] || 0;
+            return timeB - timeA;
+        });
+    }
+
     return result;
-  }, [filterMode, selectedTopic, debouncedSearchQuery, allImages, metadata]);
+  }, [filterMode, selectedTopic, debouncedSearchQuery, allImages, metadata, sortOrder, fileCreationTimes]);
 
   const prevFiltersRef = useRef({ mode: filterMode, topic: selectedTopic, query: debouncedSearchQuery });
   // Sync images state with filtered results
@@ -639,12 +773,21 @@ function App() {
 
   const postSingleImage = async (filename, platforms, shareToFacebook = false, waTargetId = null) => {
     const footer = `\n\n***\nלינק לאתר: KefeLashon.co.il\n\nלינק להצטרפות לערוץ: https://whatsapp.com/channel/0029VajNwaPL2AU0jdlgxa20\nלינק להצטרפות לקבוצה: https://chat.whatsapp.com/LN6nwJ8cYiLHaj5uhTum9P`;
-    const siteLink = 'KefeLashon.co.il';
     const results = [];
     
     // Get metadata for this specific image
     const meta = metadata[filename] || {};
     const imgTitle = meta.title || filename.replace(/\.[^/.]+$/, "");
+
+    // Initialize platform statuses so the user sees all queued platforms immediately
+    const initialStatuses = {};
+    for (const p of platforms) {
+      initialStatuses[p] = { status: 'pending', message: 'ממתין בתור...' };
+      if (p === 'facebook' && shareToPersonalProfile) {
+        initialStatuses['facebook-personal'] = { status: 'pending', message: 'ממתין בתור...' };
+      }
+    }
+    setPlatformStatuses(initialStatuses);
 
     for (const p of platforms) {
       const xFooter = `\n\n***\nלינק לאתר: KefeLashon.co.il`;
@@ -652,20 +795,74 @@ function App() {
         ? `${imgTitle}\n#כפלשון${xFooter}`
         : `${imgTitle}\n#כפלשון${footer}`;
 
-      const res = await fetch(`${API_BASE}/api/social/post`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          filename,
-          caption: finalCaption,
-          platform: p,
-          shareToFacebook: shareToFacebook,
-          targetId: p === 'whatsapp' ? waTargetId : undefined
-        })
-      });
-      const isJson = res.headers.get('content-type')?.includes('application/json');
-      const data = isJson ? await res.json() : { error: `Server error: ${res.status} ${res.statusText}` };
-      results.push({ platform: p, ok: res.ok, data });
+      setPlatformStatuses(prev => ({
+        ...prev,
+        [p]: { 
+          status: 'loading', 
+          message: (p === 'x' || p === 'instagram') ? 'מריץ אוטומציית דפדפן (כ-20 שניות)...' : 'שולח לשרת...' 
+        },
+        ...(p === 'facebook' && shareToPersonalProfile ? {
+          'facebook-personal': { status: 'loading', message: 'מנסה לבצע Repost לפרופיל...' }
+        } : {})
+      }));
+
+      try {
+        const res = await fetch(`${API_BASE}/api/social/post`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            filename,
+            caption: finalCaption,
+            platform: p,
+            shareToFacebook: shareToFacebook,
+            shareToPersonalProfile: shareToPersonalProfile,
+            targetId: p === 'whatsapp' ? waTargetId : undefined
+          })
+        });
+        const isJson = res.headers.get('content-type')?.includes('application/json');
+        const data = isJson ? await res.json() : { error: `Server error: ${res.status} ${res.statusText}` };
+
+        if (p === 'facebook' && Array.isArray(data.results)) {
+          const pageRes = data.results.find(r => r.platform === 'facebook-page');
+          const persRes = data.results.find(r => r.platform === 'facebook-personal');
+          setPlatformStatuses(prev => ({
+            ...prev,
+            facebook: pageRes ? {
+              status: pageRes.ok ? 'success' : 'error',
+              message: pageRes.ok ? (pageRes.message || 'פורסם בדף כפלשון!') : (pageRes.error || 'נכשל בדף'),
+              postUrl: pageRes.postUrl
+            } : { status: res.ok ? 'success' : 'error', message: data.error || 'הסתיים' },
+            ...(persRes ? {
+              'facebook-personal': {
+                status: persRes.ok ? 'success' : 'error',
+                message: persRes.ok ? (persRes.message || 'פורסם בפרופיל האישי!') : (persRes.error || 'נכשל בפרופיל האישי'),
+                needsFbLogin: persRes.needsFbLogin,
+                shareUrl: persRes.shareUrl || data.postUrl
+              }
+            } : {})
+          }));
+        } else {
+          setPlatformStatuses(prev => ({
+            ...prev,
+            [p]: {
+              status: res.ok ? 'success' : 'error',
+              message: res.ok ? (data.message || 'פורסם בהצלחה!') : (data.error || 'שגיאה בפרסום'),
+              needsIgLogin: data.needsIgLogin
+            }
+          }));
+        }
+
+        results.push({ platform: p, ok: res.ok, data });
+      } catch (fetchErr) {
+        setPlatformStatuses(prev => ({
+          ...prev,
+          [p]: {
+            status: 'error',
+            message: `שגיאת תקשורת עם השרת: ${fetchErr.message}`
+          }
+        }));
+        results.push({ platform: p, ok: false, data: { error: fetchErr.message } });
+      }
     }
     return results;
   };
@@ -681,32 +878,27 @@ function App() {
     try {
       const results = await postSingleImage(currFile, platforms, shareToFacebook, waTargetId);
 
-      const allOk = results.every(r => r.ok);
+      const allOk = results.every(r => r.ok && !r.data?.partialError);
+      const anyOk = results.some(r => r.ok);
       setSocialPostState(allOk ? 'success' : 'error');
       
       if (allOk) {
         setTimeout(() => setSocialPostState('idle'), 5000);
       }
       
-      if (allOk || results.some(r => r.ok)) {
+      if (anyOk) {
         fetchImages();
       }
       
-      if (results.length === 1) {
-        setSocialResult(results[0].data);
+      const errors = results.filter(r => !r.ok || r.data?.partialError).map(r => `${r.platform}: ${r.data?.error || r.data?.partialError || 'שגיאה'}`);
+      if (errors.length > 0) {
+        setSocialResult({ error: errors.join(' | ') });
       } else {
-        const errors = results.filter(r => !r.ok).map(r => `${r.platform}: ${r.data.error || 'שגיאה'}`);
-        if (errors.length > 0) {
-          setSocialResult({ error: errors.join(', ') });
-        } else {
-          setSocialResult({ message: 'כל הפלטפורמות פורסמו בהצלחה' });
-        }
+        setSocialResult({ message: 'כל הפלטפורמות שנבחרו פורסמו בהצלחה!' });
       }
     } catch (err) {
       setSocialPostState('error');
       setSocialResult({ error: err.message });
-    } finally {
-      // Done
     }
   };
 
@@ -716,6 +908,14 @@ function App() {
         setBulkProgress(null);
     } catch (e) {
         console.error('Error canceling bulk:', e);
+    }
+  };
+
+  const handleSkipBulkWait = async () => {
+    try {
+        await fetch(`${API_BASE}/api/social/bulk/skip`, { method: 'POST' });
+    } catch (e) {
+        console.error('Error skipping bulk wait:', e);
     }
   };
 
@@ -736,7 +936,9 @@ function App() {
             body: JSON.stringify({
                 filenames: selectedImages,
                 platforms: bulkSelectedPlatforms,
-                shareToFacebook: shareToFacebook
+                shareToFacebook: shareToFacebook,
+                shareToPersonalProfile: shareToPersonalProfile,
+                waTargetId: waTargetId || undefined
             })
         });
         const data = await res.json();
@@ -754,20 +956,24 @@ function App() {
 
   const handleMouseDown = (e) => {
     setIsDragging(true);
+    const safeX = Number.isFinite(bulkCardPos.x) ? bulkCardPos.x : 24;
+    const safeY = Number.isFinite(bulkCardPos.y) ? bulkCardPos.y : 24;
     dragStartRef.current = {
-      x: e.clientX + bulkCardPos.x,
-      y: e.clientY - bulkCardPos.y
+      x: e.clientX + safeX,
+      y: e.clientY - safeY
     };
     
     const onMouseMove = (moveEvent) => {
+      if (!dragStartRef.current) return;
       setBulkCardPos({
-        x: dragStartRef.current.x - moveEvent.clientX,
-        y: moveEvent.clientY - dragStartRef.current.y
+        x: Math.max(0, dragStartRef.current.x - moveEvent.clientX),
+        y: Math.max(0, moveEvent.clientY - dragStartRef.current.y)
       });
     };
     
     const onMouseUp = () => {
       setIsDragging(false);
+      dragStartRef.current = null;
       document.removeEventListener('mousemove', onMouseMove);
       document.removeEventListener('mouseup', onMouseUp);
     };
@@ -883,16 +1089,37 @@ function App() {
             {!isPublicViewer && (
               <div className="flex items-center gap-1.5 ml-2 mr-2 border-r border-slate-200 pr-4">
                 <button 
-                  title={xConnected ? 'X connected' : 'X disconnected'} 
+                  onClick={runSocialDiagnostics}
+                  title={igConnected ? 'אינסטגרם מחובר (לחץ לבדיקת כל הפלטפורמות)' : 'אינסטגרם מנותק – לחץ להתחברות או בדיקה'} 
+                  className={`p-1.5 rounded-lg transition-colors ${igConnected ? 'bg-pink-600 text-white' : 'bg-slate-100 text-slate-300'}`}
+                >
+                  <Instagram size={14} />
+                </button>
+                <button 
+                  onClick={runSocialDiagnostics}
+                  title={xConnected ? 'X.com מחובר (לחץ לבדיקת כל הפלטפורמות)' : 'X.com מנותק (לחץ לבדיקה)'} 
                   className={`p-1.5 rounded-lg transition-colors ${xConnected ? 'bg-slate-900 text-white' : 'bg-slate-100 text-slate-300'}`}
                 >
                   <Twitter size={14} />
                 </button>
                 <button 
-                  title={metaConnected ? 'Meta (FB/IG) connected' : metaError || 'Meta disconnected'} 
-                  className={`p-1.5 rounded-lg transition-colors ${metaConnected ? 'bg-blue-600 text-white' : 'bg-slate-100 text-slate-300'}`}
+                  onClick={() => setShowTokenPanel(prev => !prev)}
+                  title={metaConnected ? 'Meta (FB/IG) מחובר – לחץ לפתיחת הגדרות טוקן' : `${metaError || 'Meta מנותק'} – לחץ לעדכון טוקן`} 
+                  className={`px-2 py-1.5 rounded-lg transition-colors flex items-center gap-1 text-[10px] font-black ${metaConnected ? 'bg-blue-600 text-white' : 'bg-rose-50 border border-rose-200 text-rose-600 hover:bg-rose-100'}`}
                 >
-                  {metaError ? <X size={14} className="text-rose-500" /> : <Facebook size={14} />}
+                  {metaError ? <X size={13} className="text-rose-500" /> : <Facebook size={13} />}
+                  <span>{metaConnected ? 'Meta מחובר' : 'עדכן טוקן Meta'}</span>
+                </button>
+                <button
+                  onClick={() => {
+                    setShowTokenPanel(true);
+                    runSocialDiagnostics();
+                  }}
+                  disabled={isCheckingDiagnostics}
+                  className="px-2 py-1.5 rounded-lg bg-slate-100 hover:bg-slate-200 text-slate-700 text-[10px] font-black transition-colors flex items-center gap-1"
+                  title="בדיקת מוכנות לכל הפלטפורמות ללא פרסום"
+                >
+                  {isCheckingDiagnostics ? <Loader size={12} className="animate-spin" /> : '🔍 בדיקה'}
                 </button>
               </div>
             )}
@@ -975,6 +1202,163 @@ function App() {
 
       {/* Main Content */}
       <div className="flex-1 flex flex-col min-h-0 max-w-[1600px] mx-auto w-full px-4 pt-4 pb-6 overflow-hidden">
+
+        {/* Top Meta Token & Platform Diagnostics Banner (auto-shown in Share mode when token expired, or when toggled from header) */}
+        {!isPublicViewer && (showTokenPanel || (adminViewMode === 'share' && (!metaConnected || Object.keys(platformStatuses).length > 0))) && (
+          <div className="mb-3 p-3 rounded-2xl bg-white border border-slate-200 shadow-sm shrink-0 space-y-2">
+            <div className="flex flex-wrap items-center justify-between gap-2">
+              <div className="flex flex-wrap items-center gap-1.5">
+                <span className={`px-2 py-0.5 rounded-md text-[10px] font-black ${metaConnected ? 'bg-emerald-50 text-emerald-700 border border-emerald-200' : 'bg-rose-50 text-rose-700 border border-rose-200'}`}>
+                  {metaConnected ? '✅ Meta (FB/IG) מחובר' : `⚠️ טוקן Meta פג תוקף: ${metaError || 'נדרש חידוש טוקן'}`}
+                </span>
+                <a
+                  href="https://developers.facebook.com/tools/explorer/2088373928676287/"
+                  target="_blank"
+                  rel="noreferrer"
+                  className="px-2 py-1 bg-indigo-50 hover:bg-indigo-100 border border-indigo-200 rounded-lg text-[10px] font-black text-indigo-700 transition-colors"
+                >
+                  🔑 1. מחולל טוקן (Explorer) ↗
+                </a>
+                <a
+                  href="https://developers.facebook.com/tools/debug/accesstoken/"
+                  target="_blank"
+                  rel="noreferrer"
+                  title="הדבק שם את הטוקן ולחץ למטה על Extend Access Token כדי שיהיה תקף ל-60 יום במקום שעה אחת"
+                  className="px-2 py-1 bg-amber-50 hover:bg-amber-100 border border-amber-200 rounded-lg text-[10px] font-black text-amber-800 transition-colors"
+                >
+                  ⏱️ 2א. הארך ידנית (Extend) ↗
+                </a>
+                <a
+                  href="https://developers.facebook.com/apps/2088373928676287/settings/basic/"
+                  target="_blank"
+                  rel="noreferrer"
+                  title="העתק משם את ה-App Secret פעם אחת כדי שהשרת ימיר אוטומטית כל טוקן לטוקן קבוע לתמיד (ללא פג תוקף!)"
+                  className="px-2 py-1 bg-purple-50 hover:bg-purple-100 border border-purple-200 rounded-lg text-[10px] font-black text-purple-800 transition-colors"
+                >
+                  ♾️ 2ב. קח App Secret (אוטומציה לתמיד) ↗
+                </a>
+                <button
+                  onClick={handleFbPersonalLogin}
+                  className="px-2 py-1 bg-blue-50 hover:bg-blue-100 border border-blue-200 rounded-lg text-[10px] font-black text-blue-700 transition-colors"
+                  title="התחברות חד-פעמית לפרופיל הפייסבוק האישי לצורך Repost אוטומטי"
+                >
+                  👤 התחבר לפרופיל FB אישי
+                </button>
+                <button
+                  onClick={handleInstagramLogin}
+                  className={`px-2 py-1 rounded-lg text-[10px] font-black transition-colors border ${igConnected ? 'bg-pink-50 border-pink-200 text-pink-700 hover:bg-pink-100' : 'bg-rose-50 border-rose-200 text-rose-700 hover:bg-rose-100'}`}
+                  title="התחברות חד-פעמית לאינסטגרם בדפדפן לצורך העלאה ישירה מהמחשב"
+                >
+                  📸 {igConnected ? 'אינסטגרם מחובר (דפדפן)' : 'התחבר לאינסטגרם'}
+                </button>
+              </div>
+
+              <div className="flex items-center gap-1.5 flex-1 min-w-[280px] max-w-2xl">
+                <input
+                  type="text"
+                  value={newMetaToken}
+                  onChange={(e) => setNewMetaToken(e.target.value)}
+                  placeholder="הדבק META_ACCESS_TOKEN..."
+                  dir="ltr"
+                  className="flex-1 bg-slate-50 border border-slate-200 rounded-xl px-3 py-1.5 text-xs text-slate-800 outline-none focus:border-indigo-500 focus:bg-white"
+                />
+                <input
+                  type="password"
+                  value={metaAppSecret}
+                  onChange={(e) => setMetaAppSecret(e.target.value)}
+                  placeholder="App Secret (אופציונלי - להמרה אוטומטית לתמיד)"
+                  dir="ltr"
+                  className="w-48 bg-slate-50 border border-slate-200 rounded-xl px-2.5 py-1.5 text-xs text-slate-800 outline-none focus:border-purple-500 focus:bg-white"
+                />
+                <button
+                  onClick={handleUpdateMetaToken}
+                  disabled={isUpdatingMetaToken || !newMetaToken.trim()}
+                  className="px-3 py-1.5 bg-indigo-600 hover:bg-indigo-700 text-white rounded-xl text-xs font-black disabled:opacity-50 shrink-0 transition-colors"
+                >
+                  {isUpdatingMetaToken ? 'שומר...' : 'שמור והמר לתמיד'}
+                </button>
+                <button
+                  onClick={runSocialDiagnostics}
+                  disabled={isCheckingDiagnostics}
+                  className="px-3 py-1.5 bg-slate-800 hover:bg-slate-900 text-white rounded-xl text-xs font-black disabled:opacity-50 shrink-0 transition-colors"
+                >
+                  {isCheckingDiagnostics ? 'בודק...' : '🔍 בדוק פלטפורמות'}
+                </button>
+                {showTokenPanel && (
+                  <button
+                    onClick={() => setShowTokenPanel(false)}
+                    className="p-1.5 text-slate-400 hover:text-slate-600 rounded-lg"
+                    title="סגור חלונית"
+                  >
+                    <X size={14} />
+                  </button>
+                )}
+              </div>
+            </div>
+
+            {metaTokenSavedMsg && (
+              <div className="text-[10px] font-black text-emerald-700 bg-emerald-50 border border-emerald-200 rounded-lg px-2.5 py-1">
+                {metaTokenSavedMsg}
+              </div>
+            )}
+
+            {Object.keys(platformStatuses).length > 0 && (
+              <div className="grid grid-cols-2 md:grid-cols-5 gap-2 pt-1 border-t border-slate-100">
+                {Object.entries(platformStatuses).map(([plat, info]) => {
+                  const labels = {
+                    instagram: 'Instagram',
+                    facebook: 'Facebook (דף כפלשון)',
+                    'facebook-personal': 'Facebook (פרופיל אישי)',
+                    x: 'X.com (Twitter)',
+                    whatsapp: 'WhatsApp'
+                  };
+                  const isSuccess = info.status === 'success';
+                  const isError = info.status === 'error';
+                  const isLoading = info.status === 'loading';
+                  return (
+                    <div
+                      key={plat}
+                      className={`p-2 rounded-xl border text-[10px] flex flex-col gap-0.5 ${
+                        isSuccess ? 'bg-emerald-50 border-emerald-200 text-emerald-800' :
+                        isError ? 'bg-rose-50 border-rose-200 text-rose-800' :
+                        isLoading ? 'bg-indigo-50 border-indigo-200 text-indigo-800' :
+                        'bg-slate-50 border-slate-200 text-slate-600'
+                      }`}
+                    >
+                      <div className="flex items-center justify-between font-black">
+                        <span>{labels[plat] || plat}</span>
+                        <span>
+                          {isLoading && '⏳ בודק...'}
+                          {isSuccess && '✅ תקין'}
+                          {isError && '❌ שגיאה'}
+                        </span>
+                      </div>
+                      {info.message && (
+                        <div className="text-[9px] font-medium opacity-90 leading-snug">{info.message}</div>
+                      )}
+                      {info.needsFbLogin && (
+                        <button
+                          onClick={handleFbPersonalLogin}
+                          className="mt-1 px-2 py-1 bg-indigo-600 hover:bg-indigo-700 text-white rounded-lg text-[9px] font-black self-start transition-colors"
+                        >
+                          🔑 התחבר לפרופיל אישי
+                        </button>
+                      )}
+                      {info.needsIgLogin && (
+                        <button
+                          onClick={handleInstagramLogin}
+                          className="mt-1 px-2 py-1 bg-pink-600 hover:bg-pink-700 text-white rounded-lg text-[9px] font-black self-start transition-colors"
+                        >
+                          📸 התחבר לאינסטגרם
+                        </button>
+                      )}
+                    </div>
+                  );
+                })}
+              </div>
+            )}
+          </div>
+        )}
         
         {/* View Mode Switching and Filtering for Grid View */}
         {(adminViewMode === 'grid' || adminViewMode === 'share') && (
@@ -1175,30 +1559,32 @@ function App() {
                     </div>
                   </div>
                 ) : (
-                  <div className="p-6 space-y-6">
+                  <div className="p-2 space-y-2">
                     {/* WhatsApp Connection Status */}
-                    <div className="bg-slate-50 rounded-2xl p-4 border border-slate-100 mb-4">
-                      <div className="flex items-center justify-between mb-3">
-                        <div className="flex items-center gap-2">
-                          <MessageCircle size={16} className={waStatus.status === 'CONNECTED' ? 'text-green-500' : 'text-slate-400'} />
-                          <span className="text-xs font-bold text-slate-700">WhatsApp Status</span>
+                    <div className="bg-slate-50 rounded-xl p-2.5 border border-slate-100 mb-2">
+                      <div className="flex items-center justify-between">
+                        <div className="flex items-center gap-1.5">
+                          <MessageCircle size={14} className={waStatus.status === 'CONNECTED' ? 'text-green-500' : 'text-slate-400'} />
+                          <span className="text-[10px] font-bold text-slate-700 uppercase tracking-tighter">WA Status</span>
                         </div>
-                        <span className={`px-2 py-0.5 rounded-full text-[10px] font-black uppercase tracking-tighter ${
+                        <span className={`px-1.5 py-0.5 rounded-full text-[9px] font-black uppercase tracking-tighter ${
                           waStatus.status === 'CONNECTED' ? 'bg-green-100 text-green-700' :
                           waStatus.status === 'SCAN_QR' ? 'bg-amber-100 text-amber-700' :
                           'bg-slate-200 text-slate-600'
                         }`}>
-                          {waStatus.status === 'CONNECTED' ? 'מחובר' : 
-                           waStatus.status === 'SCAN_QR' ? 'סרוק קוד' : 
-                           waStatus.status === 'LOADING' || waStatus.status === 'INITIALIZING' ? 'טוען...' : 'מנותק'}
+                          {waStatus.status === 'CONNECTED' ? 'OK' : 
+                           waStatus.status === 'SCAN_QR' ? 'סרוק' : 
+                           waStatus.status === 'LOADING' || waStatus.status === 'INITIALIZING' ? 'טוען' : 'ניתוק'}
                         </span>
                       </div>
                       
                       {waStatus.status === 'SCAN_QR' && waStatus.qr && (
-                        <div className="flex flex-col items-center bg-white p-4 rounded-xl border border-slate-100 shadow-inner group">
-                          <p className="text-[10px] text-slate-500 mb-3 font-medium text-center">סרוק את הקוד בווטסאפ (Linked Devices)</p>
-                          <div className="p-2 bg-white rounded-lg border-2 border-slate-50 group-hover:border-teal-100 transition-colors">
-                            <img src={waStatus.qr} alt="WA QR" className="w-32 h-32" />
+                        <div className="flex items-center gap-2 bg-white p-2 rounded-xl border border-slate-100 shadow-inner group mt-1.5">
+                          <div className="p-1.5 bg-white rounded-lg border-2 border-slate-50 group-hover:border-teal-100 transition-colors shrink-0">
+                            <img src={waStatus.qr} alt="WA QR" className="w-16 h-16" />
+                          </div>
+                          <div>
+                            <p className="text-[9px] text-slate-500 font-bold leading-tight">סרוק בווטסאפ</p>
                           </div>
                         </div>
                       )}
@@ -1242,24 +1628,25 @@ function App() {
                       )}
                     </div>
 
-                    <div className="bg-slate-50 rounded-2xl p-4 border border-slate-100 transition-all">
-                      <div className="flex items-center justify-between mb-3">
-                        <label className="text-[11px] font-black text-slate-400 uppercase tracking-widest block">בחר פלטפורמה</label>
+                    <div className="bg-slate-50 rounded-xl p-2.5 border border-slate-100 transition-all">
+                      <div className="flex items-center justify-between mb-2">
+                        <label className="text-[9px] font-black text-slate-400 uppercase tracking-widest block">פלטפורמה</label>
                         <button 
                           onClick={() => {
                             checkMetaStatus();
+                            checkIgStatus();
+                            checkFbPersonalStatus();
                             checkXStatus();
                             checkWaStatus();
                           }}
-                          className="p-1 px-2 rounded-lg bg-white border border-slate-200 text-slate-400 hover:text-indigo-600 hover:border-indigo-200 transition-all flex items-center gap-1.5"
-                          title="רענן מצב חיבורים"
+                          className="p-1 px-1.5 rounded-lg bg-white border border-slate-200 text-slate-400 hover:text-indigo-600 transition-all flex items-center gap-1"
                         >
-                          <RotateCw size={12} className={socialPostState === 'loading' ? 'animate-spin' : ''} />
-                          <span className="text-[9px] font-bold">רענן חיבורים</span>
+                          <RotateCw size={10} className={socialPostState === 'loading' ? 'animate-spin' : ''} />
+                          <span className="text-[8px] font-bold">רענן</span>
                         </button>
                       </div>
                       
-                      <div className="grid grid-cols-2 gap-2">
+                      <div className="grid grid-cols-3 gap-1.5">
                         {[
                           { id: 'all', label: 'הכל', icon: Share2 },
                           { id: 'instagram', label: 'Instagram', icon: Instagram },
@@ -1271,9 +1658,12 @@ function App() {
                           let statusColor = '';
                           let statusText = '';
                           
-                          if (p.id === 'instagram' || p.id === 'facebook') {
+                          if (p.id === 'facebook') {
                             statusColor = metaConnected ? 'border-green-400 ring-green-500/10' : 'border-rose-400 ring-rose-500/10';
                             statusText = metaConnected ? 'מחובר' : 'מנותק';
+                          } else if (p.id === 'instagram') {
+                            statusColor = igConnected ? 'border-green-400 ring-green-500/10' : 'border-rose-400 ring-rose-500/10';
+                            statusText = igConnected ? 'מחובר' : 'מנותק';
                           } else if (p.id === 'x') {
                             statusColor = xConnected ? 'border-green-400 ring-green-500/10' : 'border-rose-400 ring-rose-500/10';
                             statusText = xConnected ? 'מחובר' : 'מנותק';
@@ -1286,68 +1676,203 @@ function App() {
                             <button
                               key={p.id}
                               onClick={() => setSocialPlatform(p.id)}
-                              className={`flex items-center gap-2 p-3 rounded-xl text-xs font-bold border transition-all relative ${
+                              className={`flex items-center gap-1 p-1.5 rounded-xl text-[10px] font-bold border transition-all relative ${
                                 isSelected 
-                                  ? 'bg-white border-indigo-600 text-indigo-600 shadow-md ring-2 ring-indigo-600/10 z-10' 
+                                  ? 'bg-white border-indigo-600 text-indigo-600 shadow-sm ring-1 ring-indigo-600/10 z-10' 
                                   : `bg-white text-slate-600 hover:border-slate-300 ${statusColor} ${statusColor ? 'border-2' : 'border-slate-100'}`
                               }`}
                             >
-                              <p.icon size={14} className={isSelected ? 'text-indigo-600' : 'text-slate-400'} />
-                              <div className="flex flex-col items-start leading-tight">
-                                <span>{p.label}</span>
+                              <p.icon size={11} className={isSelected ? 'text-indigo-600' : 'text-slate-400'} />
+                              <div className="flex flex-col items-start leading-none">
+                                <span className="whitespace-nowrap">{p.label === 'Instagram' ? 'Insta' : p.label}</span>
                                 {statusText && (
-                                  <span className={`text-[8px] font-black uppercase ${statusText === 'מחובר' ? 'text-green-500' : 'text-rose-500'}`}>
-                                    {statusText}
+                                  <span className={`text-[6px] font-black uppercase ${statusText === 'מחובר' ? 'text-green-500' : 'text-rose-500'}`}>
+                                    {statusText === 'מחובר' ? 'OK' : 'OFF'}
                                   </span>
                                 )}
                               </div>
-                              {statusText && (
-                                <div className={`absolute top-1.5 left-1.5 w-1.5 h-1.5 rounded-full ${statusText === 'מחובר' ? 'bg-green-500 shadow-[0_0_5px_rgba(34,197,94,0.5)]' : 'bg-rose-500 shadow-[0_0_5px_rgba(244,63,94,0.5)]'}`} />
-                              )}
                             </button>
                           );
                         })}
                       </div>
 
-                      {(socialPlatform === 'instagram' || socialPlatform === 'all') && (
-                        <div className="mt-4 pt-4 border-t border-slate-100 animate-in slide-in-from-top-2 duration-300">
-                          <button
-                            onClick={() => setShareToFacebook(!shareToFacebook)}
-                            className={`w-full flex items-center justify-between p-3 rounded-xl border transition-all ${
-                              shareToFacebook 
-                                ? 'bg-blue-50 border-blue-200 text-blue-700 shadow-sm' 
-                                : 'bg-white border-slate-100 text-slate-400 hover:border-slate-200'
-                            } ${metaConnected ? 'border-green-200' : 'border-rose-100'}`}
-                          >
-                            <div className="flex items-center gap-2">
-                              <Facebook size={14} className={shareToFacebook ? 'text-blue-600' : ''} />
-                              <div className="flex flex-col items-start leading-tight">
-                                <span className="text-[11px] font-bold">פרסם גם בפייסבוק (Crosspost)</span>
-                                <span className={`text-[8px] font-black uppercase ${metaConnected ? 'text-green-500' : 'text-rose-500'}`}>
-                                  {metaConnected ? 'קישור תקין' : 'בעיית חיבור'}
-                                </span>
+                      {!metaConnected && metaError && (
+                        <div className="mt-1.5 p-2 rounded-lg bg-rose-50 border border-rose-200 text-rose-700 text-[9px] font-bold leading-snug space-y-1.5">
+                          <div className="flex items-start justify-between gap-1">
+                            <span>⚠️ <span className="underline">אבחון Meta (FB/IG):</span> {metaError}</span>
+                            <a
+                              href="https://developers.facebook.com/tools/explorer/2088373928676287/"
+                              target="_blank"
+                              rel="noreferrer"
+                              className="shrink-0 px-1.5 py-0.5 bg-white border border-rose-200 rounded text-[8px] text-indigo-600 hover:bg-indigo-50 underline"
+                            >
+                              הפק טוקן חדש ↗
+                            </a>
+                          </div>
+                          <div className="flex items-center gap-1">
+                            <input
+                              type="text"
+                              value={newMetaToken}
+                              onChange={(e) => setNewMetaToken(e.target.value)}
+                              placeholder="הדבק כאן META_ACCESS_TOKEN חדש..."
+                              dir="ltr"
+                              className="flex-1 bg-white border border-rose-200 rounded px-2 py-1 text-[9px] text-slate-700 outline-none focus:border-indigo-500"
+                            />
+                            <button
+                              onClick={handleUpdateMetaToken}
+                              disabled={isUpdatingMetaToken || !newMetaToken.trim()}
+                              className="px-2 py-1 bg-indigo-600 text-white rounded text-[9px] font-black hover:bg-indigo-700 disabled:opacity-50 shrink-0"
+                            >
+                              {isUpdatingMetaToken ? 'שומר...' : 'שמור טוקן'}
+                            </button>
+                          </div>
+                        </div>
+                      )}
+
+                      {(socialPlatform === 'instagram' || socialPlatform === 'facebook' || socialPlatform === 'all') && (
+                        <div className="mt-2 pt-2 border-t border-slate-100 space-y-1.5">
+                          <div className="grid grid-cols-2 gap-1.5">
+                            <button
+                              onClick={() => setShareToFacebook(!shareToFacebook)}
+                              className={`flex items-center justify-between p-1.5 px-2 rounded-xl border transition-all ${
+                                shareToFacebook ? 'bg-blue-50 border-blue-200 text-blue-700' : 'bg-white border-slate-100 text-slate-400'
+                              }`}
+                            >
+                              <Facebook size={12} />
+                              <span className="text-[9px] font-bold">דף (Crosspost)</span>
+                              <div className={`w-5 h-2.5 rounded-full relative ${shareToFacebook ? 'bg-blue-500' : 'bg-slate-200'}`}>
+                                <div className={`absolute top-0.5 w-1.5 h-1.5 bg-white rounded-full ${shareToFacebook ? 'left-3' : 'left-0.5'}`} />
                               </div>
-                            </div>
-                            <div className={`w-8 h-4 rounded-full relative transition-all ${shareToFacebook ? 'bg-blue-500' : 'bg-slate-200'}`}>
-                              <div className={`absolute top-1 w-2 h-2 bg-white rounded-full transition-all ${shareToFacebook ? 'left-5' : 'left-1'}`} />
-                            </div>
-                          </button>
+                            </button>
+
+                            <button
+                              onClick={() => setShareToPersonalProfile(!shareToPersonalProfile)}
+                              className={`flex items-center justify-between p-1.5 px-2 rounded-xl border transition-all ${
+                                shareToPersonalProfile ? 'bg-indigo-50 border-indigo-200 text-indigo-700' : 'bg-white border-slate-100 text-slate-400'
+                              }`}
+                            >
+                              <Share2 size={12} />
+                              <span className="text-[9px] font-bold">ריפוסט (פרופיל אישי)</span>
+                              <div className={`w-5 h-2.5 rounded-full relative ${shareToPersonalProfile ? 'bg-indigo-500' : 'bg-slate-200'}`}>
+                                <div className={`absolute top-0.5 w-1.5 h-1.5 bg-white rounded-full ${shareToPersonalProfile ? 'left-3' : 'left-0.5'}`} />
+                              </div>
+                            </button>
+                          </div>
+
+                          {shareToPersonalProfile && (
+                            <button
+                              onClick={handleFbPersonalLogin}
+                              className={`w-full py-1 px-2 rounded-lg border text-[9px] font-black transition-colors flex items-center justify-center gap-1 ${
+                                fbPersonalConnected
+                                  ? 'bg-emerald-50 hover:bg-emerald-100 border-emerald-200 text-emerald-700'
+                                  : 'bg-amber-50 hover:bg-amber-100 border-amber-300 text-amber-800'
+                              }`}
+                              title="התחברות לפרופיל הפייסבוק האישי לשמירת סשן אוטומטי לריפוסט"
+                            >
+                              {fbPersonalConnected
+                                ? '✅ פרופיל FB אישי מחובר לריפוסט אוטומטי (לחץ לחיבור מחדש)'
+                                : '🔑 לחץ כאן להתחברות חד-פעמית לפרופיל FB האישי לריפוסט'}
+                            </button>
+                          )}
                         </div>
                       )}
                     </div>
 
-                    <div className="flex flex-col gap-3">
-                      <button
-                        onClick={handleSocialPost}
-                        disabled={socialPostState === 'loading'}
-                        className="w-full flex items-center justify-center gap-2 bg-indigo-600 hover:bg-indigo-700 text-white py-4 rounded-2xl font-black text-sm transition-all shadow-lg shadow-indigo-100 disabled:opacity-50"
-                      >
-                        {socialPostState === 'loading' ? <Loader size={18} className="animate-spin" /> : <><Share2 size={18} /> פרסם עכשיו</>}
-                      </button>
+                    <div className="flex flex-col gap-2">
+                      <div className="grid grid-cols-3 gap-1.5">
+                        <button
+                          onClick={handleSocialPost}
+                          disabled={socialPostState === 'loading'}
+                          className="col-span-2 flex items-center justify-center gap-1.5 bg-indigo-600 hover:bg-indigo-700 text-white py-2.5 rounded-2xl font-black text-xs transition-all shadow-lg shadow-indigo-100 disabled:opacity-50"
+                        >
+                          {socialPostState === 'loading' ? <Loader size={15} className="animate-spin" /> : <><Share2 size={15} /> פרסם עכשיו</>}
+                        </button>
+                        <button
+                          onClick={runSocialDiagnostics}
+                          disabled={isCheckingDiagnostics || socialPostState === 'loading'}
+                          className="col-span-1 flex items-center justify-center gap-1 bg-slate-800 hover:bg-slate-900 text-white py-2.5 px-2 rounded-2xl font-black text-[10px] transition-all disabled:opacity-50"
+                          title="בדיקת מוכנות לכל הפלטפורמות ללא פרסום פוסט"
+                        >
+                          {isCheckingDiagnostics ? <Loader size={12} className="animate-spin" /> : '🔍 בדיקה'}
+                        </button>
+                      </div>
                       
-                      {socialResult && (
-                        <div className={`p-3 rounded-xl text-xs font-bold text-center animate-in zoom-in-95 duration-200 ${socialPostState === 'error' ? 'bg-rose-50 text-rose-600 border border-rose-100' : 'bg-teal-50 text-teal-600 border border-teal-100'}`}>
-                          {socialResult.error || socialResult.message || 'הפעולה הושלמה'}
+                      {/* Live Per-Platform Status Indicator */}
+                      {Object.keys(platformStatuses).length > 0 && (
+                        <div className="bg-slate-50 rounded-xl p-2 border border-slate-200 space-y-1.5">
+                          <div className="flex items-center justify-between">
+                            <span className="text-[9px] font-black text-slate-500 uppercase">מחוון סטטוס לפי פלטפורמה</span>
+                            <button
+                              onClick={() => setPlatformStatuses({})}
+                              className="text-[8px] text-slate-400 hover:text-slate-600 font-bold"
+                            >
+                              נקה
+                            </button>
+                          </div>
+                          {Object.entries(platformStatuses).map(([plat, info]) => {
+                            const labels = {
+                              instagram: 'Instagram',
+                              facebook: 'Facebook (דף כפלשון)',
+                              'facebook-personal': 'Facebook (פרופיל אישי)',
+                              x: 'X.com (Twitter)',
+                              whatsapp: 'WhatsApp'
+                            };
+                            const isSuccess = info.status === 'success';
+                            const isError = info.status === 'error';
+                            const isLoading = info.status === 'loading';
+                            return (
+                              <div
+                                key={plat}
+                                className={`p-1.5 px-2 rounded-lg border text-[10px] flex flex-col gap-0.5 ${
+                                  isSuccess ? 'bg-emerald-50 border-emerald-200 text-emerald-800' :
+                                  isError ? 'bg-rose-50 border-rose-200 text-rose-800' :
+                                  isLoading ? 'bg-indigo-50 border-indigo-200 text-indigo-800' :
+                                  'bg-white border-slate-200 text-slate-500'
+                                }`}
+                              >
+                                <div className="flex items-center justify-between font-black">
+                                  <span>{labels[plat] || plat}</span>
+                                  <span className="flex items-center gap-1 text-[9px]">
+                                    {isLoading && <><Loader size={10} className="animate-spin" /> מפרסם...</>}
+                                    {isSuccess && <><Check size={11} className="text-emerald-600" /> הצליח</>}
+                                    {isError && <><X size={11} className="text-rose-600" /> נכשל</>}
+                                    {info.status === 'pending' && '⏳ ממתין'}
+                                  </span>
+                                </div>
+                                {info.message && (
+                                  <div className="text-[9px] font-medium leading-tight break-words opacity-90">
+                                    {info.message}
+                                  </div>
+                                )}
+                                {info.needsFbLogin && (
+                                  <button
+                                    onClick={handleFbPersonalLogin}
+                                    className="mt-1 px-2 py-1 bg-indigo-600 hover:bg-indigo-700 text-white rounded-lg text-[9px] font-black self-start transition-colors"
+                                  >
+                                    🔑 התחבר לפרופיל אישי
+                                  </button>
+                                )}
+                                {info.needsIgLogin && (
+                                  <button
+                                    onClick={handleInstagramLogin}
+                                    className="mt-1 px-2 py-1 bg-pink-600 hover:bg-pink-700 text-white rounded-lg text-[9px] font-black self-start transition-colors"
+                                  >
+                                    📸 התחבר לאינסטגרם
+                                  </button>
+                                )}
+                                {info.shareUrl && (
+                                  <a
+                                    href={`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(info.shareUrl)}`}
+                                    target="_blank"
+                                    rel="noreferrer"
+                                    className="mt-1 inline-flex items-center gap-1 text-[9px] font-black text-indigo-600 underline"
+                                  >
+                                    <ExternalLink size={10} /> שתף ידנית לפרופיל האישי בלחיצה
+                                  </a>
+                                )}
+                              </div>
+                            );
+                          })}
                         </div>
                       )}
 
@@ -1388,11 +1913,11 @@ function App() {
 
                       return (
                         <div className="bg-slate-50/50 rounded-2xl p-4 border border-slate-100">
-                          <p className="text-[11px] font-bold text-slate-700 mb-3 flex items-center gap-2">
-                            <Share2 size={12} className="text-slate-400" />
-                            היסטוריית פרסומים
+                          <p className="text-[9px] font-black text-slate-400 uppercase mb-1.5 flex items-center gap-1.5">
+                            <Share2 size={10} />
+                            היסטוריה
                           </p>
-                          <div className="space-y-2">
+                          <div className="max-h-[60px] overflow-y-auto pr-1 custom-scrollbar space-y-1">
                             {Object.entries(grouped).map(([platform, dates]) => (
                               <div key={platform} className="bg-white p-2.5 rounded-xl border border-slate-100 shadow-sm transition-all hover:border-indigo-200">
                                 <div className="flex items-center justify-between mb-1">
@@ -1596,6 +2121,16 @@ function App() {
 
                 <div className="flex items-center gap-2">
                     <button 
+                        onClick={() => setSortOrder(prev => prev === 'newest' ? 'default' : 'newest')} 
+                        className={`p-2.5 rounded-xl border transition-all shadow-sm flex items-center gap-2 ${
+                            sortOrder === 'newest' ? 'bg-indigo-600 border-indigo-600 text-white shadow-md' : 'bg-white text-slate-500 border-slate-200 hover:bg-slate-50'
+                        }`}
+                        title={sortOrder === 'newest' ? "ממוין לפי תאריך (חדש קודם)" : "מיין לפי תאריך"}
+                    >
+                        <Sparkles size={16} />
+                        {sortOrder === 'newest' && <span className="text-[10px] font-black uppercase">NEWEST</span>}
+                    </button>
+                    <button 
                         onClick={() => fetchImages()} 
                         className="p-2.5 bg-white text-slate-500 rounded-xl border border-slate-200 hover:bg-slate-50 transition-all shadow-sm"
                         title="רענן גלריה"
@@ -1710,9 +2245,19 @@ function App() {
         )}
 
         {/* Bulk Selection Modal */}
-        {isBulkModalOpen && (
-          <div className="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 flex items-center justify-center p-4 animate-in fade-in duration-300">
-            <div className="bg-white w-full max-w-lg rounded-[40px] shadow-2xl overflow-hidden animate-in zoom-in-95 duration-300">
+        <dialog
+          ref={bulkModalRef}
+          onCancel={(e) => {
+            e.preventDefault();
+            setIsBulkModalOpen(false);
+          }}
+          onClick={(e) => {
+            if (e.target === e.currentTarget) setIsBulkModalOpen(false);
+          }}
+          className="fixed inset-0 w-full h-full max-w-none max-h-none p-4 m-0 bg-transparent border-none outline-none flex items-center justify-center backdrop:bg-slate-900/60 backdrop:backdrop-blur-sm z-50"
+        >
+          {isBulkModalOpen && (
+            <div className="bg-white w-full max-w-lg rounded-[40px] shadow-2xl overflow-hidden animate-in zoom-in-95 duration-300" onClick={(e) => e.stopPropagation()}>
               <div className="p-8 border-b border-slate-100 flex items-center justify-between">
                 <div>
                   <h2 className="text-2xl font-black text-slate-900 leading-tight">פרסום קבוצתי</h2>
@@ -1764,6 +2309,29 @@ function App() {
                     );
                   })}
                 </div>
+
+                {bulkSelectedPlatforms.includes('facebook') && (
+                  <div className="pt-2 border-t border-slate-100 space-y-2">
+                    <button
+                      onClick={() => setShareToPersonalProfile(!shareToPersonalProfile)}
+                      className={`w-full flex items-center justify-between p-3.5 rounded-2xl border-2 transition-all ${
+                        shareToPersonalProfile
+                          ? 'bg-indigo-50 border-indigo-400 text-indigo-800'
+                          : 'bg-slate-50 border-slate-200 text-slate-400'
+                      }`}
+                    >
+                      <div className="flex items-center gap-2.5 text-right">
+                        <Share2 size={16} />
+                        <span className="text-xs font-black">ריפוסט אוטומטי מהפרופיל האישי לפוסט של כפלשון</span>
+                      </div>
+                      <div className={`w-6 h-6 rounded-full border-2 flex items-center justify-center ${
+                        shareToPersonalProfile ? 'bg-indigo-600 border-indigo-600 text-white' : 'border-slate-300'
+                      }`}>
+                        {shareToPersonalProfile && <Check size={13} />}
+                      </div>
+                    </button>
+                  </div>
+                )}
               </div>
               
               <div className="p-8 bg-slate-50 border-t border-slate-100 flex gap-4">
@@ -1782,13 +2350,23 @@ function App() {
                 </button>
               </div>
             </div>
-          </div>
-        )}
+          )}
+        </dialog>
 
         {/* Topic Management Modal */}
-        {isTopicModalOpen && (
-          <div className="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 flex items-center justify-center p-4 animate-in fade-in duration-300">
-            <div className="bg-white w-full max-w-2xl rounded-[40px] shadow-2xl overflow-hidden animate-in zoom-in-95 duration-300">
+        <dialog
+          ref={topicModalRef}
+          onCancel={(e) => {
+            e.preventDefault();
+            setIsTopicModalOpen(false);
+          }}
+          onClick={(e) => {
+            if (e.target === e.currentTarget) setIsTopicModalOpen(false);
+          }}
+          className="fixed inset-0 w-full h-full max-w-none max-h-none p-4 m-0 bg-transparent border-none outline-none flex items-center justify-center backdrop:bg-slate-900/60 backdrop:backdrop-blur-sm z-50"
+        >
+          {isTopicModalOpen && (
+            <div className="bg-white w-full max-w-2xl rounded-[40px] shadow-2xl overflow-hidden animate-in zoom-in-95 duration-300" onClick={(e) => e.stopPropagation()}>
               <div className="p-8 border-b border-slate-100 flex items-center justify-between">
                 <div>
                   <h2 className="text-2xl font-black text-slate-900 leading-tight">סינון לפי נושאים</h2>
@@ -1833,29 +2411,29 @@ function App() {
                 <p className="text-[11px] font-bold text-slate-400 italic">סה"כ {allTopics.length} נושאים פעילים במערכת</p>
               </div>
             </div>
-          </div>
-        )}
+          )}
+        </dialog>
 
         {/* Global Bulk Progress Popup */}
         {bulkProgress && (
           <div 
             className="fixed z-[60] shadow-2xl transition-all duration-200"
             style={{ 
-              right: bulkCardPos.x, 
-              top: bulkCardPos.y, 
-              width: isBulkMinimized ? '200px' : '320px',
+              right: Number.isFinite(bulkCardPos.x) ? bulkCardPos.x : 24, 
+              top: Number.isFinite(bulkCardPos.y) ? bulkCardPos.y : 24, 
+              width: isBulkMinimized ? '200px' : '340px',
               transition: isDragging ? 'none' : 'all 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275)'
             }}
           >
             <div className="bg-white rounded-[28px] border border-indigo-100 shadow-2xl overflow-hidden flex flex-col">
               {/* Draggable Header */}
               <div 
-                className="bg-indigo-600 p-4 cursor-move flex items-center justify-between select-none"
+                className="bg-indigo-600 p-3.5 cursor-move flex items-center justify-between select-none"
                 onMouseDown={handleMouseDown}
               >
                 <div className="flex items-center gap-2">
-                  <Share2 className="text-white" size={16} />
-                  <span className="text-white text-xs font-black uppercase tracking-widest">תהליך פרסום</span>
+                  <Share2 className="text-white" size={15} />
+                  <span className="text-white text-xs font-black uppercase tracking-widest">תהליך פרסום מרובה</span>
                 </div>
                 <div className="flex items-center gap-1">
                   <button 
@@ -1867,6 +2445,7 @@ function App() {
                   <button 
                     onClick={handleCancelBulk}
                     className="p-1 hover:bg-white/20 rounded text-white transition-colors ml-1"
+                    title="בטל וסגור"
                   >
                     <X size={12} />
                   </button>
@@ -1874,16 +2453,21 @@ function App() {
               </div>
 
               {!isBulkMinimized && (
-                <div className="p-5 flex flex-col gap-4">
+                <div className="p-4 flex flex-col gap-3">
                   <div className="flex items-center justify-between">
                     <span className="text-[10px] font-black text-slate-400 uppercase tracking-widest">סטטוס</span>
-                    <span className="text-[10px] bg-indigo-50 text-indigo-600 px-2 py-0.5 rounded-full font-bold">
-                        {bulkProgress.status === 'processing' ? 'מעלה תמונות...' : 
-                         bulkProgress.status === 'done' ? 'הסתיים' : 'פעיל'}
+                    <span className={`text-[10px] px-2 py-0.5 rounded-full font-bold ${
+                      bulkProgress.status === 'done' ? 'bg-emerald-50 text-emerald-700' :
+                      bulkProgress.status === 'waiting' ? 'bg-amber-50 text-amber-700' :
+                      'bg-indigo-50 text-indigo-600'
+                    }`}>
+                        {bulkProgress.status === 'processing' ? 'מעלה ומפרסם כעת...' : 
+                         bulkProgress.status === 'waiting' ? `ממתין לפוסט הבא (${Math.floor((bulkProgress.countdown || 0) / 60)}:${String((bulkProgress.countdown || 0) % 60).padStart(2, '0')})` :
+                         bulkProgress.status === 'done' ? 'הסתיים' : bulkProgress.status || 'פעיל'}
                     </span>
                   </div>
 
-                  <div className="space-y-2">
+                  <div className="space-y-1.5">
                     <div className="flex justify-between items-end">
                       <span className="text-2xl font-black text-slate-900 tabular-nums">
                         {bulkProgress.current}
@@ -1891,13 +2475,13 @@ function App() {
                         {bulkProgress.total}
                       </span>
                       <span className="text-xs font-black text-indigo-600">
-                        {Math.round((bulkProgress.current / bulkProgress.total) * 100)}%
+                        {bulkProgress.total > 0 ? Math.round((bulkProgress.current / bulkProgress.total) * 100) : 0}%
                       </span>
                     </div>
-                    <div className="w-full h-2.5 bg-slate-100 rounded-full overflow-hidden border border-slate-200">
+                    <div className="w-full h-2 bg-slate-100 rounded-full overflow-hidden border border-slate-200">
                       <div 
                         className="h-full bg-indigo-500 transition-all duration-500 relative"
-                        style={{ width: `${(bulkProgress.current / bulkProgress.total) * 100}%` }}
+                        style={{ width: `${bulkProgress.total > 0 ? (bulkProgress.current / bulkProgress.total) * 100 : 0}%` }}
                       >
                         <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/30 to-transparent animate-shimmer" style={{ backgroundSize: '200% 100%' }} />
                       </div>
@@ -1905,23 +2489,67 @@ function App() {
                   </div>
 
                   {bulkProgress.lastFile && (
-                    <div className="flex flex-col gap-1.5 bg-slate-50 p-3 rounded-xl border border-slate-100">
-                        <span className="text-[9px] font-black text-slate-400 uppercase tracking-tighter">מעבד כרגע:</span>
+                    <div className="flex flex-col gap-1.5 bg-slate-50 p-2.5 rounded-xl border border-slate-100">
+                        <span className="text-[9px] font-black text-slate-400 uppercase tracking-tighter">תמונה נוכחית:</span>
                         <div className="flex items-center gap-2">
-                            <div className="w-8 h-8 rounded-lg overflow-hidden border border-slate-200">
+                            <div className="w-8 h-8 rounded-lg overflow-hidden border border-slate-200 shrink-0">
                                 <img src={`${API_BASE}/images/${bulkProgress.lastFile}`} className="w-full h-full object-cover" alt="" />
                             </div>
                             <span className="text-[10px] font-bold text-slate-700 truncate flex-1">{bulkProgress.lastFile}</span>
-                            {bulkProgress.lastPlatform && (
-                                <span className="text-[8px] bg-white border border-slate-100 text-slate-400 px-1.5 py-0.5 rounded font-black uppercase">{bulkProgress.lastPlatform}</span>
-                            )}
                         </div>
                     </div>
                   )}
 
+                  {/* Per-Platform Status Indicator inside Bulk Popup */}
+                  {bulkProgress.platformStatuses && Object.keys(bulkProgress.platformStatuses).length > 0 && (
+                    <div className="space-y-1 max-h-[160px] overflow-y-auto pr-1 custom-scrollbar">
+                      <span className="text-[9px] font-black text-slate-400 uppercase tracking-tighter block">סטטוס לפי פלטפורמה:</span>
+                      {Object.entries(bulkProgress.platformStatuses).map(([plat, info]) => {
+                        const isSuccess = info.status === 'success';
+                        const isError = info.status === 'error';
+                        const isLoading = info.status === 'loading';
+                        return (
+                          <div
+                            key={plat}
+                            className={`p-1.5 px-2 rounded-lg border text-[9px] flex flex-col gap-0.5 ${
+                              isSuccess ? 'bg-emerald-50 border-emerald-200 text-emerald-800' :
+                              isError ? 'bg-rose-50 border-rose-200 text-rose-800' :
+                              isLoading ? 'bg-indigo-50 border-indigo-200 text-indigo-800' :
+                              'bg-slate-50 border-slate-200 text-slate-500'
+                            }`}
+                          >
+                            <div className="flex items-center justify-between font-black">
+                              <span className="uppercase">{plat === 'x' ? 'X.com' : plat}</span>
+                              <span className="flex items-center gap-1">
+                                {isLoading && <><Loader size={9} className="animate-spin" /> מפרסם...</>}
+                                {isSuccess && <><Check size={10} className="text-emerald-600" /> הצליח</>}
+                                {isError && <><X size={10} className="text-rose-600" /> נכשל</>}
+                                {info.status === 'pending' && '⏳ ממתין'}
+                              </span>
+                            </div>
+                            {info.message && (
+                              <div className="text-[8px] font-medium leading-tight break-words opacity-90">
+                                {info.message}
+                              </div>
+                            )}
+                          </div>
+                        );
+                      })}
+                    </div>
+                  )}
+
+                  {bulkProgress.status === 'waiting' && (
+                    <button 
+                      onClick={handleSkipBulkWait}
+                      className="w-full bg-indigo-600 text-white py-2 rounded-xl text-[11px] font-black transition-all hover:bg-indigo-700 shadow-sm"
+                    >
+                      דלג על המתנה ופרסם תמונה הבאה כעת
+                    </button>
+                  )}
+
                   {bulkProgress.status === 'done' && (
                     <button 
-                      onClick={() => setBulkProgress(null)}
+                      onClick={handleCancelBulk}
                       className="w-full bg-slate-900 text-white py-2.5 rounded-xl text-[11px] font-black transition-all hover:bg-slate-800"
                     >
                       סגור חלון
