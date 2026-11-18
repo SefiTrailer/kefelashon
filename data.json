@@ -16943,5 +16943,38 @@
         "note": "assumed_from_channel"
       }
     ]
+  },
+  "תשלום בחינם.webp": {
+    "title": "תשלום בחינם",
+    "explanation": "מגרש החנייה מעוצב בצורת המילה 'תשלום', אך השלט המצורף מכריז כי למרות שמה, החנייה ניתנת בחינם. זה יוצר כפל לשון ויזואלי ומילולי שמשחק על משמעות המילה 'תשלום' אל מול עלותה האמיתית.",
+    "topic": "מילים ומשחקי לשון, הומור ופנאי, בית ויומיום, תחבורה, פרדוקס",
+    "funny_caption": "נראה  שיש 'הנכה' במחיר לכולם.",
+    "isApproved": true,
+    "isAIGenerated": true,
+    "createdAt": 1795001450959,
+    "social_posts": [
+      {
+        "platform": "whatsapp",
+        "date": "2026-11-18T11:32:34Z",
+        "validated": true
+      },
+      {
+        "platform": "whatsapp_channel",
+        "date": "2026-11-18T11:32:49Z",
+        "validated": true
+      },
+      {
+        "platform": "facebook",
+        "date": "2026-11-18T11:33:00.411Z"
+      },
+      {
+        "platform": "facebook-personal",
+        "date": "2026-11-18T11:33:35.628Z"
+      },
+      {
+        "platform": "x",
+        "date": "2026-11-18T11:34:03.662Z"
+      }
+    ]
   }
 }
