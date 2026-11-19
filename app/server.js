@@ -206,7 +206,7 @@ app.get('/api/tags', (req, res) => {
 
 app.post('/api/metadata', (req, res) => {
     try {
-        const { filename, title, explanation, topic, isApproved, isAIGenerated } = req.body;
+        const { filename, title, explanation, topic, isApproved, isAIGenerated, renameFile } = req.body;
         const safeFilename = sanitizeSingleFilename(filename);
         if (!safeFilename) {
             return res.status(400).json({ error: 'Invalid filename' });
@@ -229,8 +229,11 @@ app.post('/api/metadata', (req, res) => {
         // If it's a new image, we MUST move it to source (and public) even if title doesn't change
         const isFromNewFolder = currentInNew;
 
-        // If there's a title, we try to rename the file
-        if (title && title.trim() !== '') {
+        // Rename file on disk ONLY if explicitly requested OR importing from new images folder
+        const shouldRenameFile = Boolean(renameFile) || isFromNewFolder;
+
+        // If rename is allowed and there's a title, we try to rename the file
+        if (shouldRenameFile && title && title.trim() !== '') {
             const ext = path.extname(safeFilename).toLowerCase();
             // Sanitize title for Windows filename
             let sanitizedTitle = title.replace(/[<>:"/\\|?*\x00-\x1f]/g, '').trim();
