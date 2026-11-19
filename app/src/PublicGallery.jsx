@@ -822,15 +822,27 @@ export default function PublicGallery({ images, metadata }) {
                                 className={`relative ${!isMobile ? 'aspect-square h-full w-auto flex-none' : 'w-full flex-1'} max-w-full max-h-full p-[3px] sm:p-1.5 md:p-[10px] rounded-[2rem] sm:rounded-[2.5rem] shadow-[0_20px_60px_rgba(0,0,0,0.55)] flex flex-col min-h-0 ${isMobile ? 'mt-0' : 'mt-0 lg:mt-0'} bg-gradient-to-br ${theme.frameGrad} mx-auto`}
                                 style={{ willChange: 'transform', ...(!isMobile && sidebarH ? { width: `${sidebarH}px` } : {}) }}
                             >
-                                {/* Nav Arrows - Desktop */}
-                                <button onClick={(e) => { e.stopPropagation(); nextImage(); }} style={{ right: '5px' }} className={`hidden lg:flex absolute top-1/2 -translate-y-1/2 translate-x-1/2 z-50 w-12 h-12 md:w-14 md:h-14 rounded-full bg-gradient-to-br ${theme.frameGrad} items-center justify-center shadow-lg transition-all hover:scale-110 ${currentIndex + getGridSize() >= displayImages.length ? 'opacity-0 pointer-events-none' : ''}`}>
-                                    <div className={`w-9 h-9 md:w-10 md:h-10 rounded-full ${theme.innerBg} flex items-center justify-center`}>
-                                        <ChevronRight className={`w-5 h-5 md:w-6 md:h-6 ${theme.textClass}`} />
-                                    </div>
-                                </button>
-                                <button onClick={(e) => { e.stopPropagation(); prevImage(); }} style={{ left: '5px' }} className={`hidden lg:flex absolute top-1/2 -translate-y-1/2 -translate-x-1/2 z-50 w-12 h-12 md:w-14 md:h-14 rounded-full bg-gradient-to-br ${theme.frameGrad} items-center justify-center shadow-lg transition-all hover:scale-110 ${currentIndex === 0 ? 'opacity-0 pointer-events-none' : ''}`}>
+                                {/* Nav Arrows - Desktop (RTL Aligned: Next is Left, Previous is Right) */}
+                                <button
+                                    onClick={(e) => { e.stopPropagation(); nextImage(); }}
+                                    style={{ left: '5px' }}
+                                    aria-label="התמונה הבאה"
+                                    title="התמונה הבאה"
+                                    className={`hidden lg:flex absolute top-1/2 -translate-y-1/2 -translate-x-1/2 z-50 w-12 h-12 md:w-14 md:h-14 rounded-full bg-gradient-to-br ${theme.frameGrad} items-center justify-center shadow-lg transition-all hover:scale-110 ${currentIndex + getGridSize() >= displayImages.length ? 'opacity-0 pointer-events-none' : ''}`}
+                                >
                                     <div className={`w-9 h-9 md:w-10 md:h-10 rounded-full ${theme.innerBg} flex items-center justify-center`}>
                                         <ChevronLeft className={`w-5 h-5 md:w-6 md:h-6 ${theme.textClass}`} />
+                                    </div>
+                                </button>
+                                <button
+                                    onClick={(e) => { e.stopPropagation(); prevImage(); }}
+                                    style={{ right: '5px' }}
+                                    aria-label="התמונה הקודמת"
+                                    title="התמונה הקודמת"
+                                    className={`hidden lg:flex absolute top-1/2 -translate-y-1/2 translate-x-1/2 z-50 w-12 h-12 md:w-14 md:h-14 rounded-full bg-gradient-to-br ${theme.frameGrad} items-center justify-center shadow-lg transition-all hover:scale-110 ${currentIndex === 0 ? 'opacity-0 pointer-events-none' : ''}`}
+                                >
+                                    <div className={`w-9 h-9 md:w-10 md:h-10 rounded-full ${theme.innerBg} flex items-center justify-center`}>
+                                        <ChevronRight className={`w-5 h-5 md:w-6 md:h-6 ${theme.textClass}`} />
                                     </div>
                                 </button>
 
@@ -1314,7 +1326,7 @@ export default function PublicGallery({ images, metadata }) {
                 onTouchStart={onTouchStart}
                 onTouchMove={onTouchMove}
                 onTouchEnd={onTouchEnd}
-                className="fixed inset-0 w-full h-full max-w-none max-h-none p-0 m-0 bg-transparent border-none outline-none flex items-center justify-center backdrop:bg-black/95 backdrop:backdrop-blur-md z-[100]"
+                className="hidden open:flex fixed inset-0 w-full h-full max-w-none max-h-none p-0 m-0 bg-transparent border-none outline-none items-center justify-center backdrop:bg-black/95 backdrop:backdrop-blur-md z-[100]"
             >
                 {isFullscreen && (
                     <div className="relative w-full h-full flex items-center justify-center p-4" onClick={() => setIsFullscreen(false)}>
@@ -1337,19 +1349,19 @@ export default function PublicGallery({ images, metadata }) {
                         />
                         <button
                             type="button"
-                            aria-label="תמונה הבאה"
+                            aria-label="התמונה הבאה"
                             onClick={(e) => { e.stopPropagation(); nextImage(); }}
-                            className="absolute right-4 top-1/2 -translate-y-1/2 p-2 bg-white/10 rounded-full text-white hidden lg:block hover:bg-white/20 transition-colors"
-                        >
-                            <ChevronRight size={40} />
-                        </button>
-                        <button
-                            type="button"
-                            aria-label="תמונה קודמת"
-                            onClick={(e) => { e.stopPropagation(); prevImage(); }}
                             className="absolute left-4 top-1/2 -translate-y-1/2 p-2 bg-white/10 rounded-full text-white hidden lg:block hover:bg-white/20 transition-colors"
                         >
                             <ChevronLeft size={40} />
+                        </button>
+                        <button
+                            type="button"
+                            aria-label="התמונה הקודמת"
+                            onClick={(e) => { e.stopPropagation(); prevImage(); }}
+                            className="absolute right-4 top-1/2 -translate-y-1/2 p-2 bg-white/10 rounded-full text-white hidden lg:block hover:bg-white/20 transition-colors"
+                        >
+                            <ChevronRight size={40} />
                         </button>
                     </div>
                 )}
@@ -1369,7 +1381,7 @@ export default function PublicGallery({ images, metadata }) {
                         setSearchQuery('');
                     }
                 }}
-                className="fixed inset-0 w-full h-full max-w-none max-h-none p-4 pt-20 m-0 bg-transparent border-none outline-none flex items-start justify-center backdrop:bg-black/80 backdrop:backdrop-blur-sm z-[100]"
+                className="hidden open:flex fixed inset-0 w-full h-full max-w-none max-h-none p-4 pt-20 m-0 bg-transparent border-none outline-none items-start justify-center backdrop:bg-black/80 backdrop:backdrop-blur-sm z-[100]"
             >
                 {isSearchOpen && (
                     <div className="relative w-full max-w-xl bg-slate-900 border border-white/10 rounded-3xl p-4 shadow-2xl animate-in fade-in slide-in-from-top-4 flex flex-col max-h-[70vh]" onClick={(e) => e.stopPropagation()}>

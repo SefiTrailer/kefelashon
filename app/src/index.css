@@ -93,6 +93,10 @@ body {
 }
 
 /* Modern Web Guidance: Native Dialog & Backdrop Baseline */
+dialog:not([open]) {
+  display: none !important;
+}
+
 dialog:modal {
   overscroll-behavior: contain;
   margin: auto;
