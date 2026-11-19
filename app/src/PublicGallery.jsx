@@ -465,7 +465,12 @@ export default function PublicGallery({ images, metadata }) {
 
     // Sidebar dynamic height measurement
     const sidebarRef = useRef(null);
-    const [sidebarH, setSidebarH] = useState(700);
+    const [sidebarH, setSidebarH] = useState(() => {
+        if (typeof window !== 'undefined') {
+            return Math.max(500, window.innerHeight - (window.innerWidth >= 1024 ? 48 : 0));
+        }
+        return 700;
+    });
     const [isMobile, setIsMobile] = useState(() => typeof window !== 'undefined' && window.innerWidth < 1024);
     
     // Gallery container measurement for adaptive grid
@@ -488,7 +493,7 @@ export default function PublicGallery({ images, metadata }) {
         };
         measure();
         const raf = requestAnimationFrame(measure);
-        const t = setTimeout(measure, 300);
+        const t = setTimeout(measure, 100);
         window.addEventListener('resize', measure);
         const ro = new ResizeObserver(measure);
         if (sidebarRef.current) ro.observe(sidebarRef.current);
@@ -499,7 +504,7 @@ export default function PublicGallery({ images, metadata }) {
             window.removeEventListener('resize', measure);
             ro.disconnect();
         };
-    }, []);
+    }, [shuffledImages.length]);
 
     const theme = THEMES[themeIndex];
 
@@ -820,7 +825,7 @@ export default function PublicGallery({ images, metadata }) {
                         <div className="w-full relative flex-1 flex flex-col min-h-0">
                             <div
                                 className={`relative ${!isMobile ? 'aspect-square h-full w-auto flex-none' : 'w-full flex-1'} max-w-full max-h-full p-[3px] sm:p-1.5 md:p-[10px] rounded-[2rem] sm:rounded-[2.5rem] shadow-[0_20px_60px_rgba(0,0,0,0.55)] flex flex-col min-h-0 ${isMobile ? 'mt-0' : 'mt-0 lg:mt-0'} bg-gradient-to-br ${theme.frameGrad} mx-auto`}
-                                style={{ willChange: 'transform', ...(!isMobile && sidebarH ? { width: `${sidebarH}px` } : {}) }}
+                                style={{ willChange: 'transform', ...(!isMobile && sidebarH ? { width: `${sidebarH}px`, maxWidth: 'calc(100vw - 460px)' } : {}) }}
                             >
                                 {/* Nav Arrows - Desktop (RTL Aligned: Next is Left, Previous is Right) */}
                                 <button
