@@ -1,8 +1,10 @@
 name: Deploy Static Viewer to GitHub Pages
 
 on:
-  push:
-    branches: ["main", "master"]
+  # Trigger on push is commented out to prevent GitHub Actions billing failure alerts.
+  # Deployment is performed directly from the local publish flow to the gh-pages branch.
+  # push:
+  #   branches: ["main", "master"]
   workflow_dispatch:
 
 permissions:

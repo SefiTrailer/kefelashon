@@ -1,42 +1,60 @@
 import { execSync } from 'child_process';
 import path from 'path';
+import fs from 'fs';
 import { fileURLToPath } from 'url';
 
-const __dirname = path.dirname(fileURLToPath(import.meta.url));
-const distDir = path.join(__dirname, 'dist');
-const repoUrl = 'https://github.com/SefiTrailer/kefel-lashon.git';
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+const distDir = path.resolve(__dirname, '../dist');
+const repoUrl = 'https://github.com/SefiTrailer/kefelashon.git';
 
 function run(cmd, cwd = distDir) {
-    console.log(`Running: ${cmd}`);
-    return execSync(cmd, { cwd, stdio: 'inherit' });
+    console.log(`[Deploy] Running: ${cmd}`);
+    return execSync(cmd, { cwd, encoding: 'utf-8', windowsHide: true });
 }
 
-try {
-    console.log('Starting custom deployment...');
-    
-    // 1. Setup dist as a git repo
-    try { run('git init'); } catch (e) { console.log('Git already initialized or error.'); }
-    
-    // 2. Add remote if not exists
-    try { run(`git remote add origin ${repoUrl}`); } catch (e) { 
-        run(`git remote set-url origin ${repoUrl}`);
+export function deployToGitHubPages() {
+    console.log('[Deploy] Starting incremental deployment to gh-pages...');
+
+    if (!fs.existsSync(distDir)) {
+        throw new Error(`dist directory not found at: ${distDir}`);
     }
-    
-    // 3. Checkout a temporary branch or just use main
-    run('git checkout -b gh-pages-deploy');
-    
-    // 4. Add all files
-    // To avoid ENAMETOOLONG on git add ., we just do it. git add . is usually fine as a single command.
-    run('git add .');
-    
-    // 5. Commit
+
+    // Ensure CNAME and .nojekyll exist in dist
+    fs.writeFileSync(path.join(distDir, 'CNAME'), 'kefelashon.co.il\n', 'utf-8');
+    fs.writeFileSync(path.join(distDir, '.nojekyll'), '', 'utf-8');
+
+    const gitDir = path.join(distDir, '.git');
+    if (!fs.existsSync(gitDir)) {
+        run('git init');
+        run(`git remote add origin ${repoUrl}`);
+        run('git fetch origin gh-pages --depth 1');
+    }
+
+    // Stage all changes (new files, modified public-data, etc.)
+    run('git add -A');
+
+    // Check if there is anything to commit
+    const status = run('git status --porcelain').trim();
+    if (!status) {
+        console.log('[Deploy] No new files to deploy to gh-pages.');
+        return { ok: true, skipped: true };
+    }
+
+    // Commit and push only the delta
     run('git commit -m "Deploy to GitHub Pages"');
-    
-    // 6. Push to gh-pages branch
-    run('git push origin gh-pages-deploy:gh-pages --force');
-    
-    console.log('Deployment successful!');
-} catch (error) {
-    console.error('Deployment failed:', error.message);
-    process.exit(1);
+    run('git push origin HEAD:gh-pages');
+
+    console.log('[Deploy] gh-pages deployed successfully!');
+    return { ok: true, deployed: true };
+}
+
+// Allow direct CLI execution
+if (process.argv[1] === fileURLToPath(import.meta.url)) {
+    try {
+        deployToGitHubPages();
+    } catch (e) {
+        console.error('[Deploy Failed]', e.message);
+        process.exit(1);
+    }
 }

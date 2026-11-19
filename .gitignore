@@ -8,6 +8,8 @@ app/deleted_candidates/
 **/תמונות מקור משחקי מילים/
 # Original heavy images before WebP conversion (kept locally, not deployed to GitHub)
 app/public/images_originals/
+app/images_originals_backup/
+.deploy_gh_pages/
 .DS_Store
 
 # Automation and local temp files
