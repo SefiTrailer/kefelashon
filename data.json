@@ -17017,6 +17017,33 @@
     "funny_caption": "זו באמת הצלחה ולא רק אשליה!",
     "isApproved": true,
     "isAIGenerated": true,
-    "createdAt": 1795088965468
+    "createdAt": 1795088965468,
+    "social_posts": [
+      {
+        "platform": "facebook",
+        "date": "2026-11-19T12:19:59.525Z"
+      },
+      {
+        "platform": "facebook-personal",
+        "date": "2026-11-19T12:20:35.856Z"
+      },
+      {
+        "platform": "instagram",
+        "date": "2026-11-19T12:20:56.969Z"
+      },
+      {
+        "platform": "x",
+        "date": "2026-11-19T12:21:13.626Z"
+      }
+    ]
+  },
+  "תמונה מעלפת.webp": {
+    "title": "תמונה מעלפת",
+    "explanation": "היצירה היא מיצג של המספר 100 העשוי מלפתות, כלומר 'מאה לפת'. מילות השבח של המבקרת, 'מאלפת', נשמעות זהות לשם היצירה, ובכך נוצר כפל לשון משעשע.",
+    "topic": "מילים ומשחקי לשון, אמנות, אוכל ושתייה, ירקות, הומור ופנאי",
+    "funny_caption": "זו גם תמונה מעלפת!",
+    "isApproved": true,
+    "isAIGenerated": true,
+    "createdAt": 1795094630812
   }
 }
