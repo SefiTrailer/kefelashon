@@ -17067,6 +17067,29 @@
     "funny_caption": "זה נקרא שג'יג'י בופון שומר על כושר?",
     "isApproved": true,
     "isAIGenerated": true,
-    "createdAt": 1795096777305
+    "createdAt": 1795096777305,
+    "social_posts": [
+      {
+        "platform": "facebook",
+        "date": "2026-11-19T14:01:41.471Z"
+      },
+      {
+        "platform": "instagram",
+        "date": "2026-11-19T14:02:48.767Z"
+      },
+      {
+        "platform": "x",
+        "date": "2026-11-19T14:03:03.296Z"
+      }
+    ]
+  },
+  "עובד מסור.webp": {
+    "title": "עובד מסור",
+    "explanation": "הביטוי 'עובד מסור' מתייחס גם לעובד חרוץ ומסור לעבודתו, וגם למסור – כלי עבודה – המבצע את מלאכתו במשרד.",
+    "topic": "מקצועות ועבודה, מילים ומשחקי לשון, הומור ופנאי, כלי עבודה, עבודת משרד",
+    "funny_caption": "הוא חד על המשימה!",
+    "isApproved": true,
+    "isAIGenerated": true,
+    "createdAt": 1795178414421
   }
 }
