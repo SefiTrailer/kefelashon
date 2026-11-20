@@ -2623,6 +2623,20 @@
       "isApproved": true,
       "isAIGenerated": true,
       "createdAt": 1795180308037,
+      "social_posts": [
+        {
+          "platform": "facebook",
+          "date": "2026-11-20T13:14:12.645Z"
+        },
+        {
+          "platform": "instagram",
+          "date": "2026-11-20T13:15:14.908Z"
+        },
+        {
+          "platform": "x",
+          "date": "2026-11-20T13:15:29.874Z"
+        }
+      ],
       "dateMillis": 1795180308037
     },
     "אורות גבוהיםנמוכים.webp": {
@@ -2755,6 +2769,7 @@
       "isAIGenerated": false,
       "createdAt": 1772468311000,
       "social_posts": [],
+      "funny_caption": "ו",
       "dateMillis": 1772468311000
     },
     "אחים לצרה.webp": {
