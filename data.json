@@ -17193,6 +17193,43 @@
     "funny_caption": "המרכז השיקומי נמצא בחדרה.",
     "isApproved": true,
     "isAIGenerated": true,
-    "createdAt": 1795290720625
+    "createdAt": 1795290720625,
+    "social_posts": [
+      {
+        "platform": "whatsapp",
+        "date": "2026-11-21T20:05:16Z",
+        "validated": true
+      },
+      {
+        "platform": "whatsapp_channel",
+        "date": "2026-11-21T20:05:28Z",
+        "validated": true
+      },
+      {
+        "platform": "facebook",
+        "date": "2026-11-21T20:05:39.051Z"
+      },
+      {
+        "platform": "facebook-personal",
+        "date": "2026-11-21T20:06:15.970Z"
+      },
+      {
+        "platform": "instagram",
+        "date": "2026-11-21T20:06:37.108Z"
+      },
+      {
+        "platform": "x",
+        "date": "2026-11-21T20:06:54.152Z"
+      }
+    ]
+  },
+  "פולט עשן.webp": {
+    "title": "פולט עשן",
+    "explanation": "המונח 'פולט עשן' מתאר בדרך כלל רכב שמזהם את הסביבה. כאן הוא מקבל משמעות כפולה של תינוק-רכב ש'פולט' (מגרפס) עשן, בדומה לתינוק אנושי שמוציא אוויר אחרי ארוחה.",
+    "topic": "מילים ומשחקי לשון, משפחה וילדים, הומור ופנאי, תחבורה",
+    "funny_caption": "צער גידול בנים",
+    "isApproved": true,
+    "isAIGenerated": true,
+    "createdAt": 1795292386938
   }
 }
