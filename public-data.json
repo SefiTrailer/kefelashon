@@ -1,5 +1,6 @@
 {
   "files": [
+    "פולט עשן.webp",
     "מוליך חשמל.webp",
     "אורה.webp",
     "חיפוש או-צרות.webp",
@@ -10600,6 +10601,34 @@
       "isApproved": true,
       "isAIGenerated": true,
       "createdAt": 1795290720625,
+      "social_posts": [
+        {
+          "platform": "whatsapp",
+          "date": "2026-11-21T20:05:16Z",
+          "validated": true
+        },
+        {
+          "platform": "whatsapp_channel",
+          "date": "2026-11-21T20:05:28Z",
+          "validated": true
+        },
+        {
+          "platform": "facebook",
+          "date": "2026-11-21T20:05:39.051Z"
+        },
+        {
+          "platform": "facebook-personal",
+          "date": "2026-11-21T20:06:15.970Z"
+        },
+        {
+          "platform": "instagram",
+          "date": "2026-11-21T20:06:37.108Z"
+        },
+        {
+          "platform": "x",
+          "date": "2026-11-21T20:06:54.152Z"
+        }
+      ],
       "dateMillis": 1795290720625
     },
     "מונה ליזה.webp": {
@@ -15473,6 +15502,16 @@
       "createdAt": 1772468311000,
       "social_posts": [],
       "dateMillis": 1772468311000
+    },
+    "פולט עשן.webp": {
+      "title": "פולט עשן",
+      "explanation": "המונח 'פולט עשן' מתאר בדרך כלל רכב שמזהם את הסביבה. כאן הוא מקבל משמעות כפולה של תינוק-רכב ש'פולט' (מגרפס) עשן, בדומה לתינוק אנושי שמוציא אוויר אחרי ארוחה.",
+      "topic": "מילים ומשחקי לשון, משפחה וילדים, הומור ופנאי, תחבורה",
+      "funny_caption": "צער גידול בנים",
+      "isApproved": true,
+      "isAIGenerated": true,
+      "createdAt": 1795292386938,
+      "dateMillis": 1795292386938
     },
     "פולי דין.webp": {
       "title": "פולי דין",
@@ -21213,6 +21252,7 @@
     "פוזל.webp": 82610,
     "פול-האוס 1.webp": 110860,
     "פולו.webp": 105864,
+    "פולט עשן.webp": 139498,
     "פולי דין.webp": 95734,
     "פונקציה מחזורית.webp": 276508,
     "פורט על הגיטרה.webp": 184712,
