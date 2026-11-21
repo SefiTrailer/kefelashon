@@ -17230,6 +17230,43 @@
     "funny_caption": "צער גידול בנים",
     "isApproved": true,
     "isAIGenerated": true,
-    "createdAt": 1795292386938
+    "createdAt": 1795292386938,
+    "social_posts": [
+      {
+        "platform": "whatsapp",
+        "date": "2026-11-21T20:53:19Z",
+        "validated": true
+      },
+      {
+        "platform": "whatsapp_channel",
+        "date": "2026-11-21T20:53:32Z",
+        "validated": true
+      },
+      {
+        "platform": "facebook",
+        "date": "2026-11-21T20:53:39.257Z"
+      },
+      {
+        "platform": "facebook-personal",
+        "date": "2026-11-21T20:54:15.584Z"
+      },
+      {
+        "platform": "instagram",
+        "date": "2026-11-21T20:54:29.514Z"
+      },
+      {
+        "platform": "x",
+        "date": "2026-11-21T20:54:45.965Z"
+      }
+    ]
+  },
+  "קיבוץ גלויות.webp": {
+    "title": "קיבוץ גלויות",
+    "explanation": "הביטוי \"קיבוץ גלויות\" מתייחס לאיסוף היהודים מכל התפוצות לארץ ישראל. האיור מציג 'קיבוץ' (ישוב קהילתי ישראלי) שעשוי כולו מ'גלויות' (תמונות מכתב), ובכך יוצר משחק מילים ויזואלי מצחיק.",
+    "topic": "מילים ומשחקי לשון, יהדות ומסורת, ישראל, הומור ופנאי, מסעות",
+    "funny_caption": "בעידן החדש גלויות כבר לא רלוונטיות, בדיוק כמו התנועה הקיבוצית.",
+    "isApproved": true,
+    "isAIGenerated": true,
+    "createdAt": 1795294674515
   }
 }
