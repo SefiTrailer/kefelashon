@@ -47,7 +47,7 @@ async function runAutomation() {
     }
 
     let browserContext;
-    let launchAttempts = 3;
+    let launchAttempts = 8;
     
     while (launchAttempts > 0) {
         try {
@@ -59,12 +59,8 @@ async function runAutomation() {
                 ignoreDefaultArgs: ['--enable-automation'],
                 args: [
                     '--disable-blink-features=AutomationControlled',
-                    '--no-sandbox',
-                    '--disable-setuid-sandbox',
                     '--disable-infobars',
                     '--window-position=0,0',
-                    '--ignore-certifcate-errors',
-                    '--ignore-certifcate-errors-spki-list',
                 ],
             });
             break; // Success
@@ -171,68 +167,203 @@ async function runAutomation() {
 
         if (!imagePath) throw new Error('No image path provided.');
 
-        const absoluteImagePath = path.resolve(imagePath);
+        let absoluteImagePath = path.resolve(imagePath);
         if (!fs.existsSync(absoluteImagePath)) throw new Error(`Image not found at ${absoluteImagePath}`);
 
-        logToFile('[X-Automation] Preparing to post...');
-        
-        const postButton = page.locator('[data-testid="SideNav_NewTweet_Button"]').first();
-        if (await postButton.isVisible()) {
-            await postButton.click();
+        // Optimize image for Twitter (X) if needed (max 1440px, progressive mozjpeg 84%)
+        let cleanupOptFile = null;
+        try {
+            const sharp = require('sharp');
+            const ext = path.extname(absoluteImagePath).toLowerCase();
+            const stat = fs.statSync(absoluteImagePath);
+            if (stat.size > 400 * 1024 || ext === '.webp') {
+                const optDir = path.join(__dirname, 'temp_opt');
+                if (!fs.existsSync(optDir)) fs.mkdirSync(optDir, { recursive: true });
+                const optFile = path.join(optDir, `x_opt_${Date.now()}_${path.basename(absoluteImagePath, ext)}.jpg`);
+                await sharp(absoluteImagePath)
+                    .resize({ width: 1440, height: 1440, fit: 'inside', withoutEnlargement: true })
+                    .jpeg({ quality: 84, progressive: true, mozjpeg: true })
+                    .toFile(optFile);
+                if (fs.existsSync(optFile) && fs.statSync(optFile).size > 0) {
+                    logToFile(`[X-Automation] Optimized image for Twitter: ${(stat.size / 1024).toFixed(0)}KB -> ${(fs.statSync(optFile).size / 1024).toFixed(0)}KB`);
+                    absoluteImagePath = optFile;
+                    cleanupOptFile = optFile;
+                }
+            }
+        } catch (optErr) {
+            logToFile(`[X-Automation] Image optimization notice: ${optErr.message}`);
         }
 
-        const composer = page.locator('[data-testid="tweetTextarea_0"]').first();
-        await composer.waitFor();
+        logToFile('[X-Automation] Preparing to post...');
+
+        // Helper: resolve the active composer container (prefer foreground compose modal over masked timeline composer)
+        const composeDialogLocator = page.locator('[role="dialog"]').filter({
+            has: page.locator('[data-testid="tweetTextarea_0"]')
+        });
+
+        let scope = page;
+        let scopeType = 'inline';
+
+        if (await composeDialogLocator.last().isVisible({ timeout: 1500 }).catch(() => false)) {
+            scope = composeDialogLocator.last();
+            scopeType = 'dialog-existing';
+        } else {
+            // If an unrelated blocking mask/modal is open (e.g., X prompt/upsell), dismiss it with Escape
+            const mask = page.locator('[data-testid="mask"]').first();
+            if (await mask.isVisible({ timeout: 500 }).catch(() => false)) {
+                logToFile('[X-Automation] Blocking [data-testid="mask"] detected without compose textarea. Sending Escape...');
+                await page.keyboard.press('Escape');
+                await page.waitForTimeout(800);
+            }
+
+            // Re-check if compose dialog appeared or open one cleanly via SideNav_NewTweet_Button
+            if (await composeDialogLocator.last().isVisible({ timeout: 500 }).catch(() => false)) {
+                scope = composeDialogLocator.last();
+                scopeType = 'dialog-existing';
+            } else {
+                const postButton = page.locator('[data-testid="SideNav_NewTweet_Button"]').first();
+                if (await postButton.isVisible({ timeout: 2500 }).catch(() => false)) {
+                    logToFile('[X-Automation] Opening compose modal via SideNav_NewTweet_Button...');
+                    await postButton.click();
+                    const dialogAppeared = await composeDialogLocator.last().waitFor({ state: 'visible', timeout: 5000 }).then(() => true).catch(() => false);
+                    if (dialogAppeared) {
+                        scope = composeDialogLocator.last();
+                        scopeType = 'dialog-opened';
+                    }
+                }
+            }
+        }
+
+        logToFile(`[X-Automation] Composer scope selected: ${scopeType}`);
+
+        const composer = scope.locator('[data-testid="tweetTextarea_0"]').first();
+        await composer.waitFor({ state: 'visible', timeout: 15000 });
+        await composer.click();
         await composer.fill(caption);
 
-        logToFile('[X-Automation] Uploading image...');
-        // Use .first() to avoid strict mode violation if multiple inputs exist
-        const fileInput = page.locator('input[data-testid="fileInput"]').first();
-        await fileInput.setInputFiles(absoluteImagePath);
-        
-        logToFile('[X-Automation] Waiting for image attachment to be ready...');
-        // Wait for the attachment removal button - it has [role="button"] inside the attachments div
-        // This is more robust than aria-label="Remove" which is language-specific
-        await page.waitForSelector('[data-testid="attachments"] [role="button"]', { timeout: 45000 });
-        
-        logToFile('[X-Automation] Waiting for Post button to be enabled...');
-        const submitButton = page.locator('[data-testid="tweetButton"], [data-testid="tweetButtonInline"]').first();
-        await submitButton.waitFor({ state: 'visible', timeout: 30000 });
-        
-        // Final check: Post button must be enabled
-        await page.waitForFunction((btn) => {
-            return !btn.disabled && btn.getAttribute('aria-disabled') !== 'true';
-        }, await submitButton.elementHandle(), { timeout: 15000 });
-
-        logToFile('[X-Automation] Clicking Post...');
-        if (await submitButton.isVisible()) {
-            await submitButton.click();
-        } else {
-            throw new Error('Could not find Post button');
+        // Verify Draft.js editor actually received the caption text; fallback to keyboard typing if empty
+        let actualText = (await composer.innerText().catch(() => '')).trim();
+        if (caption.trim() && actualText.length === 0) {
+            logToFile('[X-Automation] composer.fill resulted in empty Draft.js state; typing caption via keyboard...');
+            await composer.click();
+            await page.keyboard.insertText(caption);
+            actualText = (await composer.innerText().catch(() => '')).trim();
+        }
+        if (caption.trim() && actualText.length === 0) {
+            throw new Error('VALIDATION_FAILED: Composer text remained empty after fill/insertText');
         }
 
-        await Promise.race([
-            composer.waitFor({ state: 'hidden', timeout: 30000 }),
-            page.waitForSelector('[data-testid="toast"]', { timeout: 30000 })
-        ]);
+        logToFile('[X-Automation] Uploading image...');
+        const fileInput = scope.locator('input[data-testid="fileInput"]').first();
+        await fileInput.setInputFiles(absoluteImagePath);
 
-        logToFile('[X-Automation] Success! Image posted to X.');
-        await page.waitForTimeout(2000);
+        logToFile('[X-Automation] Waiting for image attachment to be ready...');
+        await scope.locator('[data-testid="attachments"] [role="button"]').first().waitFor({ state: 'visible', timeout: 45000 });
+
+        logToFile('[X-Automation] Waiting for Post button to be enabled...');
+        const submitButton = scope.locator('[data-testid="tweetButton"], [data-testid="tweetButtonInline"]').first();
+        await submitButton.waitFor({ state: 'visible', timeout: 30000 });
+
+        // Wait for Post button to become enabled once media finishes processing
+        await page.waitForFunction((btn) => {
+            return btn && !btn.disabled && btn.getAttribute('aria-disabled') !== 'true';
+        }, await submitButton.elementHandle(), { timeout: 30000 });
+
+        const btnState = await submitButton.evaluate(btn => ({
+            disabled: Boolean(btn.disabled),
+            ariaDisabled: btn.getAttribute('aria-disabled'),
+            text: (btn.innerText || '').trim(),
+            testId: btn.getAttribute('data-testid')
+        }));
+
+        if (args.includes('--dry-run')) {
+            await page.waitForTimeout(1000);
+            const dryRunSummary = {
+                ok: true,
+                dryRun: true,
+                validated: !btnState.disabled && btnState.ariaDisabled !== 'true',
+                scopeType,
+                buttonState: btnState,
+                textLength: actualText.length
+            };
+            logToFile(`[X-Automation] DRY-RUN summary: ${JSON.stringify(dryRunSummary)}`);
+            await page.screenshot({ path: path.join(__dirname, '../../x-dryrun.png') }).catch(() => {});
+            console.log(`RESULT_JSON:${JSON.stringify(dryRunSummary)}`);
+            return;
+        }
+
+        logToFile('[X-Automation] Clicking Post and awaiting CreateTweet API confirmation...');
+        const createTweetPromise = page.waitForResponse(
+            (resp) => resp.request().method() === 'POST' && resp.url().includes('/CreateTweet'),
+            { timeout: 30000 }
+        ).then(async (resp) => ({
+            status: resp.status(),
+            body: await resp.json().catch(() => null)
+        })).catch((err) => ({ status: 0, error: err.message, body: null }));
+
+        await submitButton.click();
+
+        const createTweet = await createTweetPromise;
+        // Also wait briefly for UI toast/modal close to settle
+        await Promise.race([
+            scope.locator('[data-testid="attachments"]').first().waitFor({ state: 'hidden', timeout: 10000 }),
+            page.waitForSelector('[data-testid="toast"]', { timeout: 10000 }),
+            composer.waitFor({ state: 'hidden', timeout: 10000 })
+        ]).catch(() => {});
+
+        const gqlErrors = Array.isArray(createTweet?.body?.errors) ? createTweet.body.errors : [];
+        const rawResult = createTweet?.body?.data?.create_tweet?.tweet_results?.result || null;
+        const tweetNode = rawResult?.tweet || rawResult;
+        const tweetId = tweetNode?.rest_id ? String(tweetNode.rest_id) : null;
+        const screenName =
+            tweetNode?.core?.user_results?.result?.legacy?.screen_name ||
+            tweetNode?.core?.user_results?.result?.core?.screen_name ||
+            null;
+        const tweetUrl = tweetId
+            ? (screenName ? `https://x.com/${screenName}/status/${tweetId}` : `https://x.com/i/web/status/${tweetId}`)
+            : null;
+
+        if (!createTweet || createTweet.status < 200 || createTweet.status >= 300 || gqlErrors.length > 0 || !tweetId) {
+            const errDetail = gqlErrors.map(e => e.message).filter(Boolean).join('; ') || createTweet?.error || `HTTP ${createTweet?.status || 0}, missing tweet rest_id`;
+            const failPayload = {
+                ok: false,
+                validated: false,
+                status: createTweet?.status || 0,
+                errors: gqlErrors,
+                error: errDetail
+            };
+            console.log(`RESULT_JSON:${JSON.stringify(failPayload)}`);
+            throw new Error(`CREATE_TWEET_VALIDATION_FAILED: ${errDetail}`);
+        }
+
+        const successPayload = {
+            ok: true,
+            validated: true,
+            tweetId,
+            tweetUrl,
+            scopeType
+        };
+        logToFile(`[X-Automation] Validated! Tweet ID=${tweetId} (${tweetUrl})`);
+        console.log(`RESULT_JSON:${JSON.stringify(successPayload)}`);
+        await page.waitForTimeout(1500);
 
     } catch (err) {
         logToFile(`[X-Automation] ERROR: ${err.message}`);
+        if (!isCheckOnly && !isLoginOnly && !String(err.message).startsWith('CREATE_TWEET_VALIDATION_FAILED')) {
+            console.log(`RESULT_JSON:${JSON.stringify({ ok: false, validated: false, error: err.message })}`);
+        }
         if (isLoginOnly && browserContext) {
             logToFile('[X-Automation] Error during login setup, but keeping window open for manual fix...');
             // In login mode, if something fails (like navigation), still wait for user to close
             const pages = browserContext.pages();
             if (pages.length > 0) {
-                await pages[0].waitForEvent('close', { timeout: 0 }).catch(() => {});
+                await pages[pages.length - 1].waitForEvent('close', { timeout: 0 }).catch(() => {});
             }
         } else {
             if (browserContext && !isHeaded) {
                 const pages = browserContext.pages();
                 if (pages.length > 0) {
-                    await pages[0].screenshot({ path: path.join(__dirname, '../../x-error.png') }).catch(() => {});
+                    await pages[pages.length - 1].screenshot({ path: path.join(__dirname, '../../x-error.png') }).catch(() => {});
                 }
             }
             if (isCheckOnly) {
@@ -242,6 +373,9 @@ async function runAutomation() {
         }
     } finally {
         if (browserContext) await browserContext.close();
+        if (cleanupOptFile && fs.existsSync(cleanupOptFile)) {
+            try { fs.unlinkSync(cleanupOptFile); } catch (_) {}
+        }
         if (taskFile && fs.existsSync(taskFile)) {
             try { fs.unlinkSync(taskFile); } catch (e) {}
         }

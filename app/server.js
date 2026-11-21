@@ -800,7 +800,10 @@ async function sendEvolutionWhatsAppImage(targetId, filePath, caption = '') {
     if (!apiKey) {
         throw new Error('EVOLUTION_API_KEY אינו מוגדר ב-.env');
     }
-    const jpegBuffer = await sharp(filePath).jpeg({ quality: 92 }).toBuffer();
+    const jpegBuffer = await sharp(filePath)
+        .resize({ width: 1440, height: 1440, fit: 'inside', withoutEnlargement: true })
+        .jpeg({ quality: 84, progressive: true, mozjpeg: true })
+        .toBuffer();
     const base64Media = jpegBuffer.toString('base64');
     const baseName = path.basename(filePath, path.extname(filePath));
 
@@ -902,7 +905,10 @@ async function postPhotoToFacebookPage(fbPageId, pageToken, filename, imageUrl, 
     const localPath = resolveImageFilePath(filename);
     if (localPath) {
         try {
-            const jpegBuffer = await sharp(localPath).jpeg({ quality: 92 }).toBuffer();
+            const jpegBuffer = await sharp(localPath)
+                .resize({ width: 1440, height: 1440, fit: 'inside', withoutEnlargement: true })
+                .jpeg({ quality: 84, progressive: true, mozjpeg: true })
+                .toBuffer();
             const form = new FormData();
             form.append('source', new Blob([jpegBuffer], { type: 'image/jpeg' }), 'post.jpg');
             if (caption) form.append('caption', caption);
