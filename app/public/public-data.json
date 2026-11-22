@@ -17057,6 +17057,34 @@
       "isApproved": true,
       "isAIGenerated": true,
       "createdAt": 1795294674515,
+      "social_posts": [
+        {
+          "platform": "whatsapp",
+          "date": "2026-11-21T21:00:24Z",
+          "validated": true
+        },
+        {
+          "platform": "whatsapp_channel",
+          "date": "2026-11-21T21:00:40Z",
+          "validated": true
+        },
+        {
+          "platform": "facebook",
+          "date": "2026-11-21T21:00:48.686Z"
+        },
+        {
+          "platform": "facebook-personal",
+          "date": "2026-11-21T21:01:22.212Z"
+        },
+        {
+          "platform": "instagram",
+          "date": "2026-11-21T21:01:37.047Z"
+        },
+        {
+          "platform": "x",
+          "date": "2026-11-21T21:01:52.330Z"
+        }
+      ],
       "dateMillis": 1795294674515
     },
     "קינוח אף.webp": {

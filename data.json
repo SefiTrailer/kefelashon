@@ -17267,6 +17267,43 @@
     "funny_caption": "בעידן החדש גלויות כבר לא רלוונטיות, בדיוק כמו התנועה הקיבוצית.",
     "isApproved": true,
     "isAIGenerated": true,
-    "createdAt": 1795294674515
+    "createdAt": 1795294674515,
+    "social_posts": [
+      {
+        "platform": "whatsapp",
+        "date": "2026-11-21T21:00:24Z",
+        "validated": true
+      },
+      {
+        "platform": "whatsapp_channel",
+        "date": "2026-11-21T21:00:40Z",
+        "validated": true
+      },
+      {
+        "platform": "facebook",
+        "date": "2026-11-21T21:00:48.686Z"
+      },
+      {
+        "platform": "facebook-personal",
+        "date": "2026-11-21T21:01:22.212Z"
+      },
+      {
+        "platform": "instagram",
+        "date": "2026-11-21T21:01:37.047Z"
+      },
+      {
+        "platform": "x",
+        "date": "2026-11-21T21:01:52.330Z"
+      }
+    ]
+  },
+  "מים קארים.webp": {
+    "title": "מים קרים",
+    "explanation": "הכיתוב 'מים קארים' משלב את שמו של כוכב הכדורסל קארים עבדול-ג'אבר עם הצליל 'מים קרים'. האירוניה היא שהמים המוצגים בתמונה הם דווקא מים חמים, בניגוד למשמעות הנסתרת.",
+    "topic": "מילים ומשחקי לשון, ספורט, אישים ומפורסמים, אוכל ושתייה, הומור ופנאי",
+    "funny_caption": "",
+    "isApproved": false,
+    "isAIGenerated": true,
+    "createdAt": 1795342290243
   }
 }
