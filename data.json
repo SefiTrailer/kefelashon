@@ -17304,6 +17304,39 @@
     "funny_caption": "זהירות מים חמים, למכירה החל מגיל כיתה 'ו' בלבד",
     "isApproved": true,
     "isAIGenerated": true,
-    "createdAt": 1795342703913
+    "createdAt": 1795342703913,
+    "social_posts": [
+      {
+        "platform": "whatsapp",
+        "date": "2026-11-22T10:20:32Z",
+        "validated": true
+      },
+      {
+        "platform": "whatsapp_channel",
+        "date": "2026-11-22T10:20:46Z",
+        "validated": true
+      },
+      {
+        "platform": "facebook",
+        "date": "2026-11-22T10:20:54.154Z"
+      },
+      {
+        "platform": "facebook-personal",
+        "date": "2026-11-22T10:21:29.273Z"
+      },
+      {
+        "platform": "instagram",
+        "date": "2026-11-22T10:21:40.583Z"
+      }
+    ]
+  },
+  "דרקון פורטוגלי.webp": {
+    "title": "דרקון פורטוגלי",
+    "explanation": "הכותרת משחקת על הדמיון בצליל בין המילה 'דרקון' (היצור שבתמונה) ל'דרכון' (המסמך שבידו). היא רומזת על השלט 'ביקורת דרכונים' הנפוץ בשדות תעופה, והופכת אותו ל'ביקורת דרקונים' באופן הומוריסטי.",
+    "topic": "חיות, מילים ומשחקי לשון, הומור ופנאי, נסיעות, שדה תעופה",
+    "funny_caption": "בדיוק הוא קיבל את הדרכון הישראלי שלו!",
+    "isApproved": true,
+    "isAIGenerated": true,
+    "createdAt": 1795343719461
   }
 }
