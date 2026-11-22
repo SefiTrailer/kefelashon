@@ -1,5 +1,6 @@
 {
   "files": [
+    "AI בנאלי.webp",
     "דרקון פורטוגלי.webp",
     "מים קרים.webp",
     "קיבוץ גלויות.webp",
@@ -1794,6 +1795,16 @@
       "isAIImproved": true,
       "social_posts": [],
       "dateMillis": 1746566030000
+    },
+    "AI בנאלי.webp": {
+      "title": "AI בנאלי",
+      "explanation": "הבדיחה משחקת על הדמיון הפונטי בין הביטוי 'AI בנה לי' (בינה מלאכותית בנתה עבורי) לבין המילה 'בנאלי' (שגרתי, חסר מקוריות), המבקרת את התוצר הסופי.",
+      "topic": "טכנולוגיה ומדע, מילים ומשחקי לשון, הומור ופנאי, בינה מלאכותית, אתרים",
+      "funny_caption": "בנאלי לחלוטין!",
+      "isApproved": true,
+      "isAIGenerated": true,
+      "createdAt": 1795344507097,
+      "dateMillis": 1795344507097
     },
     "ALL IN TUNE.webp": {
       "title": "ALL IN TUNE",
@@ -5207,6 +5218,20 @@
       "isApproved": true,
       "isAIGenerated": true,
       "createdAt": 1795343719461,
+      "social_posts": [
+        {
+          "platform": "facebook",
+          "date": "2026-11-22T10:37:08.582Z"
+        },
+        {
+          "platform": "facebook-personal",
+          "date": "2026-11-22T10:37:42.393Z"
+        },
+        {
+          "platform": "instagram",
+          "date": "2026-11-22T10:37:55.042Z"
+        }
+      ],
       "dateMillis": 1795343719461
     },
     "ה'אי קר' חסר מן הספר.webp": {
@@ -20182,6 +20207,7 @@
     "21 לעומר.webp": 65102,
     "23 לעומר.webp": 91170,
     "24 לעומר 1.webp": 81406,
+    "AI בנאלי.webp": 564456,
     "ALL IN TUNE.webp": 104502,
     "B כור פתע.webp": 84646,
     "B2.webp": 138532,

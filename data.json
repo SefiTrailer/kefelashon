@@ -17337,6 +17337,29 @@
     "funny_caption": "בדיוק הוא קיבל את הדרכון הישראלי שלו!",
     "isApproved": true,
     "isAIGenerated": true,
-    "createdAt": 1795343719461
+    "createdAt": 1795343719461,
+    "social_posts": [
+      {
+        "platform": "facebook",
+        "date": "2026-11-22T10:37:08.582Z"
+      },
+      {
+        "platform": "facebook-personal",
+        "date": "2026-11-22T10:37:42.393Z"
+      },
+      {
+        "platform": "instagram",
+        "date": "2026-11-22T10:37:55.042Z"
+      }
+    ]
+  },
+  "AI בנאלי.webp": {
+    "title": "AI בנאלי",
+    "explanation": "הבדיחה משחקת על הדמיון הפונטי בין הביטוי 'AI בנה לי' (בינה מלאכותית בנתה עבורי) לבין המילה 'בנאלי' (שגרתי, חסר מקוריות), המבקרת את התוצר הסופי.",
+    "topic": "טכנולוגיה ומדע, מילים ומשחקי לשון, הומור ופנאי, בינה מלאכותית, אתרים",
+    "funny_caption": "בנאלי לחלוטין!",
+    "isApproved": true,
+    "isAIGenerated": true,
+    "createdAt": 1795344507097
   }
 }
