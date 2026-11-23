@@ -1,5 +1,6 @@
 {
   "files": [
+    "שקר לבן.webp",
     "AI בנאלי.webp",
     "דרקון פורטוגלי.webp",
     "מים קרים.webp",
@@ -1804,6 +1805,30 @@
       "isApproved": true,
       "isAIGenerated": true,
       "createdAt": 1795344507097,
+      "social_posts": [
+        {
+          "platform": "whatsapp",
+          "date": "2026-11-22T10:54:14Z",
+          "validated": true
+        },
+        {
+          "platform": "whatsapp_channel",
+          "date": "2026-11-22T10:54:28Z",
+          "validated": true
+        },
+        {
+          "platform": "facebook",
+          "date": "2026-11-22T10:54:35.331Z"
+        },
+        {
+          "platform": "facebook-personal",
+          "date": "2026-11-22T10:55:08.963Z"
+        },
+        {
+          "platform": "instagram",
+          "date": "2026-11-22T10:55:23.994Z"
+        }
+      ],
       "dateMillis": 1795344507097
     },
     "ALL IN TUNE.webp": {
@@ -19239,6 +19264,16 @@
       "social_posts": [],
       "dateMillis": 1780229656672
     },
+    "שקר לבן.webp": {
+      "title": "שקר לבן",
+      "explanation": "המשחק בין הביטוי המוכר \"שקר לבן\" לבין מיצג אמנותי מילולי שבו המילה שקר עצמה צבועה בלבן.",
+      "topic": "מוזיקה ותרבות, מילים ומשחקי לשון, פתגמים וביטויים, הומור ופנאי, אמנות",
+      "funny_caption": "נראה שגם לבת היה קר שם.",
+      "isApproved": true,
+      "isAIGenerated": true,
+      "createdAt": 1795419370804,
+      "dateMillis": 1795419370804
+    },
     "שר בזיופים.webp": {
       "title": "שר בזיופים",
       "explanation": "הוא מזייף שטרות ותוך כדי הוא גם שר, ולאו דווקא בזיופים",
@@ -21683,6 +21718,7 @@
     "שער הדולר.webp": 133200,
     "שפת הים.webp": 253766,
     "שקוע בלי מוד.webp": 124330,
+    "שקר לבן.webp": 520948,
     "שר בזיופים.webp": 143084,
     "שר בטון חזק.webp": 190166,
     "שר החכ להוט.webp": 256158,

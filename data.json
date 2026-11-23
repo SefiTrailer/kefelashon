@@ -17360,6 +17360,39 @@
     "funny_caption": "בנאלי לחלוטין!",
     "isApproved": true,
     "isAIGenerated": true,
-    "createdAt": 1795344507097
+    "createdAt": 1795344507097,
+    "social_posts": [
+      {
+        "platform": "whatsapp",
+        "date": "2026-11-22T10:54:14Z",
+        "validated": true
+      },
+      {
+        "platform": "whatsapp_channel",
+        "date": "2026-11-22T10:54:28Z",
+        "validated": true
+      },
+      {
+        "platform": "facebook",
+        "date": "2026-11-22T10:54:35.331Z"
+      },
+      {
+        "platform": "facebook-personal",
+        "date": "2026-11-22T10:55:08.963Z"
+      },
+      {
+        "platform": "instagram",
+        "date": "2026-11-22T10:55:23.994Z"
+      }
+    ]
+  },
+  "שקר לבן.webp": {
+    "title": "שקר לבן",
+    "explanation": "המשחק בין הביטוי המוכר \"שקר לבן\" לבין מיצג אמנותי מילולי שבו המילה שקר עצמה צבועה בלבן.",
+    "topic": "מוזיקה ותרבות, מילים ומשחקי לשון, פתגמים וביטויים, הומור ופנאי, אמנות",
+    "funny_caption": "נראה שגם לבת היה קר שם.",
+    "isApproved": true,
+    "isAIGenerated": true,
+    "createdAt": 1795419370804
   }
 }
