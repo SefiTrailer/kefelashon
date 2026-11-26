@@ -15633,7 +15633,7 @@
     "title": "גש הלום",
     "explanation": "משחק מילים על הביטוי 'גש הלום': מורה שמורה לתלמיד לגשת ולהלום פיזית בפטיש על הדלת",
     "topic": "מילים ומשחקי לשון, פתגמים וביטויים, הומור ופנאי",
-    "isApproved": false,
+    "isApproved": true,
     "isAIGenerated": true,
     "createdAt": 1794083010000,
     "funny_caption": "זה בדיוק מה שהוא עושה!",
@@ -17489,6 +17489,32 @@
         "validated": true,
         "msg_id": "ACC8E31F1E01323CA8615EF7FE88AE90",
         "historical": true
+      },
+      {
+        "platform": "whatsapp",
+        "date": "2026-11-26T16:48:06Z",
+        "validated": true
+      },
+      {
+        "platform": "whatsapp_channel",
+        "date": "2026-11-26T16:48:20Z",
+        "validated": true
+      },
+      {
+        "platform": "facebook",
+        "date": "2026-11-26T16:48:27.111Z"
+      },
+      {
+        "platform": "facebook-personal",
+        "date": "2026-11-26T16:49:06.437Z"
+      },
+      {
+        "platform": "instagram",
+        "date": "2026-11-26T16:49:21.454Z"
+      },
+      {
+        "platform": "x",
+        "date": "2026-11-26T16:49:38.430Z"
       }
     ]
   }

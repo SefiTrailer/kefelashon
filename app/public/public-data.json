@@ -27,6 +27,7 @@
     "קלף נדיר, אני נודר.webp",
     "אור המום.webp",
     "היכל התה הילה.webp",
+    "גש הלום.webp",
     "עוסה חיים.webp",
     "כטוש.webp",
     "הרכב מלא.webp",
@@ -4898,6 +4899,25 @@
       "createdAt": 1772468311000,
       "social_posts": [],
       "dateMillis": 1772468311000
+    },
+    "גש הלום.webp": {
+      "title": "גש הלום",
+      "explanation": "משחק מילים על הביטוי 'גש הלום': מורה שמורה לתלמיד לגשת ולהלום פיזית בפטיש על הדלת",
+      "topic": "מילים ומשחקי לשון, פתגמים וביטויים, הומור ופנאי",
+      "isApproved": true,
+      "isAIGenerated": true,
+      "createdAt": 1794083010000,
+      "funny_caption": "זה בדיוק מה שהוא עושה!",
+      "social_posts": [
+        {
+          "platform": "whatsapp_public_group",
+          "date": "2026-11-07T20:23:30Z",
+          "validated": true,
+          "msg_id": "ACF2C479DF80096D990EED57A60406CC",
+          "historical": true
+        }
+      ],
+      "dateMillis": 1794083010000
     },
     "דאון טעון.webp": {
       "title": "דאון טעון",
@@ -15058,6 +15078,32 @@
           "validated": true,
           "msg_id": "ACC8E31F1E01323CA8615EF7FE88AE90",
           "historical": true
+        },
+        {
+          "platform": "whatsapp",
+          "date": "2026-11-26T16:48:06Z",
+          "validated": true
+        },
+        {
+          "platform": "whatsapp_channel",
+          "date": "2026-11-26T16:48:20Z",
+          "validated": true
+        },
+        {
+          "platform": "facebook",
+          "date": "2026-11-26T16:48:27.111Z"
+        },
+        {
+          "platform": "facebook-personal",
+          "date": "2026-11-26T16:49:06.437Z"
+        },
+        {
+          "platform": "instagram",
+          "date": "2026-11-26T16:49:21.454Z"
+        },
+        {
+          "platform": "x",
+          "date": "2026-11-26T16:49:38.430Z"
         }
       ],
       "dateMillis": 1794082984000
@@ -20653,6 +20699,7 @@
     "גר בונים.webp": 168144,
     "גרמא הולוגרמה.webp": 129680,
     "גרעין תורני.webp": 75582,
+    "גש הלום.webp": 1396746,
     "דאון טעון.webp": 97466,
     "דאנקי שן.webp": 183274,
     "דב כותב.webp": 100616,
