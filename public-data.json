@@ -27,6 +27,7 @@
     "קלף נדיר, אני נודר.webp",
     "אור המום.webp",
     "היכל התה הילה.webp",
+    "עוסה חיים.webp",
     "כטוש.webp",
     "הרכב מלא.webp",
     "צ'ק ללא כיסוי.webp",
@@ -15042,6 +15043,25 @@
       "social_posts": [],
       "dateMillis": 1780229247199
     },
+    "עוסה חיים.webp": {
+      "title": "עוסה חיים",
+      "explanation": "משחק מילים על 'עושה חיים': אדם בשם חיים שמקבל עיסוי בספא ופשוט עושים לחיים טיפול",
+      "topic": "מילים ומשחקי לשון, פתגמים וביטויים, הומור ופנאי",
+      "isApproved": true,
+      "isAIGenerated": true,
+      "createdAt": 1794082984000,
+      "funny_caption": "קוראים לו חיים, והוא בהחלט עושה חיים",
+      "social_posts": [
+        {
+          "platform": "whatsapp_public_group",
+          "date": "2026-11-07T20:23:04Z",
+          "validated": true,
+          "msg_id": "ACC8E31F1E01323CA8615EF7FE88AE90",
+          "historical": true
+        }
+      ],
+      "dateMillis": 1794082984000
+    },
     "עוף מוכשר.webp": {
       "title": "עוף מוכשר",
       "explanation": "נשמע כמו עוף שהכשירו אותו במלח ושחיטה כדין, רואים עוף שנראה כמו אלברט איינשטיין, הוא עוף גאון, מוכשר מאוד.",
@@ -15333,6 +15353,34 @@
       "isApproved": true,
       "isAIGenerated": true,
       "createdAt": 1795681125054,
+      "social_posts": [
+        {
+          "platform": "whatsapp",
+          "date": "2026-11-26T08:37:57Z",
+          "validated": true
+        },
+        {
+          "platform": "whatsapp_channel",
+          "date": "2026-11-26T08:37:57Z",
+          "validated": true
+        },
+        {
+          "platform": "facebook",
+          "date": "2026-11-26T08:38:11.625Z"
+        },
+        {
+          "platform": "facebook-personal",
+          "date": "2026-11-26T08:39:08.254Z"
+        },
+        {
+          "platform": "instagram",
+          "date": "2026-11-26T08:39:26.950Z"
+        },
+        {
+          "platform": "x",
+          "date": "2026-11-26T08:39:44.619Z"
+        }
+      ],
       "dateMillis": 1795681125054
     },
     "עליית המכונות.webp": {
@@ -21470,6 +21518,7 @@
     "עונת המלפפונים.webp": 76514,
     "עונת רחצה.webp": 101944,
     "עוס PEACE.webp": 166896,
+    "עוסה חיים.webp": 789766,
     "עוף מוכשר.webp": 186744,
     "עוף מוקפץ.webp": 155764,
     "עוף סיני.webp": 114918,
