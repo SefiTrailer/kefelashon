@@ -10,6 +10,7 @@ const __dirname = path.dirname(__filename);
 const SESSION_DIR = path.resolve(__dirname, '../../.gemini-session');
 const LOG_PATH = path.resolve(__dirname, '../../gemini-automation.log');
 const DEFAULT_SKILL_NAME = 'יוצר-משחקי-מילים-ויזואליים';
+const DEFAULT_LOGO_PATH = path.resolve(__dirname, '../skill_assets/sefi-logo.png');
 
 function logToFile(msg) {
     const timestamp = new Date().toISOString();
@@ -26,21 +27,30 @@ async function humanPause(page, minMs = 350, maxMs = 750) {
 }
 
 async function typeHumanText(page, text) {
-    const lines = String(text || '').trim().split(/\r?\n/);
+    const clean = String(text || '').trim();
+    const lines = clean.split(/\r?\n/);
+    // Long multi-line prompt templates are entered line-by-line cleanly (just like pasting a saved prompt template),
+    // while short prompts/edits are typed gently word-by-word.
+    const useTemplatePaste = clean.length > 260;
+
     for (let i = 0; i < lines.length; i++) {
         if (i > 0) {
             await page.keyboard.press('Shift+Enter');
-            await humanPause(page, 180, 360);
+            await humanPause(page, useTemplatePaste ? 120 : 180, useTemplatePaste ? 240 : 360);
         }
         const line = lines[i];
         if (!line) continue;
-        // Type in small natural segments with realistic pacing (keeps Hebrew input clean & natural)
-        const words = line.split(/(\s+)/);
-        for (const chunk of words) {
-            if (!chunk) continue;
-            await page.keyboard.type(chunk, { delay: randBetween(22, 42) });
-            if (chunk.trim().length > 0) {
-                await page.waitForTimeout(randBetween(25, 75));
+        if (useTemplatePaste) {
+            await page.keyboard.insertText(line);
+            await humanPause(page, 100, 220);
+        } else {
+            const words = line.split(/(\s+)/);
+            for (const chunk of words) {
+                if (!chunk) continue;
+                await page.keyboard.type(chunk, { delay: randBetween(22, 42) });
+                if (chunk.trim().length > 0) {
+                    await page.waitForTimeout(randBetween(25, 75));
+                }
             }
         }
     }
@@ -209,10 +219,26 @@ async function ensureHighReasoningMode(page) {
 
 async function ensureImageToolActive(page) {
     try {
-        const deselectBtn = page.locator('button[aria-label*="ביטול הבחירה"], button[aria-label*="Deselect"]').first();
-        if (await deselectBtn.isVisible().catch(() => false)) {
-            logToFile('[Gemini-Gem] Image creation tool already active.');
-            return;
+        const arBtn = page.locator('button, [role="button"]').filter({ hasText: /יחס גובה-רוחב|Aspect ratio/i }).first();
+        if (await arBtn.isVisible().catch(() => false)) {
+            logToFile('[Gemini-Gem] Image creation tool already active (aspect ratio selector visible).');
+            return true;
+        }
+
+        const imgDeselect = page.locator('button[aria-label*="ביטול הבחירה"], button[aria-label*="Deselect"]').first();
+        if (await imgDeselect.isVisible().catch(() => false)) {
+            const chipCtx = await imgDeselect.evaluate(el => {
+                const aria = el.getAttribute('aria-label') || '';
+                const parentTxt = (el.parentElement?.innerText || '').trim();
+                return `${aria} ${parentTxt}`;
+            }).catch(() => '');
+            if (/תמונ|image/i.test(chipCtx)) {
+                logToFile(`[Gemini-Gem] Image creation tool already active ("${chipCtx.trim()}").`);
+                return true;
+            }
+            // Another tool chip (e.g. Deep Research / Canvas) is active — clear it first
+            await imgDeselect.click();
+            await humanPause(page, 400, 650);
         }
 
         const plusBtn = page.locator(
@@ -223,7 +249,7 @@ async function ensureImageToolActive(page) {
             await plusBtn.waitFor({ state: 'visible', timeout: 8000 });
         } catch {
             logToFile('[Gemini-Gem] Warning: upload/tools (+) button not visible within 8s.');
-            return;
+            return false;
         }
 
         await plusBtn.click();
@@ -237,15 +263,203 @@ async function ensureImageToolActive(page) {
             await imgTool.click();
             logToFile('[Gemini-Gem] Activated image tool visibly: יצירת תמונה');
             await humanPause(page, 650, 950);
+            return true;
         } else {
-            logToFile('[Gemini-Gem] Notice: "יצירת תמונה" option not visible in + menu (likely in Skill mode).');
+            logToFile('[Gemini-Gem] Notice: "יצירת תמונה" option not visible in + menu.');
             await page.keyboard.press('Escape').catch(() => {});
             await humanPause(page, 300, 500);
+            return false;
         }
     } catch (e) {
         logToFile(`[Gemini-Gem] Image tool activation note (non-fatal): ${e.message}`);
         await page.keyboard.press('Escape').catch(() => {});
+        return false;
     }
+}
+
+async function ensureAspectRatioSquare(page, ratio = '1:1') {
+    const targetRatio = (ratio || '1:1').trim();
+    try {
+        const arBtn = page.locator('button, [role="button"]').filter({ hasText: /יחס גובה-רוחב|Aspect ratio/i }).first();
+        if (!(await arBtn.waitFor({ state: 'visible', timeout: 4000 }).then(() => true).catch(() => false))) {
+            // Check if a ratio chip (e.g. already showing "1:1") is displayed instead
+            const alreadyChip = page.locator('button, [role="button"]').filter({ hasText: new RegExp(`^\\s*${targetRatio.replace(':', '\\:')}\\s*$`) }).first();
+            if (await alreadyChip.isVisible().catch(() => false)) {
+                logToFile(`[Gemini-Gem] Aspect ratio already displays "${targetRatio}".`);
+                return true;
+            }
+            logToFile('[Gemini-Gem] Aspect ratio button not visible (continuing without explicit aspect click).');
+            return false;
+        }
+
+        const btnTextBefore = (await arBtn.innerText().catch(() => '')).replace(/\s+/g, ' ').trim();
+        if (btnTextBefore.includes(targetRatio)) {
+            logToFile(`[Gemini-Gem] Aspect ratio already set to ${targetRatio} ("${btnTextBefore}").`);
+            return true;
+        }
+
+        await arBtn.click();
+        await humanPause(page, 450, 750);
+
+        let ratioOpt = page.locator(`.cdk-overlay-pane [role="menuitemradio"][aria-label="${targetRatio}"]`).first();
+        if (!(await ratioOpt.isVisible().catch(() => false))) {
+            ratioOpt = page.locator('.cdk-overlay-pane [role="menuitemradio"], .cdk-overlay-pane [role="menuitem"], .cdk-overlay-pane [role="option"]')
+                .filter({ hasText: targetRatio }).first();
+        }
+
+        if (await ratioOpt.isVisible().catch(() => false)) {
+            const alreadyChecked = (await ratioOpt.getAttribute('aria-checked').catch(() => '')) === 'true';
+            if (alreadyChecked) {
+                logToFile(`[Gemini-Gem] Aspect ratio option "${targetRatio}" already checked.`);
+                await page.keyboard.press('Escape').catch(() => {});
+            } else {
+                await ratioOpt.click();
+                logToFile(`[Gemini-Gem] Selected aspect ratio visibly: ${targetRatio}`);
+                await humanPause(page, 500, 800);
+            }
+            return true;
+        } else {
+            logToFile(`[Gemini-Gem] Warning: aspect ratio option "${targetRatio}" not found in overlay.`);
+            await page.keyboard.press('Escape').catch(() => {});
+            await humanPause(page, 300, 500);
+            return false;
+        }
+    } catch (e) {
+        logToFile(`[Gemini-Gem] Aspect ratio selection note (non-fatal): ${e.message}`);
+        await page.keyboard.press('Escape').catch(() => {});
+        return false;
+    }
+}
+
+async function countComposerAttachments(page) {
+    return await page.evaluate(() => {
+        const selectors = [
+            'uploader-file-preview',
+            '.file-preview-container',
+            '[data-test-id*="file-preview"]',
+            'button[aria-label*="הסרת הקובץ"]',
+            'button[aria-label*="הסר קובץ"]',
+            'button[aria-label*="הסרת תמונה"]',
+            'button[aria-label*="Remove file"]',
+            'button[aria-label*="Remove image"]',
+            'input-container img[src^="blob:"]',
+            'input-container img[src^="data:"]',
+            '.input-area-container img[src^="blob:"]',
+            '.input-area-container img[src^="data:"]'
+        ];
+        let maxFound = 0;
+        for (const sel of selectors) {
+            const visible = Array.from(document.querySelectorAll(sel)).filter(el => {
+                const r = el.getBoundingClientRect();
+                return r.width > 0 && r.height > 0;
+            }).length;
+            if (visible > maxFound) maxFound = visible;
+        }
+        return maxFound;
+    }).catch(() => 0);
+}
+
+async function clearComposerAttachments(page) {
+    try {
+        for (let i = 0; i < 5; i++) {
+            const rmBtn = page.locator(
+                'button[aria-label*="הסרת הקובץ"], button[aria-label*="הסר קובץ"], button[aria-label*="הסרת תמונה"], button[aria-label*="Remove file"], button[aria-label*="Remove image"]'
+            ).first();
+            if (!(await rmBtn.isVisible().catch(() => false))) break;
+            await rmBtn.click();
+            await humanPause(page, 250, 450);
+        }
+    } catch (_) {}
+}
+
+async function uploadReferenceImage(page, imagePath) {
+    if (!imagePath || !fs.existsSync(imagePath)) {
+        logToFile(`[Gemini-Gem] Reference image path missing or not found: "${imagePath}"`);
+        return { ok: false, reason: 'FILE_NOT_FOUND' };
+    }
+
+    const absPath = path.resolve(imagePath);
+    const beforeCount = await countComposerAttachments(page);
+    logToFile(`[Gemini-Gem] Uploading reference image: ${path.basename(absPath)} (existing attachments: ${beforeCount})`);
+
+    let triggered = false;
+
+    // Strategy A (primary): Visible '+' menu -> 'העלאת קבצים' / 'Upload files' filechooser (matches exact human flow)
+    try {
+        const plusBtn = page.locator(
+            'button[aria-label="העלאה וכלים"], button[aria-label*="העלאה וכלים"], button[aria-label*="Upload and tools"], button[aria-label*="Add files or tools"]'
+        ).first();
+        if (await plusBtn.isVisible().catch(() => false)) {
+            await plusBtn.click();
+            await humanPause(page, 500, 850);
+            const uploadBtn = page.locator(
+                '.cdk-overlay-pane [role="menuitem"], .cdk-overlay-pane button'
+            ).filter({ hasText: /העלאת קבצים|העלאת תמונה|Upload files|Upload image/i }).first();
+
+            if (await uploadBtn.isVisible().catch(() => false)) {
+                const [chooser] = await Promise.all([
+                    page.waitForEvent('filechooser', { timeout: 8000 }),
+                    uploadBtn.click()
+                ]);
+                await chooser.setFiles(absPath);
+                triggered = true;
+                logToFile('[Gemini-Gem] Reference image attached via + -> Upload files chooser.');
+            } else {
+                await page.keyboard.press('Escape').catch(() => {});
+            }
+        }
+    } catch (e) {
+        logToFile(`[Gemini-Gem] File chooser attempt note: ${e.message}`);
+        await page.keyboard.press('Escape').catch(() => {});
+    }
+
+    // Strategy B (fallback): Direct hidden file input in DOM
+    if (!triggered) {
+        try {
+            const imgInput = page.locator('input[type="file"][accept*="image"], input[type="file"]').first();
+            if ((await imgInput.count().catch(() => 0)) > 0) {
+                await imgInput.setInputFiles(absPath);
+                const waitPreviewEnd = Date.now() + 5000;
+                while (Date.now() < waitPreviewEnd) {
+                    if ((await countComposerAttachments(page)) > beforeCount) {
+                        triggered = true;
+                        break;
+                    }
+                    await page.waitForTimeout(300);
+                }
+                if (triggered) {
+                    logToFile('[Gemini-Gem] Reference image attached via direct image file input fallback.');
+                }
+            }
+        } catch (e) {
+            logToFile(`[Gemini-Gem] Direct file input fallback note: ${e.message}`);
+        }
+    }
+
+    // Wait for upload preview to finish rendering & any upload spinner to complete
+    const settleDeadline = Date.now() + 18000;
+    let finalCount = beforeCount;
+    while (Date.now() < settleDeadline) {
+        finalCount = await countComposerAttachments(page);
+        const uploadingSpinner = await page.evaluate(() => {
+            const containers = document.querySelectorAll('input-container, .input-area-container, uploader-file-preview, .file-preview-container');
+            for (const c of containers) {
+                const sp = c.querySelector('mat-progress-spinner, [role="progressbar"], .loading-indicator');
+                if (sp && sp.getBoundingClientRect().width > 0) return true;
+            }
+            return false;
+        }).catch(() => false);
+
+        if (finalCount > beforeCount && !uploadingSpinner) {
+            break;
+        }
+        await page.waitForTimeout(400);
+    }
+
+    await humanPause(page, 600, 950);
+    const ok = finalCount > beforeCount;
+    logToFile(`[Gemini-Gem] Reference image upload complete: ok=${ok}, attachments=${finalCount}`);
+    return { ok, attachments: finalCount };
 }
 
 async function ensureImageToolInactive(page) {
@@ -367,7 +581,16 @@ async function submitPromptAndWaitForImage(
     page,
     composerFallback,
     promptText,
-    { skillName = '', useImageTool = false, clearDraft = false, maxWaitMs = 135000 } = {}
+    {
+        skillName = '',
+        useImageTool = true,
+        aspectRatio = '1:1',
+        referenceImagePath = '',
+        clearDraft = false,
+        dryRun = false,
+        dryRunScreenshot = '',
+        maxWaitMs = 135000
+    } = {}
 ) {
     await ensureHighReasoningMode(page);
 
@@ -375,7 +598,10 @@ async function submitPromptAndWaitForImage(
         // Gemini disables @Skills when standalone image tool chip is locked on
         await ensureImageToolInactive(page);
     } else if (useImageTool) {
-        await ensureImageToolActive(page);
+        const imgToolReady = await ensureImageToolActive(page);
+        if (imgToolReady && aspectRatio) {
+            await ensureAspectRatioSquare(page, aspectRatio);
+        }
     } else {
         await ensureImageToolInactive(page);
         logToFile('[Gemini-Gem] Running in native chat mode (without locking image tool chip).');
@@ -393,17 +619,6 @@ async function submitPromptAndWaitForImage(
         }
     }
 
-    const { beforeSrcs, beforeResponseCount } = await page.evaluate(() => {
-        return {
-            beforeSrcs: Array.from(document.querySelectorAll('img'))
-                .filter(img => img.naturalWidth >= 256 || img.width >= 256)
-                .map(img => img.src),
-            beforeResponseCount: document.querySelectorAll('model-response').length
-        };
-    });
-    const beforeSet = new Set(beforeSrcs);
-    logToFile(`[Gemini-Gem] Existing large images before prompt: ${beforeSet.size} (responses: ${beforeResponseCount})`);
-
     const activeComposer = (await isComposerVisible(page, 5000)) || composerFallback;
 
     if (skillName) {
@@ -417,17 +632,65 @@ async function submitPromptAndWaitForImage(
         if (clearDraft) {
             const existingText = (await activeComposer.innerText().catch(() => '')).trim();
             if (existingText.length > 0) {
+                logToFile(`[Gemini-Gem] Clearing stale composer draft (${existingText.length} chars)...`);
                 await activeComposer.fill('');
                 await humanPause(page, 300, 500);
-                await activeComposer.click();
-                await humanPause(page, 250, 450);
             }
+            await clearComposerAttachments(page);
         }
     }
 
-    // Type the prompt naturally line-by-line (Shift+Enter between lines so multi-line prompts don't submit early)
+    // Upload reference image (e.g. Sefi's SEFI/SEFITRAILER logo) directly into the composer
+    let uploadedRef = false;
+    if (referenceImagePath && fs.existsSync(referenceImagePath)) {
+        const upRes = await uploadReferenceImage(page, referenceImagePath);
+        uploadedRef = Boolean(upRes.ok);
+        if (!uploadedRef) {
+            logToFile('[Gemini-Gem] Warning: reference image did not confirm preview attachment; proceeding carefully.');
+        }
+    }
+
+    // Re-focus composer right before entering prompt text (file upload can shift focus)
+    const readyComposer = (await isComposerVisible(page, 5000)) || activeComposer;
+    await readyComposer.click();
+    await humanPause(page, 250, 450);
+
+    // Enter prompt cleanly (Shift+Enter between lines so multi-line prompts never submit early)
     await typeHumanText(page, promptText.trim());
     await humanPause(page, 550, 950);
+
+    if (dryRun) {
+        const shotPath = dryRunScreenshot || path.resolve(__dirname, '../../gemini-dry-run.png');
+        await page.screenshot({ path: shotPath }).catch(() => {});
+        const sendBtnCheck = page.locator('button[aria-label*="שליחת הודעה"], button[aria-label*="Send message"]').first();
+        const dryState = {
+            url: page.url(),
+            uploadedRef,
+            attachments: await countComposerAttachments(page),
+            composerChars: (await readyComposer.innerText().catch(() => '')).trim().length,
+            sendVisible: await sendBtnCheck.isVisible().catch(() => false),
+            sendDisabled: await sendBtnCheck.isDisabled().catch(() => true),
+            screenshot: shotPath
+        };
+        logToFile(`[Gemini-Gem] DRY-RUN verified before send: ${JSON.stringify(dryState)}`);
+        // Clean up composer & attachments so Sefi's Gemini draft stays spotless
+        await readyComposer.fill('').catch(() => {});
+        await clearComposerAttachments(page);
+        await ensureImageToolInactive(page);
+        return { newImgInfo: null, finishedWithoutImage: false, lastText: '', fatalError: null, dryRun: true, dryState };
+    }
+
+    // Snapshot existing model-response count & image URLs right BEFORE clicking Send
+    const { beforeSrcs, beforeResponseCount } = await page.evaluate(() => {
+        return {
+            beforeSrcs: Array.from(document.querySelectorAll('img'))
+                .filter(img => img.naturalWidth >= 256 || img.width >= 256)
+                .map(img => img.src),
+            beforeResponseCount: document.querySelectorAll('model-response').length
+        };
+    });
+    const beforeSet = new Set(beforeSrcs);
+    logToFile(`[Gemini-Gem] Existing large images before submit: ${beforeSet.size} (model-responses: ${beforeResponseCount})`);
 
     // Click the visible Send button naturally (fallback to Enter if not visible)
     const sendBtn = page.locator('button[aria-label*="שליחת הודעה"], button[aria-label*="Send message"]').first();
@@ -436,7 +699,9 @@ async function submitPromptAndWaitForImage(
     } else {
         await page.keyboard.press('Enter');
     }
-    logToFile(`[Gemini-Gem] Prompt submitted${skillName ? ` (with @${skillName})` : ''}: "${promptText.trim()}"`);
+    logToFile(
+        `[Gemini-Gem] Prompt submitted${skillName ? ` (with @${skillName})` : ''}${uploadedRef ? ` (+ref:${path.basename(referenceImagePath)})` : ''}: "${promptText.trim().slice(0, 140)}"`
+    );
 
     let newImgInfo = null;
     let textDoneTicks = 0;
@@ -449,28 +714,29 @@ async function submitPromptAndWaitForImage(
         const pollState = await page.evaluate(({ existingArr, minRespIdx }) => {
             const existing = new Set(existingArr);
             const responses = Array.from(document.querySelectorAll('model-response'));
-            const imgs = Array.from(document.querySelectorAll('img'));
+            const allImgs = Array.from(document.querySelectorAll('img'));
             const found = [];
-            for (let idx = 0; idx < imgs.length; idx++) {
-                const img = imgs[idx];
-                const src = img.src || '';
-                if (!src || existing.has(src)) continue;
-                if (img.complete && img.naturalWidth >= 400 && img.naturalHeight >= 400) {
-                    if (minRespIdx > 0) {
-                        const parentResp = img.closest('model-response');
-                        if (parentResp) {
-                            const respIdx = responses.indexOf(parentResp);
-                            if (respIdx !== -1 && respIdx < minRespIdx) continue;
-                        } else if (responses.length <= minRespIdx) {
-                            continue;
+
+            // CRITICAL: Only accept images inside NEW <model-response> turns (rIdx >= minRespIdx)
+            // so an uploaded reference logo inside <user-query> is NEVER mistaken for the generated image!
+            for (let rIdx = minRespIdx; rIdx < responses.length; rIdx++) {
+                const resp = responses[rIdx];
+                const respImgs = Array.from(resp.querySelectorAll('img'));
+                for (const img of respImgs) {
+                    if (img.closest('user-query, .user-query, uploader-file-preview, input-container')) continue;
+                    const src = img.src || '';
+                    if (!src || existing.has(src)) continue;
+                    if (img.complete && img.naturalWidth >= 400 && img.naturalHeight >= 400) {
+                        const globalIdx = allImgs.indexOf(img);
+                        if (globalIdx !== -1) {
+                            found.push({
+                                idx: globalIdx,
+                                src,
+                                width: img.naturalWidth,
+                                height: img.naturalHeight
+                            });
                         }
                     }
-                    found.push({
-                        idx,
-                        src,
-                        width: img.naturalWidth,
-                        height: img.naturalHeight
-                    });
                 }
             }
 
@@ -535,11 +801,16 @@ async function runAutomation() {
     const args = process.argv.slice(2);
     const isLoginOnly = args.includes('--login');
     const isCheckOnly = args.includes('--check');
+    const isDryRun = args.includes('--dry-run');
+    const dryRunShotArg = args.find(a => a.startsWith('--dry-run-shot='))?.split('=')[1] || '';
     const taskFile = args.find(a => a.startsWith('--task='))?.split('=')[1];
 
     let task = {
         gemUrl: 'https://gemini.google.com/app',
-        skillName: DEFAULT_SKILL_NAME,
+        skillName: '',
+        useImageTool: true,
+        aspectRatio: '1:1',
+        referenceImagePath: fs.existsSync(DEFAULT_LOGO_PATH) ? DEFAULT_LOGO_PATH : '',
         chatUrl: '',
         prompt: '',
         outputDir: path.resolve(__dirname, '../../תמונות חדשות'),
@@ -557,7 +828,9 @@ async function runAutomation() {
     }
 
     const isHeaded = isLoginOnly || args.includes('--headed') || Boolean(task.headed);
-    const activeSkillName = (task.skillName || DEFAULT_SKILL_NAME).trim();
+    const activeSkillName = (task.skillName || '').trim();
+    const useImageTool = task.useImageTool !== undefined ? Boolean(task.useImageTool) : !activeSkillName;
+    const targetAspectRatio = (task.aspectRatio || '1:1').trim();
 
     // ── Mode 1: Interactive Login on User's Visible Desktop ──
     if (isLoginOnly) {
@@ -758,14 +1031,28 @@ async function runAutomation() {
             await humanPause(page, 1800, 2600);
         }
 
-        // For new chats: attach @Skill (native image generation via Skill instructions).
-        // For follow-up edits in an existing chat: Skill context & prior image are already in the thread.
+        // Direct native image generation (יצירת תמונה + 1:1 + attached SEFI logo reference image).
+        // For follow-up edits in an existing chat: keep יצירת תמונה active so Gemini always outputs an image
+        // instead of replying text-only, and attach referenceImagePath only if explicitly requested.
+        const effectiveRefPath = isFollowUpChat
+            ? (task.referenceImagePath || '')
+            : (task.referenceImagePath !== undefined ? task.referenceImagePath : (fs.existsSync(DEFAULT_LOGO_PATH) ? DEFAULT_LOGO_PATH : ''));
+
         let attemptRes = await submitPromptAndWaitForImage(page, composer, task.prompt, {
             skillName: isFollowUpChat ? '' : activeSkillName,
-            useImageTool: false,
+            useImageTool,
+            aspectRatio: targetAspectRatio,
+            referenceImagePath: effectiveRefPath,
             clearDraft: !isFollowUpChat,
+            dryRun: isDryRun,
+            dryRunScreenshot: dryRunShotArg,
             maxWaitMs: 135000
         });
+
+        if (attemptRes.dryRun) {
+            console.log(`RESULT_JSON:${JSON.stringify({ ok: true, dryRun: true, ...attemptRes.dryState })}`);
+            return;
+        }
 
         if (attemptRes.fatalError) {
             const errShot = path.resolve(__dirname, '../../gemini-error.png');
@@ -781,10 +1068,12 @@ async function runAutomation() {
             await humanPause(page, 1500, 2500);
             const inChatComposer = await isComposerVisible(page, 15000);
             if (inChatComposer) {
-                const demandPrompt = "השבת בטקסט בלבד ללא תמונה. נא ליצור ולהפיק כעת את התמונה בפועל לפי התכנון הזה.";
+                const demandPrompt = "השבת בטקסט בלבד ללא תמונה. נא ליצור ולהפיק כעת את התמונה בפועל ביחס 1:1 לפי ההנחיה והלוגו המצורף.";
                 attemptRes = await submitPromptAndWaitForImage(page, inChatComposer, demandPrompt, {
                     skillName: '',
                     useImageTool: true,
+                    aspectRatio: targetAspectRatio,
+                    referenceImagePath: '',
                     clearDraft: false,
                     maxWaitMs: 120000
                 });
