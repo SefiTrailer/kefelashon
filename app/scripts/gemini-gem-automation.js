@@ -333,6 +333,8 @@ async function ensureAspectRatioSquare(page, ratio = '1:1') {
 
 async function countComposerAttachments(page) {
     return await page.evaluate(() => {
+        const scopes = Array.from(document.querySelectorAll('input-area-v2, .input-area-container, input-container'));
+        const roots = scopes.length ? scopes : [document];
         const selectors = [
             'uploader-file-preview',
             '.file-preview-container',
@@ -342,21 +344,46 @@ async function countComposerAttachments(page) {
             'button[aria-label*="הסרת תמונה"]',
             'button[aria-label*="Remove file"]',
             'button[aria-label*="Remove image"]',
-            'input-container img[src^="blob:"]',
-            'input-container img[src^="data:"]',
-            '.input-area-container img[src^="blob:"]',
-            '.input-area-container img[src^="data:"]'
+            'img[src^="blob:"]',
+            'img[src^="data:"]'
         ];
         let maxFound = 0;
         for (const sel of selectors) {
-            const visible = Array.from(document.querySelectorAll(sel)).filter(el => {
-                const r = el.getBoundingClientRect();
-                return r.width > 0 && r.height > 0;
-            }).length;
+            let visible = 0;
+            for (const root of roots) {
+                for (const el of root.querySelectorAll(sel)) {
+                    if (el.closest('user-query, model-response')) continue;
+                    const r = el.getBoundingClientRect();
+                    if (r.width > 0 && r.height > 0) visible++;
+                }
+            }
             if (visible > maxFound) maxFound = visible;
         }
         return maxFound;
     }).catch(() => 0);
+}
+
+async function stopStuckGenerationIfActive(page, phase = '') {
+    try {
+        const stopBtn = page.locator(
+            'button[aria-label*="עצירת התשובה"], button[aria-label*="עצירה"], button[aria-label*="הפסק"], button[aria-label*="Stop response"], button[aria-label*="Stop"], button:has(mat-icon[fonticon="stop"])'
+        ).first();
+        if (!(await stopBtn.isVisible().catch(() => false))) {
+            return false;
+        }
+        logToFile(`[Gemini-Gem] Detected active/stuck generation (Stop button visible${phase ? ` at ${phase}` : ''}). Clicking Stop cleanly...`);
+        await stopBtn.click().catch(() => {});
+        const deadline = Date.now() + 6000;
+        while (Date.now() < deadline) {
+            if (!(await stopBtn.isVisible().catch(() => false))) break;
+            await page.waitForTimeout(400);
+        }
+        await humanPause(page, 600, 1000);
+        return true;
+    } catch (e) {
+        logToFile(`[Gemini-Gem] Stop button check note: ${e.message}`);
+        return false;
+    }
 }
 
 async function clearComposerAttachments(page) {
@@ -589,9 +616,12 @@ async function submitPromptAndWaitForImage(
         clearDraft = false,
         dryRun = false,
         dryRunScreenshot = '',
-        maxWaitMs = 135000
+        maxWaitMs = 165000
     } = {}
 ) {
+    // If a previous turn in this chat left Gemini stuck generating (■ Stop button), clear it first!
+    await stopStuckGenerationIfActive(page, 'pre-setup');
+
     await ensureHighReasoningMode(page);
 
     if (skillName) {
@@ -655,6 +685,16 @@ async function submitPromptAndWaitForImage(
     await readyComposer.click();
     await humanPause(page, 250, 450);
 
+    // Clear any stale draft in composer even on follow-ups (e.g. if a previous stuck turn left text inside)
+    const preTypeText = (await readyComposer.innerText().catch(() => '')).trim();
+    if (!skillName && preTypeText.length > 0) {
+        logToFile(`[Gemini-Gem] Clearing leftover text in composer before typing (${preTypeText.length} chars)...`);
+        await readyComposer.fill('');
+        await humanPause(page, 250, 450);
+        await readyComposer.click();
+        await humanPause(page, 200, 350);
+    }
+
     // Enter prompt cleanly (Shift+Enter between lines so multi-line prompts never submit early)
     await typeHumanText(page, promptText.trim());
     await humanPause(page, 550, 950);
@@ -692,6 +732,9 @@ async function submitPromptAndWaitForImage(
     const beforeSet = new Set(beforeSrcs);
     logToFile(`[Gemini-Gem] Existing large images before submit: ${beforeSet.size} (model-responses: ${beforeResponseCount})`);
 
+    // Ensure no stuck Stop button is blocking submission right before sending
+    await stopStuckGenerationIfActive(page, 'pre-send');
+
     // Click the visible Send button naturally (fallback to Enter if not visible)
     const sendBtn = page.locator('button[aria-label*="שליחת הודעה"], button[aria-label*="Send message"]').first();
     if (await sendBtn.isVisible().catch(() => false) && !(await sendBtn.isDisabled().catch(() => true))) {
@@ -699,6 +742,23 @@ async function submitPromptAndWaitForImage(
     } else {
         await page.keyboard.press('Enter');
     }
+
+    // Verify prompt actually left the composer (if Stop blocked it or Send didn't fire, retry once cleanly)
+    await page.waitForTimeout(1800);
+    const stillInComposer = (await readyComposer.innerText().catch(() => '')).trim();
+    const responsesAfterClick = await page.evaluate(() => document.querySelectorAll('model-response').length).catch(() => beforeResponseCount);
+    if (stillInComposer.length > 0 && responsesAfterClick <= beforeResponseCount) {
+        logToFile('[Gemini-Gem] Prompt still in composer after initial submit; verifying Stop/Send state and retrying click...');
+        await stopStuckGenerationIfActive(page, 'retry-send');
+        if (await sendBtn.isVisible().catch(() => false) && !(await sendBtn.isDisabled().catch(() => true))) {
+            await sendBtn.click();
+        } else {
+            await readyComposer.click().catch(() => {});
+            await page.keyboard.press('Enter');
+        }
+        await page.waitForTimeout(1200);
+    }
+
     logToFile(
         `[Gemini-Gem] Prompt submitted${skillName ? ` (with @${skillName})` : ''}${uploadedRef ? ` (+ref:${path.basename(referenceImagePath)})` : ''}: "${promptText.trim().slice(0, 140)}"`
     );
@@ -784,6 +844,11 @@ async function submitPromptAndWaitForImage(
         } else {
             textDoneTicks = 0;
         }
+    }
+
+    if (!newImgInfo && !finishedWithoutImage) {
+        // Stop any stuck spinning generation on timeout so the chat isn't left wedged for the next request
+        await stopStuckGenerationIfActive(page, 'on-timeout');
     }
 
     if (!newImgInfo && !lastText) {
@@ -1046,7 +1111,7 @@ async function runAutomation() {
             clearDraft: !isFollowUpChat,
             dryRun: isDryRun,
             dryRunScreenshot: dryRunShotArg,
-            maxWaitMs: 135000
+            maxWaitMs: 165000
         });
 
         if (attemptRes.dryRun) {
