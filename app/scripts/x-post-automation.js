@@ -1,6 +1,7 @@
 import { chromium } from 'playwright';
 import path from 'path';
 import fs from 'fs';
+import sharp from 'sharp';
 import { fileURLToPath } from 'url';
 
 const __filename = fileURLToPath(import.meta.url);
@@ -71,6 +72,8 @@ async function runAutomation() {
             await new Promise(r => setTimeout(r, 3000)); // Wait before retry
         }
     }
+
+    let cleanupOptFile = null;
 
     try {
         const page = await browserContext.newPage();
@@ -171,9 +174,7 @@ async function runAutomation() {
         if (!fs.existsSync(absoluteImagePath)) throw new Error(`Image not found at ${absoluteImagePath}`);
 
         // Optimize image for Twitter (X) if needed (max 1440px, progressive mozjpeg 84%)
-        let cleanupOptFile = null;
         try {
-            const sharp = require('sharp');
             const ext = path.extname(absoluteImagePath).toLowerCase();
             const stat = fs.statSync(absoluteImagePath);
             if (stat.size > 400 * 1024 || ext === '.webp') {

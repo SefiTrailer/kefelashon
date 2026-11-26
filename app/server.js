@@ -3,7 +3,9 @@ import cors from 'cors';
 import fs from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
-import { execSync, spawn } from 'child_process';
+import { exec, execSync, spawn } from 'child_process';
+import { promisify } from 'util';
+const execAsync = promisify(exec);
 import multer from 'multer'; // Import multer
 import sharp from 'sharp';
 import { generateAHash, getHammingDistance } from './utils/image-hash.js';
@@ -647,10 +649,24 @@ function runGit(command, cwd = REPO_ROOT) {
     return execSync(command, { cwd, encoding: 'utf-8', windowsHide: true }).trim();
 }
 
+async function runCmdAsync(command, options = {}) {
+    const { stdout } = await execAsync(command, {
+        encoding: 'utf-8',
+        windowsHide: true,
+        maxBuffer: 20 * 1024 * 1024,
+        ...options
+    });
+    return (stdout || '').trim();
+}
+
+async function runGitAsync(command, cwd = REPO_ROOT) {
+    return runCmdAsync(command, { cwd, timeout: 120000 });
+}
+
 // GET /api/publish/status — returns last commit hash + message + timestamp
-app.get('/api/publish/status', (req, res) => {
+app.get('/api/publish/status', async (req, res) => {
     try {
-        const log = runGit('git log -1 "--format=%H|||%s|||%ci"');
+        const log = await runGitAsync('git log -1 "--format=%H|||%s|||%ci"');
         const [hash, subject, date] = log.split('|||');
         res.json({ hash: hash?.slice(0, 7), message: subject, date, ok: true });
     } catch (e) {
@@ -658,35 +674,30 @@ app.get('/api/publish/status', (req, res) => {
     }
 });
 
-// POST /api/publish — run prepare-public.js, then stage only content files, commit, push
+// POST /api/publish — non-blocking async publish so /api/tags & /api/social/post stay responsive during build/deploy
 app.post('/api/publish', async (req, res) => {
     const log = [];
     try {
         // 1. Convert new images to WebP automatically before updating data
         log.push('🖼️  ממיר תמונות ל-WebP...');
         try {
-            const convertOut = execSync('node convert-to-webp.mjs', {
+            await runCmdAsync('node convert-to-webp.mjs', {
                 cwd: REPO_ROOT,
-                encoding: 'utf-8',
-                timeout: 120000,
-                windowsHide: true
-            }).trim();
-            // Optional: log.push(convertOut.split('\n').pop() || 'המרה הסתיימה');
+                timeout: 120000
+            });
         } catch (e) {
             log.push(`⚠️  שגיאה בהמרת WebP: ${e.message}`);
         }
 
         // 2. Regenerate public-data.json from data.json (fast — no image recompression)
         log.push('⚙️  מעדכן public-data.json...');
-        const prepareOut = execSync('node update-public-data.mjs', {
+        const prepareOut = await runCmdAsync('node update-public-data.mjs', {
             cwd: path.resolve(__dirname),
-            encoding: 'utf-8',
-            timeout: 30000,
-            windowsHide: true
-        }).trim();
+            timeout: 30000
+        });
         log.push(`update: ${prepareOut}`);
 
-        // 2. Stage ONLY allowed content paths — never code files
+        // 3. Stage ONLY allowed content paths — never code files
         const stagePaths = [
             'data.json',
             'app/public/images',
@@ -694,48 +705,44 @@ app.post('/api/publish', async (req, res) => {
         ];
         for (const p of stagePaths) {
             try {
-                runGit(`git add -- "${p}"`);
+                await runGitAsync(`git add -- "${p}"`);
                 log.push(`git add "${p}" ✓`);
             } catch (e) {
                 log.push(`git add "${p}" — skipped (${e.message.split('\n')[0]})`);
             }
         }
 
-        // 3. Check if there's actually anything to commit
-        const status = runGit('git status --porcelain');
-        if (!status) {
+        // 4. Check if there's actually anything staged to commit
+        const stagedDiff = await runGitAsync('git diff --cached --name-only');
+        if (!stagedDiff) {
             return res.json({ ok: true, skipped: true, message: 'אין שינויים לפרסם', log });
         }
 
-        // 4. Commit with a descriptive Hebrew timestamp message
+        // 5. Commit with a descriptive Hebrew timestamp message
         const now = new Date();
         const dateStr = now.toLocaleDateString('he-IL', { day: '2-digit', month: '2-digit', year: 'numeric' });
         const timeStr = now.toLocaleTimeString('he-IL', { hour: '2-digit', minute: '2-digit' });
         const commitMsg = `עדכון תוכן — ${dateStr} ${timeStr}`;
 
-        const commitOut = runGit(`git commit -m "${commitMsg}"`);
+        const commitOut = await runGitAsync(`git commit -m "${commitMsg}"`);
         log.push(`commit: ${commitOut.split('\n')[0]}`);
 
-        // 5. Push to origin (auto-detect branch)
-        const branch = runGit('git rev-parse --abbrev-ref HEAD');
-        const pushOut = runGit(`git push origin ${branch}`);
+        // 6. Push to origin (auto-detect branch)
+        const branch = await runGitAsync('git rev-parse --abbrev-ref HEAD');
+        const pushOut = await runGitAsync(`git push origin ${branch}`);
         log.push(`push → ${branch}: ${pushOut || 'הצלחה'}`);
 
-        // 6. Build and deploy to gh-pages branch locally so kefelashon.co.il updates immediately
+        // 7. Build and deploy to gh-pages branch locally so kefelashon.co.il updates immediately
         try {
             log.push('🚀 מעדכן אתר חי (gh-pages)...');
-            execSync('node scripts/prepare-public.js && npx vite build', {
+            await runCmdAsync('node scripts/prepare-public.js && npx vite build', {
                 cwd: path.resolve(__dirname),
-                encoding: 'utf-8',
                 timeout: 120000,
-                windowsHide: true,
                 env: { ...process.env, VITE_PUBLIC_VIEWER: 'true' }
             });
-            execSync('node scripts/manual-deploy.js', {
+            await runCmdAsync('node scripts/manual-deploy.js', {
                 cwd: path.resolve(__dirname),
-                encoding: 'utf-8',
-                timeout: 60000,
-                windowsHide: true
+                timeout: 90000
             });
             log.push('gh-pages: עודכן בהצלחה ✓');
         } catch (deployErr) {
@@ -743,8 +750,8 @@ app.post('/api/publish', async (req, res) => {
             log.push(`⚠️ העלאה ל-gh-pages: ${deployErr.message.split('\n')[0]}`);
         }
 
-        // 7. Return the new commit hash
-        const hash = runGit('git rev-parse --short HEAD');
+        // 8. Return the new commit hash
+        const hash = await runGitAsync('git rev-parse --short HEAD');
         res.json({ ok: true, hash, message: commitMsg, branch, log });
     } catch (e) {
         log.push(`❌ שגיאה: ${e.message}`);
