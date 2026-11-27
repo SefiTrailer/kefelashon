@@ -2086,6 +2086,7 @@
         }
       ],
       "channel_posted_at": "2026-11-22T10:54:19Z",
+      "source_cid": "4a326ef266a999e0",
       "dateMillis": 1795344507097
     },
     "ALL IN TUNE.webp": {
@@ -4071,6 +4072,7 @@
         }
       ],
       "channel_posted_at": "2026-11-20T13:13:52Z",
+      "source_cid": "617b22a6fb974c04",
       "dateMillis": 1795180308037
     },
     "אורות גבוהיםנמוכים.webp": {
@@ -10234,6 +10236,7 @@
         }
       ],
       "channel_posted_at": "2026-11-22T10:36:54Z",
+      "source_cid": "07e47c6f63d835af",
       "dateMillis": 1795343719461
     },
     "ה'אי קר' חסר מן הספר.webp": {
@@ -13828,6 +13831,7 @@
         }
       ],
       "channel_posted_at": "2026-11-23T12:14:40Z",
+      "source_cid": "40a06a00274b9b91",
       "dateMillis": 1795435712274
     },
     "ושננתם לבניך.webp": {
@@ -14137,6 +14141,7 @@
         }
       ],
       "channel_posted_at": "2026-11-19T12:19:38Z",
+      "source_cid": "529b685b2ec8f75f",
       "dateMillis": 1795088965468
     },
     "זוכה בחמישה קולות.webp": {
@@ -15574,6 +15579,7 @@
         }
       ],
       "channel_posted_at": "2026-11-20T13:02:54Z",
+      "source_cid": "0b74535c43dbab3c",
       "dateMillis": 1795179649717
     },
     "חיפוש מתמיד.webp": {
@@ -21717,7 +21723,7 @@
       "dateMillis": 1733828424000
     },
     "מדף הרומנים.webp": {
-      "title": "מדף ספרים רומנטי",
+      "title": "היי",
       "explanation": "המילה 'רומנים' מתייחסת גם לז'אנר הספרותי (רומנים) וגם לאנשים מרומניה. התמונה מציגה מדף ספרים המוקדש כולו לרומנים (בני אדם) מרומניה, ולא לרומנים (ספרים רומנטיים).",
       "topic": "מילים ומשחקי לשון, מוזיקה ותרבות, ספרות, ספרים, רומניה",
       "funny_caption": "ובכלל אין שמה שום ספר רומנטי!",
@@ -21757,6 +21763,7 @@
         }
       ],
       "channel_posted_at": "2026-11-18T16:29:58Z",
+      "source_cid": "2cba125d0c8cd905",
       "dateMillis": 1795019334373
     },
     "מדרון חלק-לק.webp": {
@@ -22341,6 +22348,7 @@
         }
       ],
       "channel_posted_at": "2026-11-21T20:05:19Z",
+      "source_cid": "4f7e82e1cf6df0b0",
       "dateMillis": 1795290720625
     },
     "מונה ליזה.webp": {
@@ -22580,6 +22588,7 @@
         }
       ],
       "channel_posted_at": "2026-11-23T07:54:37Z",
+      "source_cid": "1c70fe4a1cceceb0",
       "dateMillis": 1795420318341
     },
     "מורח קרם שיזוף.webp": {
@@ -23983,6 +23992,7 @@
         }
       ],
       "channel_posted_at": "2026-11-22T10:20:38Z",
+      "source_cid": "c91c77ddc025ca74",
       "dateMillis": 1795342703913
     },
     "מימון המונים.webp": {
@@ -31133,6 +31143,35 @@
       "isApproved": true,
       "isAIGenerated": true,
       "createdAt": 1795774717983,
+      "social_posts": [
+        {
+          "platform": "whatsapp",
+          "date": "2026-11-27T10:21:14Z",
+          "validated": true
+        },
+        {
+          "platform": "whatsapp_channel",
+          "date": "2026-11-27T10:21:29Z",
+          "validated": true
+        },
+        {
+          "platform": "facebook",
+          "date": "2026-11-27T10:21:36.303Z"
+        },
+        {
+          "platform": "facebook-personal",
+          "date": "2026-11-27T10:22:12.537Z"
+        },
+        {
+          "platform": "instagram",
+          "date": "2026-11-27T10:22:27.047Z"
+        },
+        {
+          "platform": "x",
+          "date": "2026-11-27T10:22:41.559Z"
+        }
+      ],
+      "source_cid": "662fa07d31003c19",
       "dateMillis": 1795774717983
     },
     "סיפור חייב.webp": {
@@ -31859,6 +31898,7 @@
         }
       ],
       "channel_posted_at": "2026-11-20T12:42:02Z",
+      "source_cid": "41a14bb08583c68a",
       "dateMillis": 1795178414421
     },
     "עובדי עצות.webp": {
@@ -32461,6 +32501,7 @@
         }
       ],
       "channel_posted_at": "2026-11-20T12:50:07Z",
+      "source_cid": "6b7a883e70dcdde1",
       "dateMillis": 1795178860032
     },
     "עז רע.webp": {
@@ -32975,6 +33016,11 @@
         }
       ],
       "channel_posted_at": "2026-11-26T08:20:54Z",
+      "source_cid": "9d5b1831ed5af571",
+      "related_cids": [
+        "12ef49dfca5fd30f",
+        "66356a06abad4550"
+      ],
       "dateMillis": 1795681125054
     },
     "עליית המכונות.webp": {
@@ -33835,6 +33881,7 @@
         }
       ],
       "channel_posted_at": "2026-11-21T20:53:23Z",
+      "source_cid": "2cf2ed9d9cf84ec7",
       "dateMillis": 1795292386938
     },
     "פולי דין.webp": {
@@ -37084,6 +37131,7 @@
         }
       ],
       "channel_posted_at": "2026-11-21T21:00:30Z",
+      "source_cid": "b9a989ee8fbe5cbf",
       "dateMillis": 1795294674515
     },
     "קינוח אף.webp": {
@@ -38928,6 +38976,7 @@
         }
       ],
       "channel_posted_at": "2026-11-18T08:50:11Z",
+      "source_cid": "8d07b39e744fd8f5",
       "dateMillis": 1794991700939
     },
     "רימון.webp": {
@@ -39973,6 +40022,7 @@
         }
       ],
       "channel_posted_at": "2026-11-19T14:01:21Z",
+      "source_cid": "b5111aa66d53a918",
       "dateMillis": 1795096777305
     },
     "שורום זורום.webp": {
@@ -41826,6 +41876,7 @@
         }
       ],
       "channel_posted_at": "2026-11-23T07:38:41Z",
+      "source_cid": "2d149a8d3a30804d",
       "dateMillis": 1795419370804
     },
     "שר בזיופים.webp": {
@@ -43246,6 +43297,7 @@
         }
       ],
       "channel_posted_at": "2026-11-19T13:26:07Z",
+      "source_cid": "c72cf9d80ce956d5",
       "dateMillis": 1795094630812
     },
     "תמיד תינתן עזרה.webp": {
@@ -43861,6 +43913,7 @@
         }
       ],
       "channel_posted_at": "2026-11-18T11:32:39Z",
+      "source_cid": "7b80e1714ade79bf",
       "dateMillis": 1795001450959
     },
     "תשעת ה'ימים'.webp": {
